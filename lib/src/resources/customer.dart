@@ -66,8 +66,13 @@ class Customer extends ApiResource {
 
 
   static Future<Customer> create(Map params) {
-    return StripeService.post(Customer._path, params)
+    return StripeService.create(Customer._path, params)
       .then((Map json) => new Customer.fromMap(json));
+  }
+
+  static Future<Customer> retrieve(String id) {
+    return StripeService.retrieve(Customer._path, id)
+        .then((Map json) => new Customer.fromMap(json));
   }
 
   static Future delete(String id) => StripeService.delete(Customer._path, id);

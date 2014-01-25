@@ -24,56 +24,76 @@ abstract class StripeService {
   /**
    * Makes a post request to the Stripe API to given path and parameters.
    */
-  static Future<Map> post(final String path, final Map params) {
-
-    var uri = new Uri(scheme: "https", host: host, path: "${basePath}${path}", userInfo: "${apiKey}:");
-
-    log.info("Posting to API ${uri}");
-
-    return _getClient().postUrl(uri)
-      .then((HttpClientRequest request) {
-        // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
-        // string and add them to the request
-        request.headers.add("Content-Type", "application/x-www-form-urlencoded");
-        request.add(UTF8.encode(encodeMap(params)));
-        return request.close();
-      })
-      .then((HttpClientResponse response) {
-        // TODO: Proper error handling
-        // https://stripe.com/docs/api/curl#errors
-
-        return response.transform(UTF8.decoder).toList().then((data) {
-          return data.join('');
-        });
-      })
-      .then((String body) {
-        return JSON.decode(body);
-      });
-  }
+  static Future<Map> create(final String path, final Map params) => _request("POST", "${basePath}${path}", postData: params);
 
   /**
    * Makes a delete request to the Stripe API
    */
-  static Future<Map> delete(final String path, final String id) {
+  static Future<Map> delete(final String path, final String id) => _request("DELETE", "${basePath}${path}/${id}");
 
-    var uri = new Uri(scheme: "https", host: host, path: "${basePath}${path}/${id}", userInfo: "${apiKey}:");
+  /**
+   * Makes a get request to the Stripe API
+   */
+  static Future<Map> retrieve(final String path, final String id) => _request("GET", "${basePath}${path}/${id}");
 
-    log.info("Posting to API ${uri}");
 
-    return _getClient().openUrl("DELETE", uri)
+  static Future<Map> _request(final String method, final String path, { final Map postData }) {
+    var uri = new Uri(scheme: "https", host: host, path: path, userInfo: "${apiKey}:");
+
+    log.info("Making ${method} request to API ${uri}");
+
+
+    var responseStatusCode;
+
+    return _getClient().openUrl(method, uri)
       .then((HttpClientRequest request) {
+
+        if (postData != null) {
+          // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
+          // string and add them to the request
+          var encodedData = UTF8.encode(encodeMap(postData));
+          request.headers.add("Content-Type", "application/x-www-form-urlencoded");
+          request.headers.add("Content-Length", encodedData.length);
+          request.add(encodedData);
+        }
         return request.close();
       })
       .then((HttpClientResponse response) {
-        // TODO: Proper error handling
-        // https://stripe.com/docs/api/curl#errors
+        responseStatusCode = response.statusCode;
 
-        return response.transform(UTF8.decoder).toList().then((data) {
-          return data.join('');
-        });
+        return response.transform(UTF8.decoder).toList().then((data) => data.join(''));
       })
       .then((String body) {
-        return JSON.decode(body);
+        var map;
+
+        try {
+          map = JSON.decode(body);
+        } on Error {
+          throw new InvalidRequestErrorException("The JSON returned was unparsable (${body}).");
+        }
+
+
+
+        if (responseStatusCode != 200) {
+          if (map["error"] == null) {
+            throw new InvalidRequestErrorException("The status code returned was ${responseStatusCode} but no error was provided.");
+          }
+          Map error = map["error"];
+          switch(error["type"]) {
+            case "invalid_request_error":
+              throw new InvalidRequestErrorException(error["message"]);
+              break;
+            case "api_error":
+              throw new ApiErrorException(error["message"]);
+              break;
+            case "card_error":
+              throw new CardErrorException(error["message"], error["code"], error["param"]);
+              break;
+            default:
+              throw new InvalidRequestErrorException("The status code returned was ${responseStatusCode} but no error type was provided.");
+          }
+        }
+        return map;
       });
   }
 
