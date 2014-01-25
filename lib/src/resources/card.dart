@@ -20,7 +20,7 @@ class Card extends Resource {
   String cvcCheck;
   String fingerprint;
 
-  Card.fromJson(Map map) : super.fromMap(map) {
+  Card.fromMap(Map map) : super.fromMap(map) {
 
   }
 

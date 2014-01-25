@@ -51,6 +51,32 @@ abstract class StripeService {
       });
   }
 
+  /**
+   * Makes a delete request to the Stripe API
+   */
+  static Future<Map> delete(final String path, final String id) {
+
+    var uri = new Uri(scheme: "https", host: host, path: "${basePath}${path}/${id}", userInfo: "${apiKey}:");
+
+    log.info("Posting to API ${uri}");
+
+    return _getClient().openUrl("DELETE", uri)
+      .then((HttpClientRequest request) {
+        return request.close();
+      })
+      .then((HttpClientResponse response) {
+        // TODO: Proper error handling
+        // https://stripe.com/docs/api/curl#errors
+
+        return response.transform(UTF8.decoder).toList().then((data) {
+          return data.join('');
+        });
+      })
+      .then((String body) {
+        return JSON.decode(body);
+      });
+  }
+
 
   /**
    * Takes a map, and returns a properly escaped Uri String.

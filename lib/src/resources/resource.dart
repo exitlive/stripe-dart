@@ -11,13 +11,12 @@ abstract class Resource {
 
   final Map _dataMap;
 
-  final String _objectName = null;
+  final String objectName = null;
 
   /// Creates this resource from a JSON string.
   Resource.fromMap(this._dataMap) {
-    assert(_objectName != null);
-    if (_dataMap["object"] != _objectName) throw new InvalidDataReceived("The data received was not for object ${_objectName}");
-    print(_dataMap);
+    assert(objectName != null);
+    if (_dataMap["object"] != objectName) throw new InvalidDataReceived("The data received was not for object ${objectName}");
   }
 
   /**

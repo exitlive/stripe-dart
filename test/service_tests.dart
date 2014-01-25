@@ -1,4 +1,4 @@
-library connection_settings_tests;
+library service_tests;
 
 import 'package:unittest/unittest.dart';
 

@@ -8,7 +8,7 @@ part of stripe;
  */
 class Customer extends ApiResource {
 
-  final String _objectName = "customer";
+  final String objectName = "customer";
 
   static String _path = "customers";
 
@@ -54,6 +54,8 @@ class Customer extends ApiResource {
 
   int get accountBalance => _dataMap["account_balance"];
 
+  String get currency => _dataMap["currency"];
+
   CustomerCardCollection get cards {
     var value;
     if ((value = _dataMap["cards"]) == null) return null;
@@ -67,5 +69,7 @@ class Customer extends ApiResource {
     return StripeService.post(Customer._path, params)
       .then((Map json) => new Customer.fromMap(json));
   }
+
+  static Future delete(String id) => StripeService.delete(Customer._path, id);
 
 }

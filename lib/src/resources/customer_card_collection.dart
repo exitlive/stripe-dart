@@ -2,12 +2,26 @@ part of stripe;
 
 class CustomerCardCollection extends ApiResource {
 
-  List<Card> data;
-  int count;
-  String url;
+  final String objectName = "list";
 
-  CustomerCardCollection.fromMap(Map json) : super.fromMap(json) {
+  List<Card> get data {
+    var value;
+    if ((value = _dataMap["data"]) == null) return null;
+    else {
+      var cards = new List<Card>();
 
+      for (var cardData in value) {
+        cards.add(new Card.fromMap(cardData));
+      }
+
+      return cards;
+    }
   }
+
+  int get count => _dataMap["count"];
+
+  String get url => _dataMap["url"];
+
+  CustomerCardCollection.fromMap(Map dataMap) : super.fromMap(dataMap);
 
 }

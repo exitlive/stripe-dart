@@ -1,3 +1,3 @@
 #!/bin/bash
 
-dart test/service_tests.dart
+dart test/all_tests.dart
