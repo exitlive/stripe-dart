@@ -1,3 +1,3 @@
 #!/bin/bash
 
-dart test/nominatim_test.dart
+dart test/service_tests.dart
