@@ -1,5 +1,7 @@
 # Stripe Dart
 
+[![Build Status](https://drone.io/github.com/enyo/stripe-dart/status.png)](https://drone.io/github.com/enyo/stripe-dart/latest)
+
 > This library is not finished yet. **Do not use.**  
 > It will be ready to go in a few weeks.
 
