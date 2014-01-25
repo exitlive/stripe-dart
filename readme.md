@@ -17,9 +17,18 @@ and written as a proper native dart library.
 ## Usage
 
 ```dart
-import "stripe" as stripe;
+import "package:stripe/stripe.dart";
 
-stripe.Customer.create({ "email": "customer@example.com" })
+main() {
+
+  StripeService.apiKey = "sk_test_BQokikJOvBiI2HlWgH4olfQ2";
+
+  Customer.create({
+    "description": "Customer for test@example.com",
+    "card": "tok_103MYx2eZvKYlo2C0sa3gS3X"
+  })
   .then((Customer customer) => print(customer))
   .catchError((e) => handleError(e));
+
+}
 ``` 
