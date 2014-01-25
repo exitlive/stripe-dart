@@ -5,6 +5,10 @@ import "dart:io";
 import "dart:convert";
 
 
+import "package:logging/logging.dart";
+
+part "src/exceptions.dart";
+
 part "src/service.dart";
 
 

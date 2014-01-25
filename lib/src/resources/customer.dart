@@ -8,27 +8,60 @@ part of stripe;
  */
 class Customer extends ApiResource {
 
+  final String _objectName = "customer";
+
   static String _path = "customers";
 
-  Customer.fromMap(Map map) : super.fromMap(map) {
-    print(map);
+
+  Customer.fromMap(Map dataMap) : super.fromMap(dataMap);
+
+  String get id => _dataMap["id"];
+
+  DateTime get created => _getDateTimeFromMap("created");
+
+  bool get livemode => _dataMap["livemode"];
+
+  bool get deleted => _dataMap["deleted"];
+
+  String get description => _dataMap["description"];
+
+  /**
+   * If you want the actual card Object, you need to load it manually like this:
+   *
+   *     Card.retrieve(customer.defaultCard)
+   */
+  String get defaultCard => _dataMap["default_card"];
+
+  String get email => _dataMap["email"];
+
+  int get trialEnd => _dataMap["trial_end"];
+
+  Discount get discount => _dataMap["discount"];
+
+  NextRecurringCharge get nextRecurringCharge {
+    var value;
+    if ((value = _dataMap["next_recurring_charge"]) == null) return null;
+    else return new NextRecurringCharge.fromMap(value);
   }
 
-  int created;
-  String id;
-  bool livemode;
-  bool deleted;
-  String description;
-  String defaultCard;
-  String email;
-  int trialEnd;
-  Discount discount;
-  NextRecurringCharge nextRecurringCharge;
-  Subscription subscription;
-  bool delinquent;
-  int accountBalance;
-  CustomerCardCollection cards;
-  Map<String, String> metadata;
+  Subscription get subscription {
+    var value;
+    if ((value = _dataMap["subscription"]) == null) return null;
+    else return new Subscription.fromMap(value);
+  }
+
+  bool get delinquent => _dataMap["delinquent"];
+
+  int get accountBalance => _dataMap["account_balance"];
+
+  CustomerCardCollection get cards {
+    var value;
+    if ((value = _dataMap["cards"]) == null) return null;
+    else return new CustomerCardCollection.fromMap(value);
+  }
+
+  Map<String, String> get metadata => _dataMap["metadata"];
+
 
   static Future<Customer> create(Map params) {
     return StripeService.post(Customer._path, params)
