@@ -1,4 +1,4 @@
-name: Stripe
+name: stripe
 version: 0.0.1
 author: Matias Meno
 description: Stripe API wrapper
