@@ -1,6 +1,8 @@
 part of stripe;
 
 class Card extends Resource {
+
+  String objectName = "card";
   int expMonth;
   int expYear;
   String last4;

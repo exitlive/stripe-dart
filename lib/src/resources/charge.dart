@@ -9,30 +9,65 @@ part of stripe;
  */
 class Charge extends Resource {
 
-  int amount;
-  int created;
-  String currency;
-  String id;
-  bool livemode;
-  bool paid;
-  bool refunded;
-  bool disputed;
-  bool captured;
-  String description;
-  String failureMessage;
-  String failureCode;
-  int amountRefunded;
-  String customer;
-  String invoice;
-  List<Refund> refunds;
-  Card card;
-  Dispute dispute;
-  String balanceTransaction;
-  Map<String, String> metadata;
+  String objectName = "charge";
 
-  Charge.fromJson(Map json) : super.fromMap(json) {
+  static String path = "charges";
 
+
+  Charge.fromMap(Map dataMap) : super.fromMap(dataMap);
+
+  String get id => _dataMap["id"];
+
+  DateTime get created => _getDateTimeFromMap("created");
+
+  bool get livemode => _dataMap["livemode"];
+
+  bool get paid => _dataMap["paid"];
+
+  int get amount => _dataMap["amount"];
+
+  String get currency => _dataMap["currency"];
+
+  bool get refunded => _dataMap["refunded"];
+
+  String get customer => _dataMap["customer"];
+
+  Card get card {
+    var value = _dataMap["card"];
+    if (value == null) return null;
+    else return new Card.fromMap(value);
   }
 
+  String get description => _dataMap["description"];
+
+  Map<String, String> get metadata => _dataMap["metadata"];
+
+  String get statement_description => _dataMap["statement_description"];
+
+  bool get disputed => _dataMap["disputed"];
+
+  bool get captured => _dataMap["captured"];
+
+  String get failureMessage => _dataMap["failureMessage"];
+
+  String get failureCode => _dataMap["failureCode"];
+
+  int get amountRefunded => _dataMap["amountRefunded"];
+
+  String get invoice => _dataMap["invoice"];
+
+  List<Refund> get refunds {
+    List refundMaps = _dataMap["refunds"];
+    assert(refundMaps != null);
+    return refundMaps.map((Map refund) => new Refund.fromMap(refund)).toList(growable: false);
+  }
+
+  Dispute get dispute {
+    var value = _dataMap["dispute"];
+    if (value == null) return null;
+    else return new Dispute.fromMap(value);
+  }
+
+  String get balanceTransaction => _dataMap["balanceTransaction"];
 
 }
