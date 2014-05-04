@@ -57,8 +57,8 @@ class Customer extends ApiResource {
   String get currency => _dataMap["currency"];
 
   CustomerCardCollection get cards {
-    var value;
-    if ((value = _dataMap["cards"]) == null) return null;
+    var value = _dataMap["cards"];
+    if (value == null) return null;
     else return new CustomerCardCollection.fromMap(value);
   }
 
