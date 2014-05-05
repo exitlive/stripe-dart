@@ -7,7 +7,8 @@ part of stripe;
  */
 class Required {
 
-  const Required();
+  final String alternative;
+  const Required({String this.alternative});
 
 }
 
