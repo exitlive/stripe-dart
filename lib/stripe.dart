@@ -11,6 +11,8 @@ part "src/exceptions.dart";
 
 part "src/service.dart";
 
+part "src/annotations.dart";
+
 
 part "src/resources/resource.dart";
 part "src/resources/api_resource.dart";

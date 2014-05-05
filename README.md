@@ -23,12 +23,15 @@ main() {
 
   StripeService.apiKey = "sk_test_BQokikJOvBiI2HlWgH4olfQ2";
 
-  Customer.create({
-    "description": "Customer for test@example.com",
-    "card": "tok_103MYx2eZvKYlo2C0sa3gS3X"
-  })
-  .then((Customer customer) => print(customer))
-  .catchError((e) => handleError(e));
+  var card = new CardCreation()
+      ..number = "123123123";
+
+  new CustomerCreation()
+      ..description = "Customer for test@example.com"
+      ..card = card
+      ..create()
+      .then((Customer customer) => print(customer))
+      .catchError((e) => handleError(e));
 
 }
 ```

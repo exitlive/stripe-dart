@@ -48,3 +48,25 @@ class Card extends Resource {
   String get fingerprint => _dataMap["fingerprint"];
 
 }
+
+
+
+
+
+
+
+/**
+ * STUB.
+ * TODO: Complete this class.
+ */
+class CardCreation extends ResourceRequest {
+
+  @required
+  set number (String number) => _setMap("number", number);
+
+  Future<Card> create() {
+    return StripeService.create(Card._path, _getMap())
+      .then((Map json) => new Card.fromMap(json));
+  }
+
+}

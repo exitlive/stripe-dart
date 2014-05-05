@@ -41,3 +41,35 @@ abstract class Resource {
   }
 
 }
+
+
+
+
+/**
+ * The base class for request resources (eg: [CustomerCreation],
+ * [CustomerUpdate], etc...)
+ */
+abstract class ResourceRequest {
+
+  /**
+   * Holds all values that have been set/changed.
+   * You should not access this map directly, but use [_setMap] and [_getMap].
+   */
+  Map<String, dynamic> _map = { };
+
+
+  _setMap(String key, dynamic value) {
+    // TODO write a better exception
+    if (_map.containsKey(key)) throw new BadRequestException("You can't set the same key twice.");
+    _map[key] = value;
+  }
+
+
+  /**
+   * Returns the [_map] and checks that all [required] fields are set.
+   *
+   * TODO check if all fields that are marked as [required] are set.
+   */
+  _getMap() => _map;
+
+}

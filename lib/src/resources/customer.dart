@@ -65,16 +65,47 @@ class Customer extends ApiResource {
   Map<String, String> get metadata => _dataMap["metadata"];
 
 
-  static Future<Customer> create(Map params) {
-    return StripeService.create(Customer._path, params)
-      .then((Map json) => new Customer.fromMap(json));
-  }
-
   static Future<Customer> retrieve(String id) {
     return StripeService.retrieve(Customer._path, id)
         .then((Map json) => new Customer.fromMap(json));
   }
 
   static Future delete(String id) => StripeService.delete(Customer._path, id);
+
+}
+
+
+/**
+ * STUB.
+ * TODO: Complete this class.
+ */
+class CustomerCreation extends ResourceRequest {
+
+  set description (String desc) => _setMap("description", desc);
+
+  set card (CardCreation card) => _setMap("card", card._getMap());
+
+  set cardId (String cardId) =>  _setMap("card", cardId);
+
+  Future<Customer> create() {
+    return StripeService.create(Customer._path, _getMap())
+      .then((Map json) => new Customer.fromMap(json));
+  }
+
+}
+
+
+/**
+ * STUB.
+ * TODO: Complete this class.
+ */
+class CustomerUpdate extends ResourceRequest {
+
+  set description (String desc) => _setMap("description", desc);
+
+  Future<Customer> update() {
+    return StripeService.create(Customer._path, _getMap())
+      .then((Map json) => new Customer.fromMap(json));
+  }
 
 }
