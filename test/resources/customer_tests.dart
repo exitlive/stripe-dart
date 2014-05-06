@@ -7,6 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+import "dart:async";
 
 var exampleObject = """
                     {
@@ -70,6 +71,38 @@ main(List<String> args) {
       expect(customer.cards.count, map["cards"]["count"]);
       expect(customer.cards.url, map["cards"]["url"]);
       expect(customer.defaultCard, equals(map["default_card"]));
+    });
+
+    test("CustomerCreation minimal", () {
+      Future future = new CustomerCreation().create();
+        future.then((Customer customer) {
+          expect(customer.id, new isInstanceOf<String>());
+        });
+        expect(future, completes);
+    });
+
+    test("CustomerCreation description", () {
+      String description = "test description";
+      Future future = (new CustomerCreation()
+              ..description = description
+              ).create();
+        future.then((Customer customer) {
+          expect(customer.id, new isInstanceOf<String>());
+          expect(customer.description, description);
+        });
+        expect(future, completes);
+    });
+
+    test("CustomerCreation email", () {
+      String email = "test description";
+      Future future = (new CustomerCreation()
+              ..email = email
+              ).create();
+        future.then((Customer customer) {
+          expect(customer.id, new isInstanceOf<String>());
+          expect(customer.email, email);
+        });
+        expect(future, completes);
     });
 
   });
