@@ -44,11 +44,11 @@ main(List<String> args) {
   group('Customer', () {
 
     setUp(() {
-      utils.setUp();
+      return utils.setUp();
     });
 
     tearDown(() {
-      utils.tearDown();
+      return utils.tearDown();
     });
 
     test("fromMap() properly popullates all values", () {
@@ -74,35 +74,62 @@ main(List<String> args) {
     });
 
     test("CustomerCreation minimal", () {
+      Customer testCustomer;
       Future future = new CustomerCreation().create();
-        future.then((Customer customer) {
-          expect(customer.id, new isInstanceOf<String>());
+      future.then((Customer customer) {
+        testCustomer = customer;
+        expect(customer.id, new isInstanceOf<String>());
+      })
+      .then((_) {
+        return Customer.all().then((CustomerCollection customers) {
+          expect(customers.data.length, 1);
+          expect(customers.data.first.id, testCustomer.id);
         });
-        expect(future, completes);
+      });
+      expect(future, completes);
     });
 
     test("CustomerCreation description", () {
+      Customer testCustomer;
       String description = "test description";
-      Future future = (new CustomerCreation()
-              ..description = description
-              ).create();
-        future.then((Customer customer) {
-          expect(customer.id, new isInstanceOf<String>());
-          expect(customer.description, description);
+      Future future = (
+        new CustomerCreation()
+                ..description = description
+      ).create();
+      future.then((Customer customer) {
+        testCustomer = customer;
+        expect(customer.id, new isInstanceOf<String>());
+        expect(customer.description, description);
+      })
+      .then((_) {
+        return Customer.all().then((CustomerCollection customers) {
+          expect(customers.data.length, 1);
+          expect(customers.data.first.id, testCustomer.id);
+          expect(customers.data.first.description, description);
         });
-        expect(future, completes);
+      });
+      expect(future, completes);
     });
 
     test("CustomerCreation email", () {
-      String email = "test description";
-      Future future = (new CustomerCreation()
-              ..email = email
-              ).create();
-        future.then((Customer customer) {
-          expect(customer.id, new isInstanceOf<String>());
-          expect(customer.email, email);
+      Customer testCustomer;
+      String email = "test@test.com";
+      Future future = (
+        new CustomerCreation()
+                ..email = email
+      ).create();
+      future.then((Customer customer) {
+        testCustomer = customer;
+        expect(customer.id, new isInstanceOf<String>());
+        expect(customer.email, email);
+      }).then((_) {
+        return Customer.all().then((CustomerCollection customers) {
+          expect(customers.data.length, 1);
+          expect(customers.data.first.id, testCustomer.id);
+          expect(customers.data.first.email, email);
         });
-        expect(future, completes);
+      });
+      expect(future, completes);
     });
 
   });
