@@ -123,7 +123,7 @@ class ChargeUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap("metadata", metadata);
 
-
+  // TODO: needs to be changed to use StripeService.update()
   Future<Charge> update() {
     return StripeService.create(Charge._path, _getMap())
           .then((Map json) => new Charge.fromMap(json));

@@ -130,6 +130,7 @@ class CustomerUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap("metadata", metadata);
 
+  // TODO: needs to be changed to use StripeService.update()
   Future<Customer> update() {
     return StripeService.create(Customer._path, _getMap())
       .then((Map json) => new Customer.fromMap(json));

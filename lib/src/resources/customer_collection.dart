@@ -1,5 +1,6 @@
 part of stripe;
 
+// TODO: Collection should be a generic type
 class CustomerCollection extends ApiResource {
 
   final String objectName = "list";

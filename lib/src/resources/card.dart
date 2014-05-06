@@ -135,6 +135,7 @@ class CardUpdate extends ResourceRequest {
 
   set addressCountry (String addressCountry) => _setMap("address_country", addressCountry);
 
+  // TODO: needs to be changed to use StripeService.update()
   Future<Card> update() {
     return StripeService.create(Card._path, _getMap())
           .then((Map json) => new Card.fromMap(json));
