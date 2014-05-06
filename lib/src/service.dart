@@ -56,6 +56,7 @@ abstract class StripeService {
           // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
           // string and add them to the request
           var encodedData = UTF8.encode(encodeMap(postData));
+
           request.headers.add("Content-Type", "application/x-www-form-urlencoded");
           request.headers.add("Content-Length", encodedData.length);
           request.add(encodedData);
@@ -108,17 +109,33 @@ abstract class StripeService {
    * TODO: needs improvement
    */
   static String encodeMap(final Map data) {
-    return data.keys.map(
-        (key) {
-          if (data[key] is String) {
-            return "${Uri.encodeComponent(key)}=${Uri.encodeComponent(data[key])}";
-          } else {
-            return "${Uri.encodeComponent(key)}=${data[key]}";
-          }
+
+    List<String> output = [];
+
+    for (String k in data.keys) {
+
+      if (data[k] is Map) {
+        var hasProps = false;
+        for (String kk in data[k].keys) {
+
+          hasProps = true;
+
+          output.add(Uri.encodeComponent("${k}[${kk}]") + "=" + Uri.encodeComponent(data[k][kk].toString()));
+
         }
-      ).join("&");
+        if (!hasProps) {
+          output.add(Uri.encodeComponent(k) + "=" + Uri.encodeComponent(""));
+        }
+      } else if (data[k] is List) {
+        for (String v in data[k]) {
+          output.add(Uri.encodeComponent(k + '[]') + '=' + Uri.encodeComponent(v));
+        }
+      } else {
+        output.add(Uri.encodeComponent(k) + '=' + Uri.encodeComponent(data[k]));
+      }
+    }
+
+    return output.join('&');
+
   }
-
-
-
 }
