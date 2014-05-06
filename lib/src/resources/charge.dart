@@ -11,7 +11,7 @@ class Charge extends Resource {
 
   String objectName = "charge";
 
-  static String path = "charges";
+  static String _path = "charges";
 
 
   Charge.fromMap(Map dataMap) : super.fromMap(dataMap);
@@ -69,5 +69,64 @@ class Charge extends Resource {
   }
 
   String get balanceTransaction => _dataMap["balanceTransaction"];
+
+  static Future<Charge> retrieve(String id) {
+    return StripeService.retrieve(Charge._path, id)
+        .then((Map json) => new Charge.fromMap(json));
+  }
+
+}
+
+
+
+/**
+ * Used to create [Charge]
+ */
+class ChargeCreation extends ResourceRequest {
+
+  @required
+  set amount (int amount) => _setMap("amount", amount);
+
+  @required
+  set currency (String currency) => _setMap("currency", currency);
+
+  @Required(alternative: "card")
+  set customer (String customer) => _setMap("customer", customer);
+
+  @Required(alternative: "customer")
+  set card (CardCreation card) => _setMap("card", card._getMap());
+
+  set description (String description) => _setMap("description", description);
+
+  set metadata (Map metadata) => _setMap("metadata", metadata);
+
+  set capture (bool capture) => _setMap("capture", capture);
+
+  set statementDescription (String statementDescription) => _setMap("statement_description", statementDescription);
+
+  set applicationFee (int applicationFee) => _setMap("application_fee", applicationFee);
+
+
+  Future<Card> create() {
+    return StripeService.create(Card._path, _getMap())
+      .then((Map json) => new Card.fromMap(json));
+  }
+
+}
+
+/**
+ * Used to update a [Charge]
+ */
+class ChargeUpdate extends ResourceRequest {
+
+  set description (int description) => _setMap("description", description);
+
+  set metadata (Map metadata) => _setMap("metadata", metadata);
+
+  // TODO: needs to be changed to use StripeService.update()
+  Future<Charge> update() {
+    return StripeService.create(Charge._path, _getMap())
+          .then((Map json) => new Charge.fromMap(json));
+  }
 
 }

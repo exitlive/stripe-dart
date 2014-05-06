@@ -5,6 +5,7 @@ import "dart:convert";
 import 'package:unittest/unittest.dart';
 
 import '../../lib/stripe.dart';
+import '../utils.dart' as utils;
 
 var exampleObject = """
                     {
@@ -55,10 +56,19 @@ var exampleObject = """
                     }""";
 
 
-main() {
+main(List<String> args) {
+
+  utils.setApiKeyFromArgs(args);
 
   group('Charge', () {
 
+    setUp(() {
+      utils.setUp();
+    });
+
+    tearDown(() {
+      utils.tearDown();
+    });
 
     test("fromMap() properly popullates all values", () {
       var map = JSON.decode(exampleObject);

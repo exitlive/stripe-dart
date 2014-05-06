@@ -32,10 +32,14 @@ abstract class StripeService {
   static Future<Map> delete(final String path, final String id) => _request("DELETE", "${basePath}${path}/${id}");
 
   /**
-   * Makes a get request to the Stripe API
+   * Makes a get request to the Stripe API for a single resource item
    */
   static Future<Map> retrieve(final String path, final String id) => _request("GET", "${basePath}${path}/${id}");
 
+  /**
+   * Makes a request to the Stripe API for all items of a resource
+   */
+  static Future<Map> all(final String path, final Map params) => _request("GET", "${basePath}${path}", postData: params);
 
   static Future<Map> _request(final String method, final String path, { final Map postData }) {
     var uri = new Uri(scheme: "https", host: host, path: path, userInfo: "${apiKey}:");
@@ -100,8 +104,21 @@ abstract class StripeService {
 
   /**
    * Takes a map, and returns a properly escaped Uri String.
+   *
+   * TODO: needs improvement
    */
-  static String encodeMap(final Map data) => data.keys.map((key) => "${Uri.encodeComponent(key)}=${Uri.encodeComponent(data[key])}").join("&");
+  static String encodeMap(final Map data) {
+    return data.keys.map(
+        (key) {
+          if (data[key] is String) {
+            return "${Uri.encodeComponent(key)}=${Uri.encodeComponent(data[key])}";
+          } else {
+            return "${Uri.encodeComponent(key)}=${data[key]}";
+          }
+        }
+      ).join("&");
+  }
+
 
 
 }

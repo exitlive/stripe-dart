@@ -70,22 +70,38 @@ class Customer extends ApiResource {
         .then((Map json) => new Customer.fromMap(json));
   }
 
+  static Future<CustomerCollection> all({Map<String, dynamic> params: const {}}) {
+    return StripeService.all(Customer._path, params)
+        .then((Map json) => new CustomerCollection.fromMap(json));
+  }
+
   static Future delete(String id) => StripeService.delete(Customer._path, id);
 
 }
 
 
 /**
- * STUB.
- * TODO: Complete this class.
+ * Used to create a new [Customer]
  */
 class CustomerCreation extends ResourceRequest {
 
-  set description (String desc) => _setMap("description", desc);
+  set accountBalance (int accountBalance) => _setMap("account_balance", accountBalance);
 
   set card (CardCreation card) => _setMap("card", card._getMap());
 
-  set cardId (String cardId) =>  _setMap("card", cardId);
+  set coupon (String coupon) => _setMap("coupon", coupon);
+
+  set description (String description) => _setMap("description", description);
+
+  set email (String email) => _setMap("email", email);
+
+  set metadata (Map metadata) => _setMap("metadata", metadata);
+
+  set plan (String plan) => _setMap("plan", plan);
+
+  set quantity (int quantity) => _setMap("quantity", quantity);
+
+  set trialEnd (int trialEnd) => _setMap("trial_end", trialEnd);
 
   Future<Customer> create() {
     return StripeService.create(Customer._path, _getMap())
@@ -96,13 +112,25 @@ class CustomerCreation extends ResourceRequest {
 
 
 /**
- * STUB.
- * TODO: Complete this class.
+ * Used to update an existing [Customer]
  */
 class CustomerUpdate extends ResourceRequest {
 
-  set description (String desc) => _setMap("description", desc);
+  set accountBalance (int accountBalance) => _setMap("account_balance", accountBalance);
 
+  set card (CardCreation card) => _setMap("card", card._getMap());
+
+  set coupon (String coupon) => _setMap("coupon", coupon);
+
+  set defaultCard (String defaultCard) => _setMap("default_card", defaultCard);
+
+  set description (String description) => _setMap("description", description);
+
+  set email (String email) => _setMap("email", email);
+
+  set metadata (Map metadata) => _setMap("metadata", metadata);
+
+  // TODO: needs to be changed to use StripeService.update()
   Future<Customer> update() {
     return StripeService.create(Customer._path, _getMap())
       .then((Map json) => new Customer.fromMap(json));
