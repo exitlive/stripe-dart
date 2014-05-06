@@ -21,6 +21,7 @@ part "src/resources/card.dart";
 part "src/resources/charge.dart";
 part "src/resources/coupon.dart";
 part "src/resources/customer.dart";
+part "src/resources/customer_collection.dart";
 part "src/resources/customer_card_collection.dart";
 part "src/resources/discount.dart";
 part "src/resources/dispute.dart";

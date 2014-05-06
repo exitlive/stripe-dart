@@ -70,6 +70,11 @@ class Customer extends ApiResource {
         .then((Map json) => new Customer.fromMap(json));
   }
 
+  static Future<CustomerCollection> all({Map<String, dynamic> params: const {}}) {
+    return StripeService.all(Customer._path, params)
+        .then((Map json) => new CustomerCollection.fromMap(json));
+  }
+
   static Future delete(String id) => StripeService.delete(Customer._path, id);
 
 }
