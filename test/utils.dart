@@ -8,3 +8,11 @@ setApiKeyFromArgs(List<String> args) {
   }
   StripeService.apiKey = args.first;
 }
+
+setUp() {
+  print("Test Setup");
+}
+
+tearDown() {
+  print("Test Teardown");
+}

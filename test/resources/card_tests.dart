@@ -37,6 +37,13 @@ main(List<String> args) {
 
   group('Card', () {
 
+    setUp(() {
+      utils.setUp();
+    });
+
+    tearDown(() {
+      utils.tearDown();
+    });
 
     test("fromMap() properly popullates all values", () {
       var map = JSON.decode(exampleObject);

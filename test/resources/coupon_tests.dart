@@ -33,6 +33,13 @@ main(List<String> args) {
 
   group('Coupon', () {
 
+    setUp(() {
+      utils.setUp();
+    });
+
+    tearDown(() {
+      utils.tearDown();
+    });
 
     test("fromMap() properly popullates all values", () {
       var map = JSON.decode(exampleObject);
