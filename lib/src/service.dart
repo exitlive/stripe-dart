@@ -124,11 +124,11 @@ abstract class StripeService {
 
         }
         if (!hasProps) {
-          output.add(Uri.encodeComponent(k) + "=" + Uri.encodeComponent(""));
+          output.add(Uri.encodeComponent(k) + "=");
         }
       } else if (data[k] is List) {
         for (String v in data[k]) {
-          output.add(Uri.encodeComponent(k + '[]') + '=' + Uri.encodeComponent(v));
+          output.add(Uri.encodeComponent("${k}[]") + '=' + Uri.encodeComponent(v));
         }
       } else {
         output.add(Uri.encodeComponent(k) + '=' + Uri.encodeComponent(data[k]));
