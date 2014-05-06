@@ -24,24 +24,24 @@ abstract class StripeService {
   /**
    * Makes a post request to the Stripe API to given path and parameters.
    */
-  static Future<Map> create(final String path, final Map params) => _request("POST", "${basePath}${path}", postData: params);
+  static Future<Map> create(final String path, final Map params) => request("POST", "${basePath}${path}", postData: params);
 
   /**
    * Makes a delete request to the Stripe API
    */
-  static Future<Map> delete(final String path, final String id) => _request("DELETE", "${basePath}${path}/${id}");
+  static Future<Map> delete(final String path, final String id) => request("DELETE", "${basePath}${path}/${id}");
 
   /**
    * Makes a get request to the Stripe API for a single resource item
    */
-  static Future<Map> retrieve(final String path, final String id) => _request("GET", "${basePath}${path}/${id}");
+  static Future<Map> retrieve(final String path, final String id) => request("GET", "${basePath}${path}/${id}");
 
   /**
    * Makes a request to the Stripe API for all items of a resource
    */
-  static Future<Map> all(final String path, final Map params) => _request("GET", "${basePath}${path}", postData: params);
+  static Future<Map> list(final String path, final Map params) => request("GET", "${basePath}${path}", postData: params);
 
-  static Future<Map> _request(final String method, final String path, { final Map postData }) {
+  static Future<Map> request(final String method, final String path, { final Map postData }) {
     var uri = new Uri(scheme: "https", host: host, path: path, userInfo: "${apiKey}:");
 
     log.info("Making ${method} request to API ${uri}");
