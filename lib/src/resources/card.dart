@@ -55,10 +55,6 @@ class Card extends Resource {
 
 
 
-
-
-
-
 /**
  * Used to create a [Card]
  */
@@ -89,8 +85,8 @@ class CardCreation extends ResourceRequest {
 
   set addressCountry (String addressCountry) => _setMap("address_country", addressCountry);
 
-  Future<Card> create() {
-    return StripeService.create(Card._path, {"card": _getMap()})
+  Future<Card> create(String customerId) {
+    return StripeService.create("${Customer._path}/${customerId}/${Card._path}", {"card": _getMap()})
       .then((Map json) => new Card.fromMap(json));
   }
 
@@ -104,8 +100,8 @@ class CardCreationWithToken extends ResourceRequest {
   @required
   set token (String token) => _setMap("card", token);
 
-  Future<Card> create() {
-    return StripeService.create(Card._path, _getMap())
+  Future<Card> create(String customerId) {
+    return StripeService.create("${Customer._path}/${customerId}/${Card._path}", _getMap())
       .then((Map json) => new Card.fromMap(json));
   }
 
