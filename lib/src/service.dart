@@ -100,8 +100,21 @@ abstract class StripeService {
 
   /**
    * Takes a map, and returns a properly escaped Uri String.
+   *
+   * TODO: needs improvement
    */
-  static String encodeMap(final Map data) => data.keys.map((key) => "${Uri.encodeComponent(key)}=${Uri.encodeComponent(data[key])}").join("&");
+  static String encodeMap(final Map data) {
+    return data.keys.map(
+        (key) {
+          if (data[key] is String) {
+            return "${Uri.encodeComponent(key)}=${Uri.encodeComponent(data[key])}";
+          } else {
+            return "${Uri.encodeComponent(key)}=${data[key]}";
+          }
+        }
+      ).join("&");
+  }
+
 
 
 }
