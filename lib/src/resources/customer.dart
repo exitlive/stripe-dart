@@ -71,7 +71,7 @@ class Customer extends ApiResource {
   }
 
   static Future<CustomerCollection> all({Map<String, dynamic> params: const {}}) {
-    return StripeService.all(Customer._path, params)
+    return StripeService.list(Customer._path, params)
         .then((Map json) => new CustomerCollection.fromMap(json));
   }
 

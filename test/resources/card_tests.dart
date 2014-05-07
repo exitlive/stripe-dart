@@ -1,6 +1,7 @@
 library card_tests;
 
 import "dart:convert";
+import "dart:async";
 
 import 'package:unittest/unittest.dart';
 
@@ -38,11 +39,11 @@ main(List<String> args) {
   group('Card', () {
 
     setUp(() {
-      utils.setUp();
+      return utils.setUp();
     });
 
     tearDown(() {
-      utils.tearDown();
+      return utils.tearDown();
     });
 
     test("fromMap() properly popullates all values", () {
@@ -68,6 +69,39 @@ main(List<String> args) {
       expect(card.addressZipCheck, equals(map["address_zip_check"]));
 
     });
+
+    test("CardCreation minimal", () {
+
+      Customer testCustomer;
+      Card testCard;
+      String number = "4242424242424242";
+      int expMonth = 12;
+      int expYear = 2014;
+      Future future = new CustomerCreation().create();
+      future.then((Customer customer) {
+        testCustomer = customer;
+        expect(customer.id, new isInstanceOf<String>());
+      })
+      .then((_) {
+        return (
+            new CardCreation()
+                    ..number = number
+                    ..expMonth = expMonth
+                    ..expYear = expYear
+            ).create(testCustomer.id);
+      })
+      .then((Card card) {
+        testCard = card;
+        expect(card.id, new isInstanceOf<String>());
+        expect(card.last4, number.substring(number.length - 4));
+        expect(card.expMonth, expMonth);
+        expect(card.expYear, expYear);
+
+      });
+      expect(future, completes);
+    });
+
+
   });
 
 }
