@@ -7,6 +7,7 @@ import "resources/card_tests.dart" as cardTests;
 import "resources/charge_tests.dart" as chargeTests;
 import "resources/coupon_tests.dart" as couponTests;
 import "resources/customer_tests.dart" as customerTests;
+import "resources/plan_tests.dart" as planTests;
 
 
 main(List<String> args) {
@@ -20,5 +21,6 @@ main(List<String> args) {
   chargeTests.main(args);
   couponTests.main(args);
   customerTests.main(args);
+  planTests.main(args);
 
 }

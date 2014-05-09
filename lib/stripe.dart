@@ -15,6 +15,7 @@ part "src/annotations.dart";
 
 
 part "src/resources/resource.dart";
+part "src/resources/resource_collection.dart";
 part "src/resources/api_resource.dart";
 
 part "src/resources/card.dart";
@@ -24,6 +25,8 @@ part "src/resources/customer.dart";
 part "src/resources/customer_collection.dart";
 part "src/resources/customer_card_collection.dart";
 part "src/resources/discount.dart";
+part "src/resources/plan.dart";
+part "src/resources/plan_collection.dart";
 part "src/resources/dispute.dart";
 part "src/resources/next_recurring_charge.dart";
 part "src/resources/refund.dart";

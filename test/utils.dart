@@ -22,11 +22,31 @@ Future setUp() {
 
 Future tearDown() {
   print("Test Teardown");
+  List<Future> processQueue = [];
+  processQueue.add(deleteAllCustomers());
+  processQueue.add(deleteAllPlans());
+  return Future.wait(processQueue);
+}
+
+Future deleteAllCustomers() {
   return Customer.all()
     .then((CustomerCollection customers) {
       List<Future> processQueue = [];
       for (Customer customer in customers.data) {
         processQueue.add(Customer.delete(customer.id).then((_) => print("Delete customer: ${customer.id}")));
+      }
+      return processQueue;
+    }).then((List<Future> futures) {
+      return Future.wait(futures);
+    });
+}
+
+Future deleteAllPlans() {
+  return Plan.all()
+    .then((PlanCollection plans) {
+      List<Future> processQueue = [];
+      for (Plan plan in plans.data) {
+        processQueue.add(Plan.delete(plan.id).then((_) => print("Delete plan: ${plan.id}")));
       }
       return processQueue;
     }).then((List<Future> futures) {
