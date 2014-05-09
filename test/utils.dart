@@ -1,11 +1,17 @@
 library test_utils;
 
 import "dart:async";
+import "dart:io";
 
 import "../lib/stripe.dart";
 
 
 setApiKeyFromArgs(List<String> args) {
+  if (args.length < 1) {
+    print("Error. Most tests can not execute without a Stripe API key.");
+    print("Provide your stripe API key as the first command line argument!");
+    exit(2);
+  }
   StripeService.apiKey = args.first;
 }
 
