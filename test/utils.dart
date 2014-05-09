@@ -17,10 +17,13 @@ Future setUp() {
 Future tearDown() {
   print("Test Teardown");
   return Customer.all()
-  .then((CustomerCollection customers) {
-
-    for (Customer customer in customers.data) {
-      Customer.delete(customer.id).then((_) => print("Delete customer: ${customer.id}"));
-    }
-  });
+    .then((CustomerCollection customers) {
+      List<Future> processQueue = [];
+      for (Customer customer in customers.data) {
+        processQueue.add(Customer.delete(customer.id).then((_) => print("Delete customer: ${customer.id}")));
+      }
+      return processQueue;
+    }).then((List<Future> futures) {
+      return Future.wait(futures);
+    });
 }
