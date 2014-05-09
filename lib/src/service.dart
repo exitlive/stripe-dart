@@ -29,12 +29,12 @@ abstract class StripeService {
   /**
    * Makes a delete request to the Stripe API
    */
-  static Future<Map> delete(final String path, final String id) => request("DELETE", "${basePath}${path}/${id}");
+  static Future<Map> delete(final String path, final String id) => request("DELETE", "${basePath}${path}/${Uri.encodeComponent(id)}");
 
   /**
    * Makes a get request to the Stripe API for a single resource item
    */
-  static Future<Map> retrieve(final String path, final String id) => request("GET", "${basePath}${path}/${id}");
+  static Future<Map> retrieve(final String path, final String id) => request("GET", "${basePath}${path}/${Uri.encodeComponent(id)}");
 
   /**
    * Makes a request to the Stripe API for all items of a resource
@@ -130,6 +130,8 @@ abstract class StripeService {
         for (String v in data[k]) {
           output.add(Uri.encodeComponent("${k}[]") + "=" + Uri.encodeComponent(v));
         }
+      } else if (data[k] is int) {
+        output.add(Uri.encodeComponent(k) + "=" + data[k].toString());
       } else {
         output.add(Uri.encodeComponent(k) + "=" + Uri.encodeComponent(data[k]));
       }
