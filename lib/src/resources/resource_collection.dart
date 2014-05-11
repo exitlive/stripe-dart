@@ -1,5 +1,9 @@
 part of stripe;
 
+/*
+ * An abstract collection class that helps retrieving multiple elements of the
+ * same resource.
+ */
 abstract class ResourceCollection<T> extends ApiResource {
 
   final String objectName = "list";
