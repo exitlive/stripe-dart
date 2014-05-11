@@ -1,6 +1,7 @@
 library coupon_tests;
 
 import "dart:convert";
+import "dart:async";
 
 import 'package:unittest/unittest.dart';
 
@@ -63,4 +64,66 @@ main(List<String> args) {
     });
   });
 
+
+  test("CouponCreation minimal", () {
+
+    // Coupon fields
+    String testDuration = "forever";
+    int testPercentOff = 5;
+
+    Future future = (
+        new CouponCreation()
+            ..duration = testDuration
+            ..percentOff = testPercentOff
+        ).create();
+
+    future.then((Coupon coupon) {
+      expect(coupon.id, new isInstanceOf<String>());
+      expect(coupon.duration, testDuration);
+      expect(coupon.percentOff, testPercentOff);
+    });
+
+    expect(future, completes);
+
+  });
+
+
+  test("CouponCreation full", () {
+
+    // Coupon fields
+    String testId = "test id";
+    String testDuration = "repeating";
+    int testAmountOff = 10;
+    String testCurrency = "usd";
+    int testDurationInMoths = 12;
+    int testMaxRedemptions = 3;
+    Map testMetadata = {"foo": "bar"};
+    int testRedeemBy = 1451520000;
+
+    Future future = (
+        new CouponCreation()
+            ..id = testId
+            ..duration = testDuration
+            ..amountOff = testAmountOff
+            ..currency = testCurrency
+            ..durationInMonths = testDurationInMoths
+            ..maxRedemptions = testMaxRedemptions
+            ..metadata = testMetadata
+            ..redeemBy = testRedeemBy
+        ).create();
+
+    future.then((Coupon coupon) {
+      expect(coupon.id, testId);
+      expect(coupon.duration, testDuration);
+      expect(coupon.amountOff, testAmountOff);
+      expect(coupon.currency, testCurrency);
+      expect(coupon.durationInMonths, testDurationInMoths);
+      expect(coupon.maxRedemptions, testMaxRedemptions);
+      expect(coupon.metadata, testMetadata);
+      expect(coupon.redeemBy, testRedeemBy);
+    });
+
+    expect(future, completes);
+
+  });
 }
