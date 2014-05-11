@@ -74,26 +74,16 @@ main(List<String> args) {
     });
 
     test("CustomerCreation minimal", () {
-      Customer testCustomer;
       Future future = new CustomerCreation().create();
       future.then((Customer customer) {
-        testCustomer = customer;
         expect(customer.id, new isInstanceOf<String>());
-      })
-      .then((_) {
-        return Customer.all().then((CustomerCollection customers) {
-          expect(customers.data.length, 1);
-          expect(customers.data.first.id, testCustomer.id);
-        });
       });
       expect(future, completes);
     });
 
-    test("CustomerCreation all", () {
-      // Customer fields
-      Customer testCustomer;
-      int testAccountBalance = 100001;
-      String testDescription = "test description";
+
+    // TODO: add plan, quantity and trialEnd
+    test("CustomerCreation full", () {
 
       // Card fields
       String testNumber = "4242424242424242";
@@ -105,7 +95,6 @@ main(List<String> args) {
       String testAddressCity = "Laguna Beach";
       String testAddressZip = "92651";
       String testAddressCountry = "USA";
-
 
       CardCreation testCard = new CardCreation()
           ..number = testNumber
@@ -119,18 +108,55 @@ main(List<String> args) {
           ..addressZip = testAddressZip
           ..addressCountry = testAddressCountry;
 
+      // Coupon fields
+      String testId = "test id";
+      String testDuration = "repeating";
+      int testAmountOff = 10;
+      String testCurrency = "usd";
+      int testDurationInMoths = 12;
+      int testMaxRedemptions = 3;
+      Map testMetadata = {"foo": "bar"};
+      int testRedeemBy = 1451520000;
 
-      Future future = (
-        new CustomerCreation()
-            ..description = testDescription
-            ..accountBalance = testAccountBalance
-            ..card = testCard
-      ).create();
-      future.then((Customer customer) {
-        testCustomer = customer;
+      Coupon testCoupon;
+      CouponCreation testCouponCreation = new CouponCreation()
+          ..id = testId
+          ..duration = testDuration
+          ..amountOff = testAmountOff
+          ..currency = testCurrency
+          ..durationInMonths = testDurationInMoths
+          ..maxRedemptions = testMaxRedemptions
+          ..metadata = testMetadata
+          ..redeemBy = testRedeemBy;
+
+      // Customer fields
+      int testAccountBalance = 100001;
+      String testDescription = "test description";
+      String testEmail = "test@test.com";
+      // testMetatdata already defined in the Coupon fields
+      // Map testMetadata = {"foo": "bar"};
+
+      CustomerCreation testCustomerCreation = new CustomerCreation()
+          ..accountBalance = testAccountBalance
+          ..card = testCard
+          ..coupon = testId
+          ..description = testDescription
+          ..email = testEmail
+          ..metadata = testMetadata;
+
+      Future future = testCouponCreation.create()
+
+      .then((Coupon coupon) {
+        testCoupon = coupon;
+        return testCustomerCreation.create();
+      })
+
+      .then((Customer customer) {
+
         expect(customer.id, new isInstanceOf<String>());
-        expect(customer.description, testDescription);
         expect(customer.accountBalance, testAccountBalance);
+
+        // card tests
         expect(customer.cards.data.first.last4, testNumber.substring(testNumber.length - 4));
         expect(customer.cards.data.first.expMonth, testExpMonth);
         expect(customer.cards.data.first.expYear, testExpYear);
@@ -144,16 +170,27 @@ main(List<String> args) {
         expect(customer.cards.data.first.addressZipCheck, "pass");
         expect(customer.cards.data.first.cvcCheck, "pass");
 
-      })
-      .then((_) {
-        return Customer.all().then((CustomerCollection customers) {
-          expect(customers.data.length, 1);
-          expect(customers.data.first.id, testCustomer.id);
-        });
+        // coupon tests
+        expect(customer.discount.coupon.id, testId);
+        expect(customer.discount.coupon.duration, testDuration);
+        expect(customer.discount.coupon.amountOff, testAmountOff);
+        expect(customer.discount.coupon.currency, testCurrency);
+        expect(customer.discount.coupon.durationInMonths, testDurationInMoths);
+        expect(customer.discount.coupon.maxRedemptions, testMaxRedemptions);
+        expect(customer.discount.coupon.metadata, testMetadata);
+        expect(customer.discount.coupon.redeemBy, testRedeemBy);
+        expect(customer.discount.start.runtimeType, int);
+        expect(customer.discount.end.runtimeType, int);
+        expect(customer.discount.subscription, null);
+        expect(customer.discount.customer, customer.id);
+
+        expect(customer.description, testDescription);
+        expect(customer.email, testEmail);
+        expect(customer.metadata, testMetadata);
+
       });
+
       expect(future, completes);
     });
-
   });
-
 }

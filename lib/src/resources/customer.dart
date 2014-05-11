@@ -49,7 +49,11 @@ class Customer extends ApiResource {
   String get description => _dataMap["description"];
 
   /// Describes the current discount active on the customer, if there is one.
-  Discount get discount => _dataMap["discount"];
+  Discount get discount {
+    var value = _dataMap["discount"];
+    if (value == null) return null;
+    else return new Discount.fromMap(value);
+  }
 
   String get email => _dataMap["email"];
 
