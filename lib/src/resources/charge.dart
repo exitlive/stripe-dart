@@ -90,10 +90,8 @@ class ChargeCreation extends ResourceRequest {
   @required
   set currency (String currency) => _setMap("currency", currency);
 
-  @Required(alternative: "card")
   set customer (String customer) => _setMap("customer", customer);
 
-  @Required(alternative: "customer")
   set card (CardCreation card) => _setMap("card", card._getMap());
 
   set description (String description) => _setMap("description", description);
