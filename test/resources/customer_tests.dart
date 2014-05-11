@@ -89,44 +89,66 @@ main(List<String> args) {
       expect(future, completes);
     });
 
-    test("CustomerCreation description", () {
+    test("CustomerCreation all", () {
+      // Customer fields
       Customer testCustomer;
-      String description = "test description";
+      int testAccountBalance = 100001;
+      String testDescription = "test description";
+
+      // Card fields
+      String testNumber = "4242424242424242";
+      int testExpMonth = 12;
+      int testExpYear = 2015;
+      String testName = "Mike Rotch";
+      String testAddressLine1 = "Addresslinestreet 12/42A";
+      String testAddressLine2 = "additional address line";
+      String testAddressCity = "Laguna Beach";
+      String testAddressZip = "92651";
+      String testAddressCountry = "USA";
+
+
+      CardCreation testCard = new CardCreation()
+          ..number = testNumber
+          ..expMonth = testExpMonth
+          ..expYear = testExpYear
+          ..cvc = 123 // this value can not be tested
+          ..name = testName
+          ..addressLine1 = testAddressLine1
+          ..addressLine2 = testAddressLine2
+          ..addressCity = testAddressCity
+          ..addressZip = testAddressZip
+          ..addressCountry = testAddressCountry;
+
+
       Future future = (
         new CustomerCreation()
-                ..description = description
+            ..description = testDescription
+            ..accountBalance = testAccountBalance
+            ..card = testCard
       ).create();
       future.then((Customer customer) {
         testCustomer = customer;
         expect(customer.id, new isInstanceOf<String>());
-        expect(customer.description, description);
+        expect(customer.description, testDescription);
+        expect(customer.accountBalance, testAccountBalance);
+        expect(customer.cards.data.first.last4, testNumber.substring(testNumber.length - 4));
+        expect(customer.cards.data.first.expMonth, testExpMonth);
+        expect(customer.cards.data.first.expYear, testExpYear);
+        expect(customer.cards.data.first.name, testName);
+        expect(customer.cards.data.first.addressLine1, testAddressLine1);
+        expect(customer.cards.data.first.addressLine2, testAddressLine2);
+        expect(customer.cards.data.first.addressCity, testAddressCity);
+        expect(customer.cards.data.first.addressZip, testAddressZip);
+        expect(customer.cards.data.first.addressCountry, testAddressCountry);
+        expect(customer.cards.data.first.addressLine1Check, "pass");
+        expect(customer.cards.data.first.addressZipCheck, "pass");
+        expect(customer.cards.data.first.cvcCheck, "pass");
+
       })
       .then((_) {
         return Customer.all().then((CustomerCollection customers) {
           expect(customers.data.length, 1);
           expect(customers.data.first.id, testCustomer.id);
-          expect(customers.data.first.description, description);
-        });
-      });
-      expect(future, completes);
-    });
-
-    test("CustomerCreation email", () {
-      Customer testCustomer;
-      String email = "test@test.com";
-      Future future = (
-        new CustomerCreation()
-                ..email = email
-      ).create();
-      future.then((Customer customer) {
-        testCustomer = customer;
-        expect(customer.id, new isInstanceOf<String>());
-        expect(customer.email, email);
-      }).then((_) {
-        return Customer.all().then((CustomerCollection customers) {
-          expect(customers.data.length, 1);
-          expect(customers.data.first.id, testCustomer.id);
-          expect(customers.data.first.email, email);
         });
       });
       expect(future, completes);
