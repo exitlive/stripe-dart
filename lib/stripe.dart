@@ -24,7 +24,7 @@ part "src/resources/coupon.dart";
 part "src/resources/coupon_collection.dart";
 part "src/resources/customer.dart";
 part "src/resources/customer_collection.dart";
-part "src/resources/customer_card_collection.dart";
+part "src/resources/card_collection.dart";
 part "src/resources/discount.dart";
 part "src/resources/plan.dart";
 part "src/resources/plan_collection.dart";
