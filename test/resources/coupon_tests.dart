@@ -77,8 +77,8 @@ main(List<String> args) {
 
       future.then((Coupon coupon) {
         expect(coupon.id, new isInstanceOf<String>());
-        expect(coupon.duration, testDuration);
-        expect(coupon.percentOff, testPercentOff);
+        expect(coupon.duration, equals(testDuration));
+        expect(coupon.percentOff, equals(testPercentOff));
       });
 
       expect(future, completes);
@@ -111,14 +111,14 @@ main(List<String> args) {
           ).create();
 
       future.then((Coupon coupon) {
-        expect(coupon.id, testId);
-        expect(coupon.duration, testDuration);
-        expect(coupon.amountOff, testAmountOff);
-        expect(coupon.currency, testCurrency);
-        expect(coupon.durationInMonths, testDurationInMoths);
-        expect(coupon.maxRedemptions, testMaxRedemptions);
-        expect(coupon.metadata, testMetadata);
-        expect(coupon.redeemBy, testRedeemBy);
+        expect(coupon.id, equals(testId));
+        expect(coupon.duration, equals(testDuration));
+        expect(coupon.amountOff, equals(testAmountOff));
+        expect(coupon.currency, equals(testCurrency));
+        expect(coupon.durationInMonths, equals(testDurationInMoths));
+        expect(coupon.maxRedemptions, equals(testMaxRedemptions));
+        expect(coupon.metadata, equals(testMetadata));
+        expect(coupon.redeemBy, equals(testRedeemBy));
       });
 
       expect(future, completes);

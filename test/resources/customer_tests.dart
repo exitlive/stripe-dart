@@ -76,8 +76,8 @@ main(List<String> args) {
       expect(customer.accountBalance, equals(map["account_balance"]));
       expect(customer.currency, equals(map["currency"]));
       expect(customer.cards, new isInstanceOf<CardCollection>());
-      expect(customer.cards.count, map["cards"]["count"]);
-      expect(customer.cards.url, map["cards"]["url"]);
+      expect(customer.cards.count, equals(map["cards"]["count"]));
+      expect(customer.cards.url, equals(map["cards"]["url"]));
       expect(customer.defaultCard, equals(map["default_card"]));
     });
 

@@ -78,16 +78,10 @@ main(List<String> args) {
       future.then((Plan plan) {
         testPlan = plan;
         expect(plan.id, new isInstanceOf<String>());
-        expect(plan.amount, testAmount);
-        expect(plan.currency, testCurrency);
-        expect(plan.interval, testInterval);
-        expect(plan.name, testName);
-      })
-      .then((_) {
-        return Plan.all().then((PlanCollection plans) {
-          expect(plans.data.length, 1);
-          expect(plans.data.first.id, testPlan.id);
-        });
+        expect(plan.amount, equals(testAmount));
+        expect(plan.currency, equals(testCurrency));
+        expect(plan.interval, equals(testInterval));
+        expect(plan.name, equals(testName));
       });
       expect(future, completes);
     });
