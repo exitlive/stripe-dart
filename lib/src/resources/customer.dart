@@ -166,10 +166,13 @@ class CustomerCreation extends ResourceRequest {
   /// UTC integer timestamp representing the end of the trial period the
   /// customer will get before being charged for the first time. If set,
   /// trial_end will override the default trial period of the plan the customer
-  /// is being subscribed to. The special value now can be provided to end the
+  /// is being subscribed to.
+  set trialEnd (int trialEnd) => _setMap("trial_end", trialEnd);
+
+  /// The special value now can be provided to end the
   /// customer’s trial immediately. Only applies when the plan parameter is
   /// also provided.
-  set trialEnd (int trialEnd) => _setMap("trial_end", trialEnd);
+  trialEndNow() => _setMap("trial_end", "now");
 
 
   /**
