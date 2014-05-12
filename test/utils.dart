@@ -16,16 +16,17 @@ setApiKeyFromArgs(List<String> args) {
 }
 
 Future setUp() {
-  print("Test Setup");
-  return new Future.value();
+  print("Setup Start");
+  return new Future.sync(() => print("Setup End"));
 }
 
 Future tearDown() {
-  print("Test Teardown");
+  print("Teardown Start");
   List<Future> processQueue = [];
   processQueue.add(deleteAllCustomers());
   processQueue.add(deleteAllCoupons());
   processQueue.add(deleteAllPlans());
+  processQueue.add(new Future.sync(() => print("Teardown End")));
   return Future.wait(processQueue);
 }
 
