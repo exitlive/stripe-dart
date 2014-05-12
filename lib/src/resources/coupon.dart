@@ -63,7 +63,7 @@ class Coupon extends ApiResource {
   bool get valid => _dataMap["valid"];
 
 
-  /*
+  /**
    * Retrieves the coupon with the given ID.
    */
   static Future<Coupon> retrieve(String id) {
@@ -71,7 +71,7 @@ class Coupon extends ApiResource {
         .then((Map json) => new Coupon.fromMap(json));
   }
 
-  /*
+  /**
    * Returns a [CouponCollection] of your coupons
    */
   static Future<CouponCollection> all({Map<String, dynamic> params: const {}}) {
@@ -79,7 +79,7 @@ class Coupon extends ApiResource {
         .then((Map json) => new CouponCollection.fromMap(json));
   }
 
-  /*
+  /**
    * You can delete coupons via the coupon management page of the Stripe
    * dashboard. However, deleting a coupon does not affect any customers who
    * have already applied the coupon; it means that new customers can't redeem
@@ -145,7 +145,7 @@ class CouponCreation extends ResourceRequest {
   /// to new customers.
   set redeemBy (int redeemBy) => _setMap("redeem_by", redeemBy);
 
-  /*
+  /**
    * Uses the values of [CouponCreation] to send a request to the Stripe API.
    * Returns a [Future] with a new [Coupon] from the response.
    */

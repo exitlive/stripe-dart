@@ -1,6 +1,6 @@
 part of stripe;
 
-/*
+/**
  * An abstract collection class that helps retrieving multiple elements of the
  * same resource.
  */

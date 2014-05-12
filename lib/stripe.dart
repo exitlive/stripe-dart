@@ -32,3 +32,4 @@ part "src/resources/dispute.dart";
 part "src/resources/next_recurring_charge.dart";
 part "src/resources/refund.dart";
 part "src/resources/subscription.dart";
+part "src/resources/subscription_collection.dart";

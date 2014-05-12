@@ -69,16 +69,16 @@ class Customer extends ApiResource {
     else return new NextRecurringCharge.fromMap(value);
   }
 
-  Subscription get subscription {
-    var value;
-    if ((value = _dataMap["subscription"]) == null) return null;
-    else return new Subscription.fromMap(value);
+  SubscriptionCollection get subscriptions {
+    var value = _dataMap["subscriptions"];
+    if (value == null) return null;
+    else return new SubscriptionCollection.fromMap(value);
   }
 
-  CustomerCardCollection get cards {
+  CardCollection get cards {
     var value = _dataMap["cards"];
     if (value == null) return null;
-    else return new CustomerCardCollection.fromMap(value);
+    else return new CardCollection.fromMap(value);
   }
 
   /// Returns a customer object if a valid identifier was provided.
@@ -92,7 +92,7 @@ class Customer extends ApiResource {
   /// property, which will be true.
   bool get deleted => _dataMap["deleted"];
 
-  /*
+  /**
    * Returns a [CustomerCollection] of your customers.
    * The customers are returned sorted by creation date, with the most recently
    * created customers appearing first.
@@ -102,7 +102,7 @@ class Customer extends ApiResource {
         .then((Map json) => new CustomerCollection.fromMap(json));
   }
 
-  /*
+  /**
    * Permanently deletes a customer. It cannot be undone.
    * Also immediately cancels any active subscription on the customer.
    */
@@ -126,14 +126,14 @@ class CustomerCreation extends ResourceRequest {
   /// or a dictionary containing a user’s credit card details
   /// (with the options shown below). Passing card will create a new card,
   /// make it the new customer default card, and delete the old customer default
-  ///  if one exists. If you want to add additional cards instead of replacing
-  ///  the existing default, use the card creation API. Whenever you attach a
-  ///  card to a customer, Stripe will automatically validate the card.
+  /// if one exists. If you want to add additional cards instead of replacing
+  /// the existing default, use the card creation API. Whenever you attach a
+  /// card to a customer, Stripe will automatically validate the card.
   set card (CardCreation card) => _setMap("card", card._getMap());
 
   /// If you provide a coupon code, the customer will have a discount applied on
-  ///  all recurring charges. Charges you create through the API will not have
-  ///  the discount.
+  /// all recurring charges. Charges you create through the API will not have
+  /// the discount.
   set coupon (String coupon) => _setMap("coupon", coupon);
 
   /// An arbitrary string that you can attach to a customer object.
@@ -171,7 +171,8 @@ class CustomerCreation extends ResourceRequest {
   /// also provided.
   set trialEnd (int trialEnd) => _setMap("trial_end", trialEnd);
 
-  /*
+
+  /**
    * Uses the values of [CustomerCreation] to send a request to the Stripe API.
    * Returns a [Future] with a new [Customer] from the response.
    */
@@ -202,9 +203,13 @@ class CustomerUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap("metadata", metadata);
 
-  // TODO: needs to be changed to use StripeService.update()
-  Future<Customer> update() {
-    return StripeService.create(Customer._path, _getMap())
+
+  /**
+   * Uses the values of [CustomerUpdate] to send a request to the Stripe API.
+   * Returns a [Future] with the updated [Customer] from the response.
+   */
+  Future<Customer> update(String id) {
+    return StripeService.update(Customer._path, id, _getMap())
       .then((Map json) => new Customer.fromMap(json));
   }
 
