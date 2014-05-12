@@ -197,6 +197,10 @@ class CustomerCreation extends ResourceRequest {
  */
 class CustomerUpdate extends ResourceRequest {
 
+  /// An integer amount in cents that is the starting account balance for your
+  /// customer. A negative amount represents a credit that will be used before
+  /// attempting any charges to the customer’s card; a positive amount will be
+  /// added to the next invoice.
   set accountBalance (int accountBalance) => _setMap("account_balance", accountBalance);
 
   set card (CardCreation card) => _setMap("card", card._getMap());

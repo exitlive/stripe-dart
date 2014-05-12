@@ -278,6 +278,6 @@ main(List<String> args) {
 
       expect(future, completes);
     });
-
+  // TODO: test expandable retrieve
   });
 }
