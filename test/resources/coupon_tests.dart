@@ -35,11 +35,11 @@ main(List<String> args) {
   group('Coupon', () {
 
     setUp(() {
-      utils.setUp();
+      return utils.setUp();
     });
 
     tearDown(() {
-      utils.tearDown();
+      return utils.tearDown();
     });
 
     test("fromMap() properly popullates all values", () {
