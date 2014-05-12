@@ -26,8 +26,7 @@ Future tearDown() {
   processQueue.add(deleteAllCustomers());
   processQueue.add(deleteAllCoupons());
   processQueue.add(deleteAllPlans());
-  processQueue.add(new Future.sync(() => print("Teardown End")));
-  return Future.wait(processQueue);
+  return Future.wait(processQueue).then((_) => print("Teardown End"));
 }
 
 
