@@ -56,8 +56,13 @@ class Plan extends ApiResource {
         .then((Map json) => new Plan.fromMap(json));
   }
 
-  static Future<PlanCollection> all({Map<String, dynamic> params: const {}}) {
-    return StripeService.list(Plan._path, params)
+  static Future<PlanCollection> list({int limit, String startingAfter, String endingBefore}) {
+    Map data = {};
+    if (limit != null) data["limit"] = limit;
+    if (startingAfter != null) data["starting_after"] = startingAfter;
+    if (endingBefore != null) data["ending_before"] = endingBefore;
+    if (data == {}) data = null;
+    return StripeService.list(Plan._path, data: data)
         .then((Map json) => new PlanCollection.fromMap(json));
   }
 

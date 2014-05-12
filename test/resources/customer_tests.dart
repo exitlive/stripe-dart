@@ -34,11 +34,9 @@ var exampleObject = """
                       "currency": "usd",
                       "cards": {
                         "object": "list",
-                        "total_count": 0,
                         "has_more": false,
                         "url": "/v1/customers/cus_41KOaI2C3BNEc7/cards",
                         "data": [
-                    
                         ]
                       },
                       "default_card": null
@@ -76,7 +74,7 @@ main(List<String> args) {
       expect(customer.accountBalance, equals(map["account_balance"]));
       expect(customer.currency, equals(map["currency"]));
       expect(customer.cards, new isInstanceOf<CardCollection>());
-      expect(customer.cards.count, equals(map["cards"]["count"]));
+      expect(customer.cards.data.length, equals(map["cards"]["data"].length));
       expect(customer.cards.url, equals(map["cards"]["url"]));
       expect(customer.defaultCard, equals(map["default_card"]));
     });
@@ -254,5 +252,32 @@ main(List<String> args) {
 
       expect(future, completes);
     });
+
+    test("List parameters customer", () {
+      List<Future> queue = [];
+      for (var i = 0; i < 20; i++) {
+        queue.add(new CustomerCreation().create());
+      }
+
+      Future future = Future.wait(queue);
+      future.then((_) => Customer.list(limit: 10))
+        .then((CustomerCollection customers) {
+          expect(customers.data.length, equals(10));
+          expect(customers.hasMore, equals(true));
+          return Customer.list(limit: 10, startingAfter: customers.data.last.id);
+        })
+        .then((CustomerCollection customers) {
+          expect(customers.data.length, equals(10));
+          expect(customers.hasMore, equals(false));
+          return Customer.list(limit: 10, endingBefore: customers.data.first.id);
+        })
+        .then((CustomerCollection customers) {
+          expect(customers.data.length, equals(10));
+          expect(customers.hasMore, equals(false));
+        });
+
+      expect(future, completes);
+    });
+
   });
 }

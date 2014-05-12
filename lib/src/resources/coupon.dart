@@ -74,8 +74,13 @@ class Coupon extends ApiResource {
   /**
    * Returns a [CouponCollection] of your coupons
    */
-  static Future<CouponCollection> all({Map<String, dynamic> params: const {}}) {
-    return StripeService.list(Coupon._path, params)
+  static Future<CouponCollection> list({int limit, String startingAfter, String endingBefore}) {
+    Map data = {};
+    if (limit != null) data["limit"] = limit;
+    if (startingAfter != null) data["starting_after"] = startingAfter;
+    if (endingBefore != null) data["ending_before"] = endingBefore;
+    if (data == {}) data = null;
+    return StripeService.list(Coupon._path, data: data)
         .then((Map json) => new CouponCollection.fromMap(json));
   }
 

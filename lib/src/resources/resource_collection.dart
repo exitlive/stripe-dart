@@ -25,9 +25,9 @@ abstract class ResourceCollection<T> extends ApiResource {
 
   T getInstanceFromMap(map);
 
-  int get count => _dataMap["count"];
-
   String get url => _dataMap["url"];
+
+  bool get hasMore => _dataMap["has_more"];
 
   ResourceCollection.fromMap(Map dataMap) : super.fromMap(dataMap);
 }

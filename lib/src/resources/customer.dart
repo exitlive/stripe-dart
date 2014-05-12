@@ -97,8 +97,13 @@ class Customer extends ApiResource {
    * The customers are returned sorted by creation date, with the most recently
    * created customers appearing first.
    */
-  static Future<CustomerCollection> all({Map<String, dynamic> params: const {}}) {
-    return StripeService.list(Customer._path, params)
+  static Future<CustomerCollection> list({int limit, String startingAfter, String endingBefore}) {
+    Map data = {};
+    if (limit != null) data["limit"] = limit;
+    if (startingAfter != null) data["starting_after"] = startingAfter;
+    if (endingBefore != null) data["ending_before"] = endingBefore;
+    if (data == {}) data = null;
+    return StripeService.list(Customer._path, data: data)
         .then((Map json) => new CustomerCollection.fromMap(json));
   }
 

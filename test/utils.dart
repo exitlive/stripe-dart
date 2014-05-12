@@ -32,7 +32,7 @@ Future tearDown() {
 
 
 Future deleteAllCustomers() {
-  return Customer.all()
+  return Customer.list()
     .then((CustomerCollection customers) {
       List<Future> processQueue = [];
       for (Customer customer in customers.data) {
@@ -46,7 +46,7 @@ Future deleteAllCustomers() {
 
 
 Future deleteAllCoupons() {
-  return Coupon.all()
+  return Coupon.list()
     .then((CouponCollection coupons) {
       List<Future> processQueue = [];
       for (Coupon coupon in coupons.data) {
@@ -59,7 +59,7 @@ Future deleteAllCoupons() {
 }
 
 Future deleteAllPlans() {
-  return Plan.all()
+  return Plan.list()
     .then((PlanCollection plans) {
       List<Future> processQueue = [];
       for (Plan plan in plans.data) {
