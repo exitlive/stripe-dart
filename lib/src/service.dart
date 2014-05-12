@@ -36,6 +36,12 @@ abstract class StripeService {
    */
   static Future<Map> retrieve(final String path, final String id) => request("GET", "${basePath}${path}/${Uri.encodeComponent(id)}");
 
+
+  /**
+   * Makes a get request to the Stripe API to update an existing resource
+   */
+  static Future<Map> update(final String path, final String id, final Map params) => request("POST", "${basePath}${path}/${Uri.encodeComponent(id)}", postData: params);
+
   /**
    * Makes a request to the Stripe API for all items of a resource
    */
