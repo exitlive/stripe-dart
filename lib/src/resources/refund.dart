@@ -16,8 +16,6 @@ class Refund extends Resource {
   String balanceTransaction;
 
 
-  Refund.fromMap(Map json) : super.fromMap(json) {
-
-  }
+  Refund.fromMap(Map dataMap) : super.fromMap(dataMap);
 
 }

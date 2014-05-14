@@ -9,50 +9,50 @@ import '../utils.dart' as utils;
 
 var exampleObject = """
                     {
-                      "id": "ch_103yOK2eZvKYlo2CnLNI8KAl",
+                      "id": "ch_1041NW41dfVNZFcqslnvTHtc",
                       "object": "charge",
-                      "created": 1399217337,
+                      "created": 1399906241,
                       "livemode": false,
                       "paid": true,
-                      "amount": 500,
+                      "amount": 100991,
                       "currency": "usd",
                       "refunded": false,
                       "card": {
-                        "id": "card_103yOK2eZvKYlo2CNWdHfG5K",
+                        "id": "card_1041NW41dfVNZFcqYa3VUHqf",
                         "object": "card",
                         "last4": "4242",
                         "type": "Visa",
-                        "exp_month": 1,
-                        "exp_year": 2050,
-                        "fingerprint": "Xt5EWLLDS7FJjR1c",
-                        "customer": null,
+                        "exp_month": 12,
+                        "exp_year": 2015,
+                        "fingerprint": "2OcV4uXscDkio6R5",
+                        "customer": "cus_41NWbNsIkcUEee",
                         "country": "US",
-                        "name": null,
-                        "address_line1": null,
-                        "address_line2": null,
-                        "address_city": null,
+                        "name": "Mike Rotch",
+                        "address_line1": "Addresslinestreet 12/42A",
+                        "address_line2": "additional address line",
+                        "address_city": "Laguna Beach",
                         "address_state": null,
-                        "address_zip": null,
-                        "address_country": null,
+                        "address_zip": "92651",
+                        "address_country": "USA",
                         "cvc_check": "pass",
-                        "address_line1_check": null,
-                        "address_zip_check": null
+                        "address_line1_check": "pass",
+                        "address_zip_check": "pass"
                       },
                       "captured": true,
                       "refunds": [
                     
                       ],
-                      "balance_transaction": "txn_103vub2eZvKYlo2Csszorw8e",
+                      "balance_transaction": "txn_1041NT41dfVNZFcqhWETcQzJ",
                       "failure_message": null,
                       "failure_code": null,
                       "amount_refunded": 0,
-                      "customer": null,
-                      "invoice": null,
+                      "customer": "cus_41NWbNsIkcUEee",
+                      "invoice": "in_1041NW41dfVNZFcqeK3pYfSi",
                       "description": null,
                       "dispute": null,
                       "metadata": {
                       },
-                      "statement_description": null
+                      "statement_description": "statement descr"
                     }""";
 
 
@@ -88,14 +88,13 @@ main(List<String> args) {
       expect(charge.description, equals(map["description"]));
       expect(charge.metadata, equals(map["metadata"]));
       expect(charge.statement_description, equals(map["statement_description"]));
-      expect(charge.disputed, equals(map["disputed"]));
       expect(charge.captured, equals(map["captured"]));
       expect(charge.failureMessage, equals(map["failureMessage"]));
       expect(charge.failureCode, equals(map["failureCode"]));
       expect(charge.amountRefunded, equals(map["amountRefunded"]));
       expect(charge.refunds.length, equals(map["refunds"].length));
       expect(charge.dispute, equals(map["dispute"]));
-      expect(charge.balanceTransaction, equals(map["balanceTransaction"]));
+      expect(charge.balanceTransaction, equals(map["balance_transaction"]));
 
     });
   });
