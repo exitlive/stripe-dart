@@ -255,6 +255,7 @@ main(List<String> args) {
         expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
         expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
         expect(customer.defaultCardExpand.addressLine1, equals(testCardAddressLine1));
+        return new Future.value();
       });
       expect(future, completes);
     });
@@ -265,22 +266,23 @@ main(List<String> args) {
         queue.add(new CustomerCreation().create());
       }
 
-      Future future = Future.wait(queue);
-      future.then((_) => Customer.list(limit: 10))
-        .then((CustomerCollection customers) {
-          expect(customers.data.length, equals(10));
-          expect(customers.hasMore, equals(true));
-          return Customer.list(limit: 10, startingAfter: customers.data.last.id);
-        })
-        .then((CustomerCollection customers) {
-          expect(customers.data.length, equals(10));
-          expect(customers.hasMore, equals(false));
-          return Customer.list(limit: 10, endingBefore: customers.data.first.id);
-        })
-        .then((CustomerCollection customers) {
-          expect(customers.data.length, equals(10));
-          expect(customers.hasMore, equals(false));
-        });
+      Future future = Future.wait(queue)
+          .then((_) => Customer.list(limit: 10))
+          .then((CustomerCollection customers) {
+            expect(customers.data.length, equals(10));
+            expect(customers.hasMore, equals(true));
+            return Customer.list(limit: 10, startingAfter: customers.data.last.id);
+          })
+          .then((CustomerCollection customers) {
+            expect(customers.data.length, equals(10));
+            expect(customers.hasMore, equals(false));
+            return Customer.list(limit: 10, endingBefore: customers.data.first.id);
+          })
+          .then((CustomerCollection customers) {
+            expect(customers.data.length, equals(10));
+            expect(customers.hasMore, equals(false));
+            return new Future.value();
+          });
 
       expect(future, completes);
 

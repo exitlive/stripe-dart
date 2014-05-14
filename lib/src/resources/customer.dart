@@ -39,7 +39,7 @@ class Customer extends ApiResource {
   String get defaultCard {
     var value = _dataMap["default_card"];
     if (value == null) return null;
-    else if(value is String) return _dataMap["default_card"];
+    else if(value is String) return value;
     else return new Card.fromMap(value).id;
   }
 
@@ -90,14 +90,16 @@ class Customer extends ApiResource {
     else return new CardCollection.fromMap(value);
   }
 
-  /// Returns a customer object if a valid identifier was provided.
-  ///
-  /// If you need the [Card] object of the default credit card you can avoid
-  /// an additional API request:
-  ///
-  ///     Customer.retrieve("test", data: {"expand": ["default_card"]})
-  ///
-  /// then retrieve the [Card] using [defaultCardExpand]
+  /**
+   * Returns a customer object if a valid identifier was provided.
+   *
+   * If you need the [Card] object of the default credit card you can avoid
+   * an additional API request:
+   *
+   *     Customer.retrieve(id, data: {"expand": ["default_card"]})
+   *
+   * then retrieve the [Card] using [defaultCardExpand]
+   */
   static Future<Customer> retrieve(String id, {final Map data}) {
     return StripeService.retrieve(Customer._path, id, data: data)
         .then((Map json) => new Customer.fromMap(json));
