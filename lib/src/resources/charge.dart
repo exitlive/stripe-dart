@@ -70,6 +70,8 @@ class Charge extends Resource {
 
   String get balanceTransaction => _dataMap["balanceTransaction"];
 
+
+  /// TODO: make expandable
   static Future<Charge> retrieve(String id) {
     return StripeService.retrieve(Charge._path, id)
         .then((Map json) => new Charge.fromMap(json));

@@ -36,11 +36,20 @@ class Customer extends ApiResource {
   String get currency => _dataMap["currency"];
 
   /// ID of the default credit card attached to the customer
-  ///
-  /// If you want the actual card Object, you need to load it manually like this:
-  ///
-  ///     Card.retrieve(customer.defaultCard)
-  String get defaultCard => _dataMap["default_card"];
+  String get defaultCard {
+    var value = _dataMap["default_card"];
+    if (value == null) return null;
+    else if(value is String) return _dataMap["default_card"];
+    else return new Card.fromMap(value).id;
+  }
+
+  /// [Card] object of the default credit card.
+  /// This will return null if you call retrieve without expanding.
+  Card get defaultCardExpand {
+    var value = _dataMap["default_card"];
+    if (value == null) return null;
+    else return new Card.fromMap(value);
+  }
 
   /// Whether or not the latest charge for the customer’s latest invoice
   /// has failed
@@ -82,8 +91,15 @@ class Customer extends ApiResource {
   }
 
   /// Returns a customer object if a valid identifier was provided.
-  static Future<Customer> retrieve(String id) {
-    return StripeService.retrieve(Customer._path, id)
+  ///
+  /// If you need the [Card] object of the default credit card you can avoid
+  /// an additional API request:
+  ///
+  ///     Customer.retrieve("test", data: {"expand": ["default_card"]})
+  ///
+  /// then retrieve the [Card] using [defaultCardExpand]
+  static Future<Customer> retrieve(String id, {final Map data}) {
+    return StripeService.retrieve(Customer._path, id, data: data)
         .then((Map json) => new Customer.fromMap(json));
   }
 

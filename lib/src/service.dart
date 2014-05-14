@@ -33,6 +33,7 @@ abstract class StripeService {
 
   /**
    * Makes a get request to the Stripe API for a single resource item
+   * [data] is used for expanding resources
    */
   static Future<Map> retrieve(final String path, final String id, {final Map data}) => request("GET", "${basePath}${path}/${Uri.encodeComponent(id)}", data: data);
 
@@ -44,6 +45,7 @@ abstract class StripeService {
 
   /**
    * Makes a request to the Stripe API for all items of a resource
+   * [data] is used for pagination
    */
   static Future<Map> list(final String path, {final Map data}) => request("GET", "${basePath}${path}", data: data);
 

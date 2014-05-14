@@ -247,9 +247,15 @@ main(List<String> args) {
         expect(plan.name, equals(testPlanName));
         expect(plan.statementDescription, equals(testPlanStatementDescription));
         expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
-
+        return customer;
+      })
+      // testing the expand functionality of retrieve
+      .then((Customer customer) => Customer.retrieve(customer.id, data: {"expand": ["default_card"]}))
+      .then((Customer customer) {
+        expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
+        expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
+        expect(customer.defaultCardExpand.addressLine1, equals(testCardAddressLine1));
       });
-
       expect(future, completes);
     });
 
@@ -277,7 +283,8 @@ main(List<String> args) {
         });
 
       expect(future, completes);
+
     });
-  // TODO: test expandable retrieve
+
   });
 }
