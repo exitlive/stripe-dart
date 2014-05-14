@@ -1,6 +1,7 @@
 library charge_tests;
 
 import "dart:convert";
+import "dart:async";
 
 import 'package:unittest/unittest.dart';
 
@@ -98,5 +99,116 @@ main(List<String> args) {
 
     });
   });
+
+  test("ChargeCreation minimal", () {
+
+    // Customer fields
+    Customer testCustomer;
+
+    // Card fields
+    String testCardNumber = "4242424242424242";
+    int testCardExpMonth = 12;
+    int testCardExpYear = 2014;
+
+    // Charge fields
+    int testChargeAmount = 100;
+    String testChargeCurrency = "usd";
+
+    Future future = (new CustomerCreation().create())
+        .then((Customer customer) {
+          testCustomer = customer;
+          return (new CardCreation()
+              ..number = testCardNumber
+              ..expMonth = testCardExpMonth
+              ..expYear = testCardExpYear
+          ).create(testCustomer.id);
+        })
+        .then((Card card) {
+          return (new ChargeCreation()
+              ..amount = testChargeAmount
+              ..currency = testChargeCurrency
+              ..customer = testCustomer.id
+          ).create();
+        }).then((Charge charge) {
+          expect(charge.amount, equals(testChargeAmount));
+          expect(charge.currency, equals(testChargeCurrency));
+        });
+
+
+    expect(future, completes);
+
+  });
+
+
+  test("ChargeCreation full", () {
+
+    // Customer fields
+    Customer testCustomer;
+
+    // Card fields
+    String testCardNumber = "4242424242424242";
+    int testCardExpMonth = 12;
+    int testCardExpYear = 2014;
+
+    // Charge fields
+    Charge testCharge;
+    int testChargeAmount = 100;
+    String testChargeCurrency = "usd";
+    String testChargeDescription1 = "test description1";
+    String testChargeDescription2 = "test description2";
+    Map testChargeMetadata1 = {"foo": "bar1"};
+    Map testChargeMetadata2 = {"foo": "bar2"};
+    bool testChargeCapture = false;
+    String testChargeStatementDescription = "test descr";
+    // application_fee can not be tested
+
+    Future future = (new CustomerCreation().create())
+        .then((Customer customer) {
+          testCustomer = customer;
+          return (new CardCreation()
+              ..number = testCardNumber
+              ..expMonth = testCardExpMonth
+              ..expYear = testCardExpYear
+          ).create(testCustomer.id);
+        })
+        .then((Card card) {
+          return (new ChargeCreation()
+              ..amount = testChargeAmount
+              ..currency = testChargeCurrency
+              ..customer = testCustomer.id
+              ..description = testChargeDescription1
+              ..metadata = testChargeMetadata1
+              ..capture = testChargeCapture
+              ..statementDescription = testChargeStatementDescription
+          ).create();
+        })
+        .then((Charge charge) {
+          testCharge = charge;
+          expect(charge.amount, equals(testChargeAmount));
+          expect(charge.currency, equals(testChargeCurrency));
+          expect(charge.description, equals(testChargeDescription1));
+          expect(charge.metadata, equals(testChargeMetadata1));
+          expect(charge.captured, equals(testChargeCapture));
+          expect(charge.statement_description, equals(testChargeStatementDescription));
+          return new Future.value();
+        })
+        .then((_) {
+          return (new ChargeUpdate()
+              ..description = testChargeDescription2
+              ..metadata = testChargeMetadata2
+          ).update(testCharge.id);
+        })
+        .then((Charge charge) {
+          testCharge = charge;
+          expect(charge.description, equals(testChargeDescription2));
+          expect(charge.metadata, equals(testChargeMetadata2));
+          return new Future.value();
+        });
+
+
+    expect(future, completes);
+
+  });
+
 
 }

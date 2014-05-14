@@ -178,6 +178,22 @@ class ChargeCreation extends ResourceRequest {
   /// returned by Stripe.js, or a hash containing a user's credit card details,
   /// with the options described below. Although not all information is
   /// required, the extra info helps prevent fraud.
+  set cardId (String cardId) => _setMap("card", cardId);
+
+  /// A card to be charged. If you also pass a customer ID, the card must be
+  /// the ID of a card belonging to the customer. Otherwise, if you do not pass
+  /// a customer ID, the card you provide must either be a token, like the ones
+  /// returned by Stripe.js, or a hash containing a user's credit card details,
+  /// with the options described below. Although not all information is
+  /// required, the extra info helps prevent fraud.
+  set cardToken (String cardToken) => _setMap("card", cardToken);
+
+  /// A card to be charged. If you also pass a customer ID, the card must be
+  /// the ID of a card belonging to the customer. Otherwise, if you do not pass
+  /// a customer ID, the card you provide must either be a token, like the ones
+  /// returned by Stripe.js, or a hash containing a user's credit card details,
+  /// with the options described below. Although not all information is
+  /// required, the extra info helps prevent fraud.
   set card (CardCreation card) => _setMap("card", card._getMap());
 
   /// An arbitrary string which you can attach to a charge object.
@@ -197,7 +213,9 @@ class ChargeCreation extends ResourceRequest {
   /// issues an authorization (or pre-authorization), and will need to be
   /// captured later. Uncaptured charges expire in 7 days. For more information,
   /// see authorizing charges and settling later.
-  set capture (bool capture) => _setMap("capture", capture);
+  ///
+  // Apparently capture needs to be sent as String
+  set capture (bool capture) => _setMap("capture", capture.toString());
 
   /// An arbitrary string to be displayed alongside your company name on your
   /// customer's credit card statement. This may be up to 15 characters.
