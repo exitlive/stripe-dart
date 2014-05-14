@@ -1,13 +1,13 @@
 library customer_tests;
 
 import "dart:convert";
+import "dart:async";
 
 import 'package:unittest/unittest.dart';
 
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-import "dart:async";
 
 var exampleObject = """
                     {
@@ -95,56 +95,29 @@ main(List<String> args) {
       String testCardNumber = "4242424242424242";
       int testCardExpMonth = 12;
       int testCardExpYear = 2015;
-      String testCardName = "Mike Rotch";
-      String testCardAddressLine1 = "Addresslinestreet 12/42A";
-      String testCardAddressLine2 = "additional address line";
-      String testCardAddressCity = "Laguna Beach";
-      String testCardAddressZip = "92651";
-      String testCardAddressCountry = "USA";
 
       CardCreation testCard = new CardCreation()
           ..number = testCardNumber // only the last 4 digits can be tested
           ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
-          ..cvc = 123 // this value can not be tested
-          ..name = testCardName
-          ..addressLine1 = testCardAddressLine1
-          ..addressLine2 = testCardAddressLine2
-          ..addressCity = testCardAddressCity
-          ..addressZip = testCardAddressZip
-          ..addressCountry = testCardAddressCountry;
+          ..expYear = testCardExpYear;
 
       // Coupon fields
       String testCouponId = "test coupon id";
-      String testCouponDuration = "repeating";
-      int testCouponAmountOff = 10;
-      String testCouponCurrency = "usd";
-      int testCouponDurationInMoths = 12;
-      int testCouponMaxRedemptions = 3;
-      Map testCouponMetadata = {"foo": "bar"};
-      int testCouponRedeemBy = 1451520000;
+      String testCouponDuration = "forever";
+      int testCouponPercentOff = 15;
 
       Coupon testCoupon;
       CouponCreation testCouponCreation = new CouponCreation()
           ..id = testCouponId
           ..duration = testCouponDuration
-          ..amountOff = testCouponAmountOff
-          ..currency = testCouponCurrency
-          ..durationInMonths = testCouponDurationInMoths
-          ..maxRedemptions = testCouponMaxRedemptions
-          ..metadata = testCouponMetadata
-          ..redeemBy = testCouponRedeemBy;
+          ..percentOff = testCouponPercentOff;
 
       // Plan fields
       String testPlanId = "test plan id";
       int testPlanAmount = 200;
       String testPlanCurrency = "usd";
       String testPlanInterval = "month";
-      int testPlanIntervalCount = 2;
       String testPlanName = "test plan name";
-      int testPlanTrialPeriodDays = 30;
-      Map testPlanMetadata = {"foo": "bar"};
-      String testPlanStatementDescription = "statement descr";
 
       Plan testPlan;
       PlanCreation testPlanCreation = new PlanCreation()
@@ -152,11 +125,7 @@ main(List<String> args) {
           ..amount = testPlanAmount
           ..currency = testPlanCurrency
           ..interval = testPlanInterval
-          ..intervalCount = testPlanIntervalCount
-          ..name = testPlanName
-          ..trialPeriodDays = testPlanTrialPeriodDays
-          ..metadata = testPlanMetadata
-          ..statementDescription = testPlanStatementDescription;
+          ..name = testPlanName;
 
       // Customer fields
       int testCustomerAccountBalance = 100001;
@@ -197,33 +166,17 @@ main(List<String> args) {
         expect(customer.cards.data.first.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
         expect(customer.cards.data.first.expMonth, equals(testCardExpMonth));
         expect(customer.cards.data.first.expYear, equals(testCardExpYear));
-        expect(customer.cards.data.first.name, equals(testCardName));
-        expect(customer.cards.data.first.addressLine1, equals(testCardAddressLine1));
-        expect(customer.cards.data.first.addressLine2, equals(testCardAddressLine2));
-        expect(customer.cards.data.first.addressCity, equals(testCardAddressCity));
-        expect(customer.cards.data.first.addressZip, equals(testCardAddressZip));
-        expect(customer.cards.data.first.addressCountry, equals(testCardAddressCountry));
-        expect(customer.cards.data.first.addressLine1Check, equals("pass"));
-        expect(customer.cards.data.first.addressZipCheck, equals("pass"));
-        expect(customer.cards.data.first.cvcCheck, equals("pass"));
 
         // coupon tests
         expect(customer.discount.coupon.id, equals(testCouponId));
         expect(customer.discount.coupon.duration, equals(testCouponDuration));
-        expect(customer.discount.coupon.amountOff, equals(testCouponAmountOff));
-        expect(customer.discount.coupon.currency, equals(testCouponCurrency));
-        expect(customer.discount.coupon.durationInMonths, equals(testCouponDurationInMoths));
-        expect(customer.discount.coupon.maxRedemptions, equals(testCouponMaxRedemptions));
-        expect(customer.discount.coupon.metadata, equals(testCouponMetadata));
-        expect(customer.discount.coupon.redeemBy, equals(testCouponRedeemBy));
+        expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff));
         expect(customer.discount.start.runtimeType, equals(int));
-        expect(customer.discount.end.runtimeType, equals(int));
         expect(customer.discount.subscription, equals(null));
         expect(customer.discount.customer, equals(customer.id));
 
         expect(customer.description, equals(testCustomerDescription));
         expect(customer.email, equals(testCustomerEmail));
-        expect(customer.metadata, equals(testCouponMetadata));
 
         // plan / subscription tests
         Subscription subscription = customer.subscriptions.data.first;
@@ -242,20 +195,19 @@ main(List<String> args) {
         expect(plan.currency, equals(testPlanCurrency));
         expect(plan.id, equals(testPlanId));
         expect(plan.interval, equals(testPlanInterval));
-        expect(plan.intervalCount, equals(testPlanIntervalCount));
-        expect(plan.metadata,equals( testPlanMetadata));
         expect(plan.name, equals(testPlanName));
-        expect(plan.statementDescription, equals(testPlanStatementDescription));
-        expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
+
         return customer;
+
       })
       // testing the expand functionality of retrieve
       .then((Customer customer) => Customer.retrieve(customer.id, data: {"expand": ["default_card"]}))
       .then((Customer customer) {
         expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
-        expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
-        expect(customer.defaultCardExpand.addressLine1, equals(testCardAddressLine1));
+        expect(customer.defaultCardExpand.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
+
         return new Future.value();
+
       });
       expect(future, completes);
     });
