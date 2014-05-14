@@ -149,6 +149,44 @@ class Charge extends Resource {
         .then((Map json) => new Charge.fromMap(json));
   }
 
+  /**
+   * Refunds a charge that has previously been created but not yet refunded.
+   * Funds will be refunded to the credit or debit card that was originally
+   * charged. The fees you were originally charged are also refunded.
+   *
+   * You can optionally refund only part of a charge. You can do so as many
+   * times as you wish until the entire charge has been refunded.
+   *
+   * Once entirely refunded, a charge can't be refunded again. This method will
+   * return an error when called on an already-refunded charge, or when trying
+   * to refund more money than is left on a charge.
+   */
+  static Future<Charge> refund(String id, {int amount, bool refundApplicationFee}) {
+    Map data = {};
+    if (amount != null) data["amount"] = amount;
+    if (refundApplicationFee != null) data["refund_application_fee"] = refundApplicationFee;
+    if (data == {}) data = null;
+    return StripeService.post(Charge._path, id: id, action: "refund", data: data)
+        .then((Map json) => new Charge.fromMap(json));
+  }
+
+  /**
+   * Capture the payment of an existing, uncaptured, charge. This is the second
+   * half of the two-step payment flow, where first you created a charge with
+   * the capture option set to false.
+   *
+   * Uncaptured payments expire exactly seven days after they are created.
+   * If they are not captured by that point in time, they will be marked as
+   * refunded and will no longer be capturable.
+   */
+  static Future<Charge> capture(String id, {int amount, bool refundApplicationFee}) {
+    Map data = {};
+    if (amount != null) data["amount"] = amount;
+    if (refundApplicationFee != null) data["refund_application_fee"] = refundApplicationFee;
+    if (data == {}) data = null;
+    return StripeService.post(Charge._path, id: id, action: "capture", data: data)
+        .then((Map json) => new Charge.fromMap(json));
+  }
 }
 
 
