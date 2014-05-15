@@ -133,7 +133,7 @@ class Charge extends Resource {
    * Returns a charge object if a valid identifier was provided.
    *
    * If you need the [Balance], [Customer] or [Invoice] object of this charge
-   * you can avoid an additional API request:
+   * you can avoid an additional API request e.g.:
    *
    *     Charge.retrieve(id, data: {"expand": ["Customer"]})
    *
