@@ -56,13 +56,13 @@ main(List<String> args) {
 
     test("Retrieve Balance", () {
 
-      Future future = Balance.retrieve()
-          .then((Balance balance) {
-            expect(balance.livemode, equals(false));
-            // other tests will depend on your stripe account
-          });
+      Balance.retrieve()
+        .then((Balance balance) {
+          expect(balance.livemode, equals(false));
+          // other tests will depend on your stripe account
+        })
+        .then(expectAsync((_) => true));
 
-      expect(future, completes);
     });
 
 
