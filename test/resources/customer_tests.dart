@@ -92,25 +92,44 @@ main(List<String> args) {
     test("CustomerCreation full", () {
 
       // Card fields
-      String testCardNumber = "4242424242424242";
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2015;
+      String testCardNumber1 = "4242424242424242";
+      int testCardExpMonth1 = 12;
+      int testCardExpYear1 = 2015;
 
-      CardCreation testCard = new CardCreation()
-          ..number = testCardNumber // only the last 4 digits can be tested
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear;
+      CardCreation testCardCreation1 = new CardCreation()
+          ..number = testCardNumber1 // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth1
+          ..expYear = testCardExpYear1;
+
+      String testCardNumber2 = "5555555555554444";
+      int testCardExpMonth2 = 3;
+      int testCardExpYear2 = 2016;
+
+      CardCreation testCardCreation2 = new CardCreation()
+          ..number = testCardNumber2 // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth2
+          ..expYear = testCardExpYear2;
 
       // Coupon fields
-      String testCouponId = "test coupon id";
-      String testCouponDuration = "forever";
-      int testCouponPercentOff = 15;
+      String testCouponId1 = "test coupon id1";
+      String testCouponDuration1 = "forever";
+      int testCouponPercentOff1 = 15;
 
-      Coupon testCoupon;
-      CouponCreation testCouponCreation = new CouponCreation()
-          ..id = testCouponId
-          ..duration = testCouponDuration
-          ..percentOff = testCouponPercentOff;
+      Coupon testCoupon1;
+      CouponCreation testCouponCreation1 = new CouponCreation()
+          ..id = testCouponId1
+          ..duration = testCouponDuration1
+          ..percentOff = testCouponPercentOff1;
+
+      String testCouponId2 = "test coupon id2";
+      String testCouponDuration2 = "forever";
+      int testCouponPercentOff2 = 20;
+
+      Coupon testCoupon2;
+      CouponCreation testCouponCreation2 = new CouponCreation()
+          ..id = testCouponId2
+          ..duration = testCouponDuration2
+          ..percentOff = testCouponPercentOff2;
 
       // Plan fields
       String testPlanId = "test plan id";
@@ -128,28 +147,38 @@ main(List<String> args) {
           ..name = testPlanName;
 
       // Customer fields
-      int testCustomerAccountBalance = 100001;
-      String testCustomerDescription = "test description";
-      String testCustomerEmail = "test@test.com";
-      Map testCustomerMetadata = {"foo": "bar"};
+      Customer testCustomer;
+      int testCustomerAccountBalance1 = 100001;
+      String testCustomerDescription1 = "test description1";
+      String testCustomerEmail1 = "test1@test.com";
+      Map testCustomerMetadata1 = {"foo": "bar1"};
       int testCustomerQuantity = 5;
       int testCustomerTrialEnd = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000;
+      // for update tests
+      int testCustomerAccountBalance2 = 200002;
+      String testCustomerDescription2 = "test description2";
+      String testCustomerEmail2 = "test2@test.com";
+      Map testCustomerMetadata2 = {"foo": "bar2"};
 
       CustomerCreation testCustomerCreation = new CustomerCreation()
-          ..accountBalance = testCustomerAccountBalance
-          ..card = testCard
-          ..coupon = testCouponId
-          ..description = testCustomerDescription
-          ..email = testCustomerEmail
-          ..metadata = testCustomerMetadata
+          ..accountBalance = testCustomerAccountBalance1
+          ..card = testCardCreation1
+          ..coupon = testCouponId1
+          ..description = testCustomerDescription1
+          ..email = testCustomerEmail1
+          ..metadata = testCustomerMetadata1
           ..plan = testPlanId
           ..quantity = testCustomerQuantity
           ..trialEnd = testCustomerTrialEnd;
 
-      Future future = testCouponCreation.create()
+      Future future = testCouponCreation1.create()
 
       .then((Coupon coupon) {
-        testCoupon = coupon;
+        testCoupon1 = coupon;
+        return testCouponCreation2.create();
+      })
+      .then((Coupon coupon) {
+        testCoupon2 = coupon;
         return testPlanCreation.create();
       })
       .then((Plan plan) {
@@ -158,35 +187,35 @@ main(List<String> args) {
       })
 
       .then((Customer customer) {
-
+        testCustomer = customer;
         expect(customer.id, new isInstanceOf<String>());
-        expect(customer.accountBalance, equals(testCustomerAccountBalance));
+        expect(customer.accountBalance, equals(testCustomerAccountBalance1));
 
         // card tests
-        expect(customer.cards.data.first.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
-        expect(customer.cards.data.first.expMonth, equals(testCardExpMonth));
-        expect(customer.cards.data.first.expYear, equals(testCardExpYear));
+        expect(customer.cards.data.first.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
+        expect(customer.cards.data.first.expMonth, equals(testCardExpMonth1));
+        expect(customer.cards.data.first.expYear, equals(testCardExpYear1));
 
         // coupon tests
-        expect(customer.discount.coupon.id, equals(testCouponId));
-        expect(customer.discount.coupon.duration, equals(testCouponDuration));
-        expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff));
+        expect(customer.discount.coupon.id, equals(testCouponId1));
+        expect(customer.discount.coupon.duration, equals(testCouponDuration1));
+        expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff1));
         expect(customer.discount.start.runtimeType, equals(DateTime));
-        expect(customer.discount.subscription, equals(null));
+        expect(customer.discount.subscription, isNull);
         expect(customer.discount.customer, equals(customer.id));
 
-        expect(customer.description, equals(testCustomerDescription));
-        expect(customer.email, equals(testCustomerEmail));
+        expect(customer.description, equals(testCustomerDescription1));
+        expect(customer.email, equals(testCustomerEmail1));
 
         // plan / subscription tests
         Subscription subscription = customer.subscriptions.data.first;
         expect(subscription.customer, equals(customer.id));
-        expect(subscription.applicationFeePercent, equals(null));
-        expect(subscription.cancelAtPeriodEnd, equals(false));
-        expect(subscription.canceledAt, equals(null));
-        expect(subscription.discount, equals(null));
-        expect(subscription.endedAt, equals(null));
-        expect(subscription.quantity, equals(null));
+        expect(subscription.applicationFeePercent, isNull);
+        expect(subscription.cancelAtPeriodEnd, isFalse);
+        expect(subscription.canceledAt, isNull);
+        expect(subscription.discount, isNull);
+        expect(subscription.endedAt, isNull);
+        expect(subscription.quantity, isNull);
         expect(subscription.status, equals("trialing"));
         expect(subscription.trialEnd, equals(testCustomerTrialEnd));
         expect(subscription.plan, new isInstanceOf<Plan>());
@@ -204,10 +233,30 @@ main(List<String> args) {
       .then((Customer customer) => Customer.retrieve(customer.id, data: {"expand": ["default_card"]}))
       .then((Customer customer) {
         expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
-        expect(customer.defaultCardExpand.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
+        expect(customer.defaultCardExpand.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
 
         return new Future.value();
 
+      })
+      // testing the CustomerUpdate
+      .then((_) {
+        return (new CustomerUpdate()
+            ..accountBalance = testCustomerAccountBalance2
+            ..card = testCardCreation2
+            ..coupon = testCouponId2
+            ..description = testCustomerDescription2
+            ..email = testCustomerEmail2
+            ..metadata = testCustomerMetadata2
+        ).update(testCustomer.id);
+      })
+      .then((Customer customer) {
+        expect(customer.accountBalance, equals(testCustomerAccountBalance2));
+        expect(customer.defaultCard, isNot(equals(testCustomer.defaultCard)));
+        expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff2));
+        expect(customer.description, equals(testCustomerDescription2));
+        expect(customer.email, equals(testCustomerEmail2));
+        expect(customer.metadata, equals(testCustomerMetadata2));
+        return new Future.value();
       });
       expect(future, completes);
     });
