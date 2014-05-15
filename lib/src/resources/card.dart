@@ -83,8 +83,8 @@ class Card extends Resource {
    * directly on the customer object, but you can also retrieve details about a
    * specific card stored on the customer.
    */
-  static Future<Card> retrieve(String customerId, String cardId) {
-    return StripeService.get([Customer._path, customerId, Card._path, cardId])
+  static Future<Card> retrieve(String customerId, String cardId, {final Map data}) {
+    return StripeService.retrieve([Customer._path, customerId, Card._path, cardId], data: data)
         .then((Map json) => new Card.fromMap(json));
   }
 
@@ -181,23 +181,23 @@ class CardCreationWithToken extends ResourceRequest {
  */
 class CardUpdate extends ResourceRequest {
 
-  set expMonth (int expMonth) => _setMap("exp_month", expMonth);
+  set addressCity (String addressCity) => _setMap("address_city", addressCity);
 
-  set expYear (int expYear) => _setMap("exp_year", expYear);
-
-  set name (String name) => _setMap("name", name);
+  set addressCountry (String addressCountry) => _setMap("address_country", addressCountry);
 
   set addressLine1 (String addressLine1) => _setMap("address_line1", addressLine1);
 
   set addressLine2 (String addressLine2) => _setMap("address_line2", addressLine2);
 
-  set addressCity (String addressCity) => _setMap("address_city", addressCity);
+  set addressState (String addressState) => _setMap("address_state", addressState);
 
   set addressZip (String addressZip) => _setMap("address_zip", addressZip);
 
-  set addressState (String addressState) => _setMap("address_state", addressState);
+  set expMonth (int expMonth) => _setMap("exp_month", expMonth);
 
-  set addressCountry (String addressCountry) => _setMap("address_country", addressCountry);
+  set expYear (int expYear) => _setMap("exp_year", expYear);
+
+  set name (String name) => _setMap("name", name);
 
 
   Future<Card> update(String customerId, String cardId) {
