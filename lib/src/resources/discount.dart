@@ -20,21 +20,22 @@ class Discount extends Resource {
     else return new Coupon.fromMap(value);
   }
 
-
   String get customer => _dataMap["customer"];
 
   /// Date that the coupon was applied
-  int get start => _dataMap["start"];
+  DateTime get start => _getDateTimeFromMap("start");
 
   /// If the coupon has a duration of once or repeating, the date that this
   /// discount will end. If the coupon used has a forever duration,
   /// this attribute will be null.
-  int get end => _dataMap["end"];
+  DateTime get end => _getDateTimeFromMap("end");
 
   /// The subscription that this coupon is applied to, if it is applied to
   /// a particular subscription
   String get subscription => _dataMap["subscription"];
 
+
   Discount.fromMap(Map dataMap) : super.fromMap(dataMap);
+
 
 }
