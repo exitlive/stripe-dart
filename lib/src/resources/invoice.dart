@@ -161,7 +161,7 @@ class Invoice extends ApiResource {
    * Only expand resources on demand.
    */
   static Future<Invoice> retrieve(String id) {
-    return StripeService.retrieve(Invoice._path, id)
+    return StripeService.retrieve([Invoice._path, id])
         .then((Map json) => new Invoice.fromMap(json));
   }
 

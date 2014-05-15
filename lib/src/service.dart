@@ -11,7 +11,7 @@ abstract class StripeService {
 
   static int port = 443;
 
-  static String basePath = '/v1/';
+  static String basePath = '/v1';
 
   /// The Api key used to communicate with Stripe
   static String apiKey;
@@ -24,48 +24,50 @@ abstract class StripeService {
   /**
    * Makes a post request to the Stripe API to given path and parameters.
    */
-  static Future<Map> create(final String path, final Map data) => _request("POST", "${basePath}${path}", data: data);
+  static Future<Map> create(final List<String> pathParts, final Map data) => _request("POST", pathParts, data: data);
 
   /**
    * Makes a delete request to the Stripe API
    */
-  static Future<Map> delete(final String path, final String id) => _request("DELETE", "${basePath}${path}/${Uri.encodeComponent(id)}");
+  static Future<Map> delete(final List<String> pathParts) => _request("DELETE", pathParts);
 
   /**
    * Makes a get request to the Stripe API for a single resource item
    * [data] is used for expanding resources
    */
-  static Future<Map> retrieve(final String path, final String id, {final Map data}) => _request("GET", "${basePath}${path}/${Uri.encodeComponent(id)}", data: data);
+  static Future<Map> retrieve(final List<String> pathParts, {final Map data}) => _request("GET", pathParts, data: data);
 
 
   /**
    * Makes a get request to the Stripe API to update an existing resource
    */
-  static Future<Map> update(final String path, final String id, final Map data) => _request("POST", "${basePath}${path}/${Uri.encodeComponent(id)}", data: data);
+  static Future<Map> update(final List<String> pathParts, final Map data) => _request("POST", pathParts, data: data);
 
   /**
    * Makes a request to the Stripe API for all items of a resource
    * [data] is used for pagination
    */
-  static Future<Map> list(final String path, {final Map data}) => _request("GET", "${basePath}${path}", data: data);
+  static Future<Map> list(final List<String> pathParts, {final Map data}) => _request("GET", pathParts, data: data);
 
   /**
    * Makes a request a get request to the Stripe API
    */
-  static Future<Map> get(String path, {final String id, final String action, final Map data}) {
-    if (id != null) path = "${path}/${id}/${action}";
-    return _request("GET", "${basePath}${path}", data: data);
+  static Future<Map> get(final List<String> pathParts, {final Map data}) {
+    return _request("GET", pathParts, data: data);
   }
 
   /**
    * Makes a request a post request to the Stripe API
    */
-  static Future<Map> post(String path, {final String id, final String action, final Map data}) {
-    if (id != null) path = "${path}/${id}/${action}";
-    return _request("POST", "${basePath}${path}", data: data);
+  static Future<Map> post(final List<String> pathParts, {final Map data}) {
+    return _request("POST", pathParts, data: data);
   }
 
-  static Future<Map> _request(final String method, final String path, { final Map data }) {
+  static Future<Map> _request(final String method, final List<String> pathParts, { final Map data }) {
+
+    pathParts.insert(0, basePath);
+
+    String path = pathParts.map(Uri.encodeComponent).join('/');
 
     var uri;
     if (method == "GET" && data != null) {

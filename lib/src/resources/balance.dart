@@ -43,7 +43,7 @@ class Balance extends Resource {
    * to make the request.
    */
   static Future<Balance> retrieve() {
-    return StripeService.get(Balance._path)
+    return StripeService.get([Balance._path])
         .then((Map json) => new Balance.fromMap(json));
   }
 

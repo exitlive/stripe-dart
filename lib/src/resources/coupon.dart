@@ -67,7 +67,7 @@ class Coupon extends ApiResource {
    * Retrieves the coupon with the given ID.
    */
   static Future<Coupon> retrieve(String id) {
-    return StripeService.retrieve(Coupon._path, id)
+    return StripeService.retrieve([Coupon._path, id])
         .then((Map json) => new Coupon.fromMap(json));
   }
 
@@ -80,7 +80,7 @@ class Coupon extends ApiResource {
     if (startingAfter != null) data["starting_after"] = startingAfter;
     if (endingBefore != null) data["ending_before"] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list(Coupon._path, data: data)
+    return StripeService.list([Coupon._path], data: data)
         .then((Map json) => new CouponCollection.fromMap(json));
   }
 
@@ -90,7 +90,7 @@ class Coupon extends ApiResource {
    * have already applied the coupon; it means that new customers can't redeem
    * the coupon. You can also delete coupons via the API.
    */
-  static Future delete(String id) => StripeService.delete(Coupon._path, id);
+  static Future delete(String id) => StripeService.delete([Coupon._path, id]);
 
 
 }
@@ -155,7 +155,7 @@ class CouponCreation extends ResourceRequest {
    * Returns a [Future] with a new [Coupon] from the response.
    */
   Future<Coupon> create() {
-    return StripeService.create("${Coupon._path}", _getMap())
+    return StripeService.create([Coupon._path], _getMap())
       .then((Map json) => new Coupon.fromMap(json));
   }
 

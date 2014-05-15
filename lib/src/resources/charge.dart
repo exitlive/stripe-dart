@@ -305,7 +305,7 @@ class ChargeUpdate extends ResourceRequest {
    * Returns a [Future] with the updated [Charge] from the response.
    */
   Future<Charge> update(String id) {
-    return StripeService.update(Charge._path, id, _getMap())
+    return StripeService.update([Charge._path, id], _getMap())
       .then((Map json) => new Charge.fromMap(json));
   }
 

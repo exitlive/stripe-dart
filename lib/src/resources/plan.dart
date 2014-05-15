@@ -52,7 +52,7 @@ class Plan extends ApiResource {
   String get statementDescription => _dataMap["statement_description"];
 
   static Future<Plan> retrieve(String id) {
-    return StripeService.retrieve(Plan._path, id)
+    return StripeService.retrieve([Plan._path, id])
         .then((Map json) => new Plan.fromMap(json));
   }
 
@@ -62,11 +62,11 @@ class Plan extends ApiResource {
     if (startingAfter != null) data["starting_after"] = startingAfter;
     if (endingBefore != null) data["ending_before"] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list(Plan._path, data: data)
+    return StripeService.list([Plan._path], data: data)
         .then((Map json) => new PlanCollection.fromMap(json));
   }
 
-  static Future delete(String id) => StripeService.delete(Plan._path, id);
+  static Future delete(String id) => StripeService.delete([Plan._path, id]);
 
 }
 
@@ -131,7 +131,7 @@ class PlanCreation extends ResourceRequest {
    * Returns a [Future] with a new [Plan] from the response.
    */
   Future<Plan> create() {
-    return StripeService.create(Plan._path, _getMap())
+    return StripeService.create([Plan._path], _getMap())
       .then((Map json) => new Plan.fromMap(json));
   }
 

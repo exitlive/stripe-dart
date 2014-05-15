@@ -101,7 +101,7 @@ class Customer extends ApiResource {
    * then retrieve the [Card] using [defaultCardExpand]
    */
   static Future<Customer> retrieve(String id, {final Map data}) {
-    return StripeService.retrieve(Customer._path, id, data: data)
+    return StripeService.retrieve([Customer._path, id], data: data)
         .then((Map json) => new Customer.fromMap(json));
   }
 
@@ -121,7 +121,7 @@ class Customer extends ApiResource {
     if (startingAfter != null) data["starting_after"] = startingAfter;
     if (endingBefore != null) data["ending_before"] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list(Customer._path, data: data)
+    return StripeService.list([Customer._path], data: data)
         .then((Map json) => new CustomerCollection.fromMap(json));
   }
 
@@ -129,7 +129,7 @@ class Customer extends ApiResource {
    * Permanently deletes a customer. It cannot be undone.
    * Also immediately cancels any active subscription on the customer.
    */
-  static Future delete(String id) => StripeService.delete(Customer._path, id);
+  static Future delete(String id) => StripeService.delete([Customer._path, id]);
 
 }
 
@@ -203,7 +203,7 @@ class CustomerCreation extends ResourceRequest {
    * Returns a [Future] with a new [Customer] from the response.
    */
   Future<Customer> create() {
-    return StripeService.create(Customer._path, _getMap())
+    return StripeService.create([Customer._path], _getMap())
       .then((Map json) => new Customer.fromMap(json));
   }
 
@@ -239,7 +239,7 @@ class CustomerUpdate extends ResourceRequest {
    * Returns a [Future] with the updated [Customer] from the response.
    */
   Future<Customer> update(String id) {
-    return StripeService.update(Customer._path, id, _getMap())
+    return StripeService.update([Customer._path, id], _getMap())
       .then((Map json) => new Customer.fromMap(json));
   }
 

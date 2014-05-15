@@ -151,7 +151,7 @@ class SubscriptionCreation extends ResourceRequest {
    * Returns a [Future] with a new [Subscription] from the response.
    */
   Future<Subscription> create(String customerId) {
-    return StripeService.create("${Customer._path}/${customerId}/${Subscription._path}", _getMap())
+    return StripeService.create([Customer._path, customerId, Subscription._path], _getMap())
         .then((Map json) => new Subscription.fromMap(json));
   }
 

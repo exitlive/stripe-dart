@@ -86,7 +86,7 @@ class CardCreation extends ResourceRequest {
   set addressCountry (String addressCountry) => _setMap("address_country", addressCountry);
 
   Future<Card> create(String customerId) {
-    return StripeService.create("${Customer._path}/${customerId}/${Card._path}", {"card": _getMap()})
+    return StripeService.create([Customer._path, customerId, Card._path], {"card": _getMap()})
       .then((Map json) => new Card.fromMap(json));
   }
 
@@ -101,7 +101,7 @@ class CardCreationWithToken extends ResourceRequest {
   set token (String token) => _setMap("card", token);
 
   Future<Card> create(String customerId) {
-    return StripeService.create("${Customer._path}/${customerId}/${Card._path}", _getMap())
+    return StripeService.create([Customer._path, customerId, Card._path], _getMap())
       .then((Map json) => new Card.fromMap(json));
   }
 
@@ -131,9 +131,9 @@ class CardUpdate extends ResourceRequest {
 
   set addressCountry (String addressCountry) => _setMap("address_country", addressCountry);
 
-  // TODO: needs to be changed to use StripeService.update()
-  Future<Card> update() {
-    return StripeService.create(Card._path, _getMap())
+
+  Future<Card> update(String customerId, String cardId) {
+    return StripeService.update([Customer._path, customerId, Card._path, cardId], _getMap())
           .then((Map json) => new Card.fromMap(json));
   }
 
