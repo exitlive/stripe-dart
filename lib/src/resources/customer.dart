@@ -90,6 +90,8 @@ class Customer extends ApiResource {
     else return new CardCollection.fromMap(value);
   }
 
+
+
   /**
    * Returns a customer object if a valid identifier was provided.
    *
@@ -104,11 +106,6 @@ class Customer extends ApiResource {
     return StripeService.retrieve([Customer._path, id], data: data)
         .then((Map json) => new Customer.fromMap(json));
   }
-
-  /// When requesting the ID of a customer that has been deleted, a subset of
-  /// the customer's information will be returned, including a "deleted"
-  /// property, which will be true.
-  bool get deleted => _dataMap["deleted"];
 
   /**
    * Returns a [CustomerCollection] of your customers.
@@ -130,6 +127,13 @@ class Customer extends ApiResource {
    * Also immediately cancels any active subscription on the customer.
    */
   static Future delete(String id) => StripeService.delete([Customer._path, id]);
+
+
+  /// When requesting the ID of a customer that has been deleted, a subset of
+  /// the customer's information will be returned, including a "deleted"
+  /// property, which will be true.
+  bool get deleted => _dataMap["deleted"];
+
 
 }
 
