@@ -1,6 +1,7 @@
 library coupon_tests;
 
 import "dart:convert";
+import "dart:async";
 
 import 'package:unittest/unittest.dart';
 
@@ -34,11 +35,11 @@ main(List<String> args) {
   group('Coupon', () {
 
     setUp(() {
-      utils.setUp();
+      return utils.setUp();
     });
 
     tearDown(() {
-      utils.tearDown();
+      return utils.tearDown();
     });
 
     test("fromMap() properly popullates all values", () {
@@ -61,6 +62,67 @@ main(List<String> args) {
       expect(coupon.metadata, equals(map["metadata"]));
 
     });
-  });
 
+    test("CouponCreation minimal", () {
+
+      // Coupon fields
+      String testDuration = "forever";
+      int testPercentOff = 5;
+
+      Future future = (
+          new CouponCreation()
+              ..duration = testDuration
+              ..percentOff = testPercentOff
+          ).create();
+
+      future.then((Coupon coupon) {
+        expect(coupon.id, new isInstanceOf<String>());
+        expect(coupon.duration, equals(testDuration));
+        expect(coupon.percentOff, equals(testPercentOff));
+      });
+
+      expect(future, completes);
+
+    });
+
+
+    test("CouponCreation full", () {
+
+      // Coupon fields
+      String testId = "test id";
+      String testDuration = "repeating";
+      int testAmountOff = 10;
+      String testCurrency = "usd";
+      int testDurationInMoths = 12;
+      int testMaxRedemptions = 3;
+      Map testMetadata = {"foo": "bar"};
+      int testRedeemBy = 1451520000;
+
+      Future future = (
+          new CouponCreation()
+              ..id = testId
+              ..duration = testDuration
+              ..amountOff = testAmountOff
+              ..currency = testCurrency
+              ..durationInMonths = testDurationInMoths
+              ..maxRedemptions = testMaxRedemptions
+              ..metadata = testMetadata
+              ..redeemBy = testRedeemBy
+          ).create();
+
+      future.then((Coupon coupon) {
+        expect(coupon.id, equals(testId));
+        expect(coupon.duration, equals(testDuration));
+        expect(coupon.amountOff, equals(testAmountOff));
+        expect(coupon.currency, equals(testCurrency));
+        expect(coupon.durationInMonths, equals(testDurationInMoths));
+        expect(coupon.maxRedemptions, equals(testMaxRedemptions));
+        expect(coupon.metadata, equals(testMetadata));
+        expect(coupon.redeemBy, equals(testRedeemBy));
+      });
+
+      expect(future, completes);
+
+    });
+  });
 }

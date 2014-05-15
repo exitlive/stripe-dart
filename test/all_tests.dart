@@ -3,10 +3,14 @@ import 'package:logging/logging.dart';
 
 import "service_tests.dart" as serviceTests;
 import "resources/resource_tests.dart" as resourceTests;
+
+import "resources/balance_tests.dart" as balanceTests;
 import "resources/card_tests.dart" as cardTests;
+import "resources/discount_tests.dart" as discountTests;
 import "resources/charge_tests.dart" as chargeTests;
 import "resources/coupon_tests.dart" as couponTests;
 import "resources/customer_tests.dart" as customerTests;
+import "resources/plan_tests.dart" as planTests;
 
 
 main(List<String> args) {
@@ -16,9 +20,13 @@ main(List<String> args) {
 
   serviceTests.main();
   resourceTests.main();
+
+  balanceTests.main(args);
+  discountTests.main(args);
   cardTests.main(args);
   chargeTests.main(args);
   couponTests.main(args);
   customerTests.main(args);
+  planTests.main(args);
 
 }

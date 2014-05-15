@@ -32,7 +32,7 @@ abstract class Resource {
   DateTime _getDateTimeFromMap(String key) {
     var cachedValue;
     if ((cachedValue = _cachedDataMap[key]) != null) return cachedValue;
-
+    if (_dataMap[key] == null) return null;
     int value = _dataMap[key];
     cachedValue = new DateTime.fromMillisecondsSinceEpoch(value * 1000);
     _cachedDataMap[key] = cachedValue;

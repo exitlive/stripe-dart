@@ -93,9 +93,9 @@ main(List<String> args) {
       .then((Card card) {
         testCard = card;
         expect(card.id, new isInstanceOf<String>());
-        expect(card.last4, number.substring(number.length - 4));
-        expect(card.expMonth, expMonth);
-        expect(card.expYear, expYear);
+        expect(card.last4, equals(number.substring(number.length - 4)));
+        expect(card.expMonth, equals(expMonth));
+        expect(card.expYear, equals(expYear));
 
       });
       expect(future, completes);

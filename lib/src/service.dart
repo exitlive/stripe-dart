@@ -24,42 +24,71 @@ abstract class StripeService {
   /**
    * Makes a post request to the Stripe API to given path and parameters.
    */
-  static Future<Map> create(final String path, final Map params) => request("POST", "${basePath}${path}", postData: params);
+  static Future<Map> create(final String path, final Map data) => _request("POST", "${basePath}${path}", data: data);
 
   /**
    * Makes a delete request to the Stripe API
    */
-  static Future<Map> delete(final String path, final String id) => request("DELETE", "${basePath}${path}/${id}");
+  static Future<Map> delete(final String path, final String id) => _request("DELETE", "${basePath}${path}/${Uri.encodeComponent(id)}");
 
   /**
    * Makes a get request to the Stripe API for a single resource item
+   * [data] is used for expanding resources
    */
-  static Future<Map> retrieve(final String path, final String id) => request("GET", "${basePath}${path}/${id}");
+  static Future<Map> retrieve(final String path, final String id, {final Map data}) => _request("GET", "${basePath}${path}/${Uri.encodeComponent(id)}", data: data);
+
+
+  /**
+   * Makes a get request to the Stripe API to update an existing resource
+   */
+  static Future<Map> update(final String path, final String id, final Map data) => _request("POST", "${basePath}${path}/${Uri.encodeComponent(id)}", data: data);
 
   /**
    * Makes a request to the Stripe API for all items of a resource
+   * [data] is used for pagination
    */
-  static Future<Map> list(final String path, final Map params) => request("GET", "${basePath}${path}", postData: params);
+  static Future<Map> list(final String path, {final Map data}) => _request("GET", "${basePath}${path}", data: data);
 
-  static Future<Map> request(final String method, final String path, { final Map postData }) {
-    var uri = new Uri(scheme: "https", host: host, path: path, userInfo: "${apiKey}:");
+  /**
+   * Makes a request a get request to the Stripe API
+   */
+  static Future<Map> get(String path, {final String id, final String action, final Map data}) {
+    if (id != null) path = "${path}/${id}/${action}";
+    return _request("GET", "${basePath}${path}", data: data);
+  }
+
+  /**
+   * Makes a request a post request to the Stripe API
+   */
+  static Future<Map> post(String path, {final String id, final String action, final Map data}) {
+    if (id != null) path = "${path}/${id}/${action}";
+    return _request("POST", "${basePath}${path}", data: data);
+  }
+
+  static Future<Map> _request(final String method, final String path, { final Map data }) {
+
+    var uri;
+    if (method == "GET" && data != null) {
+      uri = new Uri(scheme: "https", host: host, path: path, query:encodeMap(data), userInfo: "${apiKey}:");
+    } else {
+      uri = new Uri(scheme: "https", host: host, path: path, userInfo: "${apiKey}:");
+    }
 
     log.info("Making ${method} request to API ${uri}");
-
 
     var responseStatusCode;
 
     return _getClient().openUrl(method, uri)
       .then((HttpClientRequest request) {
 
-        if (postData != null) {
+        if (method == "POST" && data != null) {
           // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
           // string and add them to the request
-          var encodedData = UTF8.encode(encodeMap(postData));
-
+          var encodedData = UTF8.encode(encodeMap(data));
           request.headers.add("Content-Type", "application/x-www-form-urlencoded");
           request.headers.add("Content-Length", encodedData.length);
           request.add(encodedData);
+
         }
         return request.close();
       })
@@ -76,8 +105,6 @@ abstract class StripeService {
         } on Error {
           throw new InvalidRequestErrorException("The JSON returned was unparsable (${body}).");
         }
-
-
 
         if (responseStatusCode != 200) {
           if (map["error"] == null) {
@@ -130,6 +157,8 @@ abstract class StripeService {
         for (String v in data[k]) {
           output.add(Uri.encodeComponent("${k}[]") + "=" + Uri.encodeComponent(v));
         }
+      } else if (data[k] is int) {
+        output.add(Uri.encodeComponent(k) + "=" + data[k].toString());
       } else {
         output.add(Uri.encodeComponent(k) + "=" + Uri.encodeComponent(data[k]));
       }

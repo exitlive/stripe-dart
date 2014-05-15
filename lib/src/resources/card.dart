@@ -1,6 +1,6 @@
 part of stripe;
 
-/*
+/**
  * You can store multiple credit cards for a customer in order to charge the
  * customer later.
  */

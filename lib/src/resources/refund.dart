@@ -7,17 +7,36 @@ part of stripe;
  */
 class Refund extends Resource {
 
-  int amount;
+  String get id => _dataMap["id"];
 
-  String currency;
+  String objectName = "refund";
 
-  int created;
+  /// Amount refunded, in cents.
+  int get amount => _dataMap["amount"];
 
-  String balanceTransaction;
+  DateTime get created => _getDateTimeFromMap("created");
 
+  /// Three-letter ISO code representing the currency of the refund.
+  String get currency => _dataMap["currency"];
 
-  Refund.fromMap(Map json) : super.fromMap(json) {
-
+  /// Balance transaction that describes the impact of this refund on your
+  /// account balance.
+  String get balanceTransaction {
+    var value = _dataMap["balance_transaction"];
+    if (value == null) return null;
+    else if(value is String) return value;
+    else return new Balance.fromMap(value).id;
   }
+
+  /// [Balance] transaction that describes the impact of this refund on your
+  /// account balance.
+  /// This will return null if you call retrieve without expanding.
+  Balance get balanceTransactionExpand {
+    var value = _dataMap["balance_transaction"];
+    if (value == null) return null;
+    else return new Balance.fromMap(value);
+  }
+
+  Refund.fromMap(Map dataMap) : super.fromMap(dataMap);
 
 }
