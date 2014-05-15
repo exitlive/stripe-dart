@@ -1,6 +1,8 @@
 name: stripe
 version: 0.0.1
-author: Matias Meno
+authors:
+  - Matias Meno <m@tias.me <mailto:m@tias.me>>
+  - Martin Flucka <martin.flucka@gmail.com <mailto:martin.flucka@gmail.com>>
 description: Stripe API wrapper
 homepage: https://github.com/exitlive/stripe-dart
 documentation: https://github.com/exitlive/stripe-dart
