@@ -98,7 +98,68 @@ main(List<String> args) {
         expect(card.expYear, equals(expYear));
 
       });
+
       expect(future, completes);
+
+    });
+
+    test("CardCreation full", () {
+
+      Customer testCustomer;
+      Card testCard;
+      String testCardNumber = "4242424242424242";
+      int testCardExpMonth = 12;
+      int testCardExpYear = 2014;
+      int testCardCvc = 123;
+      String testCardName = "Anita Bath";
+      String testCardAddressLine1 = "Teststreet 2/39A";
+      String testCardAddressLine2 = "line 2";
+      String testCardAddressCity = "Vienna";
+      String testCardAddressZip = "1050";
+      String testCardAddressState = "Vienna";
+      String testCardAddressCountry = "Austria";
+      Future future = new CustomerCreation().create();
+      future.then((Customer customer) {
+        testCustomer = customer;
+        expect(customer.id, new isInstanceOf<String>());
+      })
+      .then((_) {
+        return (
+            new CardCreation()
+                    ..number = testCardNumber
+                    ..expMonth = testCardExpMonth
+                    ..expYear = testCardExpYear
+                    ..cvc = testCardCvc
+                    ..name = testCardName
+                    ..addressLine1 = testCardAddressLine1
+                    ..addressLine2 = testCardAddressLine2
+                    ..addressCity = testCardAddressCity
+                    ..addressZip = testCardAddressZip
+                    ..addressState = testCardAddressState
+                    ..addressCountry = testCardAddressCountry
+            ).create(testCustomer.id);
+      })
+      .then((Card card) {
+        testCard = card;
+        expect(card.id, new isInstanceOf<String>());
+        expect(card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
+        expect(card.expMonth, equals(testCardExpMonth));
+        expect(card.expYear, equals(testCardExpYear));
+        expect(card.cvcCheck, equals("pass"));
+        expect(card.name, equals(testCardName));
+        expect(card.addressLine1, equals(testCardAddressLine1));
+        expect(card.addressLine1Check, equals("pass"));
+        expect(card.addressLine2, equals(testCardAddressLine2));
+        expect(card.addressCity, equals(testCardAddressCity));
+        expect(card.addressZip, equals(testCardAddressZip));
+        expect(card.addressZipCheck, equals("pass"));
+        expect(card.addressState, equals(testCardAddressState));
+        expect(card.addressCountry, equals(testCardAddressCountry));
+
+      });
+
+      expect(future, completes);
+
     });
 
 
