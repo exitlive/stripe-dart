@@ -171,7 +171,7 @@ main(List<String> args) {
         expect(customer.discount.coupon.id, equals(testCouponId));
         expect(customer.discount.coupon.duration, equals(testCouponDuration));
         expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff));
-        expect(customer.discount.start.runtimeType, equals(int));
+        expect(customer.discount.start.runtimeType, equals(DateTime));
         expect(customer.discount.subscription, equals(null));
         expect(customer.discount.customer, equals(customer.id));
 
