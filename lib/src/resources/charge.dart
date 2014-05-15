@@ -145,7 +145,7 @@ class Charge extends Resource {
    * Only expand resources on demand.
    */
   static Future<Charge> retrieve(String id, {final Map data}) {
-    return StripeService.retrieve(Charge._path, id, data: data)
+    return StripeService.retrieve([Charge._path, id], data: data)
         .then((Map json) => new Charge.fromMap(json));
   }
 
@@ -166,7 +166,7 @@ class Charge extends Resource {
     if (amount != null) data["amount"] = amount;
     if (refundApplicationFee != null) data["refund_application_fee"] = refundApplicationFee;
     if (data == {}) data = null;
-    return StripeService.post(Charge._path, id: id, action: "refund", data: data)
+    return StripeService.post([Charge._path, id, "refund"], data: data)
         .then((Map json) => new Charge.fromMap(json));
   }
 
@@ -184,7 +184,7 @@ class Charge extends Resource {
     if (amount != null) data["amount"] = amount;
     if (refundApplicationFee != null) data["refund_application_fee"] = refundApplicationFee;
     if (data == {}) data = null;
-    return StripeService.post(Charge._path, id: id, action: "capture", data: data)
+    return StripeService.post([Charge._path, id, "capture"], data: data)
         .then((Map json) => new Charge.fromMap(json));
   }
 }
@@ -276,7 +276,7 @@ class ChargeCreation extends ResourceRequest {
    * Returns a [Future] with a new [Charge] from the response.
    */
   Future<Charge> create() {
-    return StripeService.create(Charge._path, _getMap())
+    return StripeService.create([Charge._path], _getMap())
       .then((Map json) => new Charge.fromMap(json));
   }
 
