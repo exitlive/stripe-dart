@@ -15,7 +15,7 @@ abstract class ResourceCollection<T> extends ApiResource {
       var list = new List<T>();
 
       for (var map in data) {
-        list.add(getInstanceFromMap(map));
+        list.add(_getInstanceFromMap(map));
       }
 
       return list;
@@ -23,7 +23,7 @@ abstract class ResourceCollection<T> extends ApiResource {
   }
 
 
-  T getInstanceFromMap(map);
+  T _getInstanceFromMap(map);
 
   String get url => _dataMap["url"];
 

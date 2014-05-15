@@ -2,7 +2,7 @@ part of stripe;
 
 class CustomerCollection extends ResourceCollection {
 
-  Customer getInstanceFromMap(map) => new Customer.fromMap(map);
+  Customer _getInstanceFromMap(map) => new Customer.fromMap(map);
 
   CustomerCollection.fromMap(Map map) : super.fromMap(map);
 
