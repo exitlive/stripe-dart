@@ -253,6 +253,21 @@ main(List<String> args) {
 
     });
 
+    test('Delete customer', () {
+      Customer testCustomer;
+      new CustomerCreation().create()
+      .then((Customer customer) {
+        testCustomer = customer;
+        return Customer.delete(customer.id);
+      })
+      .then((Map response) {
+        expect(response['deleted'], isTrue);
+        expect(response['id'], equals(testCustomer.id));
+      })
+      .then(expectAsync((_) => true));
+
+    });
+
     test('List parameters customer', () {
       List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
