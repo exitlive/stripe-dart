@@ -71,13 +71,6 @@ class Customer extends ApiResource {
   /// in a structured format.
   Map<String, String> get metadata => _dataMap["metadata"];
 
-
-  NextRecurringCharge get nextRecurringCharge {
-    var value;
-    if ((value = _dataMap["next_recurring_charge"]) == null) return null;
-    else return new NextRecurringCharge.fromMap(value);
-  }
-
   SubscriptionCollection get subscriptions {
     var value = _dataMap["subscriptions"];
     if (value == null) return null;

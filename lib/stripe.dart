@@ -35,7 +35,6 @@ part "src/resources/invoice_line_item_collection.dart";
 part "src/resources/plan.dart";
 part "src/resources/plan_collection.dart";
 part "src/resources/dispute.dart";
-part "src/resources/next_recurring_charge.dart";
 part "src/resources/refund.dart";
 part "src/resources/subscription.dart";
 part "src/resources/subscription_collection.dart";
