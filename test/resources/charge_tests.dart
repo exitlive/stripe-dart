@@ -189,7 +189,13 @@ main(List<String> args) {
           expect(charge.metadata, equals(testChargeMetadata1));
           expect(charge.captured, equals(testChargeCapture));
           expect(charge.statement_description, equals(testChargeStatementDescription));
-          // also test the ChargeUpdate
+          // testing the expand functionality of retrieve
+          return Charge.retrieve(charge.id, data: {"expand": ["balance_transaction", "customer", "invoice"]});
+        })
+        .then((Charge charge) {
+          expect(charge.customer, equals(charge.customerExpand.id));
+
+          // testing the ChargeUpdate
           return (new ChargeUpdate()
               ..description = testChargeDescription2
               ..metadata = testChargeMetadata2
@@ -285,5 +291,63 @@ main(List<String> args) {
 
   });
 
+  test("List parameters charge", () {
+
+    // Customer fields
+    Customer testCustomer;
+
+    // Card fields
+    Card testCard;
+    String testCardNumber = "4242424242424242";
+    int testCardExpMonth = 12;
+    int testCardExpYear = 2014;
+
+    new CustomerCreation().create()
+        .then((Customer customer) {
+          testCustomer = customer;
+          return (new CardCreation()
+              ..number = testCardNumber
+              ..expMonth = testCardExpMonth
+              ..expYear = testCardExpYear
+          ).create(testCustomer.id);
+        })
+        .then((Card card) {
+          testCard = card;
+          List<Future> queue = [];
+          for (var i = 0; i < 20; i++) {
+            // Charge fields
+            int testChargeAmount = 100;
+            int testChargeCaptureAmount = 90;
+            String testChargeCurrency = "usd";
+            // application_fee can not be tested
+            queue.add(
+              (new ChargeCreation()
+                  ..amount = testChargeAmount
+                  ..currency = testChargeCurrency
+                  ..customer = testCustomer.id
+                  ..capture = false
+              ).create()
+            );
+          }
+          return Future.wait(queue);
+        })
+        .then((_) => Charge.list(customer: testCustomer.id, limit: 10))
+        .then((ChargeCollection charge) {
+          expect(charge.data.length, equals(10));
+          expect(charge.hasMore, equals(true));
+          return Charge.list(customer: testCustomer.id, limit: 10, startingAfter: charge.data.last.id);
+        })
+        .then((ChargeCollection charge) {
+          expect(charge.data.length, equals(10));
+          expect(charge.hasMore, equals(false));
+          return Charge.list(customer: testCustomer.id, limit: 10, endingBefore: charge.data.first.id);
+        })
+        .then((ChargeCollection charge) {
+          expect(charge.data.length, equals(10));
+          expect(charge.hasMore, equals(false));
+        })
+        .then(expectAsync((_) => true));
+
+  });
 
 }
