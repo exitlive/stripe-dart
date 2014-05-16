@@ -1,9 +1,8 @@
 part of stripe;
 
+
 /**
- * A discount represents the actual application of a coupon to a particular
- * customer. It contains information about when the discount began and when it
- * will end.
+ * [Discounts](https://stripe.com/docs/api/curl#discounts)
  */
 class Discount extends Resource {
 
@@ -13,7 +12,6 @@ class Discount extends Resource {
 
   static String _path = "discount";
 
-  /// Hash describing the coupon applied to create this discount
   Coupon get coupon {
     var value = _dataMap["coupon"];
     if (value == null) return null;
@@ -22,20 +20,12 @@ class Discount extends Resource {
 
   String get customer => _dataMap["customer"];
 
-  /// Date that the coupon was applied
   DateTime get start => _getDateTimeFromMap("start");
 
-  /// If the coupon has a duration of once or repeating, the date that this
-  /// discount will end. If the coupon used has a forever duration,
-  /// this attribute will be null.
   DateTime get end => _getDateTimeFromMap("end");
 
-  /// The subscription that this coupon is applied to, if it is applied to
-  /// a particular subscription
   String get subscription => _dataMap["subscription"];
 
-
   Discount.fromMap(Map dataMap) : super.fromMap(dataMap);
-
 
 }

@@ -8,9 +8,8 @@ class InvalidDataReceivedException implements Exception {
   InvalidDataReceivedException(this.errorMessage);
 
   String toString() => "Invalid data received: ${errorMessage}.";
+
 }
-
-
 
 
 /**
@@ -24,6 +23,7 @@ abstract class StripeApiException implements Exception {
 
 }
 
+
 /**
  * Invalid request errors arise when your request has invalid parameters.
  */
@@ -34,6 +34,7 @@ class InvalidRequestErrorException extends StripeApiException {
   String toString() => "Invalid request: ${errorMessage}.";
 
 }
+
 
 /**
  * Card errors are the most common type of error you should expect to handle.
@@ -79,4 +80,3 @@ class BadRequestException extends StripeApiException {
   String toString() => "Bad request: ${errorMessage}.";
 
 }
-

@@ -1,5 +1,6 @@
 part of stripe;
 
+
 class ChargeCollection extends ResourceCollection {
 
   Charge _getInstanceFromMap(map) => new Charge.fromMap(map);

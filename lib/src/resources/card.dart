@@ -1,45 +1,33 @@
 part of stripe;
 
+
 /**
- * You can store multiple credit cards for a customer in order to charge the
- * customer later.
+ * [Card](https://stripe.com/docs/api/curl#cards)
  */
 class Card extends Resource {
 
-  /// ID of card (used in conjunction with a customer ID)
   String get id => _dataMap["id"];
 
   final String objectName = "card";
 
   static String _path = "cards";
 
-
-  Card.fromMap(Map dataMap) : super.fromMap(dataMap);
-
   int get expMonth => _dataMap["exp_month"];
 
   int get expYear => _dataMap["exp_year"];
 
-  /// Uniquely identifies this particular card number. You can use this
-  /// attribute to check whether two customers who’ve signed up with you are
-  /// using the same card number, for example.
   String get fingerprint => _dataMap["fingerprint"];
 
   String get last4 => _dataMap["last4"];
 
-  /// Card brand. Can be Visa, American Express, MasterCard, Discover, JCB,
-  /// Diners Club, or Unknown.
   String get type => _dataMap["type"];
 
   String get addressCity => _dataMap["address_city"];
 
-  /// Billing address country, if provided when creating card
   String get addressCountry => _dataMap["address_country"];
 
   String get addressLine1 => _dataMap["address_line1"];
 
-  /// If address_line1 was provided, results of the check: pass, fail,
-  /// or unchecked.
   String get addressLine1Check => _dataMap["address_line1_check"];
 
   String get addressLine2 => _dataMap["address_line2"];
@@ -48,13 +36,10 @@ class Card extends Resource {
 
   String get addressZip => _dataMap["address_zip"];
 
-  /// If address_zip was provided, results of the check: pass, fail,
-  /// or unchecked.
   String get addressZipCheck => _dataMap["address_zip_check"];
 
   String get country => _dataMap["country"];
 
-  /// ID of the customer this card belongs to
   String get customer {
     var value = _dataMap["customer"];
     if (value == null) return null;
@@ -62,26 +47,20 @@ class Card extends Resource {
     else return new Customer.fromMap(value).id;
   }
 
-  /// [Customer] object this card belongs to
-  /// This will return null if you call retrieve without expanding.
   Customer get customerExpand {
     var value = _dataMap["customer"];
     if (value == null) return null;
     else return new Customer.fromMap(value);
   }
 
-  /// If a CVC was provided, results of the check: pass, fail, or unchecked
   String get cvcCheck => _dataMap["cvc_check"];
 
-  /// Cardholder name
   String get name => _dataMap["name"];
 
-
+  Card.fromMap(Map dataMap) : super.fromMap(dataMap);
 
   /**
-   * By default, you can see the 10 most recent cards stored on a customer
-   * directly on the customer object, but you can also retrieve details about a
-   * specific card stored on the customer.
+   * [Retrieving a customer's card](https://stripe.com/docs/api/curl#retrieve_card)
    */
   static Future<Card> retrieve(String customerId, String cardId, {final Map data}) {
     return StripeService.retrieve([Customer._path, customerId, Card._path, cardId], data: data)
@@ -89,13 +68,7 @@ class Card extends Resource {
   }
 
   /**
-   * Retrieves a [CardCollection] of the cards for the customer with the
-   * specified customerId.
-   *
-   * You can see a list of the customer's cards. Note that the 10 most recent
-   * cards are always available by default on the customer object. If you need
-   * more than those 10, you can use the limit and starting_after parameters to
-   * page through additional cards.
+   * [Listing cards](https://stripe.com/docs/api/curl#list_cards)
    */
   static Future<CardCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) {
     Map data = {};
@@ -108,23 +81,15 @@ class Card extends Resource {
   }
 
   /**
-   * You can delete cards from a customer. If you delete a card that is
-   * currently a customer's default, the most recently added card will be used
-   * as the new default. If you delete the customer's last remaining card,
-   * the default_card attribute on the customer will become null.
-   *
-   * Note that you may want to prevent customers on paid subscriptions from
-   * deleting all cards on file so that there is at least one default card for
-   * the next invoice payment attempt.
+   * [Deleting cards](https://stripe.com/docs/api/curl#delete_card)
    */
   static Future delete(String customerId, String cardId) => StripeService.delete([Customer._path, customerId, Card._path, cardId]);
 
 }
 
 
-
 /**
- * Used to create a [Card]
+ * [Creating a new card](https://stripe.com/docs/api/curl#create_card)
  */
 class CardCreation extends ResourceRequest {
 
@@ -160,8 +125,9 @@ class CardCreation extends ResourceRequest {
 
 }
 
+
 /**
- * Used to create a [Card] with a token
+ * [Creating a new card](https://stripe.com/docs/api/curl#create_card)
  */
 class CardCreationWithToken extends ResourceRequest {
 
@@ -177,7 +143,7 @@ class CardCreationWithToken extends ResourceRequest {
 
 
 /**
- * Used to update an existing [Card].
+ * [Updating a card](https://stripe.com/docs/api/curl#update_card)
  */
 class CardUpdate extends ResourceRequest {
 
@@ -198,7 +164,6 @@ class CardUpdate extends ResourceRequest {
   set expYear (int expYear) => _setMap("exp_year", expYear);
 
   set name (String name) => _setMap("name", name);
-
 
   Future<Card> update(String customerId, String cardId) {
     return StripeService.update([Customer._path, customerId, Card._path, cardId], _getMap())

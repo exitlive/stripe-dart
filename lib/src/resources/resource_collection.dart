@@ -1,5 +1,6 @@
 part of stripe;
 
+
 /**
  * An abstract collection class that helps retrieving multiple elements of the
  * same resource.
@@ -22,7 +23,6 @@ abstract class ResourceCollection<T> extends ApiResource {
     }
   }
 
-
   T _getInstanceFromMap(map);
 
   String get url => _dataMap["url"];
@@ -30,4 +30,5 @@ abstract class ResourceCollection<T> extends ApiResource {
   bool get hasMore => _dataMap["has_more"];
 
   ResourceCollection.fromMap(Map dataMap) : super.fromMap(dataMap);
+
 }

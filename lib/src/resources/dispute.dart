@@ -1,22 +1,16 @@
 part of stripe;
 
 
-
 /**
  * [Disputes](https://stripe.com/docs/api/curl#disputes)
  */
 class Dispute extends Resource {
-
 
   String get id => _dataMap["id"];
 
   final String objectName = "dispute";
 
   static String _path = "dispute";
-
-
-  Dispute.fromMap(Map dataMap) : super.fromMap(dataMap);
-
 
   bool get livemode => _dataMap["livemode"];
 
@@ -61,5 +55,7 @@ class Dispute extends Resource {
   DateTime get evidenceDueBy => _getDateTimeFromMap("evidence_due_by");
 
   bool get isProtected => _dataMap["is_protected"];
+
+  Dispute.fromMap(Map dataMap) : super.fromMap(dataMap);
 
 }

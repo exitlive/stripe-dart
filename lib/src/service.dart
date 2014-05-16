@@ -1,5 +1,6 @@
 part of stripe;
 
+
 /**
  * The service to communicate with the REST stripe API.
  */
@@ -16,10 +17,8 @@ abstract class StripeService {
   /// The Api key used to communicate with Stripe
   static String apiKey;
 
-
   /// Useful for testing.
   static HttpClient _getClient() => new HttpClient();
-
 
   /**
    * Makes a post request to the Stripe API to given path and parameters.
@@ -36,7 +35,6 @@ abstract class StripeService {
    * [data] is used for expanding resources
    */
   static Future<Map> retrieve(final List<String> pathParts, {final Map data}) => _request("GET", pathParts, data: data);
-
 
   /**
    * Makes a get request to the Stripe API to update an existing resource
@@ -130,7 +128,6 @@ abstract class StripeService {
         return map;
       });
   }
-
 
   /**
    * Takes a map, and returns a properly escaped Uri String.

@@ -1,5 +1,6 @@
 part of stripe;
 
+
 class CouponCollection extends ResourceCollection {
 
   Coupon _getInstanceFromMap(map) => new Coupon.fromMap(map);
