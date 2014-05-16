@@ -4,6 +4,8 @@ import 'package:logging/logging.dart';
 import "service_tests.dart" as serviceTests;
 import "resources/resource_tests.dart" as resourceTests;
 
+
+import "resources/account_tests.dart" as accountTests;
 import "resources/balance_tests.dart" as balanceTests;
 import "resources/card_tests.dart" as cardTests;
 import "resources/discount_tests.dart" as discountTests;
@@ -21,6 +23,7 @@ main(List<String> args) {
   serviceTests.main();
   resourceTests.main();
 
+  accountTests.main(args);
   balanceTests.main(args);
   discountTests.main(args);
   cardTests.main(args);

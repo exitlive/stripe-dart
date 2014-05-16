@@ -18,6 +18,7 @@ part "src/resources/resource.dart";
 part "src/resources/resource_collection.dart";
 part "src/resources/api_resource.dart";
 
+part "src/resources/account.dart";
 part "src/resources/balance.dart";
 part "src/resources/card.dart";
 part "src/resources/charge.dart";
