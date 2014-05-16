@@ -10,37 +10,37 @@ import '../utils.dart' as utils;
 
 
 var exampleObject = """
-                    {
-                      "object": "customer",
-                      "created": 1399894618,
-                      "id": "cus_41KOaI2C3BNEc7",
-                      "livemode": false,
-                      "description": null,
-                      "email": null,
-                      "delinquent": false,
-                      "metadata": {
-                      },
-                      "subscriptions": {
-                        "object": "list",
-                        "total_count": 0,
-                        "has_more": false,
-                        "url": "/v1/customers/cus_41KOaI2C3BNEc7/subscriptions",
-                        "data": [
-                    
-                        ]
-                      },
-                      "discount": null,
-                      "account_balance": 0,
-                      "currency": "usd",
-                      "cards": {
-                        "object": "list",
-                        "has_more": false,
-                        "url": "/v1/customers/cus_41KOaI2C3BNEc7/cards",
-                        "data": [
-                        ]
-                      },
-                      "default_card": null
-                    }""";
+    {
+      "object": "customer",
+      "created": 1399894618,
+      "id": "cus_41KOaI2C3BNEc7",
+      "livemode": false,
+      "description": null,
+      "email": null,
+      "delinquent": false,
+      "metadata": {
+      },
+      "subscriptions": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "/v1/customers/cus_41KOaI2C3BNEc7/subscriptions",
+        "data": [
+    
+        ]
+      },
+      "discount": null,
+      "account_balance": 0,
+      "currency": "usd",
+      "cards": {
+        "object": "list",
+        "has_more": false,
+        "url": "/v1/customers/cus_41KOaI2C3BNEc7/cards",
+        "data": [
+        ]
+      },
+      "default_card": null
+    }""";
 
 
 main(List<String> args) {
