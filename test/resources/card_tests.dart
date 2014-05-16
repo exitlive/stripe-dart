@@ -195,6 +195,74 @@ main(List<String> args) {
     });
 
 
+    test('Delete card', () {
+      Customer testCustomer;
+      Card testCard;
+      String number = '4242424242424242';
+      int expMonth = 12;
+      int expYear = 2014;
+      new CustomerCreation().create()
+          .then((Customer customer) {
+            testCustomer = customer;
+            expect(customer.id, new isInstanceOf<String>());
+            return (new CardCreation()
+                ..number = number
+                ..expMonth = expMonth
+                ..expYear = expYear
+            ).create(testCustomer.id);
+          })
+          .then((Card card) {
+            testCard = card;
+            return Card.delete(testCustomer.id, card.id);
+          })
+          .then((Map response) {
+            expect(response['deleted'], isTrue);
+            expect(response['id'], equals(testCard.id));
+          })
+          .then(expectAsync((_) => true));
+
+    });
+
+    test('List parameters card', () {
+      Customer testCustomer;
+      Card testCard;
+      String number = '4242424242424242';
+      int expMonth = 12;
+      int expYear = 2014;
+      new CustomerCreation().create()
+          .then((Customer customer) {
+            testCustomer = customer;
+            List<Future> queue = [];
+            for (var i = 0; i < 20; i++) {
+              queue.add((new CardCreation()
+                  ..number = number
+                  ..expMonth = expMonth
+                  ..expYear = expYear
+              ).create(testCustomer.id));
+            }
+            return Future.wait(queue);
+          })
+          .then((_) => Card.list(testCustomer.id, limit: 10))
+          .then((CardCollection cards) {
+            expect(cards.data.length, equals(10));
+            expect(cards.hasMore, equals(true));
+            return Card.list(testCustomer.id, limit: 10, startingAfter: cards.data.last.id);
+          })
+          .then((CardCollection cards) {
+            expect(cards.data.length, equals(10));
+            expect(cards.hasMore, equals(false));
+            return Card.list(testCustomer.id, limit: 10, endingBefore: cards.data.first.id);
+          })
+          .then((CardCollection cards) {
+            expect(cards.data.length, equals(10));
+            expect(cards.hasMore, equals(false));
+          })
+          .then(expectAsync((_) => true));
+
+    });
+
+
+
   });
 
 }
