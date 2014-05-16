@@ -164,6 +164,7 @@ main(List<String> args) {
           .then((Card card) {
             expect(card.customer, equals(testCustomer.id));
             expect(card.customerExpand.id, equals(testCustomer.id));
+            // testing the CardUpdate
             return (new CardUpdate()
                 ..addressCity = testCardAddressCity2
                 ..addressCountry = testCardAddressCountry2
@@ -174,7 +175,6 @@ main(List<String> args) {
                 ..expMonth = testCardExpMonth2
                 ..expYear = testCardExpYear2
                 ..name = testCardName2
-
             ).update(testCustomer.id, testCard.id);
           })
           .then((Card card) {
