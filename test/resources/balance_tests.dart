@@ -1,7 +1,6 @@
 library balance_tests;
 
 import "dart:convert";
-import "dart:async";
 
 import 'package:unittest/unittest.dart';
 
@@ -9,22 +8,22 @@ import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
 var exampleObject = """
-                    {
-                      "pending": [
-                        {
-                          "amount": 295889,
-                          "currency": "usd"
-                        }
-                      ],
-                      "available": [
-                        {
-                          "amount": 0,
-                          "currency": "usd"
-                        }
-                      ],
-                      "livemode": false,
-                      "object": "balance"
-                    }""";
+    {
+      "pending": [
+        {
+          "amount": 295889,
+          "currency": "usd"
+        }
+      ],
+      "available": [
+        {
+          "amount": 0,
+          "currency": "usd"
+        }
+      ],
+      "livemode": false,
+      "object": "balance"
+    }""";
 
 
 main(List<String> args) {
@@ -57,11 +56,11 @@ main(List<String> args) {
     test("Retrieve Balance", () {
 
       Balance.retrieve()
-        .then((Balance balance) {
-          expect(balance.livemode, equals(false));
-          // other tests will depend on your stripe account
-        })
-        .then(expectAsync((_) => true));
+          .then((Balance balance) {
+            expect(balance.livemode, equals(false));
+            // other tests will depend on your stripe account
+          })
+          .then(expectAsync((_) => true));
 
     });
 

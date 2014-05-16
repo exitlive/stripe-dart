@@ -7,24 +7,22 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-import "dart:async";
-
 var exampleObject = """
-                    {
-                      "interval": "month",
-                      "name": "Gold Special",
-                      "created": 1399650846,
-                      "amount": 2000,
-                      "currency": "usd",
-                      "id": "gold",
-                      "object": "plan",
-                      "livemode": false,
-                      "interval_count": 1,
-                      "trial_period_days": null,
-                      "metadata": {
-                      },
-                      "statement_description": null
-                    }""";
+    {
+      "interval": "month",
+      "name": "Gold Special",
+      "created": 1399650846,
+      "amount": 2000,
+      "currency": "usd",
+      "id": "gold",
+      "object": "plan",
+      "livemode": false,
+      "interval_count": 1,
+      "trial_period_days": null,
+      "metadata": {
+      },
+      "statement_description": null
+    }""";
 
 
 main(List<String> args) {
@@ -67,23 +65,22 @@ main(List<String> args) {
       String testCurrency = "usd";
       String testInterval = "month";
       String testName = "test name";
-      Future future = (
-        new PlanCreation()
-                ..id = testId
-                ..amount = testAmount
-                ..currency = testCurrency
-                ..interval = testInterval
-                ..name = testName
-      ).create();
-      future.then((Plan plan) {
-        testPlan = plan;
-        expect(plan.id, new isInstanceOf<String>());
-        expect(plan.amount, equals(testAmount));
-        expect(plan.currency, equals(testCurrency));
-        expect(plan.interval, equals(testInterval));
-        expect(plan.name, equals(testName));
-      });
-      expect(future, completes);
+      (new PlanCreation()
+          ..id = testId
+          ..amount = testAmount
+          ..currency = testCurrency
+          ..interval = testInterval
+          ..name = testName
+      ).create()
+          .then((Plan plan) {
+            testPlan = plan;
+            expect(plan.id, new isInstanceOf<String>());
+            expect(plan.amount, equals(testAmount));
+            expect(plan.currency, equals(testCurrency));
+            expect(plan.interval, equals(testInterval));
+            expect(plan.name, equals(testName));
+          })
+          .then(expectAsync((_) => true));
     });
 
   });

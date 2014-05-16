@@ -69,19 +69,16 @@ main(List<String> args) {
       String testDuration = "forever";
       int testPercentOff = 5;
 
-      Future future = (
-          new CouponCreation()
-              ..duration = testDuration
-              ..percentOff = testPercentOff
-          ).create();
-
-      future.then((Coupon coupon) {
-        expect(coupon.id, new isInstanceOf<String>());
-        expect(coupon.duration, equals(testDuration));
-        expect(coupon.percentOff, equals(testPercentOff));
-      });
-
-      expect(future, completes);
+      (new CouponCreation()
+          ..duration = testDuration
+          ..percentOff = testPercentOff
+      ).create()
+        .then((Coupon coupon) {
+          expect(coupon.id, new isInstanceOf<String>());
+          expect(coupon.duration, equals(testDuration));
+          expect(coupon.percentOff, equals(testPercentOff));
+        })
+        .then(expectAsync((_) => true));
 
     });
 
@@ -98,30 +95,27 @@ main(List<String> args) {
       Map testMetadata = {"foo": "bar"};
       int testRedeemBy = 1451520000;
 
-      Future future = (
-          new CouponCreation()
-              ..id = testId
-              ..duration = testDuration
-              ..amountOff = testAmountOff
-              ..currency = testCurrency
-              ..durationInMonths = testDurationInMoths
-              ..maxRedemptions = testMaxRedemptions
-              ..metadata = testMetadata
-              ..redeemBy = testRedeemBy
-          ).create();
-
-      future.then((Coupon coupon) {
-        expect(coupon.id, equals(testId));
-        expect(coupon.duration, equals(testDuration));
-        expect(coupon.amountOff, equals(testAmountOff));
-        expect(coupon.currency, equals(testCurrency));
-        expect(coupon.durationInMonths, equals(testDurationInMoths));
-        expect(coupon.maxRedemptions, equals(testMaxRedemptions));
-        expect(coupon.metadata, equals(testMetadata));
-        expect(coupon.redeemBy, equals(testRedeemBy));
-      });
-
-      expect(future, completes);
+      (new CouponCreation()
+          ..id = testId
+          ..duration = testDuration
+          ..amountOff = testAmountOff
+          ..currency = testCurrency
+          ..durationInMonths = testDurationInMoths
+          ..maxRedemptions = testMaxRedemptions
+          ..metadata = testMetadata
+          ..redeemBy = testRedeemBy
+      ).create()
+        .then((Coupon coupon) {
+          expect(coupon.id, equals(testId));
+          expect(coupon.duration, equals(testDuration));
+          expect(coupon.amountOff, equals(testAmountOff));
+          expect(coupon.currency, equals(testCurrency));
+          expect(coupon.durationInMonths, equals(testDurationInMoths));
+          expect(coupon.maxRedemptions, equals(testMaxRedemptions));
+          expect(coupon.metadata, equals(testMetadata));
+          expect(coupon.redeemBy, equals(testRedeemBy));
+        })
+        .then(expectAsync((_) => true));
 
     });
   });

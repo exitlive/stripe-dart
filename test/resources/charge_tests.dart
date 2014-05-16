@@ -9,52 +9,52 @@ import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
 var exampleObject = """
-                    {
-                      "id": "ch_1041NW41dfVNZFcqslnvTHtc",
-                      "object": "charge",
-                      "created": 1399906241,
-                      "livemode": false,
-                      "paid": true,
-                      "amount": 100991,
-                      "currency": "usd",
-                      "refunded": false,
-                      "card": {
-                        "id": "card_1041NW41dfVNZFcqYa3VUHqf",
-                        "object": "card",
-                        "last4": "4242",
-                        "type": "Visa",
-                        "exp_month": 12,
-                        "exp_year": 2015,
-                        "fingerprint": "2OcV4uXscDkio6R5",
-                        "customer": "cus_41NWbNsIkcUEee",
-                        "country": "US",
-                        "name": "Mike Rotch",
-                        "address_line1": "Addresslinestreet 12/42A",
-                        "address_line2": "additional address line",
-                        "address_city": "Laguna Beach",
-                        "address_state": null,
-                        "address_zip": "92651",
-                        "address_country": "USA",
-                        "cvc_check": "pass",
-                        "address_line1_check": "pass",
-                        "address_zip_check": "pass"
-                      },
-                      "captured": true,
-                      "refunds": [
-                    
-                      ],
-                      "balance_transaction": "txn_1041NT41dfVNZFcqhWETcQzJ",
-                      "failure_message": null,
-                      "failure_code": null,
-                      "amount_refunded": 0,
-                      "customer": "cus_41NWbNsIkcUEee",
-                      "invoice": "in_1041NW41dfVNZFcqeK3pYfSi",
-                      "description": null,
-                      "dispute": null,
-                      "metadata": {
-                      },
-                      "statement_description": "statement descr"
-                    }""";
+    {
+      "id": "ch_1041NW41dfVNZFcqslnvTHtc",
+      "object": "charge",
+      "created": 1399906241,
+      "livemode": false,
+      "paid": true,
+      "amount": 100991,
+      "currency": "usd",
+      "refunded": false,
+      "card": {
+        "id": "card_1041NW41dfVNZFcqYa3VUHqf",
+        "object": "card",
+        "last4": "4242",
+        "type": "Visa",
+        "exp_month": 12,
+        "exp_year": 2015,
+        "fingerprint": "2OcV4uXscDkio6R5",
+        "customer": "cus_41NWbNsIkcUEee",
+        "country": "US",
+        "name": "Mike Rotch",
+        "address_line1": "Addresslinestreet 12/42A",
+        "address_line2": "additional address line",
+        "address_city": "Laguna Beach",
+        "address_state": null,
+        "address_zip": "92651",
+        "address_country": "USA",
+        "cvc_check": "pass",
+        "address_line1_check": "pass",
+        "address_zip_check": "pass"
+      },
+      "captured": true,
+      "refunds": [
+    
+      ],
+      "balance_transaction": "txn_1041NT41dfVNZFcqhWETcQzJ",
+      "failure_message": null,
+      "failure_code": null,
+      "amount_refunded": 0,
+      "customer": "cus_41NWbNsIkcUEee",
+      "invoice": "in_1041NW41dfVNZFcqeK3pYfSi",
+      "description": null,
+      "dispute": null,
+      "metadata": {
+      },
+      "statement_description": "statement descr"
+    }""";
 
 
 main(List<String> args) {
@@ -115,25 +115,26 @@ main(List<String> args) {
     String testChargeCurrency = "usd";
 
     new CustomerCreation().create()
-      .then((Customer customer) {
-        testCustomer = customer;
-        return (new CardCreation()
-            ..number = testCardNumber
-            ..expMonth = testCardExpMonth
-            ..expYear = testCardExpYear
-        ).create(testCustomer.id);
-      })
-      .then((Card card) {
-        return (new ChargeCreation()
-            ..amount = testChargeAmount
-            ..currency = testChargeCurrency
-            ..customer = testCustomer.id
-        ).create();
-      }).then((Charge charge) {
-        expect(charge.amount, equals(testChargeAmount));
-        expect(charge.currency, equals(testChargeCurrency));
-      })
-      .then(expectAsync((_) => true));
+        .then((Customer customer) {
+          testCustomer = customer;
+          return (new CardCreation()
+              ..number = testCardNumber
+              ..expMonth = testCardExpMonth
+              ..expYear = testCardExpYear
+          ).create(testCustomer.id);
+        })
+        .then((Card card) {
+          return (new ChargeCreation()
+              ..amount = testChargeAmount
+              ..currency = testChargeCurrency
+              ..customer = testCustomer.id
+          ).create();
+        })
+        .then((Charge charge) {
+          expect(charge.amount, equals(testChargeAmount));
+          expect(charge.currency, equals(testChargeCurrency));
+        })
+        .then(expectAsync((_) => true));
 
   });
 
@@ -161,45 +162,45 @@ main(List<String> args) {
     // application_fee can not be tested
 
     new CustomerCreation().create()
-      .then((Customer customer) {
-        testCustomer = customer;
-        return (new CardCreation()
-            ..number = testCardNumber
-            ..expMonth = testCardExpMonth
-            ..expYear = testCardExpYear
-        ).create(testCustomer.id);
-      })
-      .then((Card card) {
-        return (new ChargeCreation()
-            ..amount = testChargeAmount
-            ..currency = testChargeCurrency
-            ..customer = testCustomer.id
-            ..description = testChargeDescription1
-            ..metadata = testChargeMetadata1
-            ..capture = testChargeCapture
-            ..statementDescription = testChargeStatementDescription
-        ).create();
-      })
-      .then((Charge charge) {
-        testCharge = charge;
-        expect(charge.amount, equals(testChargeAmount));
-        expect(charge.currency, equals(testChargeCurrency));
-        expect(charge.description, equals(testChargeDescription1));
-        expect(charge.metadata, equals(testChargeMetadata1));
-        expect(charge.captured, equals(testChargeCapture));
-        expect(charge.statement_description, equals(testChargeStatementDescription));
-        // also test the ChargeUpdate
-        return (new ChargeUpdate()
-            ..description = testChargeDescription2
-            ..metadata = testChargeMetadata2
-        ).update(testCharge.id);
-      })
-      .then((Charge charge) {
-        testCharge = charge;
-        expect(charge.description, equals(testChargeDescription2));
-        expect(charge.metadata, equals(testChargeMetadata2));
-      })
-      .then(expectAsync((_) => true));
+        .then((Customer customer) {
+          testCustomer = customer;
+          return (new CardCreation()
+              ..number = testCardNumber
+              ..expMonth = testCardExpMonth
+              ..expYear = testCardExpYear
+          ).create(testCustomer.id);
+        })
+        .then((Card card) {
+          return (new ChargeCreation()
+              ..amount = testChargeAmount
+              ..currency = testChargeCurrency
+              ..customer = testCustomer.id
+              ..description = testChargeDescription1
+              ..metadata = testChargeMetadata1
+              ..capture = testChargeCapture
+              ..statementDescription = testChargeStatementDescription
+          ).create();
+        })
+        .then((Charge charge) {
+          testCharge = charge;
+          expect(charge.amount, equals(testChargeAmount));
+          expect(charge.currency, equals(testChargeCurrency));
+          expect(charge.description, equals(testChargeDescription1));
+          expect(charge.metadata, equals(testChargeMetadata1));
+          expect(charge.captured, equals(testChargeCapture));
+          expect(charge.statement_description, equals(testChargeStatementDescription));
+          // also test the ChargeUpdate
+          return (new ChargeUpdate()
+              ..description = testChargeDescription2
+              ..metadata = testChargeMetadata2
+          ).update(testCharge.id);
+        })
+        .then((Charge charge) {
+          testCharge = charge;
+          expect(charge.description, equals(testChargeDescription2));
+          expect(charge.metadata, equals(testChargeMetadata2));
+        })
+        .then(expectAsync((_) => true));
 
   });
 
@@ -220,26 +221,26 @@ main(List<String> args) {
     // application_fee can not be tested
 
     new CustomerCreation().create()
-      .then((Customer customer) {
-        testCustomer = customer;
-        return (new CardCreation()
-            ..number = testCardNumber
-            ..expMonth = testCardExpMonth
-            ..expYear = testCardExpYear
-        ).create(testCustomer.id);
-      })
-      .then((Card card) {
-        return (new ChargeCreation()
-            ..amount = testChargeAmount
-            ..currency = testChargeCurrency
-            ..customer = testCustomer.id
-        ).create();
-      })
-      .then((Charge charge) => Charge.refund(charge.id, amount: testChargeRefundAmount))
-      .then((Charge charge) {
-        expect(charge.refunds.first.amount, testChargeRefundAmount);
-      })
-      .then(expectAsync((_) => true));
+        .then((Customer customer) {
+          testCustomer = customer;
+          return (new CardCreation()
+              ..number = testCardNumber
+              ..expMonth = testCardExpMonth
+              ..expYear = testCardExpYear
+          ).create(testCustomer.id);
+        })
+        .then((Card card) {
+          return (new ChargeCreation()
+              ..amount = testChargeAmount
+              ..currency = testChargeCurrency
+              ..customer = testCustomer.id
+          ).create();
+        })
+        .then((Charge charge) => Charge.refund(charge.id, amount: testChargeRefundAmount))
+        .then((Charge charge) {
+          expect(charge.refunds.first.amount, testChargeRefundAmount);
+        })
+        .then(expectAsync((_) => true));
 
   });
 
@@ -260,27 +261,27 @@ main(List<String> args) {
     // application_fee can not be tested
 
     new CustomerCreation().create()
-      .then((Customer customer) {
-        testCustomer = customer;
-        return (new CardCreation()
-            ..number = testCardNumber
-            ..expMonth = testCardExpMonth
-            ..expYear = testCardExpYear
-        ).create(testCustomer.id);
-      })
-      .then((Card card) {
-        return (new ChargeCreation()
-            ..amount = testChargeAmount
-            ..currency = testChargeCurrency
-            ..customer = testCustomer.id
-            ..capture = false
-        ).create();
-      })
-      .then((Charge charge) => Charge.capture(charge.id, amount: testChargeCaptureAmount))
-      .then((Charge charge) {
-        expect(charge.captured, true);
-      })
-      .then(expectAsync((_) => true));
+        .then((Customer customer) {
+          testCustomer = customer;
+          return (new CardCreation()
+              ..number = testCardNumber
+              ..expMonth = testCardExpMonth
+              ..expYear = testCardExpYear
+          ).create(testCustomer.id);
+        })
+        .then((Card card) {
+          return (new ChargeCreation()
+              ..amount = testChargeAmount
+              ..currency = testChargeCurrency
+              ..customer = testCustomer.id
+              ..capture = false
+          ).create();
+        })
+        .then((Charge charge) => Charge.capture(charge.id, amount: testChargeCaptureAmount))
+        .then((Charge charge) {
+          expect(charge.captured, true);
+        })
+        .then(expectAsync((_) => true));
 
   });
 
