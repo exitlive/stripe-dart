@@ -6,31 +6,31 @@ part of stripe;
  */
 class Account extends Resource {
 
-  String get id => _dataMap["id"];
+  String get id => _dataMap['id'];
 
-  String objectName = "account";
+  String objectName = 'account';
 
-  static String _path = "account";
+  static String _path = 'account';
 
-  bool get chargeEnabled => _dataMap["charge_enabled"];
+  bool get chargeEnabled => _dataMap['charge_enabled'];
 
-  String get country => _dataMap["country"];
+  String get country => _dataMap['country'];
 
-  List<String> get currenciesSupported => _dataMap["currencies_supported"];
+  List<String> get currenciesSupported => _dataMap['currencies_supported'];
 
-  String get defaultCurrency => _dataMap["default_currency"];
+  String get defaultCurrency => _dataMap['default_currency'];
 
-  bool get detailsSubmitted => _dataMap["details_submitted"];
+  bool get detailsSubmitted => _dataMap['details_submitted'];
 
-  bool get transferEnabled => _dataMap["transfer_enabled"];
+  bool get transferEnabled => _dataMap['transfer_enabled'];
 
-  String get displayName => _dataMap["display_name"];
+  String get displayName => _dataMap['display_name'];
 
-  String get email => _dataMap["email"];
+  String get email => _dataMap['email'];
 
-  String get statementDescriptor => _dataMap["statement_descriptor"];
+  String get statementDescriptor => _dataMap['statement_descriptor'];
 
-  String get timezone => _dataMap["timezone"];
+  String get timezone => _dataMap['timezone'];
 
   Account.fromMap(Map dataMap) : super.fromMap(dataMap);
 

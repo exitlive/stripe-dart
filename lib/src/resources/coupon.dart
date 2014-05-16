@@ -6,35 +6,35 @@ part of stripe;
  */
 class Coupon extends ApiResource {
 
-  String get id => _dataMap["id"];
+  String get id => _dataMap['id'];
 
-  String objectName = "coupon";
+  String objectName = 'coupon';
 
-  static String _path = "coupons";
+  static String _path = 'coupons';
 
-  bool get livemode => _dataMap["livemode"];
+  bool get livemode => _dataMap['livemode'];
 
-  DateTime get created => _getDateTimeFromMap("created");
+  DateTime get created => _getDateTimeFromMap('created');
 
-  String get duration => _dataMap["duration"];
+  String get duration => _dataMap['duration'];
 
-  int get amountOff => _dataMap["amount_off"];
+  int get amountOff => _dataMap['amount_off'];
 
-  String get currency => _dataMap["currency"];
+  String get currency => _dataMap['currency'];
 
-  int get durationInMonths => _dataMap["duration_in_months"];
+  int get durationInMonths => _dataMap['duration_in_months'];
 
-  int get maxRedemptions => _dataMap["max_redemptions"];
+  int get maxRedemptions => _dataMap['max_redemptions'];
 
-  Map<String, String> get metadata => _dataMap["metadata"];
+  Map<String, String> get metadata => _dataMap['metadata'];
 
-  int get percentOff => _dataMap["percent_off"];
+  int get percentOff => _dataMap['percent_off'];
 
-  int get redeemBy => _dataMap["redeem_by"];
+  int get redeemBy => _dataMap['redeem_by'];
 
-  int get timesRedeemed => _dataMap["times_redeemed"];
+  int get timesRedeemed => _dataMap['times_redeemed'];
 
-  bool get valid => _dataMap["valid"];
+  bool get valid => _dataMap['valid'];
 
   Coupon.fromMap(Map dataMap) : super.fromMap(dataMap);
 
@@ -51,9 +51,9 @@ class Coupon extends ApiResource {
    */
   static Future<CouponCollection> list({int limit, String startingAfter, String endingBefore}) {
     Map data = {};
-    if (limit != null) data["limit"] = limit;
-    if (startingAfter != null) data["starting_after"] = startingAfter;
-    if (endingBefore != null) data["ending_before"] = endingBefore;
+    if (limit != null) data['limit'] = limit;
+    if (startingAfter != null) data['starting_after'] = startingAfter;
+    if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
     return StripeService.list([Coupon._path], data: data)
         .then((Map json) => new CouponCollection.fromMap(json));
@@ -72,24 +72,24 @@ class Coupon extends ApiResource {
  */
 class CouponCreation extends ResourceRequest {
 
-  set id (String id) => _setMap("id", id);
+  set id (String id) => _setMap('id', id);
 
   @required
-  set duration (String duration) => _setMap("duration", duration);
+  set duration (String duration) => _setMap('duration', duration);
 
-  set amountOff (int amountOff) => _setMap("amount_off", amountOff);
+  set amountOff (int amountOff) => _setMap('amount_off', amountOff);
 
-  set currency (String currency) => _setMap("currency", currency);
+  set currency (String currency) => _setMap('currency', currency);
 
-  set durationInMonths (int durationInMonths) => _setMap("duration_in_months", durationInMonths);
+  set durationInMonths (int durationInMonths) => _setMap('duration_in_months', durationInMonths);
 
-  set maxRedemptions (int maxRedemptions) => _setMap("max_redemptions", maxRedemptions);
+  set maxRedemptions (int maxRedemptions) => _setMap('max_redemptions', maxRedemptions);
 
-  set metadata (Map metadata) => _setMap("metadata", metadata);
+  set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  set percentOff (int percentOff) => _setMap("percent_off", percentOff);
+  set percentOff (int percentOff) => _setMap('percent_off', percentOff);
 
-  set redeemBy (int redeemBy) => _setMap("redeem_by", redeemBy);
+  set redeemBy (int redeemBy) => _setMap('redeem_by', redeemBy);
 
   Future<Coupon> create() {
     return StripeService.create([Coupon._path], _getMap())

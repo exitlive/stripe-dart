@@ -6,55 +6,55 @@ part of stripe;
  */
 class Dispute extends Resource {
 
-  String get id => _dataMap["id"];
+  String get id => _dataMap['id'];
 
-  final String objectName = "dispute";
+  final String objectName = 'dispute';
 
-  static String _path = "dispute";
+  static String _path = 'dispute';
 
-  bool get livemode => _dataMap["livemode"];
+  bool get livemode => _dataMap['livemode'];
 
-  int get amount => _dataMap["amount"];
+  int get amount => _dataMap['amount'];
 
   String get charge {
-    var value = _dataMap["charge"];
+    var value = _dataMap['charge'];
     if (value == null) return null;
-    else if(value is String) return _dataMap["charge"];
+    else if(value is String) return _dataMap['charge'];
     else return new Balance.fromMap(value).id;
   }
 
   Charge get ChargeExpand {
-    var value = _dataMap["charge"];
+    var value = _dataMap['charge'];
     if (value == null) return null;
     else return new Charge.fromMap(value);
   }
 
-  DateTime get created => _getDateTimeFromMap("created");
+  DateTime get created => _getDateTimeFromMap('created');
 
-  String get currency => _dataMap["currency"];
+  String get currency => _dataMap['currency'];
 
-  String get reason => _dataMap["reason"];
+  String get reason => _dataMap['reason'];
 
-  String get status => _dataMap["status"];
+  String get status => _dataMap['status'];
 
   String get balanceTransaction {
-    var value = _dataMap["balance_transaction"];
+    var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else if(value is String) return _dataMap["balance_transaction"];
+    else if(value is String) return _dataMap['balance_transaction'];
     else return new Balance.fromMap(value).id;
   }
 
   Balance get balanceTransactionExpand {
-    var value = _dataMap["balance_transaction"];
+    var value = _dataMap['balance_transaction'];
     if (value == null) return null;
     else return new Balance.fromMap(value);
   }
 
-  String get evidence => _dataMap["evidence"];
+  String get evidence => _dataMap['evidence'];
 
-  DateTime get evidenceDueBy => _getDateTimeFromMap("evidence_due_by");
+  DateTime get evidenceDueBy => _getDateTimeFromMap('evidence_due_by');
 
-  bool get isProtected => _dataMap["is_protected"];
+  bool get isProtected => _dataMap['is_protected'];
 
   Dispute.fromMap(Map dataMap) : super.fromMap(dataMap);
 

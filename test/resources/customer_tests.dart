@@ -1,7 +1,7 @@
 library customer_tests;
 
-import "dart:convert";
-import "dart:async";
+import 'dart:convert';
+import 'dart:async';
 
 import 'package:unittest/unittest.dart';
 
@@ -57,29 +57,29 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test("fromMap() properly popullates all values", () {
+    test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleObject);
 
       var customer = new Customer.fromMap(map);
 
-      expect(customer.created, equals(new DateTime.fromMillisecondsSinceEpoch(map["created"] * 1000)));
-      expect(customer.id, equals(map["id"]));
-      expect(customer.livemode, equals(map["livemode"]));
-      expect(customer.description, equals(map["description"]));
-      expect(customer.email, equals(map["email"]));
-      expect(customer.delinquent, equals(map["delinquent"]));
-      expect(customer.metadata, equals(map["metadata"]));
+      expect(customer.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
+      expect(customer.id, equals(map['id']));
+      expect(customer.livemode, equals(map['livemode']));
+      expect(customer.description, equals(map['description']));
+      expect(customer.email, equals(map['email']));
+      expect(customer.delinquent, equals(map['delinquent']));
+      expect(customer.metadata, equals(map['metadata']));
       expect(customer.subscriptions, new isInstanceOf<SubscriptionCollection>());
-      expect(customer.discount, equals(map["discount"]));
-      expect(customer.accountBalance, equals(map["account_balance"]));
-      expect(customer.currency, equals(map["currency"]));
+      expect(customer.discount, equals(map['discount']));
+      expect(customer.accountBalance, equals(map['account_balance']));
+      expect(customer.currency, equals(map['currency']));
       expect(customer.cards, new isInstanceOf<CardCollection>());
-      expect(customer.cards.data.length, equals(map["cards"]["data"].length));
-      expect(customer.cards.url, equals(map["cards"]["url"]));
-      expect(customer.defaultCard, equals(map["default_card"]));
+      expect(customer.cards.data.length, equals(map['cards']['data'].length));
+      expect(customer.cards.url, equals(map['cards']['url']));
+      expect(customer.defaultCard, equals(map['default_card']));
     });
 
-    test("CustomerCreation minimal", () {
+    test('CustomerCreation minimal', () {
       new CustomerCreation().create()
         .then((Customer customer) {
           expect(customer.id, new isInstanceOf<String>());
@@ -89,10 +89,10 @@ main(List<String> args) {
     });
 
 
-    test("CustomerCreation full", () {
+    test('CustomerCreation full', () {
 
       // Card fields
-      String testCardNumber1 = "4242424242424242";
+      String testCardNumber1 = '4242424242424242';
       int testCardExpMonth1 = 12;
       int testCardExpYear1 = 2015;
 
@@ -101,7 +101,7 @@ main(List<String> args) {
           ..expMonth = testCardExpMonth1
           ..expYear = testCardExpYear1;
 
-      String testCardNumber2 = "5555555555554444";
+      String testCardNumber2 = '5555555555554444';
       int testCardExpMonth2 = 3;
       int testCardExpYear2 = 2016;
 
@@ -111,8 +111,8 @@ main(List<String> args) {
           ..expYear = testCardExpYear2;
 
       // Coupon fields
-      String testCouponId1 = "test coupon id1";
-      String testCouponDuration1 = "forever";
+      String testCouponId1 = 'test coupon id1';
+      String testCouponDuration1 = 'forever';
       int testCouponPercentOff1 = 15;
 
       Coupon testCoupon1;
@@ -121,8 +121,8 @@ main(List<String> args) {
           ..duration = testCouponDuration1
           ..percentOff = testCouponPercentOff1;
 
-      String testCouponId2 = "test coupon id2";
-      String testCouponDuration2 = "forever";
+      String testCouponId2 = 'test coupon id2';
+      String testCouponDuration2 = 'forever';
       int testCouponPercentOff2 = 20;
 
       Coupon testCoupon2;
@@ -132,11 +132,11 @@ main(List<String> args) {
           ..percentOff = testCouponPercentOff2;
 
       // Plan fields
-      String testPlanId = "test plan id";
+      String testPlanId = 'test plan id';
       int testPlanAmount = 200;
-      String testPlanCurrency = "usd";
-      String testPlanInterval = "month";
-      String testPlanName = "test plan name";
+      String testPlanCurrency = 'usd';
+      String testPlanInterval = 'month';
+      String testPlanName = 'test plan name';
 
       Plan testPlan;
       PlanCreation testPlanCreation = new PlanCreation()
@@ -149,16 +149,16 @@ main(List<String> args) {
       // Customer fields
       Customer testCustomer;
       int testCustomerAccountBalance1 = 100001;
-      String testCustomerDescription1 = "test description1";
-      String testCustomerEmail1 = "test1@test.com";
-      Map testCustomerMetadata1 = {"foo": "bar1"};
+      String testCustomerDescription1 = 'test description1';
+      String testCustomerEmail1 = 'test1@test.com';
+      Map testCustomerMetadata1 = {'foo': 'bar1'};
       int testCustomerQuantity = 5;
       int testCustomerTrialEnd = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000;
       // for update tests
       int testCustomerAccountBalance2 = 200002;
-      String testCustomerDescription2 = "test description2";
-      String testCustomerEmail2 = "test2@test.com";
-      Map testCustomerMetadata2 = {"foo": "bar2"};
+      String testCustomerDescription2 = 'test description2';
+      String testCustomerEmail2 = 'test2@test.com';
+      Map testCustomerMetadata2 = {'foo': 'bar2'};
 
       CustomerCreation testCustomerCreation = new CustomerCreation()
           ..accountBalance = testCustomerAccountBalance1
@@ -214,7 +214,7 @@ main(List<String> args) {
           expect(subscription.discount, isNull);
           expect(subscription.endedAt, isNull);
           expect(subscription.quantity, isNull);
-          expect(subscription.status, equals("trialing"));
+          expect(subscription.status, equals('trialing'));
           expect(subscription.trialEnd, equals(testCustomerTrialEnd));
           expect(subscription.plan, new isInstanceOf<Plan>());
           Plan plan = subscription.plan;
@@ -226,7 +226,7 @@ main(List<String> args) {
           return customer;
         })
         // testing the expand functionality of retrieve
-        .then((Customer customer) => Customer.retrieve(customer.id, data: {"expand": ["default_card"]}))
+        .then((Customer customer) => Customer.retrieve(customer.id, data: {'expand': ['default_card']}))
         .then((Customer customer) {
           expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
           expect(customer.defaultCardExpand.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
@@ -253,7 +253,7 @@ main(List<String> args) {
 
     });
 
-    test("List parameters customer", () {
+    test('List parameters customer', () {
       List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
         queue.add(new CustomerCreation().create());

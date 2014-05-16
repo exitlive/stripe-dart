@@ -1,6 +1,6 @@
 library balance_tests;
 
-import "dart:convert";
+import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
 
@@ -40,20 +40,20 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test("fromMap() properly popullates all values", () {
+    test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleObject);
 
       var balance = new Balance.fromMap(map);
 
-      expect(balance.id, equals(map["id"]));
-      expect(balance.pending.first.amount, equals(map["pending"][0]["amount"]));
-      expect(balance.pending.first.currency, equals(map["pending"][0]["currency"]));
-      expect(balance.available.first.amount, equals(map["available"][0]["amount"]));
-      expect(balance.available.first.currency, equals(map["available"][0]["currency"]));
+      expect(balance.id, equals(map['id']));
+      expect(balance.pending.first.amount, equals(map['pending'][0]['amount']));
+      expect(balance.pending.first.currency, equals(map['pending'][0]['currency']));
+      expect(balance.available.first.amount, equals(map['available'][0]['amount']));
+      expect(balance.available.first.currency, equals(map['available'][0]['currency']));
 
     });
 
-    test("Retrieve Balance", () {
+    test('Retrieve Balance', () {
 
       Balance.retrieve()
           .then((Balance balance) {

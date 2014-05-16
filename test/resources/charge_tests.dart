@@ -1,7 +1,7 @@
 library charge_tests;
 
-import "dart:convert";
-import "dart:async";
+import 'dart:convert';
+import 'dart:async';
 
 import 'package:unittest/unittest.dart';
 
@@ -71,48 +71,48 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test("fromMap() properly popullates all values", () {
+    test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleObject);
 
       var charge = new Charge.fromMap(map);
 
-      expect(charge.id, equals(map["id"]));
-      expect(charge.created, equals(new DateTime.fromMillisecondsSinceEpoch(map["created"] * 1000)));
-      expect(charge.livemode, equals(map["livemode"]));
-      expect(charge.paid, equals(map["paid"]));
-      expect(charge.amount, equals(map["amount"]));
-      expect(charge.currency, equals(map["currency"]));
-      expect(charge.refunded, equals(map["refunded"]));
-      expect(charge.customer, equals(map["customer"]));
+      expect(charge.id, equals(map['id']));
+      expect(charge.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
+      expect(charge.livemode, equals(map['livemode']));
+      expect(charge.paid, equals(map['paid']));
+      expect(charge.amount, equals(map['amount']));
+      expect(charge.currency, equals(map['currency']));
+      expect(charge.refunded, equals(map['refunded']));
+      expect(charge.customer, equals(map['customer']));
       expect(charge.card, new isInstanceOf<Card>());
-      expect(charge.card.id, new Card.fromMap(map["card"]).id);
-      expect(charge.description, equals(map["description"]));
-      expect(charge.metadata, equals(map["metadata"]));
-      expect(charge.statement_description, equals(map["statement_description"]));
-      expect(charge.captured, equals(map["captured"]));
-      expect(charge.failureMessage, equals(map["failureMessage"]));
-      expect(charge.failureCode, equals(map["failureCode"]));
-      expect(charge.amountRefunded, equals(map["amountRefunded"]));
-      expect(charge.refunds.length, equals(map["refunds"].length));
-      expect(charge.dispute, equals(map["dispute"]));
-      expect(charge.balanceTransaction, equals(map["balance_transaction"]));
+      expect(charge.card.id, new Card.fromMap(map['card']).id);
+      expect(charge.description, equals(map['description']));
+      expect(charge.metadata, equals(map['metadata']));
+      expect(charge.statement_description, equals(map['statement_description']));
+      expect(charge.captured, equals(map['captured']));
+      expect(charge.failureMessage, equals(map['failureMessage']));
+      expect(charge.failureCode, equals(map['failureCode']));
+      expect(charge.amountRefunded, equals(map['amountRefunded']));
+      expect(charge.refunds.length, equals(map['refunds'].length));
+      expect(charge.dispute, equals(map['dispute']));
+      expect(charge.balanceTransaction, equals(map['balance_transaction']));
 
     });
   });
 
-  test("ChargeCreation minimal", () {
+  test('ChargeCreation minimal', () {
 
     // Customer fields
     Customer testCustomer;
 
     // Card fields
-    String testCardNumber = "4242424242424242";
+    String testCardNumber = '4242424242424242';
     int testCardExpMonth = 12;
     int testCardExpYear = 2014;
 
     // Charge fields
     int testChargeAmount = 100;
-    String testChargeCurrency = "usd";
+    String testChargeCurrency = 'usd';
 
     new CustomerCreation().create()
         .then((Customer customer) {
@@ -139,26 +139,26 @@ main(List<String> args) {
   });
 
 
-  test("ChargeCreation full", () {
+  test('ChargeCreation full', () {
 
     // Customer fields
     Customer testCustomer;
 
     // Card fields
-    String testCardNumber = "4242424242424242";
+    String testCardNumber = '4242424242424242';
     int testCardExpMonth = 12;
     int testCardExpYear = 2014;
 
     // Charge fields
     Charge testCharge;
     int testChargeAmount = 100;
-    String testChargeCurrency = "usd";
-    String testChargeDescription1 = "test description1";
-    String testChargeDescription2 = "test description2";
-    Map testChargeMetadata1 = {"foo": "bar1"};
-    Map testChargeMetadata2 = {"foo": "bar2"};
+    String testChargeCurrency = 'usd';
+    String testChargeDescription1 = 'test description1';
+    String testChargeDescription2 = 'test description2';
+    Map testChargeMetadata1 = {'foo': 'bar1'};
+    Map testChargeMetadata2 = {'foo': 'bar2'};
     bool testChargeCapture = false;
-    String testChargeStatementDescription = "test descr";
+    String testChargeStatementDescription = 'test descr';
     // application_fee can not be tested
 
     new CustomerCreation().create()
@@ -190,7 +190,7 @@ main(List<String> args) {
           expect(charge.captured, equals(testChargeCapture));
           expect(charge.statement_description, equals(testChargeStatementDescription));
           // testing the expand functionality of retrieve
-          return Charge.retrieve(charge.id, data: {"expand": ["balance_transaction", "customer", "invoice"]});
+          return Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
         })
         .then((Charge charge) {
           expect(charge.customer, equals(charge.customerExpand.id));
@@ -210,20 +210,20 @@ main(List<String> args) {
 
   });
 
-  test("Refund a Charge", () {
+  test('Refund a Charge', () {
 
     // Customer fields
     Customer testCustomer;
 
     // Card fields
-    String testCardNumber = "4242424242424242";
+    String testCardNumber = '4242424242424242';
     int testCardExpMonth = 12;
     int testCardExpYear = 2014;
 
     // Charge fields
     int testChargeAmount = 100;
     int testChargeRefundAmount = 90;
-    String testChargeCurrency = "usd";
+    String testChargeCurrency = 'usd';
     // application_fee can not be tested
 
     new CustomerCreation().create()
@@ -250,20 +250,20 @@ main(List<String> args) {
 
   });
 
-  test("Capture a Charge", () {
+  test('Capture a Charge', () {
 
     // Customer fields
     Customer testCustomer;
 
     // Card fields
-    String testCardNumber = "4242424242424242";
+    String testCardNumber = '4242424242424242';
     int testCardExpMonth = 12;
     int testCardExpYear = 2014;
 
     // Charge fields
     int testChargeAmount = 100;
     int testChargeCaptureAmount = 90;
-    String testChargeCurrency = "usd";
+    String testChargeCurrency = 'usd';
     // application_fee can not be tested
 
     new CustomerCreation().create()
@@ -291,14 +291,14 @@ main(List<String> args) {
 
   });
 
-  test("List parameters charge", () {
+  test('List parameters charge', () {
 
     // Customer fields
     Customer testCustomer;
 
     // Card fields
     Card testCard;
-    String testCardNumber = "4242424242424242";
+    String testCardNumber = '4242424242424242';
     int testCardExpMonth = 12;
     int testCardExpYear = 2014;
 
@@ -318,7 +318,7 @@ main(List<String> args) {
             // Charge fields
             int testChargeAmount = 100;
             int testChargeCaptureAmount = 90;
-            String testChargeCurrency = "usd";
+            String testChargeCurrency = 'usd';
             // application_fee can not be tested
             queue.add(
               (new ChargeCreation()

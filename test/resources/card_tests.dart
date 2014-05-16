@@ -1,7 +1,7 @@
 library card_tests;
 
-import "dart:convert";
-import "dart:async";
+import 'dart:convert';
+import 'dart:async';
 
 import 'package:unittest/unittest.dart';
 
@@ -46,35 +46,35 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test("fromMap() properly popullates all values", () {
+    test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleObject);
 
       var card = new Card.fromMap(map);
 
-      expect(card.id, equals(map["id"]));
-      expect(card.last4, equals(map["last4"]));
-      expect(card.type, equals(map["type"]));
-      expect(card.expMonth, equals(map["exp_month"]));
-      expect(card.expYear, equals(map["exp_year"]));
-      expect(card.fingerprint, equals(map["fingerprint"]));
-      expect(card.customer, equals(map["customer"]));
-      expect(card.addressLine1, equals(map["address_line1"]));
-      expect(card.addressLine2, equals(map["address_line2"]));
-      expect(card.addressCity, equals(map["address_city"]));
-      expect(card.addressState, equals(map["address_state"]));
-      expect(card.addressZip, equals(map["address_zip"]));
-      expect(card.addressCountry, equals(map["address_country"]));
-      expect(card.cvcCheck, equals(map["cvc_check"]));
-      expect(card.addressLine1Check, equals(map["address_line1_check"]));
-      expect(card.addressZipCheck, equals(map["address_zip_check"]));
+      expect(card.id, equals(map['id']));
+      expect(card.last4, equals(map['last4']));
+      expect(card.type, equals(map['type']));
+      expect(card.expMonth, equals(map['exp_month']));
+      expect(card.expYear, equals(map['exp_year']));
+      expect(card.fingerprint, equals(map['fingerprint']));
+      expect(card.customer, equals(map['customer']));
+      expect(card.addressLine1, equals(map['address_line1']));
+      expect(card.addressLine2, equals(map['address_line2']));
+      expect(card.addressCity, equals(map['address_city']));
+      expect(card.addressState, equals(map['address_state']));
+      expect(card.addressZip, equals(map['address_zip']));
+      expect(card.addressCountry, equals(map['address_country']));
+      expect(card.cvcCheck, equals(map['cvc_check']));
+      expect(card.addressLine1Check, equals(map['address_line1_check']));
+      expect(card.addressZipCheck, equals(map['address_zip_check']));
 
     });
 
-    test("CardCreation minimal", () {
+    test('CardCreation minimal', () {
 
       Customer testCustomer;
       Card testCard;
-      String number = "4242424242424242";
+      String number = '4242424242424242';
       int expMonth = 12;
       int expYear = 2014;
       new CustomerCreation().create()
@@ -98,31 +98,31 @@ main(List<String> args) {
 
     });
 
-    test("CardCreation full", () {
+    test('CardCreation full', () {
 
       Customer testCustomer;
       Card testCard;
-      String testCardNumber = "4242424242424242";
+      String testCardNumber = '4242424242424242';
       int testCardExpMonth1 = 12;
       int testCardExpYear1 = 2014;
       int testCardCvc = 123;
-      String testCardName1 = "Anita Bath";
-      String testCardAddressLine1A = "Teststreet 2/39A";
-      String testCardAddressLine2A = "line 2";
-      String testCardAddressCity1 = "Vienna";
-      String testCardAddressZip1 = "1050";
-      String testCardAddressState1 = "Vienna";
-      String testCardAddressCountry1 = "Austria";
+      String testCardName1 = 'Anita Bath';
+      String testCardAddressLine1A = 'Teststreet 2/39A';
+      String testCardAddressLine2A = 'line 2';
+      String testCardAddressCity1 = 'Vienna';
+      String testCardAddressZip1 = '1050';
+      String testCardAddressState1 = 'Vienna';
+      String testCardAddressCountry1 = 'Austria';
       // for update tests
-      String testCardAddressCity2 = "Laguna Beach";
-      String testCardAddressCountry2 = "USA";
-      String testCardAddressLine1B = "Addresslinestreet 12/42A";
-      String testCardAddressLine2B = "additional address line";
-      String testCardAddressState2 = "California";
-      String testCardAddressZip2 = "92651";
+      String testCardAddressCity2 = 'Laguna Beach';
+      String testCardAddressCountry2 = 'USA';
+      String testCardAddressLine1B = 'Addresslinestreet 12/42A';
+      String testCardAddressLine2B = 'additional address line';
+      String testCardAddressState2 = 'California';
+      String testCardAddressZip2 = '92651';
       int testCardExpMonth2 = 3;
       int testCardExpYear2 = 2015;
-      String testCardName2 = "Agatha Bath";
+      String testCardName2 = 'Agatha Bath';
 
       new CustomerCreation().create()
           .then((Customer customer) {
@@ -148,18 +148,18 @@ main(List<String> args) {
             expect(card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
             expect(card.expMonth, equals(testCardExpMonth1));
             expect(card.expYear, equals(testCardExpYear1));
-            expect(card.cvcCheck, equals("pass"));
+            expect(card.cvcCheck, equals('pass'));
             expect(card.name, equals(testCardName1));
             expect(card.addressLine1, equals(testCardAddressLine1A));
-            expect(card.addressLine1Check, equals("pass"));
+            expect(card.addressLine1Check, equals('pass'));
             expect(card.addressLine2, equals(testCardAddressLine2A));
             expect(card.addressCity, equals(testCardAddressCity1));
             expect(card.addressZip, equals(testCardAddressZip1));
-            expect(card.addressZipCheck, equals("pass"));
+            expect(card.addressZipCheck, equals('pass'));
             expect(card.addressState, equals(testCardAddressState1));
             expect(card.addressCountry, equals(testCardAddressCountry1));
             // testing the expand functionality of retrieve
-            return Card.retrieve(testCustomer.id, card.id, data: {"expand": ["customer"]});
+            return Card.retrieve(testCustomer.id, card.id, data: {'expand': ['customer']});
           })
           .then((Card card) {
             expect(card.customer, equals(testCustomer.id));
@@ -182,11 +182,11 @@ main(List<String> args) {
             expect(card.expYear, equals(testCardExpYear2));
             expect(card.name, equals(testCardName2));
             expect(card.addressLine1, equals(testCardAddressLine1B));
-            expect(card.addressLine1Check, equals("pass"));
+            expect(card.addressLine1Check, equals('pass'));
             expect(card.addressLine2, equals(testCardAddressLine2B));
             expect(card.addressCity, equals(testCardAddressCity2));
             expect(card.addressZip, equals(testCardAddressZip2));
-            expect(card.addressZipCheck, equals("pass"));
+            expect(card.addressZipCheck, equals('pass'));
             expect(card.addressState, equals(testCardAddressState2));
             expect(card.addressCountry, equals(testCardAddressCountry2));
           })

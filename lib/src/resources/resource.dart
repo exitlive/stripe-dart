@@ -17,7 +17,7 @@ abstract class Resource {
   /// Creates this resource from a JSON string.
   Resource.fromMap(this._dataMap) {
     assert(objectName != null);
-    if (_dataMap["object"] != objectName) throw new InvalidDataReceivedException("The data received was not for object ${objectName}");
+    if (_dataMap['object'] != objectName) throw new InvalidDataReceivedException('The data received was not for object ${objectName}');
   }
 
   /**
@@ -58,7 +58,7 @@ abstract class ResourceRequest {
 
   _setMap(String key, dynamic value) {
     // TODO write a better exception
-    if (_map.containsKey(key)) throw new BadRequestException("You can't set the same key twice.");
+    if (_map.containsKey(key)) throw new BadRequestException('You can not set the same key twice.');
     _map[key] = value;
   }
 

@@ -1,6 +1,6 @@
 library plan_tests;
 
-import "dart:convert";
+import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
 
@@ -39,32 +39,32 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test("fromMap() properly popullates all values", () {
+    test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleObject);
 
       var plan = new Plan.fromMap(map);
 
-      expect(plan.created, equals(new DateTime.fromMillisecondsSinceEpoch(map["created"] * 1000)));
-      expect(plan.id, equals(map["id"]));
-      expect(plan.livemode, equals(map["livemode"]));
-      expect(plan.interval, equals(map["interval"]));
-      expect(plan.name, equals(map["name"]));
-      expect(plan.amount, equals(map["amount"]));
-      expect(plan.metadata, equals(map["metadata"]));
-      expect(plan.currency, equals(map["currency"]));
-      expect(plan.intervalCount, equals(map["interval_count"]));
-      expect(plan.trialPeriodDays, equals(map["trial_period_days"]));
-      expect(plan.currency, equals(map["currency"]));
+      expect(plan.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
+      expect(plan.id, equals(map['id']));
+      expect(plan.livemode, equals(map['livemode']));
+      expect(plan.interval, equals(map['interval']));
+      expect(plan.name, equals(map['name']));
+      expect(plan.amount, equals(map['amount']));
+      expect(plan.metadata, equals(map['metadata']));
+      expect(plan.currency, equals(map['currency']));
+      expect(plan.intervalCount, equals(map['interval_count']));
+      expect(plan.trialPeriodDays, equals(map['trial_period_days']));
+      expect(plan.currency, equals(map['currency']));
 
     });
 
-    test("PlanCreation minimal", () {
+    test('PlanCreation minimal', () {
       Plan testPlan;
-      String testId = "test id";
+      String testId = 'test id';
       int testAmount = 10;
-      String testCurrency = "usd";
-      String testInterval = "month";
-      String testName = "test name";
+      String testCurrency = 'usd';
+      String testInterval = 'month';
+      String testName = 'test name';
       (new PlanCreation()
           ..id = testId
           ..amount = testAmount

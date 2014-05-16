@@ -1,18 +1,18 @@
 
 import 'package:logging/logging.dart';
 
-import "service_tests.dart" as serviceTests;
-import "resources/resource_tests.dart" as resourceTests;
+import 'service_tests.dart' as serviceTests;
+import 'resources/resource_tests.dart' as resourceTests;
 
 
-import "resources/account_tests.dart" as accountTests;
-import "resources/balance_tests.dart" as balanceTests;
-import "resources/card_tests.dart" as cardTests;
-import "resources/discount_tests.dart" as discountTests;
-import "resources/charge_tests.dart" as chargeTests;
-import "resources/coupon_tests.dart" as couponTests;
-import "resources/customer_tests.dart" as customerTests;
-import "resources/plan_tests.dart" as planTests;
+import 'resources/account_tests.dart' as accountTests;
+import 'resources/balance_tests.dart' as balanceTests;
+import 'resources/card_tests.dart' as cardTests;
+import 'resources/discount_tests.dart' as discountTests;
+import 'resources/charge_tests.dart' as chargeTests;
+import 'resources/coupon_tests.dart' as couponTests;
+import 'resources/customer_tests.dart' as customerTests;
+import 'resources/plan_tests.dart' as planTests;
 
 
 main(List<String> args) {
