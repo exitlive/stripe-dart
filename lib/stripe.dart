@@ -21,6 +21,7 @@ part "src/resources/api_resource.dart";
 part "src/resources/balance.dart";
 part "src/resources/card.dart";
 part "src/resources/charge.dart";
+part "src/resources/charge_collection.dart";
 part "src/resources/coupon.dart";
 part "src/resources/coupon_collection.dart";
 part "src/resources/customer.dart";
