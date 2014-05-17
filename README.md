@@ -30,8 +30,8 @@ main() {
       ..description = "Customer for test@example.com"
       ..card = card
       ..create()
-      .then((Customer customer) => print(customer))
-      .catchError((e) => handleError(e));
+          .then((Customer customer) => print(customer))
+          .catchError((e) => handleError(e));
 
 }
 ```
