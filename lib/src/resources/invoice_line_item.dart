@@ -1,54 +1,38 @@
 part of stripe;
 
 
+/**
+ * [The invoice_line_item object](https://stripe.com/docs/api/curl#invoice_line_item_object)
+ */
 class InvoiceLineItem extends Resource {
 
+  String get id => _dataMap['id'];
 
-  /// The ID of the source of this line item, either an invoice item
-  /// or a subscription
-  String get id => _dataMap["id"];
+  String objectName = 'line_item';
 
-  String objectName = "line_item";
+  static String _path = 'lines';
 
-  static String _path = "lines";
+  bool get livemode => _dataMap['livemode'];
 
-  /// Whether or not this is a test line item
-  bool get livemode => _dataMap["livemode"];
+  int get amount => _dataMap['amount'];
 
-  /// The amount, in cents
-  int get amount => _dataMap["amount"];
+  String get currency =>_dataMap['currency'];
 
-  String get currency =>_dataMap["currency"];
+  Period get period => new Period.fromMap(_dataMap['period']);
 
-  /// The period this line_item covers
-  Period get period => new Period.fromMap(_dataMap["period"]);
+  bool get proration => _dataMap['proration'];
 
-  /// Whether or not this is a proration
-  bool get proration => _dataMap["proration"];
+  String get type => _dataMap['type'];
 
-  /// A string identifying the type of the source of this line item,
-  /// either an invoice item or a subscription
-  String get type => _dataMap["type"];
+  String get description => _dataMap['description'];
 
+  Map<String, String> get metadata => _dataMap['metadata'];
 
-  /// A text description of the line item, if the line item is an invoice item
-  String get description => _dataMap["description"];
+  Plan get plan => new Plan.fromMap(_dataMap['plan']);
 
-  /// Key-value pairs attached to the line item, if the line item is an
-  /// invoice item
-  Map<String, String> get metadata => _dataMap["metadata"];
-
-  /// The plan of the subscription, if the line item is a subscription
-  Plan get plan => new Plan.fromMap(_dataMap["plan"]);
-
-  /// The quantity of the subscription, if the line item is a subscription
-  int get quantity => _dataMap["quantity"];
-
+  int get quantity => _dataMap['quantity'];
 
   InvoiceLineItem.fromMap(Map dataMap) : super.fromMap(dataMap);
-
-
-
 
 }
 
@@ -57,9 +41,9 @@ class Period {
 
   Map _dataMap;
 
-  int get start => _dataMap["start"];
+  int get start => _dataMap['start'];
 
-  int get end => _dataMap["end"];
+  int get end => _dataMap['end'];
 
   Period.fromMap(this._dataMap);
 

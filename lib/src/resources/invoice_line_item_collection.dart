@@ -1,5 +1,6 @@
 part of stripe;
 
+
 class InvoiceLineItemCollection extends ResourceCollection {
 
   InvoiceLineItem _getInstanceFromMap(map) => new InvoiceLineItem.fromMap(map);

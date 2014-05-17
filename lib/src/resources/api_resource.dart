@@ -1,5 +1,6 @@
 part of stripe;
 
+
 /**
  * ApiResources are resources that can be created and sent to the Stripe REST Api.
  */

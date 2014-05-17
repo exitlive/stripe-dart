@@ -1,5 +1,6 @@
 part of stripe;
 
+
 class SubscriptionCollection extends ResourceCollection {
 
   Subscription _getInstanceFromMap(map) => new Subscription.fromMap(map);
