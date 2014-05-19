@@ -89,7 +89,6 @@ class PlanCreation extends ResourceRequest {
   @required
   set interval (String interval) => _setMap('interval', interval);
 
-  @required
   set intervalCount (int intervalCount) => _setMap('interval_count', intervalCount);
 
   @required
