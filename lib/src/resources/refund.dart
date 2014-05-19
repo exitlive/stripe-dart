@@ -17,13 +17,13 @@ class Refund extends Resource {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
     else if(value is String) return value;
-    else return new Balance.fromMap(value).id;
+    else return new BalanceTransaction.fromMap(value).id;
   }
 
-  Balance get balanceTransactionExpand {
+  BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else return new Balance.fromMap(value);
+    else return new BalanceTransaction.fromMap(value);
   }
 
   Refund.fromMap(Map dataMap) : super.fromMap(dataMap);

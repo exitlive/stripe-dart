@@ -44,13 +44,13 @@ class Charge extends Resource {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
     else if(value is String) return _dataMap['balance_transaction'];
-    else return new Balance.fromMap(value).id;
+    else return new BalanceTransaction.fromMap(value).id;
   }
 
-  Balance get balanceTransactionExpand {
+  BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else return new Balance.fromMap(value);
+    else return new BalanceTransaction.fromMap(value);
   }
 
   String get customer {
