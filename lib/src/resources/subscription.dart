@@ -22,19 +22,19 @@ class Subscription extends ApiResource {
     else return new Plan.fromMap(value);
   }
 
-  int get quantity => _dataMap['quantiy'];
+  int get quantity => _dataMap['quantity'];
 
-  int get start => _dataMap['start'];
+  DateTime get start => _getDateTimeFromMap('start');
 
   String get status => _dataMap['status'];
 
   int get applicationFeePercent => _dataMap['application_fee_percent'];
 
-  int get canceledAt => _dataMap['canceled_at'];
+  DateTime get canceledAt => _getDateTimeFromMap('canceled_at');
 
-  int get currentPeriodEnd => _dataMap['current_period_end'];
+  DateTime get currentPeriodEnd => _getDateTimeFromMap('current_period_end');
 
-  int get currentPeriodStart => _dataMap['current_period_start'];
+  DateTime get currentPeriodStart => _getDateTimeFromMap('current_period_start');
 
   Discount get discount {
     var value = _dataMap['discount'];
@@ -42,11 +42,13 @@ class Subscription extends ApiResource {
     else return new Discount.fromMap(value);
   }
 
-  int get endedAt => _dataMap['ended_at'];
+  DateTime get endedAt => _getDateTimeFromMap('ended_at');
 
-  int get trialEnd => _dataMap['trial_end'];
+  Map<String, String> get metadata => _dataMap['metadata'];
 
-  int get trialStart => _dataMap['trial_start'];
+  DateTime get trialEnd => _getDateTimeFromMap('trial_end');
+
+  DateTime get trialStart => _getDateTimeFromMap('trial_start');
 
   Subscription.fromMap(Map dataMap) : super.fromMap(dataMap);
 
@@ -79,6 +81,8 @@ class SubscriptionCreation extends ResourceRequest {
   set quantity (int quantity) => _setMap('quantity', quantity);
 
   set applicationFeePercent (int applicationFeePercent) => _setMap('application_fee_percent', applicationFeePercent);
+
+  set metadata (Map metadata) => _setMap('metadata', metadata);
 
   Future<Subscription> create(String customerId) {
     return StripeService.create([Customer._path, customerId, Subscription._path], _getMap())
