@@ -12,7 +12,7 @@ abstract class StripeService {
 
   static int port = 443;
 
-  static String basePath = '/v1';
+  static String basePath = 'v1';
 
   /// The Api key used to communicate with Stripe
   static String apiKey;
@@ -65,7 +65,7 @@ abstract class StripeService {
 
     pathParts.insert(0, basePath);
 
-    String path = pathParts.map(Uri.encodeComponent).join('/');
+    String path = '/' + pathParts.map(Uri.encodeComponent).join('/');
 
     var uri;
     if (method == 'GET' && data != null) {
