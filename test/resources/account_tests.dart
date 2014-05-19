@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+var exampleAccount = """
     {
       "id": "acct_103yoB41dfVNZFcq",
       "email": "martin.flucka@gmail.com",
@@ -43,7 +43,7 @@ main(List<String> args) {
     });
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(exampleAccount);
 
       var account = new Account.fromMap(map);
 
@@ -61,7 +61,7 @@ main(List<String> args) {
 
     });
 
-    test('Retrieve Balance', () {
+    test('Retrieve Account', () {
 
       Account.retrieve()
           .then((Account account) {

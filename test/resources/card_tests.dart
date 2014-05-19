@@ -8,7 +8,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+var exampleCard = """
     {
       "id": "card_103yOK2eZvKYlo2CNWdHfG5K",
       "object": "card",
@@ -47,7 +47,7 @@ main(List<String> args) {
     });
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(exampleCard);
 
       var card = new Card.fromMap(map);
 

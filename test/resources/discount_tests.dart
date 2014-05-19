@@ -8,7 +8,7 @@ import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
 
-var exampleObject = """
+var exampleDiscount = """
     {
       "coupon": {
         "id": "25OFF",
@@ -43,7 +43,7 @@ main(List<String> args) {
 
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(exampleDiscount);
 
       var discount = new Discount.fromMap(map);
       expect(discount.start, equals(new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000)));

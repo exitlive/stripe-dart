@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+var examplePlan = """
     {
       "interval": "month",
       "name": "Gold Special",
@@ -40,7 +40,7 @@ main(List<String> args) {
     });
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(examplePlan);
 
       var plan = new Plan.fromMap(map);
 

@@ -9,7 +9,7 @@ import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
 
-var exampleObject = """
+var exampleCustomer = """
     {
       "object": "customer",
       "created": 1399894618,
@@ -58,7 +58,7 @@ main(List<String> args) {
     });
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(exampleCustomer);
 
       var customer = new Customer.fromMap(map);
 

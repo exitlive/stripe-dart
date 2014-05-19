@@ -8,7 +8,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+var exampleCoupon = """
     {
       "id": "50-pc-forever-once",
       "created": 1397741615,
@@ -43,7 +43,7 @@ main(List<String> args) {
     });
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(exampleCoupon);
 
       var coupon = new Coupon.fromMap(map);
 

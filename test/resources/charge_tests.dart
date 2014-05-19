@@ -8,7 +8,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+var exampleCharge = """
     {
       "id": "ch_1041NW41dfVNZFcqslnvTHtc",
       "object": "charge",
@@ -72,7 +72,7 @@ main(List<String> args) {
     });
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(exampleCharge);
 
       var charge = new Charge.fromMap(map);
 

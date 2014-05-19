@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+var exampleBalance = """
     {
       "pending": [
         {
@@ -41,11 +41,10 @@ main(List<String> args) {
     });
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
+      var map = JSON.decode(exampleBalance);
 
       var balance = new Balance.fromMap(map);
 
-      expect(balance.id, equals(map['id']));
       expect(balance.pending.first.amount, equals(map['pending'][0]['amount']));
       expect(balance.pending.first.currency, equals(map['pending'][0]['currency']));
       expect(balance.available.first.amount, equals(map['available'][0]['amount']));
