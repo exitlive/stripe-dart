@@ -54,15 +54,7 @@ main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
 
-  group('Balance', () {
-
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
+  group('Balance offline', () {
 
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleBalance);
@@ -76,20 +68,9 @@ main(List<String> args) {
 
     });
 
-    test('Retrieve Balance', () {
-
-      Balance.retrieve()
-          .then((Balance balance) {
-            expect(balance.livemode, equals(false));
-            // other tests will depend on your stripe account
-          })
-          .then(expectAsync((_) => true));
-
-    });
-
   });
 
-  group('BalanceTransaction', () {
+  group('Balance online', () {
 
     setUp(() {
       return utils.setUp();
@@ -98,6 +79,22 @@ main(List<String> args) {
     tearDown(() {
       return utils.tearDown();
     });
+
+    test('Retrieve Balance', () {
+
+      Balance.retrieve()
+      .then((Balance balance) {
+        expect(balance.livemode, equals(false));
+        // other tests will depend on your stripe account
+      })
+      .then(expectAsync((_) => true));
+
+    });
+
+  });
+
+  group('BalanceTransaction offline', () {
+
 
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleBalanceTransaction);
@@ -122,6 +119,25 @@ main(List<String> args) {
       expect(balanceTransaction.description, equals(map['description']));
 
     });
+
+  });
+
+  group('BalanceTransaction online', () {
+
+    setUp(() {
+      return utils.setUp();
+    });
+
+    tearDown(() {
+      return utils.tearDown();
+    });
+
+    test('Retrieve BalanceTransaction', () {
+
+
+
+    });
+
 
   });
 
