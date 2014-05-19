@@ -32,15 +32,7 @@ main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
 
-  group('Account', () {
-
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
+  group('Account offline', () {
 
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleAccount);
@@ -61,17 +53,28 @@ main(List<String> args) {
 
     });
 
+  });
+
+  group('Account online', () {
+
+    setUp(() {
+      return utils.setUp();
+    });
+
+    tearDown(() {
+      return utils.tearDown();
+    });
+
     test('Retrieve Account', () {
 
       Account.retrieve()
-          .then((Account account) {
-            expect(account.id.substring(0, 3), equals('acc'));
-            // other tests will depend on your stripe account
-          })
-          .then(expectAsync((_) => true));
+      .then((Account account) {
+        expect(account.id.substring(0, 3), equals('acc'));
+        // other tests will depend on your stripe account
+      })
+      .then(expectAsync((_) => true));
 
     });
-
 
   });
 

@@ -32,15 +32,7 @@ main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
 
-  group('Coupon', () {
-
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
+  group('Coupon offline', () {
 
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleCoupon);
@@ -63,6 +55,18 @@ main(List<String> args) {
 
     });
 
+  });
+
+  group('Coupon online', () {
+
+    setUp(() {
+      return utils.setUp();
+    });
+
+    tearDown(() {
+      return utils.tearDown();
+    });
+
     test('CouponCreation minimal', () {
 
       // Coupon fields
@@ -70,15 +74,15 @@ main(List<String> args) {
       int testPercentOff = 5;
 
       (new CouponCreation()
-          ..duration = testDuration
-          ..percentOff = testPercentOff
+      ..duration = testDuration
+      ..percentOff = testPercentOff
       ).create()
-        .then((Coupon coupon) {
-          expect(coupon.id, new isInstanceOf<String>());
-          expect(coupon.duration, equals(testDuration));
-          expect(coupon.percentOff, equals(testPercentOff));
-        })
-        .then(expectAsync((_) => true));
+      .then((Coupon coupon) {
+        expect(coupon.id, new isInstanceOf<String>());
+        expect(coupon.duration, equals(testDuration));
+        expect(coupon.percentOff, equals(testPercentOff));
+      })
+      .then(expectAsync((_) => true));
 
     });
 
@@ -96,27 +100,29 @@ main(List<String> args) {
       int testRedeemBy = 1451520000;
 
       (new CouponCreation()
-          ..id = testId
-          ..duration = testDuration
-          ..amountOff = testAmountOff
-          ..currency = testCurrency
-          ..durationInMonths = testDurationInMoths
-          ..maxRedemptions = testMaxRedemptions
-          ..metadata = testMetadata
-          ..redeemBy = testRedeemBy
+      ..id = testId
+      ..duration = testDuration
+      ..amountOff = testAmountOff
+      ..currency = testCurrency
+      ..durationInMonths = testDurationInMoths
+      ..maxRedemptions = testMaxRedemptions
+      ..metadata = testMetadata
+      ..redeemBy = testRedeemBy
       ).create()
-        .then((Coupon coupon) {
-          expect(coupon.id, equals(testId));
-          expect(coupon.duration, equals(testDuration));
-          expect(coupon.amountOff, equals(testAmountOff));
-          expect(coupon.currency, equals(testCurrency));
-          expect(coupon.durationInMonths, equals(testDurationInMoths));
-          expect(coupon.maxRedemptions, equals(testMaxRedemptions));
-          expect(coupon.metadata, equals(testMetadata));
-          expect(coupon.redeemBy, equals(testRedeemBy));
-        })
-        .then(expectAsync((_) => true));
+      .then((Coupon coupon) {
+        expect(coupon.id, equals(testId));
+        expect(coupon.duration, equals(testDuration));
+        expect(coupon.amountOff, equals(testAmountOff));
+        expect(coupon.currency, equals(testCurrency));
+        expect(coupon.durationInMonths, equals(testDurationInMoths));
+        expect(coupon.maxRedemptions, equals(testMaxRedemptions));
+        expect(coupon.metadata, equals(testMetadata));
+        expect(coupon.redeemBy, equals(testRedeemBy));
+      })
+      .then(expectAsync((_) => true));
 
     });
+
   });
+
 }

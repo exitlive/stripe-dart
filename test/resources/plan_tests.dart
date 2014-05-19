@@ -29,17 +29,10 @@ main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
 
-  group('Plan', () {
-
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
+  group('Plan offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(examplePlan);
 
       var plan = new Plan.fromMap(map);
@@ -58,6 +51,18 @@ main(List<String> args) {
 
     });
 
+  });
+
+  group('Plan online', () {
+
+    setUp(() {
+      return utils.setUp();
+    });
+
+    tearDown(() {
+      return utils.tearDown();
+    });
+
     test('PlanCreation minimal', () {
       Plan testPlan;
       String testId = 'test id';
@@ -66,21 +71,21 @@ main(List<String> args) {
       String testInterval = 'month';
       String testName = 'test name';
       (new PlanCreation()
-          ..id = testId
-          ..amount = testAmount
-          ..currency = testCurrency
-          ..interval = testInterval
-          ..name = testName
+      ..id = testId
+      ..amount = testAmount
+      ..currency = testCurrency
+      ..interval = testInterval
+      ..name = testName
       ).create()
-          .then((Plan plan) {
-            testPlan = plan;
-            expect(plan.id, new isInstanceOf<String>());
-            expect(plan.amount, equals(testAmount));
-            expect(plan.currency, equals(testCurrency));
-            expect(plan.interval, equals(testInterval));
-            expect(plan.name, equals(testName));
-          })
-          .then(expectAsync((_) => true));
+      .then((Plan plan) {
+        testPlan = plan;
+        expect(plan.id, new isInstanceOf<String>());
+        expect(plan.amount, equals(testAmount));
+        expect(plan.currency, equals(testCurrency));
+        expect(plan.interval, equals(testInterval));
+        expect(plan.name, equals(testName));
+      })
+      .then(expectAsync((_) => true));
     });
 
   });

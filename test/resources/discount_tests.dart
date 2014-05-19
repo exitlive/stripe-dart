@@ -39,7 +39,7 @@ main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
 
-  group('Discount', () {
+  group('Discount offline', () {
 
 
     test('fromMap() properly popullates all values', () {
