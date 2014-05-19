@@ -3,6 +3,7 @@ library stripe;
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:mirrors';
 
 
 import 'package:logging/logging.dart';

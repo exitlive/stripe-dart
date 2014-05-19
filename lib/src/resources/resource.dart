@@ -64,9 +64,35 @@ abstract class ResourceRequest {
 
   /**
    * Returns the [_map] and checks that all [required] fields are set.
-   *
-   * TODO check if all fields that are marked as [required] are set.
    */
-  _getMap() => _map;
+  _getMap() {
+
+    ClassMirror classMirror = reflect(this).type;
+    Map<Symbol, MethodMirror> methods = classMirror.instanceMembers;
+    methods.forEach((symbol, method) {
+      if (method.isSetter) {
+
+        method.metadata.forEach((InstanceMirror instanceMirror) {
+          if (instanceMirror.reflectee.runtimeType == Required) {
+            String symbolName = MirrorSystem.getName(method.simpleName);
+            String setterCamelCase = symbolName.substring(0, symbolName.length - 1);
+            String setter = "";
+            for (var r in setterCamelCase.runes) {
+              String c = new String.fromCharCode(r);
+              if (c.toUpperCase() == c) {
+                setter += '_${c.toLowerCase()}';
+              } else {
+                setter += c;
+              }
+            };
+            String className = MirrorSystem.getName(classMirror.simpleName);
+            if (_map[setter] == null) throw new MissingArgumentException('You have to set ${setter} for a proper ${className} request');
+          }
+        });
+      }
+    });
+
+    return _map;
+  }
 
 }
