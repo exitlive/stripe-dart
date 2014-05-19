@@ -92,6 +92,15 @@ class Customer extends ApiResource {
 }
 
 
+class CustomerCollection extends ResourceCollection {
+
+  Customer _getInstanceFromMap(map) => new Customer.fromMap(map);
+
+  CustomerCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 /**
  * [Creating a New Customer](https://stripe.com/docs/api/curl#create_customer)
  */

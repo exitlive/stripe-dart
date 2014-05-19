@@ -67,6 +67,15 @@ class Coupon extends ApiResource {
 }
 
 
+class CouponCollection extends ResourceCollection {
+
+  Coupon _getInstanceFromMap(map) => new Coupon.fromMap(map);
+
+  CouponCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 /**
  * [Creating coupons](https://stripe.com/docs/api/curl#create_coupon)
  */

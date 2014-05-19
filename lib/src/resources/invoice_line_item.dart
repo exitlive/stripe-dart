@@ -37,6 +37,15 @@ class InvoiceLineItem extends Resource {
 }
 
 
+class InvoiceLineItemCollection extends ResourceCollection {
+
+  InvoiceLineItem _getInstanceFromMap(map) => new InvoiceLineItem.fromMap(map);
+
+  InvoiceLineItemCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 class Period {
 
   Map _dataMap;

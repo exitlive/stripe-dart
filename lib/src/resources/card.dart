@@ -88,6 +88,15 @@ class Card extends Resource {
 }
 
 
+class CardCollection extends ResourceCollection {
+
+  Card _getInstanceFromMap(map) => new Card.fromMap(map);
+
+  CardCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 /**
  * [Creating a new card](https://stripe.com/docs/api/curl#create_card)
  */

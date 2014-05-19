@@ -147,6 +147,15 @@ class Charge extends Resource {
 }
 
 
+class ChargeCollection extends ResourceCollection {
+
+  Charge _getInstanceFromMap(map) => new Charge.fromMap(map);
+
+  ChargeCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 /**
  * [Creating a new charge (charging a credit card)](https://stripe.com/docs/api/curl#create_charge)
  */

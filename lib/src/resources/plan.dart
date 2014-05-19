@@ -63,6 +63,15 @@ class Plan extends ApiResource {
 }
 
 
+class PlanCollection extends ResourceCollection {
+
+  Plan _getInstanceFromMap(map) => new Plan.fromMap(map);
+
+  PlanCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 /**
  * [Creating plans](https://stripe.com/docs/api/curl#create_plan)
  */

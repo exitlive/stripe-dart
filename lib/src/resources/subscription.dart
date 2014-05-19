@@ -53,6 +53,15 @@ class Subscription extends ApiResource {
 }
 
 
+class SubscriptionCollection extends ResourceCollection {
+
+  Subscription _getInstanceFromMap(map) => new Subscription.fromMap(map);
+
+  SubscriptionCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 /**
  * [Creating a new subscription](https://stripe.com/docs/api/curl#create_subscription)
  */
