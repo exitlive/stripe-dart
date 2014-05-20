@@ -1,6 +1,7 @@
 library subscription_tests;
 
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:unittest/unittest.dart';
 
@@ -153,15 +154,26 @@ main(List<String> args) {
 
     test('SubscriptionCreation full', () {
       // Coupon fields
-      Coupon testCoupon;
-      String testCouponId = 'test coupon id1';
-      String testCouponDuration = 'forever';
-      int testCouponPercentOff = 15;
+      Coupon testCoupon1;
+      String testCouponId1 = 'test coupon id1';
+      String testCouponDuration1 = 'forever';
+      int testCouponPercentOff1 = 15;
 
-      CouponCreation testCouponCreation = new CouponCreation()
-          ..id = testCouponId
-          ..duration = testCouponDuration
-          ..percentOff = testCouponPercentOff;
+      CouponCreation testCouponCreation1 = new CouponCreation()
+          ..id = testCouponId1
+          ..duration = testCouponDuration1
+          ..percentOff = testCouponPercentOff1;
+
+      Coupon testCoupon2;
+      String testCouponId2 = 'test coupon id2';
+      String testCouponDuration2 = 'forever';
+      int testCouponPercentOff2 = 10;
+
+      CouponCreation testCouponCreation2 = new CouponCreation()
+          ..id = testCouponId2
+          ..duration = testCouponDuration2
+          ..percentOff = testCouponPercentOff2;
+
 
       // Customer fields
       Customer testCustomer;
@@ -188,60 +200,182 @@ main(List<String> args) {
       ..expYear = testCardExpYear2;
 
       // Plan fields
-      Plan testPlan;
-      String testPlanId = 'test plan id';
-      int testPlanAmount = 200;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      String testPlanName = 'test plan name';
+      Plan testPlan1;
+      String testPlanId1 = 'test plan id1';
+      int testPlanAmount1 = 100;
+      String testPlanCurrency1 = 'usd';
+      String testPlanInterval1 = 'month';
+      String testPlanName1 = 'test plan name1';
+
+      PlanCreation testPlanCreation1 = new PlanCreation()
+          ..id = testPlanId1
+          ..amount = testPlanAmount1
+          ..currency = testPlanCurrency1
+          ..interval = testPlanInterval1
+          ..name = testPlanName1;
+
+      Plan testPlan2;
+      String testPlanId2 = 'test plan id2';
+      int testPlanAmount2 = 200;
+      String testPlanCurrency2 = 'usd';
+      String testPlanInterval2 = 'month';
+      String testPlanName2 = 'test plan name2';
+
+      PlanCreation testPlanCreation2 = new PlanCreation()
+          ..id = testPlanId2
+          ..amount = testPlanAmount2
+          ..currency = testPlanCurrency2
+          ..interval = testPlanInterval2
+          ..name = testPlanName2;
 
       // Subscription fields
-      int testSubscriptionTrialEnd = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000;
-      int testSubscriptionQuantity = 3;
+      int testSubscriptionTrialEnd1 = new DateTime.now().add(new Duration(days: 30)).millisecondsSinceEpoch ~/ 1000;
+      int testSubscriptionQuantity1 = 3;
       // application_fee_percent can only be tested with OAuth key
-      Map testSubscriptionMetadata = {'foo': 'bar'};
+      Map testSubscriptionMetadata1 = {'foo': 'bar1'};
 
-      (new PlanCreation()
-          ..id = testPlanId
-          ..amount = testPlanAmount
-          ..currency = testPlanCurrency
-          ..interval = testPlanInterval
-          ..name = testPlanName
-      ).create()
+      int testSubscriptionTrialEnd2 = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000;
+      int testSubscriptionQuantity2 = 1;
+      // application_fee_percent can only be tested with OAuth key
+      Map testSubscriptionMetadata2 = {'foo': 'bar2'};
+
+      testPlanCreation1.create()
           .then((Plan plan) {
-            testPlan = plan;
-            return testCouponCreation.create();
+            testPlan1 = plan;
+            return testPlanCreation2.create();
+          })
+          .then((Plan plan) {
+            testPlan2 = plan;
+            return testCouponCreation1.create();
           })
           .then((Coupon coupon) {
-            testCoupon = coupon;
+            testCoupon1 = coupon;
+            return testCouponCreation2.create();
+          })
+          .then((Coupon coupon) {
+            testCoupon2 = coupon;
             return new CustomerCreation().create();
           })
           .then((Customer customer) {
             testCustomer = customer;
-            return testCardCreation1.create(testCustomer.id);
-          })
-          .then((Card card) {
-            testCard1 = card;
             return (
                 new SubscriptionCreation()
-                    ..plan = testPlan.id
-                    ..coupon = testCoupon.id
-                    ..trialEnd = testSubscriptionTrialEnd
-                    ..card = testCardCreation2
-                    ..quantity = testSubscriptionQuantity
-                    ..metadata = testSubscriptionMetadata
-
+                    ..plan = testPlan1.id
+                    ..coupon = testCoupon1.id
+                    ..trialEnd = testSubscriptionTrialEnd1
+                    ..card = testCardCreation1
+                    ..quantity = testSubscriptionQuantity1
+                    ..metadata = testSubscriptionMetadata1
             ).create(testCustomer.id);
           })
           .then((Subscription subscription) {
-            expect(subscription.plan.id, equals(testPlanId));
-            expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff));
-            expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd * 1000)));
+            expect(subscription.plan.id, equals(testPlanId1));
+            expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff1));
+            expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd1 * 1000)));
             expect(subscription.customer, equals(testCustomer.id));
-            expect(subscription.quantity, equals(testSubscriptionQuantity));
-            expect(subscription.metadata, equals(testSubscriptionMetadata));
+            expect(subscription.quantity, equals(testSubscriptionQuantity1));
+            expect(subscription.metadata, equals(testSubscriptionMetadata1));
+            return Subscription.retrieve(testCustomer.id, subscription.id , data: {'expand': ['customer']});
+          })
+          // testing the expand functionality of retrieve
+          .then((Subscription subscription) {
+            expect(subscription.customer, equals(subscription.customerExpand.id));
+
+            // testing the CustomerUpdate
+            return (new SubscriptionUpdate()
+                ..plan = testPlan2.id
+                ..coupon = testCoupon2.id
+                ..trialEnd = testSubscriptionTrialEnd2
+                ..card = testCardCreation2
+                ..quantity = testSubscriptionQuantity2
+                ..metadata = testSubscriptionMetadata2
+            ).update(testCustomer.id, subscription.id);
+          })
+          .then((Subscription subscription) {
+            expect(subscription.plan.id, equals(testPlanId2));
+            expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff2));
+            expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd2 * 1000)));
+            expect(subscription.customer, equals(testCustomer.id));
+            expect(subscription.quantity, equals(testSubscriptionQuantity2));
+            expect(subscription.metadata, equals(testSubscriptionMetadata2));
+            return Subscription.cancel(testCustomer.id, subscription.id);
+          })
+          // testing cancel
+          .then((Subscription subscription) {
+            expect(subscription.status, equals('canceled'));
+            expect(subscription.cancelAtPeriodEnd, isFalse);
           })
           .then(expectAsync((_) => true));
+    });
+
+    test('List parameters subscription', () {
+
+      // Card fields
+      Customer testCustomer;
+
+      // Card fields
+      Card testCard;
+      String testCardNumber = '4242424242424242';
+      int testCardExpMonth = 12;
+      int testCardExpYear = 2015;
+
+      CardCreation testCardCreation = new CardCreation()
+          ..number = testCardNumber // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear;
+
+      // Plan fields
+      Plan testPlan;
+      String testPlanId = 'test plan id';
+      int testPlanAmount = 100;
+      String testPlanCurrency = 'usd';
+      String testPlanInterval = 'month';
+      String testPlanName = 'test plan name';
+
+      PlanCreation testPlanCreation = new PlanCreation()
+          ..id = testPlanId
+          ..amount = testPlanAmount
+          ..currency = testPlanCurrency
+          ..interval = testPlanInterval
+          ..name = testPlanName;
+
+      (new CustomerCreation()
+          ..card = testCardCreation
+      ).create()
+          .then((Customer customer) {
+            testCustomer = customer;
+            return testPlanCreation.create();
+          })
+          .then((Plan plan) {
+            testPlan = plan;
+            List<Future> queue = [];
+            for (var i = 0; i < 20; i++) {
+              queue.add(
+                  (new SubscriptionCreation()
+                      ..plan = plan.id
+                  ).create(testCustomer.id)
+              );
+            }
+            return Future.wait(queue);
+          })
+
+      .then((_) => Subscription.list(testCustomer.id, limit: 10))
+      .then((SubscriptionCollection subscriptions) {
+        expect(subscriptions.data.length, equals(10));
+        expect(subscriptions.hasMore, equals(true));
+        return Subscription.list(testCustomer.id, limit: 10, startingAfter: subscriptions.data.last.id);
+      })
+      .then((SubscriptionCollection subscriptions) {
+        expect(subscriptions.data.length, equals(10));
+        expect(subscriptions.hasMore, equals(false));
+        return Subscription.list(testCustomer.id, limit: 10, endingBefore: subscriptions.data.first.id);
+      })
+      .then((SubscriptionCollection subscriptions) {
+        expect(subscriptions.data.length, equals(10));
+        expect(subscriptions.hasMore, equals(false));
+      })
+      .then(expectAsync((_) => true));
+
     });
 
   });

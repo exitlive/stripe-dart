@@ -14,7 +14,18 @@ class Subscription extends ApiResource {
 
   bool get cancelAtPeriodEnd => _dataMap['cancel_at_period_end'];
 
-  String get customer => _dataMap['customer'];
+  String get customer {
+    var value = _dataMap['customer'];
+    if (value == null) return null;
+    else if(value is String) return value;
+    else return new Customer.fromMap(value).id;
+  }
+
+  Customer get customerExpand {
+    var value = _dataMap['customer'];
+    if (value == null) return null;
+    else return new Customer.fromMap(value);
+  }
 
   Plan get plan {
     var value = _dataMap['plan'];
@@ -52,6 +63,38 @@ class Subscription extends ApiResource {
 
   Subscription.fromMap(Map dataMap) : super.fromMap(dataMap);
 
+  /**
+   * [Retrieving a customer's subscription](https://stripe.com/docs/api/curl#retrieve_subscription)
+   */
+  static Future<Subscription> retrieve(String customerId, String subscriptionId, {final Map data}) {
+    return StripeService.retrieve([Customer._path, customerId, Subscription._path, subscriptionId], data: data)
+        .then((Map json) => new Subscription.fromMap(json));
+  }
+
+  /**
+   * [Canceling a Customer's Subscription](https://stripe.com/docs/api/curl#cancel_subscription)
+   */
+  static Future<Subscription> cancel(String customerId, String subscriptionId, {bool atPeriodEnd, final Map data}) {
+    Map data = {};
+    if (atPeriodEnd != null) data['at_period_end'] = atPeriodEnd;
+    if (data == {}) data = null;
+    return StripeService.delete([Customer._path, customerId, Subscription._path, subscriptionId], data: data)
+        .then((Map json) => new Subscription.fromMap(json));
+  }
+
+  /**
+   * [Listing subscriptions](https://stripe.com/docs/api/curl#list_subscriptions)
+   */
+  static Future<SubscriptionCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) {
+    Map data = {};
+    if (limit != null) data['limit'] = limit;
+    if (startingAfter != null) data['starting_after'] = startingAfter;
+    if (endingBefore != null) data['ending_before'] = endingBefore;
+    if (data == {}) data = null;
+    return StripeService.list([Customer._path, customerId, Subscription._path], data: data)
+        .then((Map json) => new SubscriptionCollection.fromMap(json));
+  }
+
 }
 
 
@@ -86,6 +129,36 @@ class SubscriptionCreation extends ResourceRequest {
 
   Future<Subscription> create(String customerId) {
     return StripeService.create([Customer._path, customerId, Subscription._path], _getMap())
+        .then((Map json) => new Subscription.fromMap(json));
+  }
+
+
+}
+
+
+/**
+ * [Updating a Subscription](https://stripe.com/docs/api/curl#update_subscription)
+ */
+class SubscriptionUpdate extends ResourceRequest {
+
+  set plan (String plan) => _setMap('plan', plan);
+
+  set coupon (String coupon) => _setMap('coupon', coupon);
+
+  set prorate (bool prorate) => _setMap('prorate', prorate);
+
+  set trialEnd (int trialEnd) => _setMap('trial_end', trialEnd);
+
+  set card (CardCreation card) => _setMap('card', card._getMap());
+
+  set quantity (int quantity) => _setMap('quantity', quantity);
+
+  set applicationFeePercent (int applicationFeePercent) => _setMap('application_fee_percent', applicationFeePercent);
+
+  set metadata (Map metadata) => _setMap('metadata', metadata);
+
+  Future<Subscription> update(String customerId, String subscriptionId) {
+    return StripeService.create([Customer._path, customerId, Subscription._path, subscriptionId], _getMap())
         .then((Map json) => new Subscription.fromMap(json));
   }
 
