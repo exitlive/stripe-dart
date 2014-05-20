@@ -28,7 +28,7 @@ abstract class StripeService {
   /**
    * Makes a delete request to the Stripe API
    */
-  static Future<Map> delete(final List<String> pathParts) => _request('DELETE', pathParts);
+  static Future<Map> delete(final List<String> pathParts, {final Map data}) => _request('DELETE', pathParts, data: data);
 
   /**
    * Makes a get request to the Stripe API for a single resource item
