@@ -228,10 +228,9 @@ main(List<String> args) {
         expect(plan.id, equals(testPlanId));
         expect(plan.interval, equals(testPlanInterval));
         expect(plan.name, equals(testPlanName));
-        return customer;
+        return Customer.retrieve(customer.id, data: {'expand': ['default_card']});
       })
       // testing the expand functionality of retrieve
-      .then((Customer customer) => Customer.retrieve(customer.id, data: {'expand': ['default_card']}))
       .then((Customer customer) {
         expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
         expect(customer.defaultCardExpand.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
