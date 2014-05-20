@@ -167,15 +167,25 @@ main(List<String> args) {
       Customer testCustomer;
 
       // Card fields
-      Card testCard;
-      String testCardNumber = '5555555555554444';
-      int testCardExpMonth = 3;
-      int testCardExpYear = 2016;
+      Card testCard1;
+      String testCardNumber1 = '4242424242424242';
+      int testCardExpMonth1 = 12;
+      int testCardExpYear1 = 2015;
 
-      CardCreation testCardCreation = new CardCreation()
-          ..number = testCardNumber // only the last 4 digits can be tested
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear;
+      CardCreation testCardCreation1 = new CardCreation()
+      ..number = testCardNumber1 // only the last 4 digits can be tested
+      ..expMonth = testCardExpMonth1
+      ..expYear = testCardExpYear1;
+
+      Card testCard2;
+      String testCardNumber2 = '5555555555554444';
+      int testCardExpMonth2 = 3;
+      int testCardExpYear2 = 2016;
+
+      CardCreation testCardCreation2 = new CardCreation()
+      ..number = testCardNumber2 // only the last 4 digits can be tested
+      ..expMonth = testCardExpMonth2
+      ..expYear = testCardExpYear2;
 
       // Plan fields
       Plan testPlan;
@@ -187,6 +197,10 @@ main(List<String> args) {
 
       // Subscription fields
       int testSubscriptionTrialEnd = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000;
+      int testSubscriptionQuantity = 3;
+      // application_fee_percent can only be tested with OAuth key
+      Map testSubscriptionMetadata = {'foo': 'bar'};
+
       (new PlanCreation()
           ..id = testPlanId
           ..amount = testPlanAmount
@@ -204,22 +218,28 @@ main(List<String> args) {
           })
           .then((Customer customer) {
             testCustomer = customer;
-            return testCardCreation.create(testCustomer.id);
+            return testCardCreation1.create(testCustomer.id);
           })
           .then((Card card) {
-            testCard = card;
+            testCard1 = card;
             return (
                 new SubscriptionCreation()
                     ..plan = testPlan.id
                     ..coupon = testCoupon.id
                     ..trialEnd = testSubscriptionTrialEnd
+                    ..card = testCardCreation2
+                    ..quantity = testSubscriptionQuantity
+                    ..metadata = testSubscriptionMetadata
+
             ).create(testCustomer.id);
           })
           .then((Subscription subscription) {
             expect(subscription.plan.id, equals(testPlanId));
             expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff));
-            expect(subscription.trialEnd, equals(testSubscriptionTrialEnd));
+            expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd * 1000)));
             expect(subscription.customer, equals(testCustomer.id));
+            expect(subscription.quantity, equals(testSubscriptionQuantity));
+            expect(subscription.metadata, equals(testSubscriptionMetadata));
           })
           .then(expectAsync((_) => true));
     });
