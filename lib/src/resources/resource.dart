@@ -91,7 +91,9 @@ abstract class ResourceRequest {
         });
       }
     });
-
+    _map.forEach((k, v) {
+      if (v is ResourceRequest) _map[k] = v._getMap();
+    });
     return _map;
   }
 

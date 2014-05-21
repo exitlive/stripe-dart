@@ -119,7 +119,7 @@ class SubscriptionCreation extends ResourceRequest {
 
   set trialEnd (int trialEnd) => _setMap('trial_end', trialEnd);
 
-  set card (CardCreation card) => _setMap('card', card._getMap());
+  set card (CardCreation card) => _setMap('card', card);
 
   set quantity (int quantity) => _setMap('quantity', quantity);
 
@@ -149,7 +149,7 @@ class SubscriptionUpdate extends ResourceRequest {
 
   set trialEnd (int trialEnd) => _setMap('trial_end', trialEnd);
 
-  set card (CardCreation card) => _setMap('card', card._getMap());
+  set card (CardCreation card) => _setMap('card', card);
 
   set quantity (int quantity) => _setMap('quantity', quantity);
 

@@ -106,7 +106,7 @@ class CustomerCreation extends ResourceRequest {
 
   set accountBalance (int accountBalance) => _setMap('account_balance', accountBalance);
 
-  set card (CardCreation card) => _setMap('card', card._getMap());
+  set card (CardCreation card) => _setMap('card', card);
 
   set coupon (String coupon) => _setMap('coupon', coupon);
 
@@ -139,7 +139,7 @@ class CustomerUpdate extends ResourceRequest {
 
   set accountBalance (int accountBalance) => _setMap('account_balance', accountBalance);
 
-  set card (CardCreation card) => _setMap('card', card._getMap());
+  set card (CardCreation card) => _setMap('card', card);
 
   set coupon (String coupon) => _setMap('coupon', coupon);
 
