@@ -156,10 +156,40 @@ main(List<String> args) {
         expect(plan.metadata, equals(testPlanMetadata2));
         expect(plan.statementDescription, equals(testPlanStatementDescription2));
       })
-
       .then(expectAsync((_) => true));
     });
 
+    test('Delete Plan', () {
+      // plan fields
+      Plan testPlan;
+      String testPlanId = 'test id';
+      int testPlanAmount = 10;
+      String testPlanCurrency = 'usd';
+      String testPlanInterval = 'month';
+      String testPlanName = 'test name';
+
+      (new PlanCreation()
+      ..id = testPlanId
+      ..amount = testPlanAmount
+      ..currency = testPlanCurrency
+      ..interval = testPlanInterval
+      ..name = testPlanName
+      ).create()
+      .then((Plan plan) {
+        testPlan = plan;
+        expect(plan.id, testPlanId);
+        expect(plan.amount, equals(testPlanAmount));
+        expect(plan.currency, equals(testPlanCurrency));
+        expect(plan.interval, equals(testPlanInterval));
+        expect(plan.name, equals(testPlanName));
+        return Plan.delete(plan.id);
+      })
+      .then((Map response) {
+        expect(response['deleted'], isTrue);
+        expect(response['id'], equals(testPlan.id));
+      })
+      .then(expectAsync((_) => true));
+    });
 
     test('List parameters plan', () {
     // plan fields
