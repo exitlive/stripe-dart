@@ -6,8 +6,6 @@ part of stripe;
  */
 class Dispute extends Resource {
 
-  String get id => _dataMap['id'];
-
   final String objectName = 'dispute';
 
   static String _path = 'dispute';
@@ -58,4 +56,24 @@ class Dispute extends Resource {
 
   Dispute.fromMap(Map dataMap) : super.fromMap(dataMap);
 
+  /**
+   * [Closing a dispute](https://stripe.com/docs/api/curl#close_dispute)
+   */
+  static Future close(String chargeId) => StripeService.post([Charge._path, chargeId, Dispute._path, 'close']);
+
 }
+
+/**
+ * [Updating a dispute](https://stripe.com/docs/api/curl#update_dispute)
+ */
+class DisputeUpdate extends ResourceRequest {
+
+  set evidence (String evidence) => _setMap('evidence', evidence);
+
+  Future<Customer> update(String chargeId) {
+    return StripeService.update([Charge._path, chargeId, Dispute._path], _getMap())
+      .then((Map json) => new Customer.fromMap(json));
+  }
+
+}
+
