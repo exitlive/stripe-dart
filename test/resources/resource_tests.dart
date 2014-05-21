@@ -20,7 +20,7 @@ main() {
   group('Resource', () {
 
 
-    test('should fail if the `object` key isn not correct or null', () {
+    test('should fail if the `object` key is not correct or null', () {
       var map = { 'object': 'incorrect' };
       expect(() => new TestResource.fromMap(map), throwsException);
       expect(() => new TestResource2.fromMap(map), throwsA(new isInstanceOf<AssertionError>()));
