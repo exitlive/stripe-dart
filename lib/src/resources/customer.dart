@@ -87,8 +87,6 @@ class Customer extends ApiResource {
    */
   static Future delete(String id) => StripeService.delete([Customer._path, id]);
 
-  bool get deleted => _dataMap['deleted'];
-
 }
 
 

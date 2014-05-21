@@ -102,18 +102,18 @@ main(List<String> args) {
       int testCardExpYear1 = 2015;
 
       CardCreation testCardCreation1 = new CardCreation()
-      ..number = testCardNumber1 // only the last 4 digits can be tested
-      ..expMonth = testCardExpMonth1
-      ..expYear = testCardExpYear1;
+          ..number = testCardNumber1 // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth1
+          ..expYear = testCardExpYear1;
 
       String testCardNumber2 = '5555555555554444';
       int testCardExpMonth2 = 3;
       int testCardExpYear2 = 2016;
 
       CardCreation testCardCreation2 = new CardCreation()
-      ..number = testCardNumber2 // only the last 4 digits can be tested
-      ..expMonth = testCardExpMonth2
-      ..expYear = testCardExpYear2;
+          ..number = testCardNumber2 // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth2
+          ..expYear = testCardExpYear2;
 
       // Coupon fields
       String testCouponId1 = 'test coupon id1';
@@ -122,9 +122,9 @@ main(List<String> args) {
 
       Coupon testCoupon1;
       CouponCreation testCouponCreation1 = new CouponCreation()
-      ..id = testCouponId1
-      ..duration = testCouponDuration1
-      ..percentOff = testCouponPercentOff1;
+          ..id = testCouponId1
+          ..duration = testCouponDuration1
+          ..percentOff = testCouponPercentOff1;
 
       String testCouponId2 = 'test coupon id2';
       String testCouponDuration2 = 'forever';
@@ -132,9 +132,9 @@ main(List<String> args) {
 
       Coupon testCoupon2;
       CouponCreation testCouponCreation2 = new CouponCreation()
-      ..id = testCouponId2
-      ..duration = testCouponDuration2
-      ..percentOff = testCouponPercentOff2;
+          ..id = testCouponId2
+          ..duration = testCouponDuration2
+          ..percentOff = testCouponPercentOff2;
 
       // Plan fields
       String testPlanId = 'test plan id';
@@ -145,11 +145,11 @@ main(List<String> args) {
 
       Plan testPlan;
       PlanCreation testPlanCreation = new PlanCreation()
-      ..id = testPlanId
-      ..amount = testPlanAmount
-      ..currency = testPlanCurrency
-      ..interval = testPlanInterval
-      ..name = testPlanName;
+          ..id = testPlanId
+          ..amount = testPlanAmount
+          ..currency = testPlanCurrency
+          ..interval = testPlanInterval
+          ..name = testPlanName;
 
       // Customer fields
       Customer testCustomer;
@@ -166,15 +166,15 @@ main(List<String> args) {
       Map testCustomerMetadata2 = {'foo': 'bar2'};
 
       CustomerCreation testCustomerCreation = new CustomerCreation()
-      ..accountBalance = testCustomerAccountBalance1
-      ..card = testCardCreation1
-      ..coupon = testCouponId1
-      ..description = testCustomerDescription1
-      ..email = testCustomerEmail1
-      ..metadata = testCustomerMetadata1
-      ..plan = testPlanId
-      ..quantity = testCustomerQuantity
-      ..trialEnd = testCustomerTrialEnd;
+          ..accountBalance = testCustomerAccountBalance1
+          ..card = testCardCreation1
+          ..coupon = testCouponId1
+          ..description = testCustomerDescription1
+          ..email = testCustomerEmail1
+          ..metadata = testCustomerMetadata1
+          ..plan = testPlanId
+          ..quantity = testCustomerQuantity
+          ..trialEnd = testCustomerTrialEnd;
 
       testCouponCreation1.create()
       .then((Coupon coupon) {
@@ -218,9 +218,9 @@ main(List<String> args) {
         expect(subscription.canceledAt, isNull);
         expect(subscription.discount, isNull);
         expect(subscription.endedAt, isNull);
-        expect(subscription.quantity, isNull);
+        expect(subscription.quantity, equals(testCustomerQuantity));
         expect(subscription.status, equals('trialing'));
-        expect(subscription.trialEnd, equals(testCustomerTrialEnd));
+        expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testCustomerTrialEnd * 1000)));
         expect(subscription.plan, new isInstanceOf<Plan>());
         Plan plan = subscription.plan;
         expect(plan.amount, equals(testPlanAmount));
@@ -237,12 +237,12 @@ main(List<String> args) {
 
         // testing the CustomerUpdate
         return (new CustomerUpdate()
-        ..accountBalance = testCustomerAccountBalance2
-        ..card = testCardCreation2
-        ..coupon = testCouponId2
-        ..description = testCustomerDescription2
-        ..email = testCustomerEmail2
-        ..metadata = testCustomerMetadata2
+            ..accountBalance = testCustomerAccountBalance2
+            ..card = testCardCreation2
+            ..coupon = testCouponId2
+            ..description = testCustomerDescription2
+            ..email = testCustomerEmail2
+            ..metadata = testCustomerMetadata2
         ).update(testCustomer.id);
       })
       .then((Customer customer) {
@@ -257,7 +257,7 @@ main(List<String> args) {
 
     });
 
-    test('Delete customer', () {
+    test('Delete Customer', () {
       Customer testCustomer;
       new CustomerCreation().create()
       .then((Customer customer) {
@@ -272,7 +272,7 @@ main(List<String> args) {
 
     });
 
-    test('List parameters customer', () {
+    test('List parameters Customer', () {
       List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
         queue.add(new CustomerCreation().create());
