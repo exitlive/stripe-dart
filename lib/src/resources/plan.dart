@@ -106,3 +106,22 @@ class PlanCreation extends ResourceRequest {
   }
 
 }
+
+
+/**
+ * [Updating a plan](https://stripe.com/docs/api/curl#update_plan)
+ */
+class PlanUpdate extends ResourceRequest {
+
+  set name (String name) => _setMap('name', name);
+
+  set metadata (Map metadata) => _setMap('metadata', metadata);
+
+  set statementDescription (String statementDescription) => _setMap('statement_description', statementDescription);
+
+  Future<Plan> update(String planId) {
+    return StripeService.update([Plan._path, planId], _getMap())
+      .then((Map json) => new Plan.fromMap(json));
+  }
+
+}
