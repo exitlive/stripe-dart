@@ -113,7 +113,38 @@ main(List<String> args) {
         expect(recipient.id, new isInstanceOf<String>());
         expect(recipient.name, equals(testRecipientName));
         expect(recipient.type, equals(testRecipientType));
+
+        expect(recipient.activeAccount.bankName, equals('STRIPE TEST BANK'));
+        expect(recipient.activeAccount.country, equals(testBankAccountCountry));
+        expect(recipient.activeAccount.currency, equals('usd'));
+        expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber.substring(8)));
+        expect(recipient.activeAccount.disabled, isFalse);
+        expect(recipient.activeAccount.fingerprint, equals('w3wTQ7xfYhoIBIcK'));
+        expect(recipient.activeAccount.validated, isFalse);
+
+        expect(recipient.email, equals(testRecipientEmail));
+        expect(recipient.description, equals(testRecipientDescription));
+        expect(recipient.metadata, equals(testRecipientMetadata));
+        return Recipient.retrieve(recipient.id);
       })
+      .then((Recipient recipient) {
+        expect(recipient.id, new isInstanceOf<String>());
+        expect(recipient.name, equals(testRecipientName));
+        expect(recipient.type, equals(testRecipientType));
+
+        expect(recipient.activeAccount.bankName, equals('STRIPE TEST BANK'));
+        expect(recipient.activeAccount.country, equals(testBankAccountCountry));
+        expect(recipient.activeAccount.currency, equals('usd'));
+        expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber.substring(8)));
+        expect(recipient.activeAccount.disabled, isFalse);
+        expect(recipient.activeAccount.fingerprint, equals('w3wTQ7xfYhoIBIcK'));
+        expect(recipient.activeAccount.validated, isFalse);
+
+        expect(recipient.email, equals(testRecipientEmail));
+        expect(recipient.description, equals(testRecipientDescription));
+        expect(recipient.metadata, equals(testRecipientMetadata));
+      })
+
       .then(expectAsync((_) => true));
 
     });

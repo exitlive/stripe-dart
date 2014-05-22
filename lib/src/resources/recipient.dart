@@ -130,13 +130,23 @@ class RecipientUpdate extends ResourceRequest {
 
 class BankAccount extends Resource {
 
+  String get id => _dataMap['id'];
+
   String objectName = 'bank_account';
+
+  String get bankName => _dataMap['bank_name'];
 
   String get country => _dataMap['country'];
 
-  String get routingNumber => _dataMap['routing_number'];
+  String get currency => _dataMap['currency'];
 
-  String get accountNumber => _dataMap['account_number'];
+  String get last4 => _dataMap['last4'];
+
+  bool get disabled => _dataMap['disabled'];
+
+  String get fingerprint => _dataMap['fingerprint'];
+
+  bool get validated => _dataMap['validated'];
 
   BankAccount.fromMap(Map dataMap) : super.fromMap(dataMap);
 
