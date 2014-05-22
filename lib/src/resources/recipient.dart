@@ -112,7 +112,7 @@ class RecipientUpdate extends ResourceRequest {
 
   set taxId (String taxId) => _setMap('tax_id', taxId);
 
-  set bankAccount (BankAccount bankAccount) => _setMap('bank_account', bankAccount);
+  set bankAccount (BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
 
   set email (String email) => _setMap('email', email);
 

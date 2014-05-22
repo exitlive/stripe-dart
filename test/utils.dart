@@ -26,6 +26,7 @@ Future tearDown() {
   processQueue.add(deleteAllCustomers());
   processQueue.add(deleteAllCoupons());
   processQueue.add(deleteAllPlans());
+  processQueue.add(deleteAllRecipients());
   return Future.wait(processQueue).then((_) {
     print('Teardown End');
     return new Future.value();
@@ -38,6 +39,17 @@ Future deleteAllCustomers() {
       List<Future> processQueue = [];
       for (Customer customer in customers.data) {
         processQueue.add(Customer.delete(customer.id).then((_) => print('Delete customer: ${customer.id}')));
+      }
+      return Future.wait(processQueue);
+    });
+}
+
+Future deleteAllRecipients() {
+  return Recipient.list(limit: 100)
+    .then((RecipientCollection recipients) {
+      List<Future> processQueue = [];
+      for (Recipient recipient in recipients.data) {
+        processQueue.add(Recipient.delete(recipient.id).then((_) => print('Delete customer: ${recipient.id}')));
       }
       return Future.wait(processQueue);
     });
