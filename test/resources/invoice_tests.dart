@@ -150,11 +150,106 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('Invoice Account', () {
-
+    test('InvoiceCreation minimal', () {
+      // Customer fields
+      Customer testCustomer;
       
+      new CustomerCreation().create()          
+          .then((Customer customer) {
+            return (new InvoiceCreation()
+                ..customer = customer.id
+            ).create();
+          })
+          .then((Invoice invoice) {
+            expect(invoice.customer, equals(testCustomer.id));      
+          })
+          .catchError((e) {
+            // nothing to invoice for a new customer
+            expect(e, new isInstanceOf<InvalidRequestErrorException>());
+            expect(e.errorMessage, equals('Nothing to invoice for customer'));
+          })
+          .then(expectAsync((_) => true));
 
     });
+
+    test('InvoiceCreation full', () {
+      // Customer fields
+      Customer testCustomer;
+
+      // Card fields
+      Card testCard;
+      String testCardNumber = '5555555555554444';
+      int testCardExpMonth = 3;
+      int testCardExpYear = 2016;
+
+      CardCreation testCardCreation = new CardCreation()
+          ..number = testCardNumber // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear;
+
+      // Plan fields
+      Plan testPlan;
+      String testPlanId = 'test plan id';
+      int testPlanAmount = 200;
+      String testPlanCurrency = 'usd';
+      String testPlanInterval = 'month';
+      String testPlanName = 'test plan name';
+
+      // Charge fields
+      int testChargeAmount = 100;
+      String testChargeCurrency = 'usd';
+   
+      // Invoice fields
+      String testInvoiceDescription = 'test description';
+      Map testInvoiceMetadata = {'foo': 'bar'};
+      
+      (new PlanCreation()
+          ..id = testPlanId
+          ..amount = testPlanAmount
+          ..currency = testPlanCurrency
+          ..interval = testPlanInterval
+          ..name = testPlanName
+      ).create()
+          .then((Plan plan) {
+            testPlan = plan;
+            return new CustomerCreation().create();
+          })
+          .then((Customer customer) {
+            testCustomer = customer;
+            return testCardCreation.create(testCustomer.id);
+          })
+          .then((Card card) {
+            testCard = card;
+            return (new ChargeCreation()
+                ..amount = testChargeAmount
+                ..currency = testChargeCurrency
+                ..customer = testCustomer.id
+            ).create();
+          })
+          .then((Charge charge) {
+            return (
+                new SubscriptionCreation()
+                    ..plan = testPlan.id
+            ).create(testCustomer.id);
+          })
+          .then((Subscription subscription) {
+            return (new InvoiceCreation()
+                ..customer = testCustomer.id
+                ..description = testInvoiceDescription
+                ..metadata = testInvoiceMetadata
+                ..subscription = subscription.id
+            ).create();
+          })
+          .catchError((e) {
+            // nothing to invoice for a new customer
+            expect(e, new isInstanceOf<InvalidRequestErrorException>());
+            expect(e.errorMessage, equals('Nothing to invoice for subscription'));
+          })
+          .then(expectAsync((_) => true));
+
+    });
+
+    
 
   });
 

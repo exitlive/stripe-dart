@@ -101,3 +101,26 @@ class Invoice extends ApiResource {
   }
 
 }
+
+/**
+ * [Creating an invoice](https://stripe.com/docs/api/curl#create_invoice)
+ */
+class InvoiceCreation extends ResourceRequest {
+  
+  @required
+  set customer (String customer) => _setMap('customer', customer);
+  
+  set applicationFee (int applicationFee) => _setMap('application_fee', applicationFee);
+  
+  set description (String description) => _setMap('description', description);
+  
+  set metadata (Map metadata) => _setMap('metadata', metadata);
+  
+  set subscription (String subscription) => _setMap('subscription', subscription);
+  
+  Future<Invoice> create() {
+    return StripeService.create([Invoice._path], _getMap())
+      .then((Map json) => new Invoice.fromMap(json));
+  }
+
+}
