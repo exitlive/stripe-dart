@@ -18,7 +18,7 @@ class Invoice extends ApiResource {
 
   int get attemptCount => _dataMap['attempt_count'];
 
-  bool get attempted => _dataMap['attempt'];
+  bool get attempted => _dataMap['attempted'];
 
   bool get closed => _dataMap['closed'];
 
@@ -74,7 +74,11 @@ class Invoice extends ApiResource {
 
   String get description => _dataMap['description'];
 
-  Discount get discount => new Discount.fromMap(_dataMap['discount']);
+  Discount get discount {
+    var value = _dataMap['discount'];
+    if (value == null) return null;
+    else return new Discount.fromMap(value);
+  }
 
   int get endingBalance => _dataMap['ending_balance'];
 
@@ -82,6 +86,8 @@ class Invoice extends ApiResource {
 
   String get subscription => _dataMap['subscription'];
 
+  DateTime get webhooksDeliveredAt => _getDateTimeFromMap('webhooks_delivered_at');
+  
   Map<String, String> get metadata => _dataMap['metadata'];
 
   Invoice.fromMap(Map dataMap) : super.fromMap(dataMap);

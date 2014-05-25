@@ -13,6 +13,7 @@ import 'resources/customer_tests.dart' as customerTests;
 import 'resources/card_tests.dart' as cardTests;
 import 'resources/discount_tests.dart' as discountTests;
 import 'resources/dispute_tests.dart' as disputeTests;
+import 'resources/invoice_tests.dart' as invoiceTests;
 import 'resources/plan_tests.dart' as planTests;
 import 'resources/recipient_tests.dart' as recipientTests;
 import 'resources/subscription_tests.dart' as subscriptionTests;
@@ -34,6 +35,7 @@ main(List<String> args) {
   customerTests.main(args);
   discountTests.main(args);
   disputeTests.main(args);
+  invoiceTests.main(args);
   planTests.main(args);
   recipientTests.main(args);
   subscriptionTests.main(args);
