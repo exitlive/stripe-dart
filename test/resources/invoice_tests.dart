@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleAccount = """
+var exampleInvoice = """
     {
       "date": 1400855490,
       "id": "in_1045Uh41dfVNZFcqMyRp9Tml",
@@ -84,10 +84,10 @@ main(List<String> args) {
   group('Invoice offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleAccount);
+      var map = JSON.decode(exampleInvoice);
 
       var invoice = new Invoice.fromMap(map);
-      
+
       expect(invoice.date, equals(new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000)));
       expect(invoice.id, equals(map['id']));
       expect(invoice.periodStart, equals(new DateTime.fromMillisecondsSinceEpoch(map['period_start'] * 1000)));
@@ -134,7 +134,7 @@ main(List<String> args) {
       expect(invoice.subscription, equals(map['subscription']));
       expect(invoice.metadata, equals(map['metadata']));
       expect(invoice.description, equals(map['description']));
-      
+
 
     });
 
@@ -153,15 +153,15 @@ main(List<String> args) {
     test('InvoiceCreation minimal', () {
       // Customer fields
       Customer testCustomer;
-      
-      new CustomerCreation().create()          
+
+      new CustomerCreation().create()
           .then((Customer customer) {
             return (new InvoiceCreation()
                 ..customer = customer.id
             ).create();
           })
           .then((Invoice invoice) {
-            expect(invoice.customer, equals(testCustomer.id));      
+            expect(invoice.customer, equals(testCustomer.id));
           })
           .catchError((e) {
             // nothing to invoice for a new customer
@@ -198,11 +198,11 @@ main(List<String> args) {
       // Charge fields
       int testChargeAmount = 100;
       String testChargeCurrency = 'usd';
-   
+
       // Invoice fields
       String testInvoiceDescription = 'test description';
       Map testInvoiceMetadata = {'foo': 'bar'};
-      
+
       (new PlanCreation()
           ..id = testPlanId
           ..amount = testPlanAmount
@@ -249,7 +249,7 @@ main(List<String> args) {
 
     });
 
-    
+
 
   });
 

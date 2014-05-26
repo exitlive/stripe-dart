@@ -8,7 +8,7 @@ import 'dart:async';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleAccount = """
+var exampleTransfer = """
     {
       "id": "tr_1046Ri41dfVNZFcqQ325IJCE",
       "object": "transfer",
@@ -181,7 +181,7 @@ main(List<String> args) {
   group('Transfer offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleAccount);
+      var map = JSON.decode(exampleTransfer);
 
       var transfer = new Transfer.fromMap(map);
 

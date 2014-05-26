@@ -8,7 +8,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleAccount = """
+var exampleRecipient = """
     {
       "id": "rp_1044M141dfVNZFcqeFYdRcQN",
       "object": "recipient",
@@ -32,7 +32,7 @@ main(List<String> args) {
   group('Recipient offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleAccount);
+      var map = JSON.decode(exampleRecipient);
 
       var recipient = new Recipient.fromMap(map);
 

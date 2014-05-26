@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleAccount = """
+var exampleToken = """
     {
       "id": "tok_103z9O41dfVNZFcqpeOFk6jX",
       "livemode": false,
@@ -43,7 +43,7 @@ main(List<String> args) {
   group('Token offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleAccount);
+      var map = JSON.decode(exampleToken);
 
       var token = new Token.fromMap(map);
 

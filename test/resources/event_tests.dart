@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleAccount = """
+var exampleEvent = """
     {
       "id": "evt_1046Ri41dfVNZFcqJ8BRwM05",
       "created": 1401075077,
@@ -192,7 +192,7 @@ main(List<String> args) {
   group('Event offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleAccount);
+      var map = JSON.decode(exampleEvent);
 
       var event = new Event.fromMap(map);
 
