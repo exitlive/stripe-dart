@@ -135,7 +135,6 @@ main(List<String> args) {
       expect(invoice.metadata, equals(map['metadata']));
       expect(invoice.description, equals(map['description']));
 
-
     });
 
   });

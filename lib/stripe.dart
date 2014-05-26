@@ -29,7 +29,7 @@ part 'src/resources/customer.dart';
 part 'src/resources/discount.dart';
 part 'src/resources/event.dart';
 part 'src/resources/invoice.dart';
-part 'src/resources/invoice_line_item.dart';
+part 'src/resources/invoice_item.dart';
 part 'src/resources/plan.dart';
 part 'src/resources/dispute.dart';
 part 'src/resources/refund.dart';
