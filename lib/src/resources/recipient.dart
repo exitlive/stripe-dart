@@ -47,11 +47,12 @@ class Recipient extends Resource {
   /**
    * [List all Recipients](https://stripe.com/docs/api/curl#list_recipients)
    */
-  static Future<RecipientCollection> list({int limit, String startingAfter, String endingBefore}) {
+  static Future<RecipientCollection> list({int limit, String startingAfter, String endingBefore, bool verified}) {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
+    if (verified != null) data['verified'] = verified;
     if (data == {}) data = null;
     return StripeService.list([Recipient._path], data: data)
         .then((Map json) => new RecipientCollection.fromMap(json));

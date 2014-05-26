@@ -72,6 +72,7 @@ class Customer extends ApiResource {
   /**
    * [List all Customers](https://stripe.com/docs/api/curl#list_customers)
    */
+  // TODO: implement missing arguments
   static Future<CustomerCollection> list({int limit, String startingAfter, String endingBefore}) {
     Map data = {};
     if (limit != null) data['limit'] = limit;
