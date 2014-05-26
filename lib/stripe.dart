@@ -26,6 +26,7 @@ part 'src/resources/charge.dart';
 part 'src/resources/coupon.dart';
 part 'src/resources/customer.dart';
 part 'src/resources/discount.dart';
+part 'src/resources/event.dart';
 part 'src/resources/invoice.dart';
 part 'src/resources/invoice_line_item.dart';
 part 'src/resources/plan.dart';
