@@ -35,3 +35,4 @@ part 'src/resources/refund.dart';
 part 'src/resources/recipient.dart';
 part 'src/resources/subscription.dart';
 part 'src/resources/token.dart';
+part 'src/resources/transfer.dart';
