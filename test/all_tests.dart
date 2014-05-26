@@ -17,7 +17,7 @@ import 'resources/invoice_tests.dart' as invoiceTests;
 import 'resources/plan_tests.dart' as planTests;
 import 'resources/recipient_tests.dart' as recipientTests;
 import 'resources/subscription_tests.dart' as subscriptionTests;
-
+import 'resources/token_tests.dart' as tokenTests;
 
 main(List<String> args) {
 
@@ -39,5 +39,6 @@ main(List<String> args) {
   planTests.main(args);
   recipientTests.main(args);
   subscriptionTests.main(args);
+  tokenTests.main(args);
 
 }

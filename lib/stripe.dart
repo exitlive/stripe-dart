@@ -33,3 +33,4 @@ part 'src/resources/dispute.dart';
 part 'src/resources/refund.dart';
 part 'src/resources/recipient.dart';
 part 'src/resources/subscription.dart';
+part 'src/resources/token.dart';
