@@ -7,7 +7,8 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+
+var exampleAccount = """
     {
       "id": "acct_103yoB41dfVNZFcq",
       "email": "martin.flucka@gmail.com",
@@ -32,21 +33,12 @@ main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
 
-  group('Account', () {
-
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
+  group('Account offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
 
+      var map = JSON.decode(exampleAccount);
       var account = new Account.fromMap(map);
-
       expect(account.id, equals(map['id']));
       expect(account.email, equals(map['email']));
       expect(account.statementDescriptor, equals(map['statement_descriptor']));
@@ -61,7 +53,11 @@ main(List<String> args) {
 
     });
 
-    test('Retrieve Balance', () {
+  });
+
+  group('Account online', () {
+
+    test('Retrieve Account', () {
 
       Account.retrieve()
           .then((Account account) {
@@ -71,7 +67,6 @@ main(List<String> args) {
           .then(expectAsync((_) => true));
 
     });
-
 
   });
 

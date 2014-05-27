@@ -6,8 +6,6 @@ part of stripe;
  */
 class Dispute extends Resource {
 
-  String get id => _dataMap['id'];
-
   final String objectName = 'dispute';
 
   static String _path = 'dispute';
@@ -20,7 +18,7 @@ class Dispute extends Resource {
     var value = _dataMap['charge'];
     if (value == null) return null;
     else if(value is String) return _dataMap['charge'];
-    else return new Balance.fromMap(value).id;
+    else return new Charge.fromMap(value).id;
   }
 
   Charge get ChargeExpand {
@@ -41,13 +39,13 @@ class Dispute extends Resource {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
     else if(value is String) return _dataMap['balance_transaction'];
-    else return new Balance.fromMap(value).id;
+    else return new BalanceTransaction.fromMap(value).id;
   }
 
-  Balance get balanceTransactionExpand {
+  BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else return new Balance.fromMap(value);
+    else return new BalanceTransaction.fromMap(value);
   }
 
   String get evidence => _dataMap['evidence'];
@@ -57,5 +55,25 @@ class Dispute extends Resource {
   bool get isProtected => _dataMap['is_protected'];
 
   Dispute.fromMap(Map dataMap) : super.fromMap(dataMap);
+
+  /**
+   * [Closing a dispute](https://stripe.com/docs/api/curl#close_dispute)
+   */
+  static Future close(String chargeId) => StripeService.post([Charge._path, chargeId, Dispute._path, 'close']);
+
+}
+
+
+/**
+ * [Updating a dispute](https://stripe.com/docs/api/curl#update_dispute)
+ */
+class DisputeUpdate extends ResourceRequest {
+
+  set evidence (String evidence) => _setMap('evidence', evidence);
+
+  Future<Customer> update(String chargeId) {
+    return StripeService.update([Charge._path, chargeId, Dispute._path], _getMap())
+        .then((Map json) => new Customer.fromMap(json));
+  }
 
 }

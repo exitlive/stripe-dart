@@ -71,6 +71,7 @@ class Customer extends ApiResource {
 
   /**
    * [List all Customers](https://stripe.com/docs/api/curl#list_customers)
+   * TODO: implement missing argument: `created`
    */
   static Future<CustomerCollection> list({int limit, String startingAfter, String endingBefore}) {
     Map data = {};
@@ -87,7 +88,14 @@ class Customer extends ApiResource {
    */
   static Future delete(String id) => StripeService.delete([Customer._path, id]);
 
-  bool get deleted => _dataMap['deleted'];
+}
+
+
+class CustomerCollection extends ResourceCollection {
+
+  Customer _getInstanceFromMap(map) => new Customer.fromMap(map);
+
+  CustomerCollection.fromMap(Map map) : super.fromMap(map);
 
 }
 
@@ -99,7 +107,7 @@ class CustomerCreation extends ResourceRequest {
 
   set accountBalance (int accountBalance) => _setMap('account_balance', accountBalance);
 
-  set card (CardCreation card) => _setMap('card', card._getMap());
+  set card (CardCreation card) => _setMap('card', card);
 
   set coupon (String coupon) => _setMap('coupon', coupon);
 
@@ -119,7 +127,7 @@ class CustomerCreation extends ResourceRequest {
 
   Future<Customer> create() {
     return StripeService.create([Customer._path], _getMap())
-      .then((Map json) => new Customer.fromMap(json));
+        .then((Map json) => new Customer.fromMap(json));
   }
 
 }
@@ -132,7 +140,7 @@ class CustomerUpdate extends ResourceRequest {
 
   set accountBalance (int accountBalance) => _setMap('account_balance', accountBalance);
 
-  set card (CardCreation card) => _setMap('card', card._getMap());
+  set card (CardCreation card) => _setMap('card', card);
 
   set coupon (String coupon) => _setMap('coupon', coupon);
 
@@ -146,7 +154,7 @@ class CustomerUpdate extends ResourceRequest {
 
   Future<Customer> update(String id) {
     return StripeService.update([Customer._path, id], _getMap())
-      .then((Map json) => new Customer.fromMap(json));
+        .then((Map json) => new Customer.fromMap(json));
   }
 
 }

@@ -1,14 +1,15 @@
 library card_tests;
 
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
 
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleObject = """
+
+var exampleCard = """
     {
       "id": "card_103yOK2eZvKYlo2CNWdHfG5K",
       "object": "card",
@@ -36,21 +37,12 @@ main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
 
-  group('Card', () {
-
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
+  group('Card offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleObject);
 
+      var map = JSON.decode(exampleCard);
       var card = new Card.fromMap(map);
-
       expect(card.id, equals(map['id']));
       expect(card.last4, equals(map['last4']));
       expect(card.type, equals(map['type']));
@@ -68,6 +60,18 @@ main(List<String> args) {
       expect(card.addressLine1Check, equals(map['address_line1_check']));
       expect(card.addressZipCheck, equals(map['address_zip_check']));
 
+    });
+
+  });
+
+  group('Card online', () {
+
+    setUp(() {
+      return utils.setUp();
+    });
+
+    tearDown(() {
+      return utils.tearDown();
     });
 
     test('CardCreation minimal', () {
@@ -123,7 +127,6 @@ main(List<String> args) {
       int testCardExpMonth2 = 3;
       int testCardExpYear2 = 2015;
       String testCardName2 = 'Agatha Bath';
-
       new CustomerCreation().create()
           .then((Customer customer) {
             testCustomer = customer;
@@ -194,8 +197,8 @@ main(List<String> args) {
 
     });
 
-
     test('Delete card', () {
+
       Customer testCustomer;
       Card testCard;
       String number = '4242424242424242';
@@ -224,6 +227,7 @@ main(List<String> args) {
     });
 
     test('List parameters card', () {
+
       Customer testCustomer;
       Card testCard;
       String number = '4242424242424242';
@@ -260,8 +264,6 @@ main(List<String> args) {
           .then(expectAsync((_) => true));
 
     });
-
-
 
   });
 

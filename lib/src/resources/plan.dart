@@ -63,6 +63,15 @@ class Plan extends ApiResource {
 }
 
 
+class PlanCollection extends ResourceCollection {
+
+  Plan _getInstanceFromMap(map) => new Plan.fromMap(map);
+
+  PlanCollection.fromMap(Map map) : super.fromMap(map);
+
+}
+
+
 /**
  * [Creating plans](https://stripe.com/docs/api/curl#create_plan)
  */
@@ -80,7 +89,6 @@ class PlanCreation extends ResourceRequest {
   @required
   set interval (String interval) => _setMap('interval', interval);
 
-  @required
   set intervalCount (int intervalCount) => _setMap('interval_count', intervalCount);
 
   @required
@@ -94,7 +102,26 @@ class PlanCreation extends ResourceRequest {
 
   Future<Plan> create() {
     return StripeService.create([Plan._path], _getMap())
-      .then((Map json) => new Plan.fromMap(json));
+        .then((Map json) => new Plan.fromMap(json));
+  }
+
+}
+
+
+/**
+ * [Updating a plan](https://stripe.com/docs/api/curl#update_plan)
+ */
+class PlanUpdate extends ResourceRequest {
+
+  set name (String name) => _setMap('name', name);
+
+  set metadata (Map metadata) => _setMap('metadata', metadata);
+
+  set statementDescription (String statementDescription) => _setMap('statement_description', statementDescription);
+
+  Future<Plan> update(String planId) {
+    return StripeService.update([Plan._path, planId], _getMap())
+        .then((Map json) => new Plan.fromMap(json));
   }
 
 }

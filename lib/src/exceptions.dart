@@ -13,6 +13,21 @@ class InvalidDataReceivedException implements Exception {
 
 
 /**
+ * Missing argument errors indicate that not all required arguments were set for
+ * the request.
+ */
+class MissingArgumentException implements Exception {
+
+  final String errorMessage;
+
+  MissingArgumentException(this.errorMessage);
+
+  String toString() => 'Missing arguments for this request: ${errorMessage}.';
+
+}
+
+
+/**
  * Exceptions thrown by Stripe
  */
 abstract class StripeApiException implements Exception {

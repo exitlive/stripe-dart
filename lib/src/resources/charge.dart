@@ -44,13 +44,13 @@ class Charge extends Resource {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
     else if(value is String) return _dataMap['balance_transaction'];
-    else return new Balance.fromMap(value).id;
+    else return new BalanceTransaction.fromMap(value).id;
   }
 
-  Balance get balanceTransactionExpand {
+  BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else return new Balance.fromMap(value);
+    else return new BalanceTransaction.fromMap(value);
   }
 
   String get customer {
@@ -131,10 +131,10 @@ class Charge extends Resource {
 
   /**
    * [List all Charges](https://stripe.com/docs/api/curl#list_charges)
+   * TODO: implement missing argument: `created`
    */
-  static Future<ChargeCollection> list({String created, String customer, int limit, String startingAfter, String endingBefore}) {
+  static Future<ChargeCollection> list({String customer, int limit, String startingAfter, String endingBefore}) {
     Map data = {};
-    if (created != null) data['created'] = created;
     if (customer != null) data['customer'] = customer;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
@@ -143,6 +143,15 @@ class Charge extends Resource {
     return StripeService.list([Charge._path], data: data)
         .then((Map json) => new ChargeCollection.fromMap(json));
   }
+
+}
+
+
+class ChargeCollection extends ResourceCollection {
+
+  Charge _getInstanceFromMap(map) => new Charge.fromMap(map);
+
+  ChargeCollection.fromMap(Map map) : super.fromMap(map);
 
 }
 
@@ -164,7 +173,7 @@ class ChargeCreation extends ResourceRequest {
 
   set cardToken (String cardToken) => _setMap('card', cardToken);
 
-  set card (CardCreation card) => _setMap('card', card._getMap());
+  set card (CardCreation card) => _setMap('card', card);
 
   set description (String description) => _setMap('description', description);
 
@@ -178,7 +187,7 @@ class ChargeCreation extends ResourceRequest {
 
   Future<Charge> create() {
     return StripeService.create([Charge._path], _getMap())
-      .then((Map json) => new Charge.fromMap(json));
+        .then((Map json) => new Charge.fromMap(json));
   }
 
 }
@@ -195,7 +204,7 @@ class ChargeUpdate extends ResourceRequest {
 
   Future<Charge> update(String id) {
     return StripeService.update([Charge._path, id], _getMap())
-      .then((Map json) => new Charge.fromMap(json));
+        .then((Map json) => new Charge.fromMap(json));
   }
 
 }

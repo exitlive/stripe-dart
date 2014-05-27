@@ -37,7 +37,6 @@ abstract class Resource {
     int value = _dataMap[key];
     cachedValue = new DateTime.fromMillisecondsSinceEpoch(value * 1000);
     _cachedDataMap[key] = cachedValue;
-
     return cachedValue;
   }
 
@@ -64,9 +63,31 @@ abstract class ResourceRequest {
 
   /**
    * Returns the [_map] and checks that all [required] fields are set.
-   *
-   * TODO check if all fields that are marked as [required] are set.
    */
-  _getMap() => _map;
+  _getMap() {
+    ClassMirror classMirror = reflect(this).type;
+    Map<Symbol, MethodMirror> methods = classMirror.instanceMembers;
+    methods.forEach((symbol, method) {
+      if (method.isSetter) {
+        method.metadata.forEach((InstanceMirror instanceMirror) {
+          if (instanceMirror.reflectee.runtimeType == Required) {
+            var symbolName = MirrorSystem.getName(method.simpleName);
+            var setterCamelCase = symbolName.substring(0, symbolName.length - 1);
+            var setter = _underscore(setterCamelCase);
+            String className = MirrorSystem.getName(classMirror.simpleName);
+            if (_map[setter] == null) throw new MissingArgumentException('You have to set ${setter} for a proper ${className} request');
+          }
+        });
+      }
+    });
+    _map.forEach((k, v) {
+      if (v is ResourceRequest) _map[k] = v._getMap();
+    });
+    return _map;
+  }
+
+  String _underscore(String camelized) {
+    return camelized.replaceAllMapped(new RegExp(r"([A-Z])"), (Match match) => "_${match.group(1).toLowerCase()}");
+  }
 
 }
