@@ -7,7 +7,7 @@ description: Stripe API wrapper
 homepage: https://github.com/exitlive/stripe-dart
 documentation: https://github.com/exitlive/stripe-dart
 dependencies:
-  http: ">=0.9.0"
-  logging: ">=0.9.0"
+  http: ">=0.9.0 <0.10.0"
+  logging: ">=0.9.0 <0.10.0"
 dev_dependencies:
-  unittest: any
+  unittest: ">=0.11.0 <0.12.0"
