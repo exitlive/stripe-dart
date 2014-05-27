@@ -36,9 +36,11 @@ main() {
 
 ## Tests
 
-The majority of the tests rely on connecting to a real Stripe Account in testmode.
-Therefore all tests expect your API Test Secret Key as the first script argument.
-Testcoverage is limited (some tests would require livemode and or OAuth)
+The majority of the tests rely on connecting to a real Stripe Account in
+testmode.
+Therefore all tests expect your API **Test** Secret Key as the first script
+argument and your account must be set to **US**. Testcoverage is limited (some
+tests would require livemode and or OAuth).
 
 
 ## License
