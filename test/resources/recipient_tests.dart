@@ -132,7 +132,6 @@ main(List<String> args) {
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
             expect(recipient.activeAccount.disabled, isFalse);
-            expect(recipient.activeAccount.fingerprint, equals('VWNIOfZT5sKafYB2'));
             expect(recipient.activeAccount.validated, isFalse);
 
             expect(recipient.email, equals(testRecipientEmail1));
@@ -150,7 +149,6 @@ main(List<String> args) {
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
             expect(recipient.activeAccount.disabled, isFalse);
-            expect(recipient.activeAccount.fingerprint, equals('VWNIOfZT5sKafYB2'));
             expect(recipient.activeAccount.validated, isFalse);
 
             expect(recipient.email, equals(testRecipientEmail1));
@@ -175,7 +173,6 @@ main(List<String> args) {
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber2.substring(8)));
             expect(recipient.activeAccount.disabled, isFalse);
-            expect(recipient.activeAccount.fingerprint, equals('w3wTQ7xfYhoIBIcK'));
             expect(recipient.activeAccount.validated, isFalse);
 
             expect(recipient.email, equals(testRecipientEmail2));
