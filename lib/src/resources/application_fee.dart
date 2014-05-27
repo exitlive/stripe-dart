@@ -94,8 +94,8 @@ class ApplicationFee extends Resource {
 
   /**
    * [List all Application Fees](https://stripe.com/docs/api/curl#list_application_fees)
+   * TODO: implement missing argument: `created`
    */
-  // TODO: implement missing arguments
   static Future<ApplicationFeeCollection> list({String charge, int limit, String startingAfter, String endingBefore}) {
     Map data = {};
     if (charge != null) data['charge'] = charge;

@@ -79,8 +79,8 @@ class Transfer extends ApiResource {
 
   /**
    * [List all Transfers](https://stripe.com/docs/api/curl#list_transfers)
+   * TODO: implement missing arguments: `created` and `date`
    */
-  // TODO: implement missing arguments
   static Future<TransferCollection> list({int limit, String startingAfter, String endingBefore, String recipient, String status}) {
     Map data = {};
     if (limit != null) data['limit'] = limit;

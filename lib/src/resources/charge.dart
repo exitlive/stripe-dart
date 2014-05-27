@@ -131,8 +131,8 @@ class Charge extends Resource {
 
   /**
    * [List all Charges](https://stripe.com/docs/api/curl#list_charges)
+   * TODO: implement missing argument: `created`
    */
-  // TODO: implement missing arguments
   static Future<ChargeCollection> list({String customer, int limit, String startingAfter, String endingBefore}) {
     Map data = {};
     if (customer != null) data['customer'] = customer;

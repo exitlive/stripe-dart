@@ -110,8 +110,8 @@ class Invoice extends ApiResource {
 
   /**
    * [Retrieving a List of Invoices](https://stripe.com/docs/api/curl#list_customer_invoices)
+   * TODO: implement missing argument: `date`
    */
-  // TODO: implement missing arguments
   static Future<InvoiceCollection> list({String customer, int limit, String startingAfter, String endingBefore}) {
     Map data = {};
     if (customer != null) data['customer'] = customer;
