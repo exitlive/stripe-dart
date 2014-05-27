@@ -25,6 +25,7 @@ Future tearDown() {
   List<Future> processQueue = [];
   processQueue.add(deleteAllCustomers());
   processQueue.add(deleteAllCoupons());
+  processQueue.add(deleteAllInvoiceitems());
   processQueue.add(deleteAllPlans());
   processQueue.add(deleteAllRecipients());
   return Future.wait(processQueue).then((_) {
@@ -44,6 +45,28 @@ Future deleteAllCustomers() {
     });
 }
 
+Future deleteAllCoupons() {
+  return Coupon.list(limit: 100)
+    .then((CouponCollection coupons) {
+      List<Future> processQueue = [];
+      for (Coupon coupon in coupons.data) {
+        processQueue.add(Coupon.delete(coupon.id).then((_) => print('Delete coupon: ${coupon.id}')));
+      }
+      return Future.wait(processQueue);
+    });
+}
+
+Future deleteAllInvoiceitems() {
+  return Invoiceitem.list(limit: 100)
+    .then((InvoiceitemCollection invoiceitems) {
+      List<Future> processQueue = [];
+      for (Invoiceitem invoiceitem in invoiceitems.data) {
+        processQueue.add(Invoiceitem.delete(invoiceitem.id).then((_) => print('Delete invoiceitem: ${invoiceitem.id}')));
+      }
+      return Future.wait(processQueue);
+    });
+}
+
 Future deleteAllRecipients() {
   return Recipient.list(limit: 100)
     .then((RecipientCollection recipients) {
@@ -56,16 +79,6 @@ Future deleteAllRecipients() {
 }
 
 
-Future deleteAllCoupons() {
-  return Coupon.list(limit: 100)
-    .then((CouponCollection coupons) {
-      List<Future> processQueue = [];
-      for (Coupon coupon in coupons.data) {
-        processQueue.add(Coupon.delete(coupon.id).then((_) => print('Delete coupon: ${coupon.id}')));
-      }
-      return Future.wait(processQueue);
-    });
-}
 
 Future deleteAllPlans() {
   return Plan.list(limit: 100)

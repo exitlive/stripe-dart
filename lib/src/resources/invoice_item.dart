@@ -59,8 +59,8 @@ class Invoiceitem extends Resource {
   /**
    * [Retrieving an Invoice Item](https://stripe.com/docs/api/curl#retrieve_invoiceitem)
    */
-  static Future<Invoiceitem> retrieve(String invoiceitemId) {
-    return StripeService.retrieve([Invoiceitem._path, invoiceitemId])
+  static Future<Invoiceitem> retrieve(String invoiceitemId, {final Map data}) {
+    return StripeService.retrieve([Invoiceitem._path, invoiceitemId], data: data)
         .then((Map json) => new Invoiceitem.fromMap(json));
   }
 
