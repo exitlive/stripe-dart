@@ -71,17 +71,9 @@ abstract class ResourceRequest {
       if (method.isSetter) {
         method.metadata.forEach((InstanceMirror instanceMirror) {
           if (instanceMirror.reflectee.runtimeType == Required) {
-            String symbolName = MirrorSystem.getName(method.simpleName);
-            String setterCamelCase = symbolName.substring(0, symbolName.length - 1);
-            String setter = "";
-            for (var r in setterCamelCase.runes) {
-              String c = new String.fromCharCode(r);
-              if (c.toUpperCase() == c) {
-                setter += '_${c.toLowerCase()}';
-              } else {
-                setter += c;
-              }
-            };
+            var symbolName = MirrorSystem.getName(method.simpleName);
+            var setterCamelCase = symbolName.substring(0, symbolName.length - 1);
+            var setter = _underscore(setterCamelCase);
             String className = MirrorSystem.getName(classMirror.simpleName);
             if (_map[setter] == null) throw new MissingArgumentException('You have to set ${setter} for a proper ${className} request');
           }
@@ -92,6 +84,10 @@ abstract class ResourceRequest {
       if (v is ResourceRequest) _map[k] = v._getMap();
     });
     return _map;
+  }
+
+  String _underscore(String camelized) {
+    return camelized.replaceAllMapped(new RegExp(r"([A-Z])"), (Match match) => "_${match.group(1).toLowerCase()}");
   }
 
 }
