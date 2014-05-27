@@ -42,15 +42,14 @@ main(List<String> args) {
   group('Discount offline', () {
 
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleDiscount);
 
+      var map = JSON.decode(exampleDiscount);
       var discount = new Discount.fromMap(map);
       expect(discount.start, equals(new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000)));
       expect(discount.objectName, equals(map['object']));
       expect(discount.customer, equals(map['customer']));
       expect(discount.subscription, equals(map['subscription']));
       expect(discount.end, equals(map['end']));
-
       expect(discount.coupon.id, equals(map['coupon']['id']));
       expect(discount.coupon.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['coupon']['created'] * 1000)));
       expect(discount.coupon.percentOff, equals(map['coupon']['percent_off']));
@@ -99,29 +98,28 @@ main(List<String> args) {
           ..duration = testCouponDuration
           ..percentOff = testCouponPercentOff
       ).create()
-      .then((Coupon coupon) {
-        return (new CustomerCreation()
-            ..coupon = coupon.id
-        ).create();
-      })
-      .then((Customer customer) {
-        testCustomer = customer;
-        expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff));
-        testDiscount = customer.discount;
-        return Discount.deleteForCustomer(customer.id);
-      })
-      .then((Map response) {
-        expect(response['deleted'], isTrue);
-        expect(response['id'], equals(testDiscount.id));
-        return Customer.retrieve(testCustomer.id);
-      })
-      .then((Customer customer) {
-        expect(customer.discount, isNull);
-      })
-      .then(expectAsync((_) => true));
+          .then((Coupon coupon) {
+            return (new CustomerCreation()
+                ..coupon = coupon.id
+            ).create();
+          })
+          .then((Customer customer) {
+            testCustomer = customer;
+            expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff));
+            testDiscount = customer.discount;
+            return Discount.deleteForCustomer(customer.id);
+          })
+          .then((Map response) {
+            expect(response['deleted'], isTrue);
+            expect(response['id'], equals(testDiscount.id));
+            return Customer.retrieve(testCustomer.id);
+          })
+          .then((Customer customer) {
+            expect(customer.discount, isNull);
+          })
+          .then(expectAsync((_) => true));
 
     });
-
 
     test('delete from Subscription', () {
 
@@ -165,48 +163,48 @@ main(List<String> args) {
           ..duration = testCouponDuration
           ..percentOff = testCouponPercentOff
       ).create()
-      .then((Coupon coupon) {
-        testCoupon = coupon;
-        return (new PlanCreation()
-            ..id = testPlanId
-            ..amount = testPlanAmount
-            ..currency = testPlanCurrency
-            ..interval = testPlanInterval
-            ..name = testPlanName
-        ).create();
-      })
-      .then((Plan plan) {
-        testPlan = plan;
-        return new CustomerCreation().create();
-      })
-      .then((Customer customer) {
-        testCustomer = customer;
-        return testCardCreation.create(testCustomer.id);
-      })
-      .then((Card card) {
-        testCard = card;
-        return (
-            new SubscriptionCreation()
-                ..plan = testPlan.id
-                ..coupon = testCoupon.id
-        ).create(testCustomer.id);
-      })
-      .then((Subscription subscription) {
-        testSubscription = subscription;
-        expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff));
-        testDiscount = subscription.discount;
-        return Discount.deleteForSubscription(testCustomer.id, testSubscription.id);
-      })
-      .then((Map response) {
-        expect(response['deleted'], isTrue);
-        expect(response['id'], equals(testDiscount.id));
-        return Subscription.retrieve(testCustomer.id, testSubscription.id);
-      })
-      .then((Subscription subscription) {
-        expect(subscription.discount, isNull);
+          .then((Coupon coupon) {
+            testCoupon = coupon;
+            return (new PlanCreation()
+                ..id = testPlanId
+                ..amount = testPlanAmount
+                ..currency = testPlanCurrency
+                ..interval = testPlanInterval
+                ..name = testPlanName
+            ).create();
+          })
+          .then((Plan plan) {
+            testPlan = plan;
+            return new CustomerCreation().create();
+          })
+          .then((Customer customer) {
+            testCustomer = customer;
+            return testCardCreation.create(testCustomer.id);
+          })
+          .then((Card card) {
+            testCard = card;
+            return (
+                new SubscriptionCreation()
+                    ..plan = testPlan.id
+                    ..coupon = testCoupon.id
+            ).create(testCustomer.id);
+          })
+          .then((Subscription subscription) {
+            testSubscription = subscription;
+            expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff));
+            testDiscount = subscription.discount;
+            return Discount.deleteForSubscription(testCustomer.id, testSubscription.id);
+          })
+          .then((Map response) {
+            expect(response['deleted'], isTrue);
+            expect(response['id'], equals(testDiscount.id));
+            return Subscription.retrieve(testCustomer.id, testSubscription.id);
+          })
+          .then((Subscription subscription) {
+            expect(subscription.discount, isNull);
 
-      })
-      .then(expectAsync((_) => true));
+          })
+          .then(expectAsync((_) => true));
 
     });
 

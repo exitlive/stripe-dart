@@ -7,6 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+
 var exampleBalance = """
     {
       "pending": [
@@ -24,6 +25,7 @@ var exampleBalance = """
       "livemode": false,
       "object": "balance"
     }""";
+
 
 var exampleBalanceTransaction = """
     {
@@ -50,6 +52,7 @@ var exampleBalanceTransaction = """
       "description": null
     }""";
 
+
 main(List<String> args) {
 
   utils.setApiKeyFromArgs(args);
@@ -57,10 +60,9 @@ main(List<String> args) {
   group('Balance offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleBalance);
-
       var balance = new Balance.fromMap(map);
-
       expect(balance.pending.first.amount, equals(map['pending'][0]['amount']));
       expect(balance.pending.first.currency, equals(map['pending'][0]['currency']));
       expect(balance.available.first.amount, equals(map['available'][0]['amount']));
@@ -83,24 +85,21 @@ main(List<String> args) {
     test('Retrieve Balance', () {
 
       Balance.retrieve()
-      .then((Balance balance) {
-        expect(balance.livemode, equals(false));
-        // other tests will depend on your stripe account
-      })
-      .then(expectAsync((_) => true));
-
+          .then((Balance balance) {
+            expect(balance.livemode, equals(false));
+            // other tests will depend on your stripe account
+          })
+          .then(expectAsync((_) => true));
     });
 
   });
 
   group('BalanceTransaction offline', () {
 
-
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleBalanceTransaction);
-
       var balanceTransaction = new BalanceTransaction.fromMap(map);
-
       expect(balanceTransaction.id, equals(map['id']));
       expect(balanceTransaction.amount, equals(map['amount']));
       expect(balanceTransaction.currency, equals(map['currency']));
@@ -119,25 +118,6 @@ main(List<String> args) {
       expect(balanceTransaction.description, equals(map['description']));
 
     });
-
-  });
-
-  group('BalanceTransaction online', () {
-
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
-
-    test('Retrieve BalanceTransaction', () {
-
-
-
-    });
-
 
   });
 

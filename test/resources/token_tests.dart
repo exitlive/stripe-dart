@@ -7,6 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+
 var exampleToken = """
     {
       "id": "tok_103z9O41dfVNZFcqpeOFk6jX",
@@ -43,10 +44,9 @@ main(List<String> args) {
   group('Token offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleToken);
-
       var token = new Token.fromMap(map);
-
       expect(token.id, equals(map['id']));
       expect(token.livemode, equals(map['livemode']));
       expect(token.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
@@ -84,6 +84,7 @@ main(List<String> args) {
     });
 
     test('CardTokenCreation', () {
+
       // Card fields
       Card testCard;
       String testCardNumber = '4242424242424242';
@@ -123,11 +124,11 @@ main(List<String> args) {
     });
 
     test('BankAccountTokenCreation', () {
+
       // BankAccount fields
       String testBankAccountCountry = 'US';
       String testBankAccountRoutingNumber = '110000000';
       String testBankAccountAccountNumber = '000123456789';
-
 
       BankAccountRequest testBankAccount = (new BankAccountRequest()
           ..country = testBankAccountCountry
@@ -159,7 +160,6 @@ main(List<String> args) {
           .then(expectAsync((_) => true));
 
     });
-
 
   });
 

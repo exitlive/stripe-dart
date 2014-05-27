@@ -7,6 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+
 var exampleInvoice = """
     {
       "date": 1400855490,
@@ -84,10 +85,9 @@ main(List<String> args) {
   group('Invoice offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleInvoice);
-
       var invoice = new Invoice.fromMap(map);
-
       expect(invoice.date, equals(new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000)));
       expect(invoice.id, equals(map['id']));
       expect(invoice.periodStart, equals(new DateTime.fromMillisecondsSinceEpoch(map['period_start'] * 1000)));
@@ -150,6 +150,7 @@ main(List<String> args) {
     });
 
     test('InvoiceCreation minimal', () {
+
       // Customer fields
       Customer testCustomer;
 
@@ -172,6 +173,7 @@ main(List<String> args) {
     });
 
     test('InvoiceCreation full', () {
+
       // Customer fields
       Customer testCustomer;
 
@@ -247,8 +249,6 @@ main(List<String> args) {
           .then(expectAsync((_) => true));
 
     });
-
-
 
   });
 

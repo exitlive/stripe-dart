@@ -7,6 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+
 var exampleApplicationFee = """
     {
       "id": "fee_46ctshdXTn0txu",
@@ -34,10 +35,9 @@ main(List<String> args) {
   group('Account offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleApplicationFee);
-
       var applicationFee = new ApplicationFee.fromMap(map);
-
       expect(applicationFee.id, equals(map['id']));
       expect(applicationFee.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
       expect(applicationFee.livemode, equals(map['livemode']));

@@ -1,7 +1,7 @@
 library customer_tests;
 
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
 
@@ -50,10 +50,9 @@ main(List<String> args) {
   group('Customer offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleCustomer);
-
       var customer = new Customer.fromMap(map);
-
       expect(customer.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
       expect(customer.id, equals(map['id']));
       expect(customer.livemode, equals(map['livemode']));
@@ -69,8 +68,8 @@ main(List<String> args) {
       expect(customer.cards.data.length, equals(map['cards']['data'].length));
       expect(customer.cards.url, equals(map['cards']['url']));
       expect(customer.defaultCard, equals(map['default_card']));
-    });
 
+    });
 
   });
 
@@ -85,11 +84,12 @@ main(List<String> args) {
     });
 
     test('CustomerCreation minimal', () {
+
       new CustomerCreation().create()
-      .then((Customer customer) {
-        expect(customer.id, new isInstanceOf<String>());
-      })
-      .then(expectAsync((_) => true));
+          .then((Customer customer) {
+            expect(customer.id, new isInstanceOf<String>());
+          })
+          .then(expectAsync((_) => true));
 
     });
 
@@ -177,124 +177,126 @@ main(List<String> args) {
           ..trialEnd = testCustomerTrialEnd;
 
       testCouponCreation1.create()
-      .then((Coupon coupon) {
-        testCoupon1 = coupon;
-        return testCouponCreation2.create();
-      })
-      .then((Coupon coupon) {
-        testCoupon2 = coupon;
-        return testPlanCreation.create();
-      })
-      .then((Plan plan) {
-        testPlan = plan;
-        return testCustomerCreation.create();
-      })
-      .then((Customer customer) {
-        testCustomer = customer;
-        expect(customer.id, new isInstanceOf<String>());
-        expect(customer.accountBalance, equals(testCustomerAccountBalance1));
+          .then((Coupon coupon) {
+            testCoupon1 = coupon;
+            return testCouponCreation2.create();
+          })
+          .then((Coupon coupon) {
+            testCoupon2 = coupon;
+            return testPlanCreation.create();
+          })
+          .then((Plan plan) {
+            testPlan = plan;
+            return testCustomerCreation.create();
+          })
+          .then((Customer customer) {
+            testCustomer = customer;
+            expect(customer.id, new isInstanceOf<String>());
+            expect(customer.accountBalance, equals(testCustomerAccountBalance1));
 
-        // card tests
-        expect(customer.cards.data.first.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
-        expect(customer.cards.data.first.expMonth, equals(testCardExpMonth1));
-        expect(customer.cards.data.first.expYear, equals(testCardExpYear1));
+            // card tests
+            expect(customer.cards.data.first.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
+            expect(customer.cards.data.first.expMonth, equals(testCardExpMonth1));
+            expect(customer.cards.data.first.expYear, equals(testCardExpYear1));
 
-        // coupon tests
-        expect(customer.discount.coupon.id, equals(testCouponId1));
-        expect(customer.discount.coupon.duration, equals(testCouponDuration1));
-        expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff1));
-        expect(customer.discount.start.runtimeType, equals(DateTime));
-        expect(customer.discount.subscription, isNull);
-        expect(customer.discount.customer, equals(customer.id));
+            // coupon tests
+            expect(customer.discount.coupon.id, equals(testCouponId1));
+            expect(customer.discount.coupon.duration, equals(testCouponDuration1));
+            expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff1));
+            expect(customer.discount.start.runtimeType, equals(DateTime));
+            expect(customer.discount.subscription, isNull);
+            expect(customer.discount.customer, equals(customer.id));
 
-        expect(customer.description, equals(testCustomerDescription1));
-        expect(customer.email, equals(testCustomerEmail1));
+            expect(customer.description, equals(testCustomerDescription1));
+            expect(customer.email, equals(testCustomerEmail1));
 
-        // plan / subscription tests
-        Subscription subscription = customer.subscriptions.data.first;
-        expect(subscription.customer, equals(customer.id));
-        expect(subscription.applicationFeePercent, isNull);
-        expect(subscription.cancelAtPeriodEnd, isFalse);
-        expect(subscription.canceledAt, isNull);
-        expect(subscription.discount, isNull);
-        expect(subscription.endedAt, isNull);
-        expect(subscription.quantity, equals(testCustomerQuantity));
-        expect(subscription.status, equals('trialing'));
-        expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testCustomerTrialEnd * 1000)));
-        expect(subscription.plan, new isInstanceOf<Plan>());
-        Plan plan = subscription.plan;
-        expect(plan.amount, equals(testPlanAmount));
-        expect(plan.currency, equals(testPlanCurrency));
-        expect(plan.id, equals(testPlanId));
-        expect(plan.interval, equals(testPlanInterval));
-        expect(plan.name, equals(testPlanName));
-        return Customer.retrieve(customer.id, data: {'expand': ['default_card']});
-      })
-      // testing the expand functionality of retrieve
-      .then((Customer customer) {
-        expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
-        expect(customer.defaultCardExpand.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
+            // plan / subscription tests
+            Subscription subscription = customer.subscriptions.data.first;
+            expect(subscription.customer, equals(customer.id));
+            expect(subscription.applicationFeePercent, isNull);
+            expect(subscription.cancelAtPeriodEnd, isFalse);
+            expect(subscription.canceledAt, isNull);
+            expect(subscription.discount, isNull);
+            expect(subscription.endedAt, isNull);
+            expect(subscription.quantity, equals(testCustomerQuantity));
+            expect(subscription.status, equals('trialing'));
+            expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testCustomerTrialEnd * 1000)));
+            expect(subscription.plan, new isInstanceOf<Plan>());
+            Plan plan = subscription.plan;
+            expect(plan.amount, equals(testPlanAmount));
+            expect(plan.currency, equals(testPlanCurrency));
+            expect(plan.id, equals(testPlanId));
+            expect(plan.interval, equals(testPlanInterval));
+            expect(plan.name, equals(testPlanName));
+            return Customer.retrieve(customer.id, data: {'expand': ['default_card']});
+          })
+          // testing the expand functionality of retrieve
+          .then((Customer customer) {
+            expect(customer.defaultCard, equals(customer.defaultCardExpand.id));
+            expect(customer.defaultCardExpand.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
 
-        // testing the CustomerUpdate
-        return (new CustomerUpdate()
-            ..accountBalance = testCustomerAccountBalance2
-            ..card = testCardCreation2
-            ..coupon = testCouponId2
-            ..description = testCustomerDescription2
-            ..email = testCustomerEmail2
-            ..metadata = testCustomerMetadata2
-        ).update(testCustomer.id);
-      })
-      .then((Customer customer) {
-        expect(customer.accountBalance, equals(testCustomerAccountBalance2));
-        expect(customer.defaultCard, isNot(equals(testCustomer.defaultCard)));
-        expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff2));
-        expect(customer.description, equals(testCustomerDescription2));
-        expect(customer.email, equals(testCustomerEmail2));
-        expect(customer.metadata, equals(testCustomerMetadata2));
-      })
-      .then(expectAsync((_) => true));
+            // testing the CustomerUpdate
+            return (new CustomerUpdate()
+                ..accountBalance = testCustomerAccountBalance2
+                ..card = testCardCreation2
+                ..coupon = testCouponId2
+                ..description = testCustomerDescription2
+                ..email = testCustomerEmail2
+                ..metadata = testCustomerMetadata2
+            ).update(testCustomer.id);
+          })
+          .then((Customer customer) {
+            expect(customer.accountBalance, equals(testCustomerAccountBalance2));
+            expect(customer.defaultCard, isNot(equals(testCustomer.defaultCard)));
+            expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff2));
+            expect(customer.description, equals(testCustomerDescription2));
+            expect(customer.email, equals(testCustomerEmail2));
+            expect(customer.metadata, equals(testCustomerMetadata2));
+          })
+          .then(expectAsync((_) => true));
 
     });
 
     test('Delete Customer', () {
+
       Customer testCustomer;
       new CustomerCreation().create()
-      .then((Customer customer) {
-        testCustomer = customer;
-        return Customer.delete(customer.id);
-      })
-      .then((Map response) {
-        expect(response['deleted'], isTrue);
-        expect(response['id'], equals(testCustomer.id));
-      })
-      .then(expectAsync((_) => true));
+          .then((Customer customer) {
+            testCustomer = customer;
+            return Customer.delete(customer.id);
+          })
+          .then((Map response) {
+            expect(response['deleted'], isTrue);
+            expect(response['id'], equals(testCustomer.id));
+          })
+          .then(expectAsync((_) => true));
 
     });
 
     test('List parameters Customer', () {
+
       List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
         queue.add(new CustomerCreation().create());
       }
 
       Future.wait(queue)
-      .then((_) => Customer.list(limit: 10))
-      .then((CustomerCollection customers) {
-        expect(customers.data.length, equals(10));
-        expect(customers.hasMore, equals(true));
-        return Customer.list(limit: 10, startingAfter: customers.data.last.id);
-      })
-      .then((CustomerCollection customers) {
-        expect(customers.data.length, equals(10));
-        expect(customers.hasMore, equals(false));
-        return Customer.list(limit: 10, endingBefore: customers.data.first.id);
-      })
-      .then((CustomerCollection customers) {
-        expect(customers.data.length, equals(10));
-        expect(customers.hasMore, equals(false));
-      })
-      .then(expectAsync((_) => true));
+          .then((_) => Customer.list(limit: 10))
+          .then((CustomerCollection customers) {
+            expect(customers.data.length, equals(10));
+            expect(customers.hasMore, equals(true));
+            return Customer.list(limit: 10, startingAfter: customers.data.last.id);
+          })
+          .then((CustomerCollection customers) {
+            expect(customers.data.length, equals(10));
+            expect(customers.hasMore, equals(false));
+            return Customer.list(limit: 10, endingBefore: customers.data.first.id);
+          })
+          .then((CustomerCollection customers) {
+            expect(customers.data.length, equals(10));
+            expect(customers.hasMore, equals(false));
+          })
+          .then(expectAsync((_) => true));
 
     });
 

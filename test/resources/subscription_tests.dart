@@ -1,12 +1,13 @@
 library subscription_tests;
 
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
 
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
+
 
 var exampleSubscription = """
     {
@@ -52,10 +53,9 @@ main(List<String> args) {
   group('Subscription offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleSubscription);
-
       var subscription = new Subscription.fromMap(map);
-
       expect(subscription.id, equals(map['id']));
       expect(subscription.plan.interval, equals(map['plan']['interval']));
       expect(subscription.plan.name, equals(map['plan']['name']));
@@ -153,6 +153,7 @@ main(List<String> args) {
 
 
     test('SubscriptionCreation full', () {
+
       // Coupon fields
       Coupon testCoupon1;
       String testCouponId1 = 'test coupon id1';
@@ -174,7 +175,6 @@ main(List<String> args) {
           ..duration = testCouponDuration2
           ..percentOff = testCouponPercentOff2;
 
-
       // Customer fields
       Customer testCustomer;
 
@@ -185,9 +185,9 @@ main(List<String> args) {
       int testCardExpYear1 = 2015;
 
       CardCreation testCardCreation1 = new CardCreation()
-      ..number = testCardNumber1 // only the last 4 digits can be tested
-      ..expMonth = testCardExpMonth1
-      ..expYear = testCardExpYear1;
+          ..number = testCardNumber1 // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth1
+          ..expYear = testCardExpYear1;
 
       Card testCard2;
       String testCardNumber2 = '5555555555554444';
@@ -195,9 +195,9 @@ main(List<String> args) {
       int testCardExpYear2 = 2016;
 
       CardCreation testCardCreation2 = new CardCreation()
-      ..number = testCardNumber2 // only the last 4 digits can be tested
-      ..expMonth = testCardExpMonth2
-      ..expYear = testCardExpYear2;
+          ..number = testCardNumber2 // only the last 4 digits can be tested
+          ..expMonth = testCardExpMonth2
+          ..expYear = testCardExpYear2;
 
       // Plan fields
       Plan testPlan1;
@@ -306,6 +306,7 @@ main(List<String> args) {
             expect(subscription.cancelAtPeriodEnd, isFalse);
           })
           .then(expectAsync((_) => true));
+
     });
 
     test('List parameters subscription', () {
@@ -351,32 +352,32 @@ main(List<String> args) {
             List<Future> queue = [];
             for (var i = 0; i < 20; i++) {
               queue.add(
-                  (new SubscriptionCreation()
-                      ..plan = plan.id
-                  ).create(testCustomer.id)
+                (new SubscriptionCreation()
+                    ..plan = plan.id
+                ).create(testCustomer.id)
               );
             }
             return Future.wait(queue);
           })
-
-      .then((_) => Subscription.list(testCustomer.id, limit: 10))
-      .then((SubscriptionCollection subscriptions) {
-        expect(subscriptions.data.length, equals(10));
-        expect(subscriptions.hasMore, equals(true));
-        return Subscription.list(testCustomer.id, limit: 10, startingAfter: subscriptions.data.last.id);
-      })
-      .then((SubscriptionCollection subscriptions) {
-        expect(subscriptions.data.length, equals(10));
-        expect(subscriptions.hasMore, equals(false));
-        return Subscription.list(testCustomer.id, limit: 10, endingBefore: subscriptions.data.first.id);
-      })
-      .then((SubscriptionCollection subscriptions) {
-        expect(subscriptions.data.length, equals(10));
-        expect(subscriptions.hasMore, equals(false));
-      })
-      .then(expectAsync((_) => true));
+          .then((_) => Subscription.list(testCustomer.id, limit: 10))
+          .then((SubscriptionCollection subscriptions) {
+            expect(subscriptions.data.length, equals(10));
+            expect(subscriptions.hasMore, equals(true));
+            return Subscription.list(testCustomer.id, limit: 10, startingAfter: subscriptions.data.last.id);
+          })
+          .then((SubscriptionCollection subscriptions) {
+            expect(subscriptions.data.length, equals(10));
+            expect(subscriptions.hasMore, equals(false));
+            return Subscription.list(testCustomer.id, limit: 10, endingBefore: subscriptions.data.first.id);
+          })
+          .then((SubscriptionCollection subscriptions) {
+            expect(subscriptions.data.length, equals(10));
+            expect(subscriptions.hasMore, equals(false));
+          })
+          .then(expectAsync((_) => true));
 
     });
 
   });
+
 }

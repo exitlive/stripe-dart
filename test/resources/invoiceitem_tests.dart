@@ -1,11 +1,13 @@
 library invoiceitem_tests;
 
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:unittest/unittest.dart';
 
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
+
 
 var exampleAccount = """
     {
@@ -32,10 +34,9 @@ main(List<String> args) {
   group('Invoice item offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleAccount);
-
       var invoiceItem = new Invoiceitem.fromMap(map);
-
       expect(invoiceItem.id, equals(map['id']));
       expect(invoiceItem.date, equals(new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000)));
       expect(invoiceItem.amount, equals(map['amount']));
@@ -77,28 +78,27 @@ main(List<String> args) {
       String testChargeCurrency = 'usd';
 
       new CustomerCreation().create()
-      .then((Customer customer) {
-        testCustomer = customer;
-        return (new CardCreation()
-            ..number = testCardNumber
-            ..expMonth = testCardExpMonth
-            ..expYear = testCardExpYear
-        ).create(testCustomer.id);
-      })
-      .then((Card card) {
-        return (new InvoiceitemCreation()
-            ..customer = testCustomer.id
-            ..amount = testChargeAmount
-            ..currency = testChargeCurrency
-        ).create();
-      })
-      .then((Invoiceitem invoiceitem) {
-        expect(invoiceitem.amount, equals(testChargeAmount));
-        expect(invoiceitem.currency, equals(testChargeCurrency));
-        expect(invoiceitem.customer, equals(testCustomer.id));
-      })
-
-      .then(expectAsync((_) => true));
+          .then((Customer customer) {
+            testCustomer = customer;
+            return (new CardCreation()
+                ..number = testCardNumber
+                ..expMonth = testCardExpMonth
+                ..expYear = testCardExpYear
+            ).create(testCustomer.id);
+          })
+          .then((Card card) {
+            return (new InvoiceitemCreation()
+                ..customer = testCustomer.id
+                ..amount = testChargeAmount
+                ..currency = testChargeCurrency
+            ).create();
+          })
+          .then((Invoiceitem invoiceitem) {
+            expect(invoiceitem.amount, equals(testChargeAmount));
+            expect(invoiceitem.currency, equals(testChargeCurrency));
+            expect(invoiceitem.customer, equals(testCustomer.id));
+          })
+          .then(expectAsync((_) => true));
 
     });
 
@@ -129,7 +129,6 @@ main(List<String> args) {
       String testPlanCurrency = 'usd';
       String testPlanInterval = 'month';
       String testPlanName = 'test plan name';
-
 
       // Subscription fields
       Subscription testSubscription;
@@ -233,9 +232,6 @@ main(List<String> args) {
       int testChargeAmount = 100;
       String testChargeCurrency = 'usd';
 
-
-
-
       List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
         queue.add(
@@ -258,25 +254,24 @@ main(List<String> args) {
         );
       }
       Future.wait(queue)
-      .then((_) => Invoiceitem.list(limit: 10))
-      .then((InvoiceitemCollection invoiceitems) {
-        expect(invoiceitems.data.length, equals(10));
-        expect(invoiceitems.hasMore, equals(true));
-        return Invoiceitem.list(limit: 10, startingAfter: invoiceitems.data.last.id);
-      })
-      .then((InvoiceitemCollection invoiceitems) {
-        expect(invoiceitems.data.length, equals(10));
-        expect(invoiceitems.hasMore, equals(false));
-        return Invoiceitem.list(limit: 10, endingBefore: invoiceitems.data.first.id);
-      })
-      .then((InvoiceitemCollection invoiceitems) {
-        expect(invoiceitems.data.length, equals(10));
-        expect(invoiceitems.hasMore, equals(false));
-      })
-      .then(expectAsync((_) => true));
+          .then((_) => Invoiceitem.list(limit: 10))
+          .then((InvoiceitemCollection invoiceitems) {
+            expect(invoiceitems.data.length, equals(10));
+            expect(invoiceitems.hasMore, equals(true));
+            return Invoiceitem.list(limit: 10, startingAfter: invoiceitems.data.last.id);
+          })
+          .then((InvoiceitemCollection invoiceitems) {
+            expect(invoiceitems.data.length, equals(10));
+            expect(invoiceitems.hasMore, equals(false));
+            return Invoiceitem.list(limit: 10, endingBefore: invoiceitems.data.first.id);
+          })
+          .then((InvoiceitemCollection invoiceitems) {
+            expect(invoiceitems.data.length, equals(10));
+            expect(invoiceitems.hasMore, equals(false));
+          })
+          .then(expectAsync((_) => true));
 
     });
-
 
   });
 

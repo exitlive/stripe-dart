@@ -7,6 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+
 var exampleDispute = """
     {
       "charge": "ch_10442N41dfVNZFcqXcbfGBel",
@@ -30,10 +31,9 @@ main(List<String> args) {
   group('Dispute offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleDispute);
-
       var dispute = new Dispute.fromMap(map);
-
       expect(dispute.charge, equals(map['charge']));
       expect(dispute.amount, equals(map['amount']));
       expect(dispute.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));

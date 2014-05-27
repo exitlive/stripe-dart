@@ -1,12 +1,13 @@
 library transfer_tests;
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
-import 'dart:async';
 
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
+
 
 var exampleTransfer = """
     {
@@ -181,10 +182,9 @@ main(List<String> args) {
   group('Transfer offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleTransfer);
-
       var transfer = new Transfer.fromMap(map);
-
       expect(transfer.id, equals(map['id']));
       expect(transfer.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
       expect(transfer.date, equals(new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000)));
@@ -214,6 +214,7 @@ main(List<String> args) {
     });
 
     test('TransferCreation minimal', () {
+
       // Transfer fields
       int testTransferAmount = 100;
       String testTransferCurrency = 'usd';
@@ -224,15 +225,17 @@ main(List<String> args) {
           ..currency = testTransferCurrency
           ..recipient = testTransferRecipient
       ).create()
-      .then((Transfer transfer) {
-        expect(transfer.amount, equals(testTransferAmount));
-        expect(transfer.currency, equals(testTransferCurrency));
-        expect(transfer.recipient, isNull);
-      })
-      .then(expectAsync((_) => true));
+          .then((Transfer transfer) {
+            expect(transfer.amount, equals(testTransferAmount));
+            expect(transfer.currency, equals(testTransferCurrency));
+            expect(transfer.recipient, isNull);
+          })
+          .then(expectAsync((_) => true));
+
     });
 
     test('TransferCreation full', () {
+
       // Recipient fields
       Recipient testRecipient;
       String testRecipientName = 'test name';
@@ -310,6 +313,7 @@ main(List<String> args) {
             expect(e.errorMessage, equals('Transfer cannot be canceled, because it has already been submitted. You can currently only cancel pending transfers.'));
           })
           .then(expectAsync((_) => true));
+
     });
 
     test('List parameters Transfer', () {
@@ -329,23 +333,23 @@ main(List<String> args) {
       }
 
       Future.wait(queue)
-      .then((_) => Transfer.list(limit: 10))
-      .then((TransferCollection transfers) {
-        expect(transfers.data.length, equals(10));
-        expect(transfers.hasMore, equals(true));
-        return Transfer.list(limit: 10, startingAfter: transfers.data.last.id);
-      })
-      .then((TransferCollection transfers) {
-        expect(transfers.data.length, equals(10));
-        // will also include transfers from past tests
-        expect(transfers.hasMore, equals(true));
-        return Transfer.list(limit: 10, endingBefore: transfers.data.first.id);
-      })
-      .then((TransferCollection transfers) {
-        expect(transfers.data.length, equals(10));
-        expect(transfers.hasMore, equals(false));
-      })
-      .then(expectAsync((_) => true));
+          .then((_) => Transfer.list(limit: 10))
+          .then((TransferCollection transfers) {
+            expect(transfers.data.length, equals(10));
+            expect(transfers.hasMore, equals(true));
+            return Transfer.list(limit: 10, startingAfter: transfers.data.last.id);
+          })
+          .then((TransferCollection transfers) {
+            expect(transfers.data.length, equals(10));
+            // will also include transfers from past tests
+            expect(transfers.hasMore, equals(true));
+            return Transfer.list(limit: 10, endingBefore: transfers.data.first.id);
+          })
+          .then((TransferCollection transfers) {
+            expect(transfers.data.length, equals(10));
+            expect(transfers.hasMore, equals(false));
+          })
+          .then(expectAsync((_) => true));
 
     });
 

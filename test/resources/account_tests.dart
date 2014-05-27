@@ -7,6 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+
 var exampleAccount = """
     {
       "id": "acct_103yoB41dfVNZFcq",
@@ -35,10 +36,9 @@ main(List<String> args) {
   group('Account offline', () {
 
     test('fromMap() properly popullates all values', () {
+
       var map = JSON.decode(exampleAccount);
-
       var account = new Account.fromMap(map);
-
       expect(account.id, equals(map['id']));
       expect(account.email, equals(map['email']));
       expect(account.statementDescriptor, equals(map['statement_descriptor']));
@@ -57,22 +57,14 @@ main(List<String> args) {
 
   group('Account online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
-    tearDown(() {
-      return utils.tearDown();
-    });
-
     test('Retrieve Account', () {
 
       Account.retrieve()
-      .then((Account account) {
-        expect(account.id.substring(0, 3), equals('acc'));
-        // other tests will depend on your stripe account
-      })
-      .then(expectAsync((_) => true));
+          .then((Account account) {
+            expect(account.id.substring(0, 3), equals('acc'));
+            // other tests will depend on your stripe account
+          })
+          .then(expectAsync((_) => true));
 
     });
 
