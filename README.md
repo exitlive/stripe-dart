@@ -2,8 +2,6 @@
 
 [![Build Status](https://drone.io/github.com/enyo/stripe-dart/status.png)](https://drone.io/github.com/enyo/stripe-dart/latest)
 
-> This library is not finished yet. **Do not use.**  
-> It will be ready to go in a few weeks.
 
 Stripe API implemented in dart.
 
@@ -35,3 +33,9 @@ main() {
 
 }
 ```
+
+## Tests
+
+The majority of the tests rely on connecting to a real Stripe Account in testmode.
+Therefore all tests expect your API Test Secret Key as the first script argument.
+Testcoverage is limited (some tests would require livemode and or OAuth)
