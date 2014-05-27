@@ -45,7 +45,6 @@ class BalanceTransaction extends Resource {
 
   static String _path = 'history';
 
-
   int get amount => _dataMap['amount'];
 
   DateTime get availableOn => _getDateTimeFromMap('available_on');

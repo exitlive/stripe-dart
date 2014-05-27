@@ -28,7 +28,6 @@ class Discount extends Resource {
 
   Discount.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-
   /**
    * [Deleting a Customer-wide Discount](https://stripe.com/docs/api/curl#delete_discount)
    */
@@ -40,6 +39,5 @@ class Discount extends Resource {
   static Future deleteForSubscription(String customerId, String subscriptionId) {
     return StripeService.delete([Customer._path, customerId, Subscription._path, subscriptionId, Discount._path]);
   }
-
 
 }

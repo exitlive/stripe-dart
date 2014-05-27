@@ -37,7 +37,6 @@ abstract class Resource {
     int value = _dataMap[key];
     cachedValue = new DateTime.fromMillisecondsSinceEpoch(value * 1000);
     _cachedDataMap[key] = cachedValue;
-
     return cachedValue;
   }
 
@@ -66,12 +65,10 @@ abstract class ResourceRequest {
    * Returns the [_map] and checks that all [required] fields are set.
    */
   _getMap() {
-
     ClassMirror classMirror = reflect(this).type;
     Map<Symbol, MethodMirror> methods = classMirror.instanceMembers;
     methods.forEach((symbol, method) {
       if (method.isSetter) {
-
         method.metadata.forEach((InstanceMirror instanceMirror) {
           if (instanceMirror.reflectee.runtimeType == Required) {
             String symbolName = MirrorSystem.getName(method.simpleName);

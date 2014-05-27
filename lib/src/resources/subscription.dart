@@ -132,7 +132,6 @@ class SubscriptionCreation extends ResourceRequest {
         .then((Map json) => new Subscription.fromMap(json));
   }
 
-
 }
 
 

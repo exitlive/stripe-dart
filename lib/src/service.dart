@@ -64,23 +64,17 @@ abstract class StripeService {
   static Future<Map> _request(final String method, final List<String> pathParts, { final Map data }) {
 
     pathParts.insert(0, basePath);
-
     String path = '/' + pathParts.map(Uri.encodeComponent).join('/');
-
     var uri;
     if (method == 'GET' && data != null) {
       uri = new Uri(scheme: 'https', host: host, path: path, query:encodeMap(data), userInfo: '${apiKey}:');
     } else {
       uri = new Uri(scheme: 'https', host: host, path: path, userInfo: '${apiKey}:');
     }
-
     log.info('Making ${method} request to API ${uri}');
-
     var responseStatusCode;
-
     return _getClient().openUrl(method, uri)
       .then((HttpClientRequest request) {
-
         if (method == 'POST' && data != null) {
           // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
           // string and add them to the request
@@ -88,24 +82,20 @@ abstract class StripeService {
           request.headers.add('Content-Type', 'application/x-www-form-urlencoded');
           request.headers.add('Content-Length', encodedData.length);
           request.add(encodedData);
-
         }
         return request.close();
       })
       .then((HttpClientResponse response) {
         responseStatusCode = response.statusCode;
-
         return response.transform(UTF8.decoder).toList().then((data) => data.join(''));
       })
       .then((String body) {
         var map;
-
         try {
           map = JSON.decode(body);
         } on Error {
           throw new InvalidRequestErrorException('The JSON returned was unparsable (${body}).');
         }
-
         if (responseStatusCode != 200) {
           if (map['error'] == null) {
             throw new InvalidRequestErrorException('The status code returned was ${responseStatusCode} but no error was provided.');
@@ -135,19 +125,13 @@ abstract class StripeService {
    * TODO: needs improvement
    */
   static String encodeMap(final Map data) {
-
     List<String> output = [];
-
     for (String k in data.keys) {
-
       if (data[k] is Map) {
         var hasProps = false;
         for (String kk in data[k].keys) {
-
           hasProps = true;
-
           output.add(Uri.encodeComponent('${k}[${kk}]') + '=' + Uri.encodeComponent(data[k][kk].toString()));
-
         }
         if (!hasProps) {
           output.add(Uri.encodeComponent(k) + '=');
@@ -162,8 +146,7 @@ abstract class StripeService {
         output.add(Uri.encodeComponent(k) + '=' + Uri.encodeComponent(data[k]));
       }
     }
-
     return output.join('&');
-
   }
+
 }

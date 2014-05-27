@@ -63,6 +63,7 @@ class Dispute extends Resource {
 
 }
 
+
 /**
  * [Updating a dispute](https://stripe.com/docs/api/curl#update_dispute)
  */
@@ -76,4 +77,3 @@ class DisputeUpdate extends ResourceRequest {
   }
 
 }
-

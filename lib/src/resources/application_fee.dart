@@ -81,7 +81,6 @@ class ApplicationFee extends Resource {
         .then((Map json) => new ApplicationFee.fromMap(json));
   }
 
-
   /**
    * [Refunding an Application Fee](https://stripe.com/docs/api/curl#refund_application_fee)
    */
@@ -118,5 +117,3 @@ class ApplicationFeeCollection extends ResourceCollection {
   ApplicationFeeCollection.fromMap(Map map) : super.fromMap(map);
 
 }
-
-

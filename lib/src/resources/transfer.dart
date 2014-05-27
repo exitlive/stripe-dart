@@ -77,7 +77,6 @@ class Transfer extends ApiResource {
         .then((Map json) => new Transfer.fromMap(json));
   }
 
-
   /**
    * [List all Transfers](https://stripe.com/docs/api/curl#list_transfers)
    */
@@ -153,4 +152,3 @@ class TransferUpdate extends ResourceRequest {
   }
 
 }
-

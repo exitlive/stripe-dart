@@ -153,6 +153,7 @@ class BankAccount extends Resource {
 
 }
 
+
 class BankAccountRequest extends ResourceRequest {
 
   set country (String country) => _setMap('country', country);
@@ -162,5 +163,3 @@ class BankAccountRequest extends ResourceRequest {
   set accountNumber (String accountNumber) => _setMap('account_number', accountNumber);
 
 }
-
-

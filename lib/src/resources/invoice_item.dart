@@ -79,12 +79,10 @@ class Invoiceitem extends Resource {
         .then((Map json) => new InvoiceitemCollection.fromMap(json));
   }
 
-
   /**
    * [Deleting an Invoice Item](https://stripe.com/docs/api/curl#delete_invoiceitem)
    */
   static Future delete(String invoiceitemId) => StripeService.delete([Invoiceitem._path, invoiceitemId]);
-
 
 }
 
