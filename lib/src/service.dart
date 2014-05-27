@@ -121,8 +121,6 @@ abstract class StripeService {
 
   /**
    * Takes a map, and returns a properly escaped Uri String.
-   *
-   * TODO: needs improvement
    */
   static String encodeMap(final Map data) {
     List<String> output = [];
