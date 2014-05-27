@@ -98,7 +98,7 @@ class RecipientCreation extends ResourceRequest {
 
   Future<Recipient> create() {
     return StripeService.create([Recipient._path], _getMap())
-      .then((Map json) => new Recipient.fromMap(json));
+        .then((Map json) => new Recipient.fromMap(json));
   }
 
 }
@@ -123,7 +123,7 @@ class RecipientUpdate extends ResourceRequest {
 
   Future<Recipient> update(String id) {
     return StripeService.update([Recipient._path, id], _getMap())
-      .then((Map json) => new Recipient.fromMap(json));
+        .then((Map json) => new Recipient.fromMap(json));
   }
 
 }

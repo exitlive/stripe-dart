@@ -73,7 +73,7 @@ class DisputeUpdate extends ResourceRequest {
 
   Future<Customer> update(String chargeId) {
     return StripeService.update([Charge._path, chargeId, Dispute._path], _getMap())
-      .then((Map json) => new Customer.fromMap(json));
+        .then((Map json) => new Customer.fromMap(json));
   }
 
 }

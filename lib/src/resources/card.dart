@@ -129,7 +129,7 @@ class CardCreation extends ResourceRequest {
 
   Future<Card> create(String customerId) {
     return StripeService.create([Customer._path, customerId, Card._path], {'card': _getMap()})
-      .then((Map json) => new Card.fromMap(json));
+        .then((Map json) => new Card.fromMap(json));
   }
 
 }
@@ -145,7 +145,7 @@ class CardCreationWithToken extends ResourceRequest {
 
   Future<Card> create(String customerId) {
     return StripeService.create([Customer._path, customerId, Card._path], _getMap())
-      .then((Map json) => new Card.fromMap(json));
+        .then((Map json) => new Card.fromMap(json));
   }
 
 }
@@ -176,7 +176,7 @@ class CardUpdate extends ResourceRequest {
 
   Future<Card> update(String customerId, String cardId) {
     return StripeService.update([Customer._path, customerId, Card._path, cardId], _getMap())
-          .then((Map json) => new Card.fromMap(json));
+        .then((Map json) => new Card.fromMap(json));
   }
 
 }

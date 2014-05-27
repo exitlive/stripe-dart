@@ -187,7 +187,7 @@ class ChargeCreation extends ResourceRequest {
 
   Future<Charge> create() {
     return StripeService.create([Charge._path], _getMap())
-      .then((Map json) => new Charge.fromMap(json));
+        .then((Map json) => new Charge.fromMap(json));
   }
 
 }
@@ -204,7 +204,7 @@ class ChargeUpdate extends ResourceRequest {
 
   Future<Charge> update(String id) {
     return StripeService.update([Charge._path, id], _getMap())
-      .then((Map json) => new Charge.fromMap(json));
+        .then((Map json) => new Charge.fromMap(json));
   }
 
 }

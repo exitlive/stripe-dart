@@ -102,7 +102,7 @@ class PlanCreation extends ResourceRequest {
 
   Future<Plan> create() {
     return StripeService.create([Plan._path], _getMap())
-      .then((Map json) => new Plan.fromMap(json));
+        .then((Map json) => new Plan.fromMap(json));
   }
 
 }
@@ -121,7 +121,7 @@ class PlanUpdate extends ResourceRequest {
 
   Future<Plan> update(String planId) {
     return StripeService.update([Plan._path, planId], _getMap())
-      .then((Map json) => new Plan.fromMap(json));
+        .then((Map json) => new Plan.fromMap(json));
   }
 
 }

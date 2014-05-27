@@ -102,7 +102,7 @@ class CouponCreation extends ResourceRequest {
 
   Future<Coupon> create() {
     return StripeService.create([Coupon._path], _getMap())
-      .then((Map json) => new Coupon.fromMap(json));
+        .then((Map json) => new Coupon.fromMap(json));
   }
 
 }

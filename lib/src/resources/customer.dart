@@ -127,7 +127,7 @@ class CustomerCreation extends ResourceRequest {
 
   Future<Customer> create() {
     return StripeService.create([Customer._path], _getMap())
-      .then((Map json) => new Customer.fromMap(json));
+        .then((Map json) => new Customer.fromMap(json));
   }
 
 }
@@ -154,7 +154,7 @@ class CustomerUpdate extends ResourceRequest {
 
   Future<Customer> update(String id) {
     return StripeService.update([Customer._path, id], _getMap())
-      .then((Map json) => new Customer.fromMap(json));
+        .then((Map json) => new Customer.fromMap(json));
   }
 
 }

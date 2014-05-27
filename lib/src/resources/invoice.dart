@@ -179,7 +179,7 @@ class InvoiceCreation extends ResourceRequest {
 
   Future<Invoice> create() {
     return StripeService.create([Invoice._path], _getMap())
-      .then((Map json) => new Invoice.fromMap(json));
+        .then((Map json) => new Invoice.fromMap(json));
   }
 
 }
@@ -200,7 +200,7 @@ class InvoiceUpdate extends ResourceRequest {
 
   Future<Invoice> update(String invoiceId) {
     return StripeService.update([Invoice._path, invoiceId], _getMap())
-      .then((Map json) => new Invoice.fromMap(json));
+        .then((Map json) => new Invoice.fromMap(json));
   }
 
 }
