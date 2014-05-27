@@ -45,7 +45,7 @@ tests would require livemode and or OAuth).
 
 ## License
 
-Copyright (c) 2014 Matias Meno &lt;m@tias.me&gt;, Martin Flucka &lt;martin.flucka@gmail.com&gt;
+Copyright (c) 2014 Matias Meno (m@tias.me), Martin Flucka (martin.flucka@gmail.com)
 
 The MIT License
 
