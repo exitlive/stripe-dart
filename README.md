@@ -1,6 +1,6 @@
 # Stripe Dart
 
-[![Build Status](https://drone.io/github.com/enyo/stripe-dart/status.png)](https://drone.io/github.com/enyo/stripe-dart/latest)
+[![Build Status](https://drone.io/github.com/exitlive/stripe-dart/status.png)](https://drone.io/github.com/exitlive/stripe-dart/latest)
 
 
 Stripe API implemented in dart.
