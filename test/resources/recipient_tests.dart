@@ -127,7 +127,6 @@ main(List<String> args) {
             expect(recipient.name, equals(testRecipientName1));
             expect(recipient.type, equals(testRecipientType));
 
-            expect(recipient.activeAccount.bankName, equals('STRIPE TEST BANK'));
             expect(recipient.activeAccount.country, equals(testBankAccountCountry));
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
@@ -144,7 +143,6 @@ main(List<String> args) {
             expect(recipient.name, equals(testRecipientName1));
             expect(recipient.type, equals(testRecipientType));
 
-            expect(recipient.activeAccount.bankName, equals('STRIPE TEST BANK'));
             expect(recipient.activeAccount.country, equals(testBankAccountCountry));
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
@@ -168,7 +166,6 @@ main(List<String> args) {
             expect(recipient.name, equals(testRecipientName2));
             expect(recipient.type, equals(testRecipientType));
 
-            expect(recipient.activeAccount.bankName, equals('STRIPE TEST BANK'));
             expect(recipient.activeAccount.country, equals(testBankAccountCountry));
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber2.substring(8)));

@@ -29,3 +29,11 @@ class Refund extends Resource {
   Refund.fromMap(Map dataMap) : super.fromMap(dataMap);
 
 }
+
+class RefundCollection extends ResourceCollection {
+
+  Refund _getInstanceFromMap(map) => new Refund.fromMap(map);
+
+  RefundCollection.fromMap(Map map) : super.fromMap(map);
+
+}

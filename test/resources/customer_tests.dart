@@ -192,7 +192,6 @@ main(List<String> args) {
           .then((Customer customer) {
             testCustomer = customer;
             expect(customer.id, new isInstanceOf<String>());
-            expect(customer.accountBalance, equals(testCustomerAccountBalance1));
 
             // card tests
             expect(customer.cards.data.first.last4, equals(testCardNumber1.substring(testCardNumber1.length - 4)));
@@ -228,7 +227,11 @@ main(List<String> args) {
             expect(plan.id, equals(testPlanId));
             expect(plan.interval, equals(testPlanInterval));
             expect(plan.name, equals(testPlanName));
-            return Customer.retrieve(customer.id, data: {'expand': ['default_card']});
+            return Invoice.list(customer: customer.id);
+          })
+          .then((InvoiceCollection invoices) {
+            expect(invoices.data.first.startingBalance, equals(testCustomerAccountBalance1));
+            return Customer.retrieve(testCustomer.id, data: {'expand': ['default_card']});
           })
           // testing the expand functionality of retrieve
           .then((Customer customer) {
