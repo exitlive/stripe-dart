@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:mirrors';
 
 import 'package:logging/logging.dart';
+import 'dart:collection';
 
 part 'src/exceptions.dart';
 part 'src/service.dart';

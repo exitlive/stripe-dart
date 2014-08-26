@@ -32,10 +32,10 @@ class Charge extends Resource {
 
   bool get refunded => _dataMap['refunded'];
 
-  List<Refund> get refunds {
-    List refundMaps = _dataMap['refunds'];
-    assert(refundMaps != null);
-    return refundMaps.map((Map refund) => new Refund.fromMap(refund)).toList(growable: false);
+  RefundCollection get refunds {
+    Map refundMap = _dataMap['refunds'];
+    assert(refundMap != null);
+    return new RefundCollection.fromMap(refundMap);
   }
 
   int get amountRefunded => _dataMap['amountRefunded'];
