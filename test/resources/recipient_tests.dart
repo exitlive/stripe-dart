@@ -11,9 +11,9 @@ import '../utils.dart' as utils;
 
 var exampleRecipient = """
     {
-      "id": "rp_1044M141dfVNZFcqeFYdRcQN",
+      "id": "rp_14gyAY41dfVNZFcqD6nfNcbw",
       "object": "recipient",
-      "created": 1400592618,
+      "created": 1411735794,
       "livemode": true,
       "type": "individual",
       "description": "Recipient for John Doe",
@@ -22,7 +22,17 @@ var exampleRecipient = """
       "verified": false,
       "metadata": {
       },
-      "active_account": null
+      "active_account": null,
+      "cards": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "/v1/recipients/rp_14gyAY41dfVNZFcqD6nfNcbw/cards",
+        "data": [
+    
+        ]
+      },
+      "default_card": null
     }""";
 
 
@@ -44,7 +54,8 @@ main(List<String> args) {
       expect(recipient.email, equals(map['email']));
       expect(recipient.name, equals(map['name']));
       expect(recipient.verified, equals(map['verified']));
-      expect(recipient.livemode, equals(map['livemode']));
+      expect(recipient.metadata, equals(map['metadata']));
+      expect(recipient.activeAccount, equals(map['active_account']));
 
     });
 
@@ -130,8 +141,7 @@ main(List<String> args) {
             expect(recipient.activeAccount.country, equals(testBankAccountCountry));
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
-            expect(recipient.activeAccount.disabled, isFalse);
-            expect(recipient.activeAccount.validated, isFalse);
+            expect(recipient.activeAccount.status, 'new');
 
             expect(recipient.email, equals(testRecipientEmail1));
             expect(recipient.description, equals(testRecipientDescription1));
@@ -146,8 +156,7 @@ main(List<String> args) {
             expect(recipient.activeAccount.country, equals(testBankAccountCountry));
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
-            expect(recipient.activeAccount.disabled, isFalse);
-            expect(recipient.activeAccount.validated, isFalse);
+            expect(recipient.activeAccount.status, 'new');
 
             expect(recipient.email, equals(testRecipientEmail1));
             expect(recipient.description, equals(testRecipientDescription1));
@@ -169,8 +178,7 @@ main(List<String> args) {
             expect(recipient.activeAccount.country, equals(testBankAccountCountry));
             expect(recipient.activeAccount.currency, equals('usd'));
             expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber2.substring(8)));
-            expect(recipient.activeAccount.disabled, isFalse);
-            expect(recipient.activeAccount.validated, isFalse);
+            expect(recipient.activeAccount.status, 'new');
 
             expect(recipient.email, equals(testRecipientEmail2));
             expect(recipient.description, equals(testRecipientDescription2));
