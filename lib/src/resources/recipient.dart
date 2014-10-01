@@ -143,11 +143,9 @@ class BankAccount extends Resource {
 
   String get last4 => _dataMap['last4'];
 
-  bool get disabled => _dataMap['disabled'];
+  String get status => _dataMap['status'];
 
   String get fingerprint => _dataMap['fingerprint'];
-
-  bool get validated => _dataMap['validated'];
 
   BankAccount.fromMap(Map dataMap) : super.fromMap(dataMap);
 
