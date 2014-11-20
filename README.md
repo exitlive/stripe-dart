@@ -3,7 +3,7 @@
 [![Build Status](https://drone.io/github.com/exitlive/stripe-dart/status.png)](https://drone.io/github.com/exitlive/stripe-dart/latest)
 
 
-Stripe API (version 2014-10-07) implemented in dart.
+Stripe API (version 2014-11-05) implemented in dart.
 
 Most of the model class documentations have been taken from the
 [stripe documentation](https://stripe.com/docs).
