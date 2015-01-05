@@ -42,7 +42,7 @@ var exampleInvoice = """
               "trial_period_days": null,
               "metadata": {
               },
-              "statement_description": null
+              "statement_descriptor": null
             },
             "description": null,
             "metadata": {
@@ -111,7 +111,7 @@ main(List<String> args) {
       expect(invoice.lines.data.first.plan.intervalCount, equals(map['lines']['data'][0]['plan']['interval_count']));
       expect(invoice.lines.data.first.plan.trialPeriodDays, equals(map['lines']['data'][0]['plan']['trialPeriodDays']));
       expect(invoice.lines.data.first.plan.metadata, equals(map['lines']['data'][0]['plan']['metadata']));
-      expect(invoice.lines.data.first.plan.statementDescription, equals(map['lines']['data'][0]['plan']['statement_description']));
+      expect(invoice.lines.data.first.plan.statementDescriptor, equals(map['lines']['data'][0]['plan']['statement_descriptor']));
       expect(invoice.lines.data.first.description, equals(map['lines']['data'][0]['description']));
       expect(invoice.lines.data.first.metadata, equals(map['lines']['data'][0]['metadata']));
       expect(invoice.lines.url, equals(map['lines']['url']));

@@ -25,7 +25,7 @@ var exampleSubscription = """
         "trial_period_days": null,
         "metadata": {
         },
-        "statement_description": null
+        "statement_descriptor": null
       },
       "object": "subscription",
       "start": 1400498611,
@@ -67,7 +67,7 @@ main(List<String> args) {
       expect(subscription.plan.intervalCount, equals(map['plan']['interval_count']));
       expect(subscription.plan.trialPeriodDays, equals(map['plan']['trial_period_days']));
       expect(subscription.plan.metadata, equals(map['plan']['metadata']));
-      expect(subscription.plan.statementDescription, equals(map['plan']['statement_description']));
+      expect(subscription.plan.statementDescriptor, equals(map['plan']['statement_descriptor']));
       expect(subscription.start, equals(new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000)));
       expect(subscription.status, equals(map['status']));
       expect(subscription.customer, equals(map['customer']));

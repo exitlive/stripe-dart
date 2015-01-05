@@ -61,7 +61,7 @@ var exampleCharge = """
       "dispute": null,
       "metadata": {
       },
-      "statement_description": null,
+      "statement_descriptor": null,
       "receipt_email": null
     }""";
 
@@ -88,7 +88,7 @@ main(List<String> args) {
       expect(charge.card.id, new Card.fromMap(map['card']).id);
       expect(charge.description, equals(map['description']));
       expect(charge.metadata, equals(map['metadata']));
-      expect(charge.statement_description, equals(map['statement_description']));
+      expect(charge.statement_descriptor, equals(map['statement_descriptor']));
       expect(charge.captured, equals(map['captured']));
       expect(charge.failureMessage, equals(map['failureMessage']));
       expect(charge.failureCode, equals(map['failureCode']));
@@ -165,7 +165,7 @@ main(List<String> args) {
       Map testChargeMetadata1 = {'foo': 'bar1'};
       Map testChargeMetadata2 = {'foo': 'bar2'};
       bool testChargeCapture = false;
-      String testChargeStatementDescriptior = 'test descriptor';
+      String testChargeStatementDescriptor = 'test descriptor';
       // application_fee can not be tested
 
       new CustomerCreation().create()
@@ -185,7 +185,7 @@ main(List<String> args) {
                 ..description = testChargeDescription1
                 ..metadata = testChargeMetadata1
                 ..capture = testChargeCapture
-                ..statementDescriptor = testChargeStatementDescriptior
+                ..statementDescriptor = testChargeStatementDescriptor
             ).create();
           })
           .then((Charge charge) {
@@ -195,7 +195,7 @@ main(List<String> args) {
             expect(charge.description, equals(testChargeDescription1));
             expect(charge.metadata, equals(testChargeMetadata1));
             expect(charge.captured, equals(testChargeCapture));
-            expect(charge.statement_descriptor, equals(testChargeStatementDescriptior));
+            expect(charge.statement_descriptor, equals(testChargeStatementDescriptor));
             // testing the expand functionality of retrieve
             return Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
           })

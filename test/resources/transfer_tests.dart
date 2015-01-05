@@ -170,7 +170,7 @@ var exampleTransfer = """
       "description": "STRIPE TRANSFER",
       "metadata": {
       },
-      "statement_description": null,
+      "statement_descriptor": null,
       "recipient": null
     }""";
 
@@ -196,7 +196,7 @@ main(List<String> args) {
       expect(transfer.balanceTransaction, equals(map['balance_transaction']));
       expect(transfer.description, equals(map['description']));
       expect(transfer.metadata, equals(map['metadata']));
-      expect(transfer.statementDescription, equals(map['statement_description']));
+      expect(transfer.statementDescriptor, equals(map['statement_descriptor']));
       expect(transfer.recipient, equals(map['recipient']));
 
     });

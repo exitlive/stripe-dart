@@ -23,7 +23,7 @@ var examplePlan = """
       "trial_period_days": null,
       "metadata": {
       },
-      "statement_description": null
+      "statement_descriptor": null
     }""";
 
 
