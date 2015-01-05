@@ -61,7 +61,7 @@ var exampleCharge = """
       "dispute": null,
       "metadata": {
       },
-      "statement_description": null,
+      "statement_descriptor": null,
       "receipt_email": null
     }""";
 
@@ -88,7 +88,7 @@ main(List<String> args) {
       expect(charge.card.id, new Card.fromMap(map['card']).id);
       expect(charge.description, equals(map['description']));
       expect(charge.metadata, equals(map['metadata']));
-      expect(charge.statement_description, equals(map['statement_description']));
+      expect(charge.statement_descriptor, equals(map['statement_descriptor']));
       expect(charge.captured, equals(map['captured']));
       expect(charge.failureMessage, equals(map['failureMessage']));
       expect(charge.failureCode, equals(map['failureCode']));
@@ -118,7 +118,7 @@ main(List<String> args) {
       // Card fields
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
-      int testCardExpYear = 2014;
+      int testCardExpYear = 2015;
       // Charge fields
       int testChargeAmount = 100;
       String testChargeCurrency = 'usd';
@@ -154,7 +154,7 @@ main(List<String> args) {
       // Card fields
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
-      int testCardExpYear = 2014;
+      int testCardExpYear = 2015;
 
       // Charge fields
       Charge testCharge;
@@ -165,7 +165,7 @@ main(List<String> args) {
       Map testChargeMetadata1 = {'foo': 'bar1'};
       Map testChargeMetadata2 = {'foo': 'bar2'};
       bool testChargeCapture = false;
-      String testChargeStatementDescription = 'test descr';
+      String testChargeStatementDescriptor = 'test descriptor';
       // application_fee can not be tested
 
       new CustomerCreation().create()
@@ -185,7 +185,7 @@ main(List<String> args) {
                 ..description = testChargeDescription1
                 ..metadata = testChargeMetadata1
                 ..capture = testChargeCapture
-                ..statementDescription = testChargeStatementDescription
+                ..statementDescriptor = testChargeStatementDescriptor
             ).create();
           })
           .then((Charge charge) {
@@ -195,7 +195,7 @@ main(List<String> args) {
             expect(charge.description, equals(testChargeDescription1));
             expect(charge.metadata, equals(testChargeMetadata1));
             expect(charge.captured, equals(testChargeCapture));
-            expect(charge.statement_description, equals(testChargeStatementDescription));
+            expect(charge.statement_descriptor, equals(testChargeStatementDescriptor));
             // testing the expand functionality of retrieve
             return Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
           })
@@ -225,7 +225,7 @@ main(List<String> args) {
       // Card fields
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
-      int testCardExpYear = 2014;
+      int testCardExpYear = 2015;
 
       // Charge fields
       int testChargeAmount = 100;
@@ -265,7 +265,7 @@ main(List<String> args) {
       // Card fields
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
-      int testCardExpYear = 2014;
+      int testCardExpYear = 2015;
 
       // Charge fields
       int testChargeAmount = 100;
@@ -307,7 +307,7 @@ main(List<String> args) {
       Card testCard;
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
-      int testCardExpYear = 2014;
+      int testCardExpYear = 2015;
 
       new CustomerCreation().create()
           .then((Customer customer) {

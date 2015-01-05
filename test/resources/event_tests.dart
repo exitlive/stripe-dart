@@ -175,7 +175,7 @@ var exampleEvent = """
           "description": "STRIPE TRANSFER",
           "metadata": {
           },
-          "statement_description": null,
+          "statement_descriptor": null,
           "recipient": null,
           "account": null
         }
