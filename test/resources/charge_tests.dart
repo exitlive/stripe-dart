@@ -165,7 +165,7 @@ main(List<String> args) {
       Map testChargeMetadata1 = {'foo': 'bar1'};
       Map testChargeMetadata2 = {'foo': 'bar2'};
       bool testChargeCapture = false;
-      String testChargeStatementDescription = 'test descr';
+      String testChargeStatementDescriptior = 'test descriptor';
       // application_fee can not be tested
 
       new CustomerCreation().create()
@@ -185,7 +185,7 @@ main(List<String> args) {
                 ..description = testChargeDescription1
                 ..metadata = testChargeMetadata1
                 ..capture = testChargeCapture
-                ..statementDescription = testChargeStatementDescription
+                ..statementDescriptor = testChargeStatementDescriptior
             ).create();
           })
           .then((Charge charge) {
@@ -195,7 +195,7 @@ main(List<String> args) {
             expect(charge.description, equals(testChargeDescription1));
             expect(charge.metadata, equals(testChargeMetadata1));
             expect(charge.captured, equals(testChargeCapture));
-            expect(charge.statement_description, equals(testChargeStatementDescription));
+            expect(charge.statement_descriptor, equals(testChargeStatementDescriptior));
             // testing the expand functionality of retrieve
             return Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
           })

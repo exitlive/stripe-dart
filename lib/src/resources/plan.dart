@@ -30,7 +30,7 @@ class Plan extends ApiResource {
 
   int get trialPeriodDays => _dataMap['trial_period_days'];
 
-  String get statementDescription => _dataMap['statement_description'];
+  String get statementDescriptor => _dataMap['statement_descriptor'];
 
   Plan.fromMap(Map dataMap) : super.fromMap(dataMap);
 
@@ -98,7 +98,7 @@ class PlanCreation extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  set statementDescription (String statementDescription) => _setMap('statement_description', statementDescription);
+  set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
   Future<Plan> create() {
     return StripeService.create([Plan._path], _getMap())
@@ -117,7 +117,7 @@ class PlanUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  set statementDescription (String statementDescription) => _setMap('statement_description', statementDescription);
+  set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
   Future<Plan> update(String planId) {
     return StripeService.update([Plan._path, planId], _getMap())

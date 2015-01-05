@@ -93,7 +93,7 @@ class Charge extends Resource {
 
   Map<String, String> get metadata => _dataMap['metadata'];
 
-  String get statement_description => _dataMap['statement_description'];
+  String get statement_descriptor => _dataMap['statement_descriptor'];
 
   Charge.fromMap(Map dataMap) : super.fromMap(dataMap);
 
@@ -181,7 +181,7 @@ class ChargeCreation extends ResourceRequest {
 
   set capture (bool capture) => _setMap('capture', capture.toString());
 
-  set statementDescription (String statementDescription) => _setMap('statement_description', statementDescription);
+  set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
   set applicationFee (int applicationFee) => _setMap('application_fee', applicationFee);
 

@@ -57,7 +57,7 @@ class Transfer extends ApiResource {
 
   String get recipient => _dataMap['recipient'];
 
-  String get statementDescription => _dataMap['statement_description'];
+  String get statementDescriptor => _dataMap['statement_descriptor'];
 
   Transfer.fromMap(Map dataMap) : super.fromMap(dataMap);
 
@@ -125,7 +125,7 @@ class TransferCreation extends ResourceRequest {
 
   set card (String card) => _setMap('card', card);
 
-  set statementDescription (String statementDescription) => _setMap('statement_description', statementDescription);
+  set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 

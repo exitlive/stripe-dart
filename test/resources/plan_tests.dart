@@ -104,11 +104,11 @@ main(List<String> args) {
       String testPlanName1 = 'test name';
       int testPlanTrialPeriodDays = 3;
       Map testPlanMetadata1 = {'foo': 'bar1'};
-      String testPlanStatementDescription1 = 'description1';
+      String testPlanStatementDescriptor1 = 'descriptor1';
 
       String testPlanName2 = 'test name2';
       Map testPlanMetadata2 = {'foo': 'bar2'};
-      String testPlanStatementDescription2 = 'description2';
+      String testPlanStatementDescriptor2 = 'descriptor2';
 
       (new PlanCreation()
           ..id = testPlanId
@@ -119,7 +119,7 @@ main(List<String> args) {
           ..name = testPlanName1
           ..trialPeriodDays = testPlanTrialPeriodDays
           ..metadata = testPlanMetadata1
-          ..statementDescription = testPlanStatementDescription1
+          ..statementDescriptor = testPlanStatementDescriptor1
       ).create()
           .then((Plan plan) {
             testPlan = plan;
@@ -131,7 +131,7 @@ main(List<String> args) {
             expect(plan.name, equals(testPlanName1));
             expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
             expect(plan.metadata, equals(testPlanMetadata1));
-            expect(plan.statementDescription, equals(testPlanStatementDescription1));
+            expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
             return Plan.retrieve(plan.id);
           })
           // testing retrieve
@@ -144,11 +144,11 @@ main(List<String> args) {
             expect(plan.name, equals(testPlanName1));
             expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
             expect(plan.metadata, equals(testPlanMetadata1));
-            expect(plan.statementDescription, equals(testPlanStatementDescription1));
+            expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
             return (new PlanUpdate()
                 ..name = testPlanName2
                 ..metadata = testPlanMetadata2
-                ..statementDescription = testPlanStatementDescription2
+                ..statementDescriptor = testPlanStatementDescriptor2
             ).update(plan.id);
           })
           // testing update
@@ -156,7 +156,7 @@ main(List<String> args) {
             expect(plan.id, testPlanId);
             expect(plan.name, equals(testPlanName2));
             expect(plan.metadata, equals(testPlanMetadata2));
-            expect(plan.statementDescription, equals(testPlanStatementDescription2));
+            expect(plan.statementDescriptor, equals(testPlanStatementDescriptor2));
           })
           .then(expectAsync((_) => true));
 

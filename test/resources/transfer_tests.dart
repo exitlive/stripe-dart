@@ -260,7 +260,7 @@ main(List<String> args) {
       int testTransferAmount = 100;
       String testTransferCurrency = 'usd';
       String testTransferDescription1 = 'test description1';
-      String testTransferStatementDescription = 'description';
+      String testTransferStatementDescriptor = 'descriptor';
       Map testTransferMetadata1 = {'foo': 'bar1'};
 
       String testTransferDescription2 = 'test description2';
@@ -274,7 +274,7 @@ main(List<String> args) {
                 ..currency = testTransferCurrency
                 ..recipient = recipient.id
                 ..description = testTransferDescription1
-                ..statementDescription = testTransferStatementDescription
+                ..statementDescriptor = testTransferStatementDescriptor
                 ..metadata = testTransferMetadata1
             ).create();
           })
@@ -283,7 +283,7 @@ main(List<String> args) {
             expect(transfer.currency, equals(testTransferCurrency));
             expect(transfer.recipient, testRecipient.id);
             expect(transfer.description, testTransferDescription1);
-            expect(transfer.statementDescription, testTransferStatementDescription);
+            expect(transfer.statementDescriptor, testTransferStatementDescriptor);
             expect(transfer.metadata, testTransferMetadata1);
             return Transfer.retrieve(transfer.id, data: {'expand': ['balance_transaction']});
           })
@@ -302,7 +302,7 @@ main(List<String> args) {
             expect(transfer.currency, equals(testTransferCurrency));
             expect(transfer.recipient, testRecipient.id);
             expect(transfer.description, testTransferDescription2);
-            expect(transfer.statementDescription, testTransferStatementDescription);
+            expect(transfer.statementDescriptor, testTransferStatementDescriptor);
             expect(transfer.metadata, testTransferMetadata2);
             // testing transfer cancel
             return Transfer.cancel(transfer.id);
