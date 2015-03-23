@@ -310,7 +310,7 @@ main(List<String> args) {
           .catchError((e) {
             // transfer has already been submitted
             expect(e, new isInstanceOf<InvalidRequestErrorException>());
-            expect(e.errorMessage, equals('Transfer cannot be canceled, because it has already been submitted. You can currently only cancel pending transfers.'));
+            expect(e.errorMessage, equals('Transfers to non-Stripe accounts can currently only be reversed while they are pending.'));
           })
           .then(expectAsync((_) => true));
 
