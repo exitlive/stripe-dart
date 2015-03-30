@@ -37,9 +37,9 @@ class Account extends Resource {
   /**
    * [Retrieve an account](https://stripe.com/docs/api/curl#retrieve_account)
    */
-  static Future<Account> retrieve() {
-    return StripeService.retrieve([Account._path])
-        .then((Map json) => new Account.fromMap(json));
+  static Future<Account> retrieve() async {
+    var dataMap = await StripeService.retrieve([Account._path]);
+    return new Account.fromMap(dataMap);
   }
 
 }

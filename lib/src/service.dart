@@ -61,7 +61,7 @@ abstract class StripeService {
     return _request('POST', pathParts, data: data);
   }
 
-  static Future<Map> _request(final String method, final List<String> pathParts, { final Map data }) {
+  static Future<Map> _request(final String method, final List<String> pathParts, { final Map data }) async {
 
     pathParts.insert(0, basePath);
     String path = '/' + pathParts.map(Uri.encodeComponent).join('/');
@@ -73,50 +73,47 @@ abstract class StripeService {
     }
     log.info('Making ${method} request to API ${uri}');
     var responseStatusCode;
-    return _getClient().openUrl(method, uri)
-        .then((HttpClientRequest request) {
-          if (method == 'POST' && data != null) {
-            // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
-            // string and add them to the request
-            var encodedData = UTF8.encode(encodeMap(data));
-            request.headers.add('Content-Type', 'application/x-www-form-urlencoded');
-            request.headers.add('Content-Length', encodedData.length);
-            request.add(encodedData);
-          }
-          return request.close();
-        })
-        .then((HttpClientResponse response) {
-          responseStatusCode = response.statusCode;
-          return response.transform(UTF8.decoder).toList().then((data) => data.join(''));
-        })
-        .then((String body) {
-          var map;
-          try {
-            map = JSON.decode(body);
-          } on Error {
-            throw new InvalidRequestErrorException('The JSON returned was unparsable (${body}).');
-          }
-          if (responseStatusCode != 200) {
-            if (map['error'] == null) {
-              throw new InvalidRequestErrorException('The status code returned was ${responseStatusCode} but no error was provided.');
-            }
-            Map error = map['error'];
-            switch(error['type']) {
-              case 'invalid_request_error':
-                throw new InvalidRequestErrorException(error['message']);
-                break;
-              case 'api_error':
-                throw new ApiErrorException(error['message']);
-                break;
-              case 'card_error':
-                throw new CardErrorException(error['message'], error['code'], error['param']);
-                break;
-              default:
-                throw new InvalidRequestErrorException('The status code returned was ${responseStatusCode} but no error type was provided.');
-            }
-          }
-          return map;
-        });
+    HttpClientRequest request = await _getClient().openUrl(method, uri);
+
+    if (method == 'POST' && data != null) {
+      // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
+      // string and add them to the request
+      var encodedData = UTF8.encode(encodeMap(data));
+      request.headers.add('Content-Type', 'application/x-www-form-urlencoded');
+      request.headers.add('Content-Length', encodedData.length);
+      request.add(encodedData);
+    }
+    HttpClientResponse response = await request.close();
+    responseStatusCode = response.statusCode;
+    var bodyData = await response.transform(UTF8.decoder).toList();
+    String body = bodyData.join('');
+    var map;
+    try {
+      map = JSON.decode(body);
+    } on Error {
+      throw new InvalidRequestErrorException('The JSON returned was unparsable (${body}).');
+    }
+    if (responseStatusCode != 200) {
+      if (map['error'] == null) {
+        throw new InvalidRequestErrorException('The status code returned was ${responseStatusCode} but no error was provided.');
+      }
+      Map error = map['error'];
+      switch(error['type']) {
+        case 'invalid_request_error':
+          throw new InvalidRequestErrorException(error['message']);
+          break;
+        case 'api_error':
+          throw new ApiErrorException(error['message']);
+          break;
+        case 'card_error':
+          throw new CardErrorException(error['message'], error['code'], error['param']);
+          break;
+        default:
+          throw new InvalidRequestErrorException('The status code returned was ${responseStatusCode} but no error type was provided.');
+      }
+    }
+    return map;
+
   }
 
   /**

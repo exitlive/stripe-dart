@@ -29,9 +29,9 @@ class Balance extends Resource {
   /**
    * [Retrieve a balance](https://stripe.com/docs/api/curl#retrieve_balance)
    */
-  static Future<Balance> retrieve() {
-    return StripeService.get([Balance._path])
-        .then((Map json) => new Balance.fromMap(json));
+  static Future<Balance> retrieve() async {
+    var dataMap = await StripeService.get([Balance._path]);
+    return new Balance.fromMap(dataMap);
   }
 
 }
@@ -100,23 +100,23 @@ class BalanceTransaction extends Resource {
   /**
    * [Retrieving a Balance Transaction](https://stripe.com/docs/api/curl#retrieve_balance_transaction)
    */
-  static Future<BalanceTransaction> retrieve() {
-    return StripeService.get([BalanceTransaction._path])
-        .then((Map json) => new BalanceTransaction.fromMap(json));
+  static Future<BalanceTransaction> retrieve() async {
+    var dataMap = await StripeService.get([BalanceTransaction._path]);
+    return new BalanceTransaction.fromMap(dataMap);
   }
 
   /**
    * [Listing balance history](https://stripe.com/docs/api/curl#balance_history)
    * TODO: implement missing arguments: `available_on` and `created`
    */
-  static Future<BalanceTransactionCollection> list({int limit, String startingAfter, String endingBefore}) {
+  static Future<BalanceTransactionCollection> list({int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list([Balance._path, BalanceTransaction._path], data: data)
-        .then((Map json) => new BalanceTransactionCollection.fromMap(json));
+    var dataMap = await StripeService.list([Balance._path, BalanceTransaction._path], data: data);
+    return new BalanceTransactionCollection.fromMap(dataMap);
   }
 
 }

@@ -41,22 +41,22 @@ class Coupon extends ApiResource {
   /**
    * [Retrieving a Coupon](https://stripe.com/docs/api/curl#retrieve_coupon)
    */
-  static Future<Coupon> retrieve(String id) {
-    return StripeService.retrieve([Coupon._path, id])
-        .then((Map json) => new Coupon.fromMap(json));
+  static Future<Coupon> retrieve(String id) async {
+    var dataMap = await StripeService.retrieve([Coupon._path, id]);
+    return new Coupon.fromMap(dataMap);
   }
 
   /**
    * [List all Coupons](https://stripe.com/docs/api/curl#list_coupons)
    */
-  static Future<CouponCollection> list({int limit, String startingAfter, String endingBefore}) {
+  static Future<CouponCollection> list({int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list([Coupon._path], data: data)
-        .then((Map json) => new CouponCollection.fromMap(json));
+    var dataMap = await StripeService.list([Coupon._path], data: data);
+    return new CouponCollection.fromMap(dataMap);
   }
 
   /**
@@ -100,9 +100,9 @@ class CouponCreation extends ResourceRequest {
 
   set redeemBy (int redeemBy) => _setMap('redeem_by', redeemBy);
 
-  Future<Coupon> create() {
-    return StripeService.create([Coupon._path], _getMap())
-        .then((Map json) => new Coupon.fromMap(json));
+  Future<Coupon> create() async {
+    var dataMap = await StripeService.create([Coupon._path], _getMap());
+    return new Coupon.fromMap(dataMap);
   }
 
 }

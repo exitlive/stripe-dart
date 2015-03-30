@@ -76,35 +76,35 @@ class ApplicationFee extends Resource {
   /**
    * [Retrieving an Application Fee](https://stripe.com/docs/api/curl#retrieve_application_fee)
    */
-  static Future<ApplicationFee> retrieve(String applicationFeeId) {
-    return StripeService.get([ApplicationFee._path, applicationFeeId])
-        .then((Map json) => new ApplicationFee.fromMap(json));
+  static Future<ApplicationFee> retrieve(String applicationFeeId) async {
+    var dataMap = await StripeService.get([ApplicationFee._path, applicationFeeId]);
+    return new ApplicationFee.fromMap(dataMap);
   }
 
   /**
    * [Refunding an Application Fee](https://stripe.com/docs/api/curl#refund_application_fee)
    */
-  static Future<ApplicationFee> refund(String applicationFeeId, {int amount}) {
+  static Future<ApplicationFee> refund(String applicationFeeId, {int amount}) async {
     Map data = {};
     if (amount != null) data['amount'] = amount;
     if (data == {}) data = null;
-    return StripeService.post([ApplicationFee._path, applicationFeeId, 'refund'], data: data)
-        .then((Map json) => new ApplicationFee.fromMap(json));
+    var dataMap = await StripeService.post([ApplicationFee._path, applicationFeeId, 'refund'], data: data);
+    return new ApplicationFee.fromMap(dataMap);
   }
 
   /**
    * [List all Application Fees](https://stripe.com/docs/api/curl#list_application_fees)
    * TODO: implement missing argument: `created`
    */
-  static Future<ApplicationFeeCollection> list({String charge, int limit, String startingAfter, String endingBefore}) {
+  static Future<ApplicationFeeCollection> list({String charge, int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (charge != null) data['charge'] = charge;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list([ApplicationFee._path], data: data)
-        .then((Map json) => new ApplicationFeeCollection.fromMap(json));
+    var dataMap = await StripeService.list([ApplicationFee._path], data: data);
+    return new ApplicationFeeCollection.fromMap(dataMap);
   }
 
 }

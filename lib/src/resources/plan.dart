@@ -37,22 +37,22 @@ class Plan extends ApiResource {
   /**
    * [Retrieving a Plan](https://stripe.com/docs/api/curl#retrieve_plan)
    */
-  static Future<Plan> retrieve(String id) {
-    return StripeService.retrieve([Plan._path, id])
-        .then((Map json) => new Plan.fromMap(json));
+  static Future<Plan> retrieve(String id) async {
+    var dataMap = await StripeService.retrieve([Plan._path, id]);
+    return new Plan.fromMap(dataMap);
   }
 
   /**
    * [List all Plans](https://stripe.com/docs/api/curl#list_plans)
    */
-  static Future<PlanCollection> list({int limit, String startingAfter, String endingBefore}) {
+  static Future<PlanCollection> list({int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list([Plan._path], data: data)
-        .then((Map json) => new PlanCollection.fromMap(json));
+    var dataMap = await StripeService.list([Plan._path], data: data);
+    return new PlanCollection.fromMap(dataMap);
   }
 
   /**
@@ -100,9 +100,9 @@ class PlanCreation extends ResourceRequest {
 
   set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
-  Future<Plan> create() {
-    return StripeService.create([Plan._path], _getMap())
-        .then((Map json) => new Plan.fromMap(json));
+  Future<Plan> create() async {
+    var dataMap = await StripeService.create([Plan._path], _getMap());
+    return new Plan.fromMap(dataMap);
   }
 
 }
@@ -119,9 +119,9 @@ class PlanUpdate extends ResourceRequest {
 
   set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
-  Future<Plan> update(String planId) {
-    return StripeService.update([Plan._path, planId], _getMap())
-        .then((Map json) => new Plan.fromMap(json));
+  Future<Plan> update(String planId) async {
+    var dataMap = await StripeService.update([Plan._path, planId], _getMap());
+    return new Plan.fromMap(dataMap);
   }
 
 }
