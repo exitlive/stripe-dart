@@ -17,7 +17,7 @@ and written as a proper native dart library.
 ```dart
 import "package:stripe/stripe.dart";
 
-main() {
+main() async {
 
   var cardCreation = new CardCreation()
       ..number = '123123123';
