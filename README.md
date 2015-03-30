@@ -19,17 +19,14 @@ import "package:stripe/stripe.dart";
 
 main() {
 
-  StripeService.apiKey = "sk_test_BQokikJOvBiI2HlWgH4olfQ2";
+  var cardCreation = new CardCreation()
+      ..number = '123123123';
 
-  var card = new CardCreation()
-      ..number = "123123123";
-
-  new CustomerCreation()
-      ..description = "Customer for test@example.com"
-      ..card = card
-      ..create()
-          .then((Customer customer) => print(customer))
-          .catchError((e) => handleError(e));
+  var customerCreation = new CustomerCreation()
+      ..description = 'Customer for test@example.com'
+      ..card = card;
+      
+  var customer = await customerCreation.create();
 
 }
 ```
