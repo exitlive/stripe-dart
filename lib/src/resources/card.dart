@@ -62,22 +62,22 @@ class Card extends Resource {
   /**
    * [Retrieving a customer's card](https://stripe.com/docs/api/curl#retrieve_card)
    */
-  static Future<Card> retrieve(String customerId, String cardId, {final Map data}) {
-    return StripeService.retrieve([Customer._path, customerId, Card._path, cardId], data: data)
-        .then((Map json) => new Card.fromMap(json));
+  static Future<Card> retrieve(String customerId, String cardId, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([Customer._path, customerId, Card._path, cardId], data: data);
+    return new Card.fromMap(dataMap);
   }
 
   /**
    * [Listing cards](https://stripe.com/docs/api/curl#list_cards)
    */
-  static Future<CardCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) {
+  static Future<CardCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list([Customer._path, customerId, Card._path], data: data)
-        .then((Map json) => new CardCollection.fromMap(json));
+    var dataMap = await StripeService.list([Customer._path, customerId, Card._path], data: data);
+    return new CardCollection.fromMap(dataMap);
   }
 
   /**
@@ -127,9 +127,9 @@ class CardCreation extends ResourceRequest {
 
   set addressCountry (String addressCountry) => _setMap('address_country', addressCountry);
 
-  Future<Card> create(String customerId) {
-    return StripeService.create([Customer._path, customerId, Card._path], {'card': _getMap()})
-        .then((Map json) => new Card.fromMap(json));
+  Future<Card> create(String customerId) async {
+    var dataMap = await StripeService.create([Customer._path, customerId, Card._path], {'card': _getMap()});
+    return new Card.fromMap(dataMap);
   }
 
 }
@@ -143,9 +143,9 @@ class CardCreationWithToken extends ResourceRequest {
   @required
   set token (String token) => _setMap('card', token);
 
-  Future<Card> create(String customerId) {
-    return StripeService.create([Customer._path, customerId, Card._path], _getMap())
-        .then((Map json) => new Card.fromMap(json));
+  Future<Card> create(String customerId) async {
+    var dataMap = await StripeService.create([Customer._path, customerId, Card._path], _getMap());
+    return new Card.fromMap(dataMap);
   }
 
 }
@@ -174,9 +174,9 @@ class CardUpdate extends ResourceRequest {
 
   set name (String name) => _setMap('name', name);
 
-  Future<Card> update(String customerId, String cardId) {
-    return StripeService.update([Customer._path, customerId, Card._path, cardId], _getMap())
-        .then((Map json) => new Card.fromMap(json));
+  Future<Card> update(String customerId, String cardId) async {
+    var dataMap = await StripeService.update([Customer._path, customerId, Card._path, cardId], _getMap());
+    return new Card.fromMap(dataMap);
   }
 
 }

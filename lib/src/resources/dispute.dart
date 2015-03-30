@@ -71,9 +71,9 @@ class DisputeUpdate extends ResourceRequest {
 
   set evidence (String evidence) => _setMap('evidence', evidence);
 
-  Future<Customer> update(String chargeId) {
-    return StripeService.update([Charge._path, chargeId, Dispute._path], _getMap())
-        .then((Map json) => new Customer.fromMap(json));
+  Future<Customer> update(String chargeId) async {
+    var dataMap = await StripeService.update([Charge._path, chargeId, Dispute._path], _getMap());
+    return new Customer.fromMap(dataMap);
   }
 
 }

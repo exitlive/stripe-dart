@@ -33,24 +33,24 @@ class Event extends ApiResource {
   /**
    * [Retrieve an event](https://stripe.com/docs/api/curl#retrieve_event)
    */
-  static Future<Event> retrieve(String eventId) {
-    return StripeService.retrieve([Event._path, eventId])
-        .then((Map json) => new Event.fromMap(json));
+  static Future<Event> retrieve(String eventId) async {
+    var dataMap = await StripeService.retrieve([Event._path, eventId]);
+    return new Event.fromMap(dataMap);
   }
 
   /**
    * [List all events](https://stripe.com/docs/api/curl#list_events)
    * TODO: implement missing argument: `created`
    */
-  static Future<EventCollection> list({int limit, String startingAfter, String endingBefore, String type}) {
+  static Future<EventCollection> list({int limit, String startingAfter, String endingBefore, String type}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (type != null) data['type'] = type;
     if (data == {}) data = null;
-    return StripeService.list([Event._path], data: data)
-        .then((Map json) => new EventCollection.fromMap(json));
+    var dataMap = await StripeService.list([Event._path], data: data);
+    return new EventCollection.fromMap(dataMap);
   }
 
 }

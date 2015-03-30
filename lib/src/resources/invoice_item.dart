@@ -59,24 +59,24 @@ class Invoiceitem extends Resource {
   /**
    * [Retrieving an Invoice Item](https://stripe.com/docs/api/curl#retrieve_invoiceitem)
    */
-  static Future<Invoiceitem> retrieve(String invoiceitemId, {final Map data}) {
-    return StripeService.retrieve([Invoiceitem._path, invoiceitemId], data: data)
-        .then((Map json) => new Invoiceitem.fromMap(json));
+  static Future<Invoiceitem> retrieve(String invoiceitemId, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([Invoiceitem._path, invoiceitemId], data: data);
+    return new Invoiceitem.fromMap(dataMap);
   }
 
   /**
    * [List all Invoice Items](https://stripe.com/docs/api/curl#list_invoiceitems)
    * TODO: implement missing argument: `created`
    */
-  static Future<InvoiceitemCollection> list({String customer, int limit, String startingAfter, String endingBefore}) {
+  static Future<InvoiceitemCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (customer != null) data['customer'] = customer;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list([Invoiceitem._path], data: data)
-        .then((Map json) => new InvoiceitemCollection.fromMap(json));
+    var dataMap = await StripeService.list([Invoiceitem._path], data: data);
+    return new InvoiceitemCollection.fromMap(dataMap);
   }
 
   /**
@@ -118,9 +118,9 @@ class InvoiceitemCreation extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Invoiceitem> create() {
-    return StripeService.create([Invoiceitem._path], _getMap())
-        .then((Map json) => new Invoiceitem.fromMap(json));
+  Future<Invoiceitem> create() async {
+    var dataMap = await StripeService.create([Invoiceitem._path], _getMap());
+    return new Invoiceitem.fromMap(dataMap);
   }
 
 }
@@ -137,9 +137,9 @@ class InvoiceitemUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Invoiceitem> update(String invoiceitemId) {
-    return StripeService.update([Invoiceitem._path, invoiceitemId], _getMap())
-        .then((Map json) => new Invoiceitem.fromMap(json));
+  Future<Invoiceitem> update(String invoiceitemId) async {
+    var dataMap = await StripeService.update([Invoiceitem._path, invoiceitemId], _getMap());
+    return new Invoiceitem.fromMap(dataMap);
   }
 
 }

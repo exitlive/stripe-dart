@@ -64,23 +64,23 @@ class Customer extends ApiResource {
   /**
    * [Retrieving a Customer](https://stripe.com/docs/api/curl#retrieve_customer)
    */
-  static Future<Customer> retrieve(String id, {final Map data}) {
-    return StripeService.retrieve([Customer._path, id], data: data)
-        .then((Map json) => new Customer.fromMap(json));
+  static Future<Customer> retrieve(String id, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([Customer._path, id], data: data);
+    return new Customer.fromMap(dataMap);
   }
 
   /**
    * [List all Customers](https://stripe.com/docs/api/curl#list_customers)
    * TODO: implement missing argument: `created`
    */
-  static Future<CustomerCollection> list({int limit, String startingAfter, String endingBefore}) {
+  static Future<CustomerCollection> list({int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    return StripeService.list([Customer._path], data: data)
-        .then((Map json) => new CustomerCollection.fromMap(json));
+    var dataMap = await StripeService.list([Customer._path], data: data);
+    return new CustomerCollection.fromMap(dataMap);
   }
 
   /**
@@ -125,9 +125,9 @@ class CustomerCreation extends ResourceRequest {
 
   trialEndNow() => _setMap('trial_end', 'now');
 
-  Future<Customer> create() {
-    return StripeService.create([Customer._path], _getMap())
-        .then((Map json) => new Customer.fromMap(json));
+  Future<Customer> create() async {
+    var dataMap = await StripeService.create([Customer._path], _getMap());
+    return new Customer.fromMap(dataMap);
   }
 
 }
@@ -152,9 +152,9 @@ class CustomerUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Customer> update(String id) {
-    return StripeService.update([Customer._path, id], _getMap())
-        .then((Map json) => new Customer.fromMap(json));
+  Future<Customer> update(String id) async {
+    var dataMap = await StripeService.update([Customer._path, id], _getMap());
+    return new Customer.fromMap(dataMap);
   }
 
 }

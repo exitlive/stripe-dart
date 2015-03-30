@@ -64,24 +64,24 @@ class Transfer extends ApiResource {
   /**
    * [Retrieving a Transfer](https://stripe.com/docs/api/curl#retrieve_transfer)
    */
-  static Future<Transfer> retrieve(String transferId, {final Map data}) {
-    return StripeService.retrieve([Transfer._path, transferId], data: data)
-        .then((Map json) => new Transfer.fromMap(json));
+  static Future<Transfer> retrieve(String transferId, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([Transfer._path, transferId], data: data);
+    return new Transfer.fromMap(dataMap);
   }
 
   /**
    * [Canceling a Transfer](https://stripe.com/docs/api/curl#cancel_transfer)
    */
-  static Future<Transfer> cancel(String transferId) {
-    return StripeService.post([Transfer._path, transferId, 'cancel'])
-        .then((Map json) => new Transfer.fromMap(json));
+  static Future<Transfer> cancel(String transferId) async {
+    var dataMap = await StripeService.post([Transfer._path, transferId, 'cancel']);
+    return new Transfer.fromMap(dataMap);
   }
 
   /**
    * [List all Transfers](https://stripe.com/docs/api/curl#list_transfers)
    * TODO: implement missing arguments: `created` and `date`
    */
-  static Future<TransferCollection> list({int limit, String startingAfter, String endingBefore, String recipient, String status}) {
+  static Future<TransferCollection> list({int limit, String startingAfter, String endingBefore, String recipient, String status}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
@@ -89,8 +89,8 @@ class Transfer extends ApiResource {
     if (recipient != null) data['recipient'] = recipient;
     if (status != null) data['status'] = status;
     if (data == {}) data = null;
-    return StripeService.list([Transfer._path], data: data)
-        .then((Map json) => new TransferCollection.fromMap(json));
+    var dataMap = await StripeService.list([Transfer._path], data: data);
+    return new TransferCollection.fromMap(dataMap);
   }
 
 }
@@ -129,9 +129,9 @@ class TransferCreation extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Transfer> create() {
-    return StripeService.create([Transfer._path], _getMap())
-        .then((Map json) => new Transfer.fromMap(json));
+  Future<Transfer> create() async {
+    var dataMap = await StripeService.create([Transfer._path], _getMap());
+    return new Transfer.fromMap(dataMap);
   }
 
 }
@@ -146,9 +146,9 @@ class TransferUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Transfer> update(String transferId) {
-    return StripeService.create([Transfer._path, transferId], _getMap())
-        .then((Map json) => new Transfer.fromMap(json));
+  Future<Transfer> update(String transferId) async {
+    var dataMap = await StripeService.create([Transfer._path, transferId], _getMap());
+    return new Transfer.fromMap(dataMap);
   }
 
 }

@@ -39,23 +39,23 @@ class Recipient extends Resource {
   /**
    * [Retrieving a Recipient](https://stripe.com/docs/api/curl#retrieve_recipient)
    */
-  static Future<Recipient> retrieve(String recipientId) {
-    return StripeService.get([Recipient._path, recipientId])
-        .then((Map json) => new Recipient.fromMap(json));
+  static Future<Recipient> retrieve(String recipientId) async {
+    var dataMap = await StripeService.get([Recipient._path, recipientId]);
+    return new Recipient.fromMap(dataMap);
   }
 
   /**
    * [List all Recipients](https://stripe.com/docs/api/curl#list_recipients)
    */
-  static Future<RecipientCollection> list({int limit, String startingAfter, String endingBefore, bool verified}) {
+  static Future<RecipientCollection> list({int limit, String startingAfter, String endingBefore, bool verified}) async {
     Map data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (verified != null) data['verified'] = verified;
     if (data == {}) data = null;
-    return StripeService.list([Recipient._path], data: data)
-        .then((Map json) => new RecipientCollection.fromMap(json));
+    var dataMap = await StripeService.list([Recipient._path], data: data);
+    return new RecipientCollection.fromMap(dataMap);
   }
 
   /**
@@ -96,9 +96,9 @@ class RecipientCreation extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Recipient> create() {
-    return StripeService.create([Recipient._path], _getMap())
-        .then((Map json) => new Recipient.fromMap(json));
+  Future<Recipient> create() async {
+    var dataMap = await StripeService.create([Recipient._path], _getMap());
+    return new Recipient.fromMap(dataMap);
   }
 
 }
@@ -121,9 +121,9 @@ class RecipientUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Recipient> update(String id) {
-    return StripeService.update([Recipient._path, id], _getMap())
-        .then((Map json) => new Recipient.fromMap(json));
+  Future<Recipient> update(String id) async {
+    var dataMap = await StripeService.update([Recipient._path, id], _getMap());
+    return new Recipient.fromMap(dataMap);
   }
 
 }

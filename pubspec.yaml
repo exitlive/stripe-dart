@@ -1,13 +1,15 @@
 name: stripe
-version: 1.1.0
+version: 1.1.1
 authors:
   - Matias Meno <m@tias.me>
   - Martin Flucka <martin.flucka@gmail.com>
 description: Stripe API wrapper
 homepage: https://github.com/exitlive/stripe-dart
 documentation: https://github.com/exitlive/stripe-dart
+environment:
+  sdk: '>=1.9.0 <2.0.0'
 dependencies:
-  http: ">=0.9.0 <0.10.0"
-  logging: ">=0.9.0 <0.10.0"
+  http: ^0.11.1+3
+  logging: ^0.9.3
 dev_dependencies:
-  unittest: ">=0.11.0 <0.12.0"
+  unittest: ^0.11.5+4
