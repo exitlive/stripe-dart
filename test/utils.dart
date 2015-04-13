@@ -26,7 +26,7 @@ Future setUp() {
 }
 
 
-Future tearDown() {
+Future tearDown() async {
 
   print('Teardown Start');
   List<Future> processQueue = [];
@@ -35,79 +35,67 @@ Future tearDown() {
   processQueue.add(deleteAllInvoiceitems());
   processQueue.add(deleteAllPlans());
   processQueue.add(deleteAllRecipients());
-  return Future.wait(processQueue).then((_) {
-    print('Teardown End');
-    return new Future.value();
-  });
+  await Future.wait(processQueue);
+  print('Teardown End');
 
 }
 
 
-Future deleteAllCustomers() {
+Future deleteAllCustomers() async {
 
-  return Customer.list(limit: 100)
-      .then((CustomerCollection customers) {
-        List<Future> processQueue = [];
-        for (Customer customer in customers.data) {
-          processQueue.add(Customer.delete(customer.id).then((_) => print('Delete customer: ${customer.id}')));
-        }
-        return Future.wait(processQueue);
-      });
+  CustomerCollection customers = await Customer.list(limit: 100);
+  List<Future> processQueue = [];
+  for (Customer customer in customers.data) {
+    processQueue.add(Customer.delete(customer.id).then((_) => print('Delete customer: ${customer.id}')));
+  }
+  return Future.wait(processQueue);
 
 }
 
 
-Future deleteAllCoupons() {
+Future deleteAllCoupons() async {
 
-  return Coupon.list(limit: 100)
-      .then((CouponCollection coupons) {
-        List<Future> processQueue = [];
-        for (Coupon coupon in coupons.data) {
-          processQueue.add(Coupon.delete(coupon.id).then((_) => print('Delete coupon: ${coupon.id}')));
-        }
-        return Future.wait(processQueue);
-      });
+  CouponCollection coupons = await Coupon.list(limit: 100);
+  List<Future> processQueue = [];
+  for (Coupon coupon in coupons.data) {
+    processQueue.add(Coupon.delete(coupon.id).then((_) => print('Delete coupon: ${coupon.id}')));
+  }
+  return Future.wait(processQueue);
 
 }
 
 
-Future deleteAllInvoiceitems() {
+Future deleteAllInvoiceitems() async {
 
-  return Invoiceitem.list(limit: 100)
-      .then((InvoiceitemCollection invoiceitems) {
-        List<Future> processQueue = [];
-        for (Invoiceitem invoiceitem in invoiceitems.data) {
-          processQueue.add(Invoiceitem.delete(invoiceitem.id).then((_) => print('Delete invoiceitem: ${invoiceitem.id}')));
-        }
-        return Future.wait(processQueue);
-      });
+  InvoiceitemCollection invoiceitems = await Invoiceitem.list(limit: 100);
+  List<Future> processQueue = [];
+  for (Invoiceitem invoiceitem in invoiceitems.data) {
+    processQueue.add(Invoiceitem.delete(invoiceitem.id).then((_) => print('Delete invoiceitem: ${invoiceitem.id}')));
+  }
+  return Future.wait(processQueue);
 
 }
 
 
-Future deleteAllRecipients() {
+Future deleteAllRecipients() async {
 
-  return Recipient.list(limit: 100)
-      .then((RecipientCollection recipients) {
-        List<Future> processQueue = [];
-        for (Recipient recipient in recipients.data) {
-          processQueue.add(Recipient.delete(recipient.id).then((_) => print('Delete customer: ${recipient.id}')));
-        }
-        return Future.wait(processQueue);
-      });
+  RecipientCollection recipients = await Recipient.list(limit: 100);
+  List<Future> processQueue = [];
+  for (Recipient recipient in recipients.data) {
+    processQueue.add(Recipient.delete(recipient.id).then((_) => print('Delete customer: ${recipient.id}')));
+  }
+  return Future.wait(processQueue);
 
 }
 
 
-Future deleteAllPlans() {
+Future deleteAllPlans() async {
 
-  return Plan.list(limit: 100)
-      .then((PlanCollection plans) {
-        List<Future> processQueue = [];
-        for (Plan plan in plans.data) {
-          processQueue.add(Plan.delete(plan.id).then((_) => print('Delete plan: ${plan.id}')));
-        }
-        return Future.wait(processQueue);
-      });
+  PlanCollection plans = await Plan.list(limit: 100);
+  List<Future> processQueue = [];
+  for (Plan plan in plans.data) {
+    processQueue.add(Plan.delete(plan.id).then((_) => print('Delete plan: ${plan.id}')));
+  }
+  return Future.wait(processQueue);
 
 }
