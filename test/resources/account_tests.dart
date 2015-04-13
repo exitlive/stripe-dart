@@ -57,14 +57,11 @@ main(List<String> args) {
 
   group('Account online', () {
 
-    test('Retrieve Account', () {
+    test('Retrieve Account', () async {
 
-      Account.retrieve()
-          .then((Account account) {
-            expect(account.id.substring(0, 3), equals('acc'));
-            // other tests will depend on your stripe account
-          })
-          .then(expectAsync((_) => true));
+      Account account = await Account.retrieve();
+      expect(account.id.substring(0, 3), equals('acc'));
+      // other tests will depend on your stripe account
 
     });
 
