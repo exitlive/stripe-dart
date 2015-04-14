@@ -289,13 +289,13 @@ main(List<String> args) {
       }
       SubscriptionCollection subscriptions = await Subscription.list(customer.id, limit: 10);
       expect(subscriptions.data.length, 10);
-      expect(subscriptions.hasMore, true);
+      expect(subscriptions.hasMore, isTrue);
       subscriptions = await Subscription.list(customer.id, limit: 10, startingAfter: subscriptions.data.last.id);
       expect(subscriptions.data.length, 10);
-      expect(subscriptions.hasMore, false);
+      expect(subscriptions.hasMore, isFalse);
       subscriptions = await Subscription.list(customer.id, limit: 10, endingBefore: subscriptions.data.first.id);
       expect(subscriptions.data.length, 10);
-      expect(subscriptions.hasMore, false);
+      expect(subscriptions.hasMore, isFalse);
 
     });
 

@@ -81,7 +81,7 @@ main(List<String> args) {
     test('Retrieve Balance', () async {
 
       Balance balance = await Balance.retrieve();
-      expect(balance.livemode, false);
+      expect(balance.livemode, isFalse);
       // other tests will depend on your stripe account
 
     });

@@ -204,13 +204,13 @@ main(List<String> args) {
 
       RecipientCollection recipients = await Recipient.list(limit: 10);
       expect(recipients.data.length, 10);
-      expect(recipients.hasMore, true);
+      expect(recipients.hasMore, isTrue);
       recipients = await Recipient.list(limit: 10, startingAfter: recipients.data.last.id);
       expect(recipients.data.length, 10);
-      expect(recipients.hasMore, false);
+      expect(recipients.hasMore, isFalse);
       recipients = await Recipient.list(limit: 10, endingBefore: recipients.data.first.id);
       expect(recipients.data.length, 10);
-      expect(recipients.hasMore, false);
+      expect(recipients.hasMore, isFalse);
 
     });
 

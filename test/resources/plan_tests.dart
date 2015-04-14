@@ -189,13 +189,13 @@ main(List<String> args) {
       }
       PlanCollection plans = await Plan.list(limit: 10);
       expect(plans.data.length, 10);
-      expect(plans.hasMore, true);
+      expect(plans.hasMore, isTrue);
       plans = await Plan.list(limit: 10, startingAfter: plans.data.last.id);
       expect(plans.data.length, 10);
-      expect(plans.hasMore, false);
+      expect(plans.hasMore, isFalse);
       plans = await Plan.list(limit: 10, endingBefore: plans.data.first.id);
       expect(plans.data.length, 10);
-      expect(plans.hasMore, false);
+      expect(plans.hasMore, isFalse);
 
     });
 

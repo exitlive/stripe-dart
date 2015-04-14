@@ -315,14 +315,14 @@ main(List<String> args) {
 
       TransferCollection transfers = await Transfer.list(limit: 10);
       expect(transfers.data.length, 10);
-      expect(transfers.hasMore, true);
+      expect(transfers.hasMore, isTrue);
       transfers = await Transfer.list(limit: 10, startingAfter: transfers.data.last.id);
       expect(transfers.data.length, 10);
       // will also include transfers from past tests
-      expect(transfers.hasMore, true);
+      expect(transfers.hasMore, isTrue);
       transfers = await Transfer.list(limit: 10, endingBefore: transfers.data.first.id);
       expect(transfers.data.length, 10);
-      expect(transfers.hasMore, false);
+      expect(transfers.hasMore, isFalse);
 
     });
 

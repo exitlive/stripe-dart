@@ -203,13 +203,13 @@ main(List<String> args) {
       }
       CardCollection cards = await Card.list(customer.id, limit: 10);
       expect(cards.data.length, 10);
-      expect(cards.hasMore, true);
+      expect(cards.hasMore, isTrue);
       cards = await Card.list(customer.id, limit: 10, startingAfter: cards.data.last.id);
       expect(cards.data.length, 10);
-      expect(cards.hasMore, false);
+      expect(cards.hasMore, isFalse);
       cards = await Card.list(customer.id, limit: 10, endingBefore: cards.data.first.id);
       expect(cards.data.length, 10);
-      expect(cards.hasMore, false);
+      expect(cards.hasMore, isFalse);
 
     });
 

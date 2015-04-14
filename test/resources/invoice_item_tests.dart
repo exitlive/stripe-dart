@@ -198,13 +198,13 @@ main(List<String> args) {
 
       InvoiceItemCollection invoiceItems = await InvoiceItem.list(limit: 10);
       expect(invoiceItems.data.length, 10);
-      expect(invoiceItems.hasMore, true);
+      expect(invoiceItems.hasMore, isTrue);
       invoiceItems = await InvoiceItem.list(limit: 10, startingAfter: invoiceItems.data.last.id);
       expect(invoiceItems.data.length, 10);
-      expect(invoiceItems.hasMore, false);
+      expect(invoiceItems.hasMore, isFalse);
       invoiceItems = await InvoiceItem.list(limit: 10, endingBefore: invoiceItems.data.first.id);
       expect(invoiceItems.data.length, 10);
-      expect(invoiceItems.hasMore, false);
+      expect(invoiceItems.hasMore, isFalse);
 
     });
 

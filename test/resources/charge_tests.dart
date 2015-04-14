@@ -239,7 +239,7 @@ main(List<String> args) {
           ..capture = false
       ).create();
       charge = await Charge.capture(charge.id, amount: testChargeCaptureAmount);
-      expect(charge.captured, true);
+      expect(charge.captured, isTrue);
 
     });
 
@@ -270,13 +270,13 @@ main(List<String> args) {
       }
       ChargeCollection charges = await Charge.list(customer: customer.id, limit: 10);
       expect(charges.data.length, 10);
-      expect(charges.hasMore, true);
+      expect(charges.hasMore, isTrue);
       charges = await Charge.list(customer: customer.id, limit: 10, startingAfter: charges.data.last.id);
       expect(charges.data.length, 10);
-      expect(charges.hasMore, false);
+      expect(charges.hasMore, isFalse);
       charges = await Charge.list(customer: customer.id, limit: 10, endingBefore: charges.data.first.id);
       expect(charges.data.length, 10);
-      expect(charges.hasMore, false);
+      expect(charges.hasMore, isFalse);
 
     });
 

@@ -155,13 +155,13 @@ main(List<String> args) {
 
       CouponCollection coupons = await Coupon.list(limit: 10);
       expect(coupons.data.length, 10);
-      expect(coupons.hasMore, true);
+      expect(coupons.hasMore, isTrue);
       coupons = await Coupon.list(limit: 10, startingAfter: coupons.data.last.id);
       expect(coupons.data.length, 10);
-      expect(coupons.hasMore, false);
+      expect(coupons.hasMore, isFalse);
       coupons = await Coupon.list(limit: 10, endingBefore: coupons.data.first.id);
       expect(coupons.data.length, 10);
-      expect(coupons.hasMore, false);
+      expect(coupons.hasMore, isFalse);
 
     });
 

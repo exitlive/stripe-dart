@@ -245,13 +245,13 @@ main(List<String> args) {
 
       CustomerCollection customers = await Customer.list(limit: 10);
       expect(customers.data.length, 10);
-      expect(customers.hasMore, true);
+      expect(customers.hasMore, isTrue);
       customers = await Customer.list(limit: 10, startingAfter: customers.data.last.id);
       expect(customers.data.length, 10);
-      expect(customers.hasMore, false);
+      expect(customers.hasMore, isFalse);
       customers = await Customer.list(limit: 10, endingBefore: customers.data.first.id);
       expect(customers.data.length, 10);
-      expect(customers.hasMore, false);
+      expect(customers.hasMore, isFalse);
 
     });
 
