@@ -20,13 +20,44 @@ import 'resources/recipient_tests.dart' as recipientTests;
 import 'resources/subscription_tests.dart' as subscriptionTests;
 import 'resources/token_tests.dart' as tokenTests;
 import 'resources/transfer_tests.dart' as transferTests;
+import 'package:unittest/unittest.dart';
 
+
+class TestConfiguration extends SimpleConfiguration {
+
+
+  var log = new Logger('Test');
+
+
+  void onTestResult(TestCase externalTestCase) {
+    super.onTestResult(externalTestCase);
+    log.info('[${externalTestCase.result.toUpperCase()}] ${externalTestCase.description}');
+  }
+
+  void onSummary(int passed, int failed, int errors, List<TestCase> results,
+                 String uncaughtError) {
+    if (passed == 0 && failed == 0 && errors == 0 && uncaughtError == null) {
+          log.warning('No tests found.');
+          // This is considered a failure too.
+        } else if (failed == 0 && errors == 0 && uncaughtError == null) {
+          log.info('All $passed tests passed.');
+        } else {
+          if (uncaughtError != null) {
+            log.severe('Top-level uncaught error: $uncaughtError');
+          }
+          log.info('$passed PASSED, $failed FAILED, $errors ERRORS');
+        }
+    }
+
+}
 
 main(List<String> args) {
 
   Logger.root.level = Level.INFO;
   Logger.root.onRecord.listen((LogRecord record) => print('${record.loggerName} (${record.level}): ${record.message}'));
 
+
+  unittestConfiguration = new TestConfiguration();
   resourceTests.main();
   serviceTests.main();
 
