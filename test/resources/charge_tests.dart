@@ -109,161 +109,161 @@ main(List<String> args) {
     test('ChargeCreation minimal', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
       // Charge fields
-      int testChargeAmount = 100;
-      String testChargeCurrency = 'usd';
+      int chargeAmount = 100;
+      String chargeCurrency = 'usd';
       Customer customer = await new CustomerCreation().create();
       await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       ).create(customer.id);
       Charge charge = await (new ChargeCreation()
-          ..amount = testChargeAmount
-          ..currency = testChargeCurrency
+          ..amount = chargeAmount
+          ..currency = chargeCurrency
           ..customer = customer.id
       ).create();
-      expect(charge.amount, testChargeAmount);
-      expect(charge.currency, testChargeCurrency);
+      expect(charge.amount, chargeAmount);
+      expect(charge.currency, chargeCurrency);
 
     });
 
     test('ChargeCreation full', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
 
       // Charge fields
-      int testChargeAmount = 100;
-      String testChargeCurrency = 'usd';
-      String testChargeDescription1 = 'test description1';
-      String testChargeDescription2 = 'test description2';
-      Map testChargeMetadata1 = {'foo': 'bar1'};
-      Map testChargeMetadata2 = {'foo': 'bar2'};
-      bool testChargeCapture = false;
-      String testChargeStatementDescriptor = 'test descriptor';
+      int chargeAmount = 100;
+      String chargeCurrency = 'usd';
+      String chargeDescription1 = 'test description1';
+      String chargeDescription2 = 'test description2';
+      Map chargeMetadata1 = {'foo': 'bar1'};
+      Map chargeMetadata2 = {'foo': 'bar2'};
+      bool chargeCapture = false;
+      String chargeStatementDescriptor = 'test descriptor';
       // application_fee can not be tested
 
       Customer customer = await new CustomerCreation().create();
       await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       ).create(customer.id);
       Charge charge = await (new ChargeCreation()
-          ..amount = testChargeAmount
-          ..currency = testChargeCurrency
+          ..amount = chargeAmount
+          ..currency = chargeCurrency
           ..customer = customer.id
-          ..description = testChargeDescription1
-          ..metadata = testChargeMetadata1
-          ..capture = testChargeCapture
-          ..statementDescriptor = testChargeStatementDescriptor
+          ..description = chargeDescription1
+          ..metadata = chargeMetadata1
+          ..capture = chargeCapture
+          ..statementDescriptor = chargeStatementDescriptor
       ).create();
-      expect(charge.amount, testChargeAmount);
-      expect(charge.currency, testChargeCurrency);
-      expect(charge.description, testChargeDescription1);
-      expect(charge.metadata, testChargeMetadata1);
-      expect(charge.captured, testChargeCapture);
-      expect(charge.statement_descriptor, testChargeStatementDescriptor);
+      expect(charge.amount, chargeAmount);
+      expect(charge.currency, chargeCurrency);
+      expect(charge.description, chargeDescription1);
+      expect(charge.metadata, chargeMetadata1);
+      expect(charge.captured, chargeCapture);
+      expect(charge.statement_descriptor, chargeStatementDescriptor);
       // testing the expand functionality of retrieve
       charge = await Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
       expect(charge.customer, charge.customerExpand.id);
 
       // testing the ChargeUpdate
       charge = await (new ChargeUpdate()
-          ..description = testChargeDescription2
-          ..metadata = testChargeMetadata2
+          ..description = chargeDescription2
+          ..metadata = chargeMetadata2
       ).update(charge.id);
-      expect(charge.description, testChargeDescription2);
-      expect(charge.metadata, testChargeMetadata2);
+      expect(charge.description, chargeDescription2);
+      expect(charge.metadata, chargeMetadata2);
 
     });
 
     test('Refund a Charge', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
 
       // Charge fields
-      int testChargeAmount = 100;
-      int testChargeRefundAmount = 90;
-      String testChargeCurrency = 'usd';
+      int chargeAmount = 100;
+      int chargeRefundAmount = 90;
+      String chargeCurrency = 'usd';
       // application_fee can not be tested
 
       Customer customer = await new CustomerCreation().create();
       await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       ).create(customer.id);
       Charge charge = await (new ChargeCreation()
-          ..amount = testChargeAmount
-          ..currency = testChargeCurrency
+          ..amount = chargeAmount
+          ..currency = chargeCurrency
           ..customer = customer.id
       ).create();
-      charge = await Charge.refund(charge.id, amount: testChargeRefundAmount);
-      expect(charge.refunds.data.first.amount, testChargeRefundAmount);
+      charge = await Charge.refund(charge.id, amount: chargeRefundAmount);
+      expect(charge.refunds.data.first.amount, chargeRefundAmount);
 
     });
 
     test('Capture a Charge', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
 
       // Charge fields
-      int testChargeAmount = 100;
-      int testChargeCaptureAmount = 90;
-      String testChargeCurrency = 'usd';
+      int chargeAmount = 100;
+      int chargeCaptureAmount = 90;
+      String chargeCurrency = 'usd';
       // application_fee can not be tested
 
       Customer customer = await new CustomerCreation().create();
       await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       ).create(customer.id);
       Charge charge = await (new ChargeCreation()
-          ..amount = testChargeAmount
-          ..currency = testChargeCurrency
+          ..amount = chargeAmount
+          ..currency = chargeCurrency
           ..customer = customer.id
           ..capture = false
       ).create();
-      charge = await Charge.capture(charge.id, amount: testChargeCaptureAmount);
+      charge = await Charge.capture(charge.id, amount: chargeCaptureAmount);
       expect(charge.captured, isTrue);
 
     });
 
     test('List parameters charge', () async {
 
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
 
       Customer customer = await new CustomerCreation().create();
       await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       ).create(customer.id);
       for (var i = 0; i < 20; i++) {
         // Charge fields
-        int testChargeAmount = 100;
-        String testChargeCurrency = 'usd';
+        int chargeAmount = 100;
+        String chargeCurrency = 'usd';
         // application_fee can not be tested
 
         await (new ChargeCreation()
-            ..amount = testChargeAmount
-            ..currency = testChargeCurrency
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
             ..customer = customer.id
             ..capture = false
         ).create();

@@ -10,7 +10,7 @@ import '../utils.dart' as utils;
 
 var exampleAccount = """
     {
-      "object": "invoiceitem",
+      "object": "invoiceItem",
       "id": "ii_1046ct41dfVNZFcq7D6Z8lys",
       "date": 1401116624,
       "amount": 100,
@@ -61,27 +61,27 @@ main(List<String> args) {
     test('Create Invoice item minimal', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
 
       // Charge fields
-      int testChargeAmount = 100;
-      String testChargeCurrency = 'usd';
+      int chargeAmount = 100;
+      String chargeCurrency = 'usd';
 
       Customer customer = await new CustomerCreation().create();
       await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       ).create(customer.id);
       InvoiceItem invoiceItem = await (new InvoiceItemCreation()
           ..customer = customer.id
-          ..amount = testChargeAmount
-          ..currency = testChargeCurrency
+          ..amount = chargeAmount
+          ..currency = chargeCurrency
       ).create();
-      expect(invoiceItem.amount, testChargeAmount);
-      expect(invoiceItem.currency, testChargeCurrency);
+      expect(invoiceItem.amount, chargeAmount);
+      expect(invoiceItem.currency, chargeCurrency);
       expect(invoiceItem.customer, customer.id);
 
     });
@@ -89,79 +89,79 @@ main(List<String> args) {
     test('Create Invoice item full', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
 
-      CardCreation testCardCreation = new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear;
+      CardCreation cardCreation = new CardCreation()
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear;
 
       // Charge fields
-      String testChargeCurrency = 'usd';
+      String chargeCurrency = 'usd';
 
       // Plan fields
-      String testPlanId = 'test plan id';
-      int testPlanAmount = 200;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      String testPlanName = 'test plan name';
+      String planId = 'test plan id';
+      int planAmount = 200;
+      String planCurrency = 'usd';
+      String planInterval = 'month';
+      String planName = 'test plan name';
 
       // Invoiceitem fields
-      String testInvoiceitemCurrency = 'usd';
-      int testInvoiceitemAmount1 = 200;
-      String testInvoiceitemDescription1 = 'test description1';
-      Map testInvoiceitemMetadata1 = {'foo': 'bar1'};
+      String invoiceItemCurrency = 'usd';
+      int invoiceItemAmount1 = 200;
+      String invoiceItemDescription1 = 'test description1';
+      Map invoiceItemMetadata1 = {'foo': 'bar1'};
 
-      int testInvoiceitemAmount2 = 220;
-      String testInvoiceitemDescription2 = 'test description2';
-      Map testInvoiceitemMetadata2 = {'foo': 'bar2'};
+      int invoiceItemAmount2 = 220;
+      String invoiceItemDescription2 = 'test description2';
+      Map invoiceItemMetadata2 = {'foo': 'bar2'};
 
       Plan plan = await (new PlanCreation()
-          ..id = testPlanId
-          ..amount = testPlanAmount
-          ..currency = testPlanCurrency
-          ..interval = testPlanInterval
-          ..name = testPlanName
+          ..id = planId
+          ..amount = planAmount
+          ..currency = planCurrency
+          ..interval = planInterval
+          ..name = planName
       ).create();
       Customer customer = await new CustomerCreation().create();
-      await testCardCreation.create(customer.id);
+      await cardCreation.create(customer.id);
       Subscription subscription = await (new SubscriptionCreation()
           ..plan = plan.id
       ).create(customer.id);
       InvoiceItem invoiceItem = await (new InvoiceItemCreation()
           ..customer = customer.id
-          ..amount = testInvoiceitemAmount1
-          ..currency = testInvoiceitemCurrency
+          ..amount = invoiceItemAmount1
+          ..currency = invoiceItemCurrency
           ..subscription = subscription.id
-          ..description = testInvoiceitemDescription1
-          ..metadata = testInvoiceitemMetadata1
+          ..description = invoiceItemDescription1
+          ..metadata = invoiceItemMetadata1
       ).create();
-      expect(invoiceItem.amount, testInvoiceitemAmount1);
-      expect(invoiceItem.currency, testInvoiceitemCurrency);
+      expect(invoiceItem.amount, invoiceItemAmount1);
+      expect(invoiceItem.currency, invoiceItemCurrency);
       expect(invoiceItem.customer, customer.id);
       expect(invoiceItem.subscription, subscription.id);
-      expect(invoiceItem.description, testInvoiceitemDescription1);
-      expect(invoiceItem.metadata, testInvoiceitemMetadata1);
+      expect(invoiceItem.description, invoiceItemDescription1);
+      expect(invoiceItem.metadata, invoiceItemMetadata1);
       // seems that expanding currently does not work according to the API specification
       // testing retrieve
       invoiceItem = await InvoiceItem.retrieve(invoiceItem.id);
-      expect(invoiceItem.amount, testInvoiceitemAmount1);
-      expect(invoiceItem.currency, testChargeCurrency);
+      expect(invoiceItem.amount, invoiceItemAmount1);
+      expect(invoiceItem.currency, chargeCurrency);
       expect(invoiceItem.customer, customer.id);
       expect(invoiceItem.subscription, subscription.id);
-      expect(invoiceItem.description, testInvoiceitemDescription1);
-      expect(invoiceItem.metadata, testInvoiceitemMetadata1);
+      expect(invoiceItem.description, invoiceItemDescription1);
+      expect(invoiceItem.metadata, invoiceItemMetadata1);
       // testing InvoiceitemUpdate
       invoiceItem = await (new InvoiceItemUpdate()
-          ..amount = testInvoiceitemAmount2
-          ..description = testInvoiceitemDescription2
-          ..metadata = testInvoiceitemMetadata2
+          ..amount = invoiceItemAmount2
+          ..description = invoiceItemDescription2
+          ..metadata = invoiceItemMetadata2
       ).update(invoiceItem.id);
-      expect(invoiceItem.amount, testInvoiceitemAmount2);
-      expect(invoiceItem.description, testInvoiceitemDescription2);
-      expect(invoiceItem.metadata, testInvoiceitemMetadata2);
+      expect(invoiceItem.amount, invoiceItemAmount2);
+      expect(invoiceItem.description, invoiceItemDescription2);
+      expect(invoiceItem.metadata, invoiceItemMetadata2);
       // testing delete
       Map response = await InvoiceItem.delete(invoiceItem.id);
       expect(response['id'], invoiceItem.id);
@@ -172,27 +172,27 @@ main(List<String> args) {
     test('List parameters Invoiceitem', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
 
       // Charge fields
-      int testChargeAmount = 100;
-      String testChargeCurrency = 'usd';
+      int chargeAmount = 100;
+      String chargeCurrency = 'usd';
 
       Customer customer = await new CustomerCreation().create();
 
       await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       ).create(customer.id);
 
       for (var i = 0; i < 20; i++) {
         await (new InvoiceItemCreation()
             ..customer = customer.id
-            ..amount = testChargeAmount
-            ..currency = testChargeCurrency
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
         ).create();
       }
 

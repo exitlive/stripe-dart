@@ -90,83 +90,83 @@ main(List<String> args) {
 
     test('CardCreation full', () async {
 
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth1 = 12;
-      int testCardExpYear1 = 2016;
-      int testCardCvc = 123;
-      String testCardName1 = 'Anita Bath';
-      String testCardAddressLine1A = 'Teststreet 2/39A';
-      String testCardAddressLine2A = 'line 2';
-      String testCardAddressCity1 = 'Vienna';
-      String testCardAddressZip1 = '1050';
-      String testCardAddressState1 = 'Vienna';
-      String testCardAddressCountry1 = 'Austria';
+      String cardNumber = '4242424242424242';
+      int cardExpMonth1 = 12;
+      int cardExpYear1 = 2016;
+      int cardCvc = 123;
+      String cardName1 = 'Anita Bath';
+      String cardAddressLine1A = 'Teststreet 2/39A';
+      String cardAddressLine2A = 'line 2';
+      String cardAddressCity1 = 'Vienna';
+      String cardAddressZip1 = '1050';
+      String cardAddressState1 = 'Vienna';
+      String cardAddressCountry1 = 'Austria';
       // for update tests
-      String testCardAddressCity2 = 'Laguna Beach';
-      String testCardAddressCountry2 = 'USA';
-      String testCardAddressLine1B = 'Addresslinestreet 12/42A';
-      String testCardAddressLine2B = 'additional address line';
-      String testCardAddressState2 = 'California';
-      String testCardAddressZip2 = '92651';
-      int testCardExpMonth2 = 3;
-      int testCardExpYear2 = 2016;
-      String testCardName2 = 'Agatha Bath';
+      String cardAddressCity2 = 'Laguna Beach';
+      String cardAddressCountry2 = 'USA';
+      String cardAddressLine1B = 'Addresslinestreet 12/42A';
+      String cardAddressLine2B = 'additional address line';
+      String cardAddressState2 = 'California';
+      String cardAddressZip2 = '92651';
+      int cardExpMonth2 = 3;
+      int cardExpYear2 = 2016;
+      String cardName2 = 'Agatha Bath';
       Customer customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
       Card card = await (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth1
-          ..expYear = testCardExpYear1
-          ..cvc = testCardCvc
-          ..name = testCardName1
-          ..addressLine1 = testCardAddressLine1A
-          ..addressLine2 = testCardAddressLine2A
-          ..addressCity = testCardAddressCity1
-          ..addressZip = testCardAddressZip1
-          ..addressState = testCardAddressState1
-          ..addressCountry = testCardAddressCountry1
+          ..number = cardNumber
+          ..expMonth = cardExpMonth1
+          ..expYear = cardExpYear1
+          ..cvc = cardCvc
+          ..name = cardName1
+          ..addressLine1 = cardAddressLine1A
+          ..addressLine2 = cardAddressLine2A
+          ..addressCity = cardAddressCity1
+          ..addressZip = cardAddressZip1
+          ..addressState = cardAddressState1
+          ..addressCountry = cardAddressCountry1
       ).create(customer.id);
       expect(card.id, new isInstanceOf<String>());
-      expect(card.last4, testCardNumber.substring(testCardNumber.length - 4));
-      expect(card.expMonth, testCardExpMonth1);
-      expect(card.expYear, testCardExpYear1);
+      expect(card.last4, cardNumber.substring(cardNumber.length - 4));
+      expect(card.expMonth, cardExpMonth1);
+      expect(card.expYear, cardExpYear1);
       expect(card.cvcCheck, 'pass');
-      expect(card.name, testCardName1);
-      expect(card.addressLine1, testCardAddressLine1A);
+      expect(card.name, cardName1);
+      expect(card.addressLine1, cardAddressLine1A);
       expect(card.addressLine1Check, 'pass');
-      expect(card.addressLine2, testCardAddressLine2A);
-      expect(card.addressCity, testCardAddressCity1);
-      expect(card.addressZip, testCardAddressZip1);
+      expect(card.addressLine2, cardAddressLine2A);
+      expect(card.addressCity, cardAddressCity1);
+      expect(card.addressZip, cardAddressZip1);
       expect(card.addressZipCheck, 'pass');
-      expect(card.addressState, testCardAddressState1);
-      expect(card.addressCountry, testCardAddressCountry1);
+      expect(card.addressState, cardAddressState1);
+      expect(card.addressCountry, cardAddressCountry1);
       // testing the expand functionality of retrieve
       card = await Card.retrieve(customer.id, card.id, data: {'expand': ['customer']});
       expect(card.customer, customer.id);
       expect(card.customerExpand.id, customer.id);
       // testing the CardUpdate
       card = await (new CardUpdate()
-          ..addressCity = testCardAddressCity2
-          ..addressCountry = testCardAddressCountry2
-          ..addressLine1 = testCardAddressLine1B
-          ..addressLine2 = testCardAddressLine2B
-          ..addressState = testCardAddressState2
-          ..addressZip = testCardAddressZip2
-          ..expMonth = testCardExpMonth2
-          ..expYear = testCardExpYear2
-          ..name = testCardName2
+          ..addressCity = cardAddressCity2
+          ..addressCountry = cardAddressCountry2
+          ..addressLine1 = cardAddressLine1B
+          ..addressLine2 = cardAddressLine2B
+          ..addressState = cardAddressState2
+          ..addressZip = cardAddressZip2
+          ..expMonth = cardExpMonth2
+          ..expYear = cardExpYear2
+          ..name = cardName2
       ).update(customer.id, card.id);
-      expect(card.expMonth, testCardExpMonth2);
-      expect(card.expYear, testCardExpYear2);
-      expect(card.name, testCardName2);
-      expect(card.addressLine1, testCardAddressLine1B);
+      expect(card.expMonth, cardExpMonth2);
+      expect(card.expYear, cardExpYear2);
+      expect(card.name, cardName2);
+      expect(card.addressLine1, cardAddressLine1B);
       expect(card.addressLine1Check, 'pass');
-      expect(card.addressLine2, testCardAddressLine2B);
-      expect(card.addressCity, testCardAddressCity2);
-      expect(card.addressZip, testCardAddressZip2);
+      expect(card.addressLine2, cardAddressLine2B);
+      expect(card.addressCity, cardAddressCity2);
+      expect(card.addressZip, cardAddressZip2);
       expect(card.addressZipCheck, 'pass');
-      expect(card.addressState, testCardAddressState2);
-      expect(card.addressCountry, testCardAddressCountry2);
+      expect(card.addressState, cardAddressState2);
+      expect(card.addressCountry, cardAddressCountry2);
 
     });
 

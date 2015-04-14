@@ -78,19 +78,19 @@ main(List<String> args) {
     test('delete from Customer', () async {
 
       // Coupon fields
-      String testCouponId = 'test coupon id';
-      String testCouponDuration = 'forever';
-      int testCouponPercentOff = 15;
+      String couponId = 'test coupon id';
+      String couponDuration = 'forever';
+      int couponPercentOff = 15;
 
       Coupon coupon = await (new CouponCreation()
-          ..id = testCouponId
-          ..duration = testCouponDuration
-          ..percentOff = testCouponPercentOff
+          ..id = couponId
+          ..duration = couponDuration
+          ..percentOff = couponPercentOff
       ).create();
       Customer customer = await (new CustomerCreation()
           ..coupon = coupon.id
       ).create();
-      expect(customer.discount.coupon.percentOff, testCouponPercentOff);
+      expect(customer.discount.coupon.percentOff, couponPercentOff);
       Discount discount = customer.discount;
       Map response = await Discount.deleteForCustomer(customer.id);
       expect(response['deleted'], isTrue);
@@ -102,46 +102,46 @@ main(List<String> args) {
 
     test('delete from Subscription', () async {
 
-      String testCardNumber = '5555555555554444';
-      int testCardExpMonth = 3;
-      int testCardExpYear = 2016;
+      String cardNumber = '5555555555554444';
+      int cardExpMonth = 3;
+      int cardExpYear = 2016;
 
-      CardCreation testCardCreation = new CardCreation()
-          ..number = testCardNumber // only the last 4 digits can be tested
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear;
+      CardCreation cardCreation = new CardCreation()
+          ..number = cardNumber // only the last 4 digits can be tested
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear;
 
       // Plan fields
-      String testPlanId = 'test plan id';
-      int testPlanAmount = 200;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      String testPlanName = 'test plan name';
+      String planId = 'test plan id';
+      int planAmount = 200;
+      String planCurrency = 'usd';
+      String planInterval = 'month';
+      String planName = 'test plan name';
 
       // Coupon fields
-      String testCouponId = 'test coupon id';
-      String testCouponDuration = 'forever';
-      int testCouponPercentOff = 15;
+      String couponId = 'test coupon id';
+      String couponDuration = 'forever';
+      int couponPercentOff = 15;
 
       Coupon coupon = await (new CouponCreation()
-          ..id = testCouponId
-          ..duration = testCouponDuration
-          ..percentOff = testCouponPercentOff
+          ..id = couponId
+          ..duration = couponDuration
+          ..percentOff = couponPercentOff
       ).create();
       Plan plan = await (new PlanCreation()
-          ..id = testPlanId
-          ..amount = testPlanAmount
-          ..currency = testPlanCurrency
-          ..interval = testPlanInterval
-          ..name = testPlanName
+          ..id = planId
+          ..amount = planAmount
+          ..currency = planCurrency
+          ..interval = planInterval
+          ..name = planName
       ).create();
       Customer customer = await new CustomerCreation().create();
-      await testCardCreation.create(customer.id);
+      await cardCreation.create(customer.id);
       Subscription subscription = await (new SubscriptionCreation()
           ..plan = plan.id
           ..coupon = coupon.id
       ).create(customer.id);
-      expect(subscription.discount.coupon.percentOff, testCouponPercentOff);
+      expect(subscription.discount.coupon.percentOff, couponPercentOff);
       Discount discount = subscription.discount;
       Map response = await Discount.deleteForSubscription(customer.id, subscription.id);
       expect(response['deleted'], isTrue);

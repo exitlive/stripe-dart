@@ -211,17 +211,17 @@ main(List<String> args) {
     test('TransferCreation minimal', () async {
 
       // Transfer fields
-      int testTransferAmount = 100;
-      String testTransferCurrency = 'usd';
-      String testTransferRecipient = 'self';
+      int transferAmount = 100;
+      String transferCurrency = 'usd';
+      String transferRecipient = 'self';
 
       Transfer transfer = await (new TransferCreation()
-          ..amount = testTransferAmount
-          ..currency = testTransferCurrency
-          ..recipient = testTransferRecipient
+          ..amount = transferAmount
+          ..currency = transferCurrency
+          ..recipient = transferRecipient
       ).create();
-      expect(transfer.amount, testTransferAmount);
-      expect(transfer.currency, testTransferCurrency);
+      expect(transfer.amount, transferAmount);
+      expect(transfer.currency, transferCurrency);
       expect(transfer.recipient, isNull);
 
     });
@@ -229,64 +229,64 @@ main(List<String> args) {
     test('TransferCreation full', () async {
 
       // Recipient fields
-      String testRecipientName = 'test name';
-      String testRecipientType = 'corporation';
+      String recipientName = 'test name';
+      String recipientType = 'corporation';
 
-      String testBankAccountCountry = 'US';
-      String testBankAccountRoutingNumber = '110000000';
-      String testBankAccountAccountNumber = '000123456789';
+      String bankAccountCountry = 'US';
+      String bankAccountRoutingNumber = '110000000';
+      String bankAccountAccountNumber = '000123456789';
 
-      BankAccountRequest testRecipientBankAccount = (new BankAccountRequest()
-          ..country = testBankAccountCountry
-          ..routingNumber = testBankAccountRoutingNumber
-          ..accountNumber = testBankAccountAccountNumber
+      BankAccountRequest recipientBankAccount = (new BankAccountRequest()
+          ..country = bankAccountCountry
+          ..routingNumber = bankAccountRoutingNumber
+          ..accountNumber = bankAccountAccountNumber
       );
 
-      RecipientCreation testRecipientCreation = new RecipientCreation()
-          ..name = testRecipientName
-          ..type = testRecipientType
-          ..bankAccount = testRecipientBankAccount;
+      RecipientCreation recipientCreation = new RecipientCreation()
+          ..name = recipientName
+          ..type = recipientType
+          ..bankAccount = recipientBankAccount;
 
       // Transfer fields
-      int testTransferAmount = 100;
-      String testTransferCurrency = 'usd';
-      String testTransferDescription1 = 'test description1';
-      String testTransferStatementDescriptor = 'descriptor';
-      Map testTransferMetadata1 = {'foo': 'bar1'};
+      int transferAmount = 100;
+      String transferCurrency = 'usd';
+      String transferDescription1 = 'test description1';
+      String transferStatementDescriptor = 'descriptor';
+      Map transferMetadata1 = {'foo': 'bar1'};
 
-      String testTransferDescription2 = 'test description2';
-      Map testTransferMetadata2 = {'foo': 'bar2'};
+      String transferDescription2 = 'test description2';
+      Map transferMetadata2 = {'foo': 'bar2'};
 
-      Recipient recipient = await testRecipientCreation.create();
+      Recipient recipient = await recipientCreation.create();
       Transfer transfer = await (new TransferCreation()
-          ..amount = testTransferAmount
-          ..currency = testTransferCurrency
+          ..amount = transferAmount
+          ..currency = transferCurrency
           ..recipient = recipient.id
-          ..description = testTransferDescription1
-          ..statementDescriptor = testTransferStatementDescriptor
-          ..metadata = testTransferMetadata1
+          ..description = transferDescription1
+          ..statementDescriptor = transferStatementDescriptor
+          ..metadata = transferMetadata1
       ).create();
-      expect(transfer.amount, testTransferAmount);
-      expect(transfer.currency, testTransferCurrency);
+      expect(transfer.amount, transferAmount);
+      expect(transfer.currency, transferCurrency);
       expect(transfer.recipient, recipient.id);
-      expect(transfer.description, testTransferDescription1);
-      expect(transfer.statementDescriptor, testTransferStatementDescriptor);
-      expect(transfer.metadata, testTransferMetadata1);
+      expect(transfer.description, transferDescription1);
+      expect(transfer.statementDescriptor, transferStatementDescriptor);
+      expect(transfer.metadata, transferMetadata1);
       transfer = await Transfer.retrieve(transfer.id, data: {'expand': ['balance_transaction']});
       // testing the expand functionality of retrieve
       expect(transfer.balanceTransaction, transfer.balanceTransactionExpand.id);
-      expect(transfer.balanceTransactionExpand.amount, testTransferAmount * -1);
+      expect(transfer.balanceTransactionExpand.amount, transferAmount * -1);
       // testing the TransferUpdate
       transfer = await (new TransferUpdate()
-          ..description = testTransferDescription2
-          ..metadata = testTransferMetadata2
+          ..description = transferDescription2
+          ..metadata = transferMetadata2
       ).update(transfer.id);
-      expect(transfer.amount, testTransferAmount);
-      expect(transfer.currency, testTransferCurrency);
+      expect(transfer.amount, transferAmount);
+      expect(transfer.currency, transferCurrency);
       expect(transfer.recipient, recipient.id);
-      expect(transfer.description, testTransferDescription2);
-      expect(transfer.statementDescriptor, testTransferStatementDescriptor);
-      expect(transfer.metadata, testTransferMetadata2);
+      expect(transfer.description, transferDescription2);
+      expect(transfer.statementDescriptor, transferStatementDescriptor);
+      expect(transfer.metadata, transferMetadata2);
       // testing transfer cancel
       try {
         await Transfer.cancel(transfer.id);
@@ -301,15 +301,15 @@ main(List<String> args) {
     test('List parameters Transfer', () async {
 
       // Transfer fields
-      int testTransferAmount = 100;
-      String testTransferCurrency = 'usd';
-      String testTransferRecipient = 'self';
+      int transferAmount = 100;
+      String transferCurrency = 'usd';
+      String transferRecipient = 'self';
 
       for (var i = 0; i < 20; i++) {
         await (new TransferCreation()
-            ..amount = testTransferAmount
-            ..currency = testTransferCurrency
-            ..recipient = testTransferRecipient
+            ..amount = transferAmount
+            ..currency = transferCurrency
+            ..recipient = transferRecipient
         ).create();
       }
 

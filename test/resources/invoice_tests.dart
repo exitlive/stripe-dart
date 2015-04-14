@@ -163,42 +163,42 @@ main(List<String> args) {
     test('InvoiceCreation full', () async {
 
       // Card fields
-      String testCardNumber = '5555555555554444';
-      int testCardExpMonth = 3;
-      int testCardExpYear = 2016;
+      String cardNumber = '5555555555554444';
+      int cardExpMonth = 3;
+      int cardExpYear = 2016;
 
-      CardCreation testCardCreation = new CardCreation()
-          ..number = testCardNumber // only the last 4 digits can be tested
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear;
+      CardCreation cardCreation = new CardCreation()
+          ..number = cardNumber // only the last 4 digits can be tested
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear;
 
       // Plan fields
-      String testPlanId = 'test plan id';
-      int testPlanAmount = 200;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      String testPlanName = 'test plan name';
+      String planId = 'test plan id';
+      int planAmount = 200;
+      String planCurrency = 'usd';
+      String planInterval = 'month';
+      String planName = 'test plan name';
 
       // Charge fields
-      int testChargeAmount = 100;
-      String testChargeCurrency = 'usd';
+      int cardAmount = 100;
+      String cardCurrency = 'usd';
 
       // Invoice fields
-      String testInvoiceDescription = 'test description';
-      Map testInvoiceMetadata = {'foo': 'bar'};
+      String invoiceDescription = 'test description';
+      Map invoiceMetadata = {'foo': 'bar'};
 
       Plan plan = await (new PlanCreation()
-          ..id = testPlanId
-          ..amount = testPlanAmount
-          ..currency = testPlanCurrency
-          ..interval = testPlanInterval
-          ..name = testPlanName
+          ..id = planId
+          ..amount = planAmount
+          ..currency = planCurrency
+          ..interval = planInterval
+          ..name = planName
       ).create();
       Customer customer = await new CustomerCreation().create();
-      await testCardCreation.create(customer.id);
+      await cardCreation.create(customer.id);
       await (new ChargeCreation()
-          ..amount = testChargeAmount
-          ..currency = testChargeCurrency
+          ..amount = cardAmount
+          ..currency = cardCurrency
           ..customer = customer.id
       ).create();
       Subscription subscription = await (new SubscriptionCreation()
@@ -207,8 +207,8 @@ main(List<String> args) {
       try {
         await (new InvoiceCreation()
             ..customer = customer.id
-            ..description = testInvoiceDescription
-            ..metadata = testInvoiceMetadata
+            ..description = invoiceDescription
+            ..metadata = invoiceMetadata
             ..subscription = subscription.id
         ).create();
       } catch (e) {

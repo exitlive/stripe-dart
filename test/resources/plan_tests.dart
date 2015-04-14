@@ -61,108 +61,108 @@ main(List<String> args) {
     test('PlanCreation minimal', () async {
 
       // plan fields
-      String testPlanId = 'test id';
-      int testPlanAmount = 10;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      String testPlanName = 'test name';
+      String planId = 'test id';
+      int planAmount = 10;
+      String planCurrency = 'usd';
+      String planInterval = 'month';
+      String planName = 'test name';
 
       Plan plan = await (new PlanCreation()
-          ..id = testPlanId
-          ..amount = testPlanAmount
-          ..currency = testPlanCurrency
-          ..interval = testPlanInterval
-          ..name = testPlanName
+          ..id = planId
+          ..amount = planAmount
+          ..currency = planCurrency
+          ..interval = planInterval
+          ..name = planName
       ).create();
-      expect(plan.id, testPlanId);
-      expect(plan.amount, testPlanAmount);
-      expect(plan.currency, testPlanCurrency);
-      expect(plan.interval, testPlanInterval);
-      expect(plan.name, testPlanName);
+      expect(plan.id, planId);
+      expect(plan.amount, planAmount);
+      expect(plan.currency, planCurrency);
+      expect(plan.interval, planInterval);
+      expect(plan.name, planName);
 
     });
 
     test('PlanCreation full', () async {
 
       // plan fields
-      String testPlanId = 'test id';
-      int testPlanAmount = 10;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      int testPlanIntervalCount = 2;
-      String testPlanName1 = 'test name';
-      int testPlanTrialPeriodDays = 3;
-      Map testPlanMetadata1 = {'foo': 'bar1'};
-      String testPlanStatementDescriptor1 = 'descriptor1';
+      String planId = 'test id';
+      int planAmount = 10;
+      String planCurrency = 'usd';
+      String planInterval = 'month';
+      int planIntervalCount = 2;
+      String planName1 = 'test name';
+      int planTrialPeriodDays = 3;
+      Map planMetadata1 = {'foo': 'bar1'};
+      String planStatementDescriptor1 = 'descriptor1';
 
-      String testPlanName2 = 'test name2';
-      Map testPlanMetadata2 = {'foo': 'bar2'};
-      String testPlanStatementDescriptor2 = 'descriptor2';
+      String planName2 = 'test name2';
+      Map planMetadata2 = {'foo': 'bar2'};
+      String planStatementDescriptor2 = 'descriptor2';
 
       Plan plan = await (new PlanCreation()
-          ..id = testPlanId
-          ..amount = testPlanAmount
-          ..currency = testPlanCurrency
-          ..interval = testPlanInterval
-          ..intervalCount = testPlanIntervalCount
-          ..name = testPlanName1
-          ..trialPeriodDays = testPlanTrialPeriodDays
-          ..metadata = testPlanMetadata1
-          ..statementDescriptor = testPlanStatementDescriptor1
+          ..id = planId
+          ..amount = planAmount
+          ..currency = planCurrency
+          ..interval = planInterval
+          ..intervalCount = planIntervalCount
+          ..name = planName1
+          ..trialPeriodDays = planTrialPeriodDays
+          ..metadata = planMetadata1
+          ..statementDescriptor = planStatementDescriptor1
       ).create();
-      expect(plan.id, testPlanId);
-      expect(plan.amount, testPlanAmount);
-      expect(plan.currency, testPlanCurrency);
-      expect(plan.interval, testPlanInterval);
-      expect(plan.intervalCount, testPlanIntervalCount);
-      expect(plan.name, testPlanName1);
-      expect(plan.trialPeriodDays, testPlanTrialPeriodDays);
-      expect(plan.metadata, testPlanMetadata1);
-      expect(plan.statementDescriptor, testPlanStatementDescriptor1);
+      expect(plan.id, planId);
+      expect(plan.amount, planAmount);
+      expect(plan.currency, planCurrency);
+      expect(plan.interval, planInterval);
+      expect(plan.intervalCount, planIntervalCount);
+      expect(plan.name, planName1);
+      expect(plan.trialPeriodDays, planTrialPeriodDays);
+      expect(plan.metadata, planMetadata1);
+      expect(plan.statementDescriptor, planStatementDescriptor1);
       plan = await Plan.retrieve(plan.id);
-      expect(plan.id, testPlanId);
-      expect(plan.amount, testPlanAmount);
-      expect(plan.currency, testPlanCurrency);
-      expect(plan.interval, testPlanInterval);
-      expect(plan.intervalCount, testPlanIntervalCount);
-      expect(plan.name, testPlanName1);
-      expect(plan.trialPeriodDays, testPlanTrialPeriodDays);
-      expect(plan.metadata, testPlanMetadata1);
-      expect(plan.statementDescriptor, testPlanStatementDescriptor1);
+      expect(plan.id, planId);
+      expect(plan.amount, planAmount);
+      expect(plan.currency, planCurrency);
+      expect(plan.interval, planInterval);
+      expect(plan.intervalCount, planIntervalCount);
+      expect(plan.name, planName1);
+      expect(plan.trialPeriodDays, planTrialPeriodDays);
+      expect(plan.metadata, planMetadata1);
+      expect(plan.statementDescriptor, planStatementDescriptor1);
       plan = await (new PlanUpdate()
-          ..name = testPlanName2
-          ..metadata = testPlanMetadata2
-          ..statementDescriptor = testPlanStatementDescriptor2
+          ..name = planName2
+          ..metadata = planMetadata2
+          ..statementDescriptor = planStatementDescriptor2
       ).update(plan.id);
       // testing update
-      expect(plan.id, testPlanId);
-      expect(plan.name, testPlanName2);
-      expect(plan.metadata, testPlanMetadata2);
-      expect(plan.statementDescriptor, testPlanStatementDescriptor2);
+      expect(plan.id, planId);
+      expect(plan.name, planName2);
+      expect(plan.metadata, planMetadata2);
+      expect(plan.statementDescriptor, planStatementDescriptor2);
 
     });
 
     test('Delete Plan', () async {
 
       // plan fields
-      String testPlanId = 'test id';
-      int testPlanAmount = 10;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      String testPlanName = 'test name';
+      String planId = 'test id';
+      int planAmount = 10;
+      String planCurrency = 'usd';
+      String planInterval = 'month';
+      String planName = 'test name';
 
       Plan plan = await (new PlanCreation()
-          ..id = testPlanId
-          ..amount = testPlanAmount
-          ..currency = testPlanCurrency
-          ..interval = testPlanInterval
-          ..name = testPlanName
+          ..id = planId
+          ..amount = planAmount
+          ..currency = planCurrency
+          ..interval = planInterval
+          ..name = planName
       ).create();
-      expect(plan.id, testPlanId);
-      expect(plan.amount, testPlanAmount);
-      expect(plan.currency, testPlanCurrency);
-      expect(plan.interval, testPlanInterval);
-      expect(plan.name, testPlanName);
+      expect(plan.id, planId);
+      expect(plan.amount, planAmount);
+      expect(plan.currency, planCurrency);
+      expect(plan.interval, planInterval);
+      expect(plan.name, planName);
       Map response = await Plan.delete(plan.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], plan.id);
@@ -172,19 +172,19 @@ main(List<String> args) {
     test('List parameters plan', () async {
 
       // plan fields
-      String testPlanId = 'test id';
-      int testPlanAmount = 10;
-      String testPlanCurrency = 'usd';
-      String testPlanInterval = 'month';
-      String testPlanName = 'test name';
+      String planId = 'test id';
+      int planAmount = 10;
+      String planCurrency = 'usd';
+      String planInterval = 'month';
+      String planName = 'test name';
 
       for (var i = 0; i < 20; i++) {
         await (new PlanCreation()
-            ..id = testPlanId + i.toString()
-            ..amount = testPlanAmount
-            ..currency = testPlanCurrency
-            ..interval = testPlanInterval
-            ..name = testPlanName + i.toString()
+            ..id = planId + i.toString()
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..name = planName + i.toString()
         ).create();
       }
       PlanCollection plans = await Plan.list(limit: 10);

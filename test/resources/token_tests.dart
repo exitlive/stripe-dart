@@ -82,29 +82,29 @@ main(List<String> args) {
     test('CardTokenCreation', () async {
 
       // Card fields
-      String testCardNumber = '4242424242424242';
-      int testCardExpMonth = 12;
-      int testCardExpYear = 2016;
+      String cardNumber = '4242424242424242';
+      int cardExpMonth = 12;
+      int cardExpYear = 2016;
       await new CustomerCreation().create();
       Token token = await (new CardTokenCreation()
           ..card = (new CardCreation()
-          ..number = testCardNumber
-          ..expMonth = testCardExpMonth
-          ..expYear = testCardExpYear
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear
       )).create();
       expect(token.id, new isInstanceOf<String>());
-      expect(token.card.last4, testCardNumber.substring(testCardNumber.length - 4));
-      expect(token.card.expMonth, testCardExpMonth);
-      expect(token.card.expYear, testCardExpYear);
+      expect(token.card.last4, cardNumber.substring(cardNumber.length - 4));
+      expect(token.card.expMonth, cardExpMonth);
+      expect(token.card.expYear, cardExpYear);
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'card');
       // testing retrieve
       token = await Token.retrieve(token.id);
       expect(token.id, new isInstanceOf<String>());
-      expect(token.card.last4, testCardNumber.substring(testCardNumber.length - 4));
-      expect(token.card.expMonth, testCardExpMonth);
-      expect(token.card.expYear, testCardExpYear);
+      expect(token.card.last4, cardNumber.substring(cardNumber.length - 4));
+      expect(token.card.expMonth, cardExpMonth);
+      expect(token.card.expYear, cardExpYear);
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'card');
@@ -114,30 +114,30 @@ main(List<String> args) {
     test('BankAccountTokenCreation', () async {
 
       // BankAccount fields
-      String testBankAccountCountry = 'US';
-      String testBankAccountRoutingNumber = '110000000';
-      String testBankAccountAccountNumber = '000123456789';
+      String bankAccountCountry = 'US';
+      String bankAccountRoutingNumber = '110000000';
+      String bankAccountAccountNumber = '000123456789';
 
-      BankAccountRequest testBankAccount = (new BankAccountRequest()
-          ..country = testBankAccountCountry
-          ..routingNumber = testBankAccountRoutingNumber
-          ..accountNumber = testBankAccountAccountNumber
+      BankAccountRequest bankAccount = (new BankAccountRequest()
+          ..country = bankAccountCountry
+          ..routingNumber = bankAccountRoutingNumber
+          ..accountNumber = bankAccountAccountNumber
       );
 
       Token token = await (new BankAccountTokenCreation()
-          ..bankAccount = testBankAccount
+          ..bankAccount = bankAccount
       ).create();
       expect(token.id, new isInstanceOf<String>());
-      expect(token.bankAccount.country, testBankAccountCountry);
-      expect(token.bankAccount.last4, testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4));
+      expect(token.bankAccount.country, bankAccountCountry);
+      expect(token.bankAccount.last4, bankAccountAccountNumber.substring(bankAccountAccountNumber.length - 4));
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'bank_account');
       // testing retrieve
       token = await Token.retrieve(token.id);
       expect(token.id, new isInstanceOf<String>());
-      expect(token.bankAccount.country, testBankAccountCountry);
-      expect(token.bankAccount.last4, testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4));
+      expect(token.bankAccount.country, bankAccountCountry);
+      expect(token.bankAccount.last4, bankAccountAccountNumber.substring(bankAccountAccountNumber.length - 4));
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'bank_account');

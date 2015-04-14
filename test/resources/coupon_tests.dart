@@ -65,16 +65,16 @@ main(List<String> args) {
     test('CouponCreation minimal', () async {
 
       // Coupon fields
-      String testDuration = 'forever';
-      int testPercentOff = 5;
+      String couponDuration = 'forever';
+      int couponPercentOff = 5;
 
       Coupon coupon = await (new CouponCreation()
-          ..duration = testDuration
-          ..percentOff = testPercentOff
+          ..duration = couponDuration
+          ..percentOff = couponPercentOff
       ).create();
       expect(coupon.id, new isInstanceOf<String>());
-      expect(coupon.duration, testDuration);
-      expect(coupon.percentOff, testPercentOff);
+      expect(coupon.duration, couponDuration);
+      expect(coupon.percentOff, couponPercentOff);
 
     });
 
@@ -82,59 +82,59 @@ main(List<String> args) {
     test('CouponCreation full', () async {
 
       // Coupon fields
-      String testId = 'test id';
-      String testDuration = 'repeating';
-      int testAmountOff = 10;
-      String testCurrency = 'usd';
-      int testDurationInMoths = 12;
-      int testMaxRedemptions = 3;
-      Map testMetadata = {'foo': 'bar'};
-      int testRedeemBy = 1451520000;
+      String couponId = 'test id';
+      String couponDuration = 'repeating';
+      int couponAmountOff = 10;
+      String couponCurrency = 'usd';
+      int couponDurationInMoths = 12;
+      int couponMaxRedemptions = 3;
+      Map couponMetadata = {'foo': 'bar'};
+      int couponRedeemBy = 1451520000;
 
       Coupon coupon = await (new CouponCreation()
-          ..id = testId
-          ..duration = testDuration
-          ..amountOff = testAmountOff
-          ..currency = testCurrency
-          ..durationInMonths = testDurationInMoths
-          ..maxRedemptions = testMaxRedemptions
-          ..metadata = testMetadata
-          ..redeemBy = testRedeemBy
+          ..id = couponId
+          ..duration = couponDuration
+          ..amountOff = couponAmountOff
+          ..currency = couponCurrency
+          ..durationInMonths = couponDurationInMoths
+          ..maxRedemptions = couponMaxRedemptions
+          ..metadata = couponMetadata
+          ..redeemBy = couponRedeemBy
       ).create();
-      expect(coupon.id, testId);
-      expect(coupon.duration, testDuration);
-      expect(coupon.amountOff, testAmountOff);
-      expect(coupon.currency, testCurrency);
-      expect(coupon.durationInMonths, testDurationInMoths);
-      expect(coupon.maxRedemptions, testMaxRedemptions);
-      expect(coupon.metadata, testMetadata);
-      expect(coupon.redeemBy, testRedeemBy);
+      expect(coupon.id, couponId);
+      expect(coupon.duration, couponDuration);
+      expect(coupon.amountOff, couponAmountOff);
+      expect(coupon.currency, couponCurrency);
+      expect(coupon.durationInMonths, couponDurationInMoths);
+      expect(coupon.maxRedemptions, couponMaxRedemptions);
+      expect(coupon.metadata, couponMetadata);
+      expect(coupon.redeemBy, couponRedeemBy);
       coupon = await Coupon.retrieve(coupon.id);
       // testing retrieve
-      expect(coupon.id, testId);
-      expect(coupon.duration, testDuration);
-      expect(coupon.amountOff, testAmountOff);
-      expect(coupon.currency, testCurrency);
-      expect(coupon.durationInMonths, testDurationInMoths);
-      expect(coupon.maxRedemptions, testMaxRedemptions);
-      expect(coupon.metadata, testMetadata);
-      expect(coupon.redeemBy, testRedeemBy);
+      expect(coupon.id, couponId);
+      expect(coupon.duration, couponDuration);
+      expect(coupon.amountOff, couponAmountOff);
+      expect(coupon.currency, couponCurrency);
+      expect(coupon.durationInMonths, couponDurationInMoths);
+      expect(coupon.maxRedemptions, couponMaxRedemptions);
+      expect(coupon.metadata, couponMetadata);
+      expect(coupon.redeemBy, couponRedeemBy);
 
     });
 
     test('Delete Coupon', () async {
 
       // Coupon fields
-      String testDuration = 'forever';
-      int testPercentOff = 5;
+      String couponDuration = 'forever';
+      int couponPercentOff = 5;
 
       Coupon coupon = await (new CouponCreation()
-          ..duration = testDuration
-          ..percentOff = testPercentOff
+          ..duration = couponDuration
+          ..percentOff = couponPercentOff
       ).create();
       expect(coupon.id, new isInstanceOf<String>());
-      expect(coupon.duration, testDuration);
-      expect(coupon.percentOff, testPercentOff);
+      expect(coupon.duration, couponDuration);
+      expect(coupon.percentOff, couponPercentOff);
       Map response = await Coupon.delete(coupon.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], coupon.id);
@@ -144,12 +144,12 @@ main(List<String> args) {
     test('List parameters Coupon', () async {
 
       // Coupon fields
-      String testDuration = 'forever';
-      int testPercentOff = 5;
+      String couponDuration = 'forever';
+      int couponPercentOff = 5;
       for (var i = 0; i < 20; i++) {
         await (new CouponCreation()
-            ..duration = testDuration
-            ..percentOff = testPercentOff
+            ..duration = couponDuration
+            ..percentOff = couponPercentOff
         ).create();
       }
 
