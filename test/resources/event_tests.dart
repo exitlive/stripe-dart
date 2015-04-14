@@ -206,7 +206,7 @@ main(List<String> args) {
 
   });
 
-  group('Event online', () {
+  solo_group('Event online', () {
 
     setUp(() {
       return utils.setUp();
@@ -216,29 +216,18 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('List and retrieve Events', () {
+    test('List and retrieve Events', () async {
 
-      Customer testCustomer;
-      Event testEvent;
-
-      new CustomerCreation().create()
-          .then((Customer customer) {
-            testCustomer = customer;
-            return Event.list(limit: 1, type: 'customer.created');
-          })
-          .then((EventCollection events) {
-            testEvent = events.data.first;
-            expect(testEvent.data.object['id'], equals(testCustomer.id));
-            return Event.retrieve(testEvent.id);
-          })
-          .then((Event event) {
-            expect(event.created, equals(testEvent.created));
-            expect(event.data.object, equals(testEvent.data.object));
-            expect(event.id, equals(testEvent.id));
-            expect(event.livemode, equals(testEvent.livemode));
-            expect(event.type, equals(testEvent.type));
-          })
-          .then(expectAsync((_) => true));
+      Customer customer = await new CustomerCreation().create();
+      EventCollection events = await Event.list(limit: 1, type: 'customer.created');
+      Event eventFromList = events.data.first;
+      expect(eventFromList.data.object['id'], equals(customer.id));
+      Event eventFromRetrieve = await Event.retrieve(eventFromList.id);
+      expect(eventFromRetrieve.created, equals(eventFromList.created));
+      expect(eventFromRetrieve.data.object, equals(eventFromList.data.object));
+      expect(eventFromRetrieve.id, equals(eventFromList.id));
+      expect(eventFromRetrieve.livemode, equals(eventFromList.livemode));
+      expect(eventFromRetrieve.type, equals(eventFromList.type));
 
     });
 
