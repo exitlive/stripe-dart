@@ -83,47 +83,39 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('CardTokenCreation', () {
+    test('CardTokenCreation', () async {
 
       // Card fields
-      Card testCard;
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
       int testCardExpYear = 2016;
-      new CustomerCreation().create()
-          .then((Customer customer) {
-            return (new CardTokenCreation()
-                ..card = (new CardCreation()
-                ..number = testCardNumber
-                ..expMonth = testCardExpMonth
-                ..expYear = testCardExpYear
-            )).create();
-          })
-          .then((Token token) {
-            expect(token.id, new isInstanceOf<String>());
-            expect(token.card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
-            expect(token.card.expMonth, equals(testCardExpMonth));
-            expect(token.card.expYear, equals(testCardExpYear));
-            expect(token.livemode, isFalse);
-            expect(token.used, isFalse);
-            expect(token.type, equals('card'));
-            // testing retrieve
-            return Token.retrieve(token.id);
-          })
-          .then((Token token) {
-            expect(token.id, new isInstanceOf<String>());
-            expect(token.card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
-            expect(token.card.expMonth, equals(testCardExpMonth));
-            expect(token.card.expYear, equals(testCardExpYear));
-            expect(token.livemode, isFalse);
-            expect(token.used, isFalse);
-            expect(token.type, equals('card'));
-          })
-          .then(expectAsync((_) => true));
+      await new CustomerCreation().create();
+      Token token = await (new CardTokenCreation()
+          ..card = (new CardCreation()
+          ..number = testCardNumber
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear
+      )).create();
+      expect(token.id, new isInstanceOf<String>());
+      expect(token.card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
+      expect(token.card.expMonth, equals(testCardExpMonth));
+      expect(token.card.expYear, equals(testCardExpYear));
+      expect(token.livemode, isFalse);
+      expect(token.used, isFalse);
+      expect(token.type, equals('card'));
+      // testing retrieve
+      token = await Token.retrieve(token.id);
+      expect(token.id, new isInstanceOf<String>());
+      expect(token.card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
+      expect(token.card.expMonth, equals(testCardExpMonth));
+      expect(token.card.expYear, equals(testCardExpYear));
+      expect(token.livemode, isFalse);
+      expect(token.used, isFalse);
+      expect(token.type, equals('card'));
 
     });
 
-    test('BankAccountTokenCreation', () {
+    test('BankAccountTokenCreation', () async {
 
       // BankAccount fields
       String testBankAccountCountry = 'US';
@@ -136,28 +128,23 @@ main(List<String> args) {
           ..accountNumber = testBankAccountAccountNumber
       );
 
-      (new BankAccountTokenCreation()
+      Token token = await (new BankAccountTokenCreation()
           ..bankAccount = testBankAccount
-      ).create()
-          .then((Token token) {
-            expect(token.id, new isInstanceOf<String>());
-            expect(token.bankAccount.country, equals(testBankAccountCountry));
-            expect(token.bankAccount.last4, equals(testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4)));
-            expect(token.livemode, isFalse);
-            expect(token.used, isFalse);
-            expect(token.type, equals('bank_account'));
-            // testing retrieve
-            return Token.retrieve(token.id);
-          })
-          .then((Token token) {
-            expect(token.id, new isInstanceOf<String>());
-            expect(token.bankAccount.country, equals(testBankAccountCountry));
-            expect(token.bankAccount.last4, equals(testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4)));
-            expect(token.livemode, isFalse);
-            expect(token.used, isFalse);
-            expect(token.type, equals('bank_account'));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(token.id, new isInstanceOf<String>());
+      expect(token.bankAccount.country, equals(testBankAccountCountry));
+      expect(token.bankAccount.last4, equals(testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4)));
+      expect(token.livemode, isFalse);
+      expect(token.used, isFalse);
+      expect(token.type, equals('bank_account'));
+      // testing retrieve
+      token = await Token.retrieve(token.id);
+      expect(token.id, new isInstanceOf<String>());
+      expect(token.bankAccount.country, equals(testBankAccountCountry));
+      expect(token.bankAccount.last4, equals(testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4)));
+      expect(token.livemode, isFalse);
+      expect(token.used, isFalse);
+      expect(token.type, equals('bank_account'));
 
     });
 
