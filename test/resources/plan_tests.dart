@@ -1,6 +1,5 @@
 library plan_tests;
 
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
@@ -63,39 +62,33 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('PlanCreation minimal', () {
+    test('PlanCreation minimal', () async {
 
       // plan fields
-      Plan testPlan;
       String testPlanId = 'test id';
       int testPlanAmount = 10;
       String testPlanCurrency = 'usd';
       String testPlanInterval = 'month';
       String testPlanName = 'test name';
 
-      (new PlanCreation()
+      Plan plan = await (new PlanCreation()
           ..id = testPlanId
           ..amount = testPlanAmount
           ..currency = testPlanCurrency
           ..interval = testPlanInterval
           ..name = testPlanName
-      ).create()
-          .then((Plan plan) {
-            testPlan = plan;
-            expect(plan.id, testPlanId);
-            expect(plan.amount, equals(testPlanAmount));
-            expect(plan.currency, equals(testPlanCurrency));
-            expect(plan.interval, equals(testPlanInterval));
-            expect(plan.name, equals(testPlanName));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(plan.id, testPlanId);
+      expect(plan.amount, equals(testPlanAmount));
+      expect(plan.currency, equals(testPlanCurrency));
+      expect(plan.interval, equals(testPlanInterval));
+      expect(plan.name, equals(testPlanName));
 
     });
 
-    test('PlanCreation full', () {
+    test('PlanCreation full', () async {
 
       // plan fields
-      Plan testPlan;
       String testPlanId = 'test id';
       int testPlanAmount = 10;
       String testPlanCurrency = 'usd';
@@ -110,7 +103,7 @@ main(List<String> args) {
       Map testPlanMetadata2 = {'foo': 'bar2'};
       String testPlanStatementDescriptor2 = 'descriptor2';
 
-      (new PlanCreation()
+      Plan plan = await (new PlanCreation()
           ..id = testPlanId
           ..amount = testPlanAmount
           ..currency = testPlanCurrency
@@ -120,120 +113,93 @@ main(List<String> args) {
           ..trialPeriodDays = testPlanTrialPeriodDays
           ..metadata = testPlanMetadata1
           ..statementDescriptor = testPlanStatementDescriptor1
-      ).create()
-          .then((Plan plan) {
-            testPlan = plan;
-            expect(plan.id, testPlanId);
-            expect(plan.amount, equals(testPlanAmount));
-            expect(plan.currency, equals(testPlanCurrency));
-            expect(plan.interval, equals(testPlanInterval));
-            expect(plan.intervalCount, equals(testPlanIntervalCount));
-            expect(plan.name, equals(testPlanName1));
-            expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
-            expect(plan.metadata, equals(testPlanMetadata1));
-            expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
-            return Plan.retrieve(plan.id);
-          })
-          // testing retrieve
-          .then((Plan plan) {
-            expect(plan.id, testPlanId);
-            expect(plan.amount, equals(testPlanAmount));
-            expect(plan.currency, equals(testPlanCurrency));
-            expect(plan.interval, equals(testPlanInterval));
-            expect(plan.intervalCount, equals(testPlanIntervalCount));
-            expect(plan.name, equals(testPlanName1));
-            expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
-            expect(plan.metadata, equals(testPlanMetadata1));
-            expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
-            return (new PlanUpdate()
-                ..name = testPlanName2
-                ..metadata = testPlanMetadata2
-                ..statementDescriptor = testPlanStatementDescriptor2
-            ).update(plan.id);
-          })
-          // testing update
-          .then((Plan plan) {
-            expect(plan.id, testPlanId);
-            expect(plan.name, equals(testPlanName2));
-            expect(plan.metadata, equals(testPlanMetadata2));
-            expect(plan.statementDescriptor, equals(testPlanStatementDescriptor2));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(plan.id, testPlanId);
+      expect(plan.amount, equals(testPlanAmount));
+      expect(plan.currency, equals(testPlanCurrency));
+      expect(plan.interval, equals(testPlanInterval));
+      expect(plan.intervalCount, equals(testPlanIntervalCount));
+      expect(plan.name, equals(testPlanName1));
+      expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
+      expect(plan.metadata, equals(testPlanMetadata1));
+      expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
+      plan = await Plan.retrieve(plan.id);
+      expect(plan.id, testPlanId);
+      expect(plan.amount, equals(testPlanAmount));
+      expect(plan.currency, equals(testPlanCurrency));
+      expect(plan.interval, equals(testPlanInterval));
+      expect(plan.intervalCount, equals(testPlanIntervalCount));
+      expect(plan.name, equals(testPlanName1));
+      expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
+      expect(plan.metadata, equals(testPlanMetadata1));
+      expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
+      plan = await (new PlanUpdate()
+          ..name = testPlanName2
+          ..metadata = testPlanMetadata2
+          ..statementDescriptor = testPlanStatementDescriptor2
+      ).update(plan.id);
+      // testing update
+      expect(plan.id, testPlanId);
+      expect(plan.name, equals(testPlanName2));
+      expect(plan.metadata, equals(testPlanMetadata2));
+      expect(plan.statementDescriptor, equals(testPlanStatementDescriptor2));
 
     });
 
-    test('Delete Plan', () {
+    test('Delete Plan', () async {
 
       // plan fields
-      Plan testPlan;
       String testPlanId = 'test id';
       int testPlanAmount = 10;
       String testPlanCurrency = 'usd';
       String testPlanInterval = 'month';
       String testPlanName = 'test name';
 
-      (new PlanCreation()
+      Plan plan = await (new PlanCreation()
           ..id = testPlanId
           ..amount = testPlanAmount
           ..currency = testPlanCurrency
           ..interval = testPlanInterval
           ..name = testPlanName
-      ).create()
-          .then((Plan plan) {
-            testPlan = plan;
-            expect(plan.id, testPlanId);
-            expect(plan.amount, equals(testPlanAmount));
-            expect(plan.currency, equals(testPlanCurrency));
-            expect(plan.interval, equals(testPlanInterval));
-            expect(plan.name, equals(testPlanName));
-            return Plan.delete(plan.id);
-          })
-          .then((Map response) {
-            expect(response['deleted'], isTrue);
-            expect(response['id'], equals(testPlan.id));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(plan.id, testPlanId);
+      expect(plan.amount, equals(testPlanAmount));
+      expect(plan.currency, equals(testPlanCurrency));
+      expect(plan.interval, equals(testPlanInterval));
+      expect(plan.name, equals(testPlanName));
+      Map response = await Plan.delete(plan.id);
+      expect(response['deleted'], isTrue);
+      expect(response['id'], equals(plan.id));
 
     });
 
-    test('List parameters plan', () {
+    test('List parameters plan', () async {
 
       // plan fields
-      Plan testPlan;
       String testPlanId = 'test id';
       int testPlanAmount = 10;
       String testPlanCurrency = 'usd';
       String testPlanInterval = 'month';
       String testPlanName = 'test name';
 
-      List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
-        queue.add((new PlanCreation()
+        await (new PlanCreation()
             ..id = testPlanId + i.toString()
             ..amount = testPlanAmount
             ..currency = testPlanCurrency
             ..interval = testPlanInterval
             ..name = testPlanName + i.toString()
-        ).create());
+        ).create();
       }
-
-      Future.wait(queue)
-          .then((_) => Plan.list(limit: 10))
-          .then((PlanCollection plans) {
-            expect(plans.data.length, equals(10));
-            expect(plans.hasMore, equals(true));
-            return Plan.list(limit: 10, startingAfter: plans.data.last.id);
-          })
-          .then((PlanCollection plans) {
-            expect(plans.data.length, equals(10));
-            expect(plans.hasMore, equals(false));
-            return Plan.list(limit: 10, endingBefore: plans.data.first.id);
-          })
-          .then((PlanCollection plans) {
-            expect(plans.data.length, equals(10));
-            expect(plans.hasMore, equals(false));
-          })
-          .then(expectAsync((_) => true));
+      PlanCollection plans = await Plan.list(limit: 10);
+      expect(plans.data.length, equals(10));
+      expect(plans.hasMore, equals(true));
+      plans = await Plan.list(limit: 10, startingAfter: plans.data.last.id);
+      expect(plans.data.length, equals(10));
+      expect(plans.hasMore, equals(false));
+      plans = await Plan.list(limit: 10, endingBefore: plans.data.first.id);
+      expect(plans.data.length, equals(10));
+      expect(plans.hasMore, equals(false));
 
     });
 
