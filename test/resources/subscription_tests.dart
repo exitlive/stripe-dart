@@ -1,6 +1,5 @@
 library subscription_tests;
 
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
@@ -97,13 +96,9 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('SubscriptionCreation minimal', () {
-
-      // Customer fields
-      Customer testCustomer;
+    test('SubscriptionCreation minimal', () async {
 
       // Card fields
-      Card testCard;
       String testCardNumber = '5555555555554444';
       int testCardExpMonth = 3;
       int testCardExpYear = 2016;
@@ -114,48 +109,33 @@ main(List<String> args) {
           ..expYear = testCardExpYear;
 
       // Plan fields
-      Plan testPlan;
       String testPlanId = 'test plan id';
       int testPlanAmount = 200;
       String testPlanCurrency = 'usd';
       String testPlanInterval = 'month';
       String testPlanName = 'test plan name';
 
-      (new PlanCreation()
+      Plan plan = await (new PlanCreation()
           ..id = testPlanId
           ..amount = testPlanAmount
           ..currency = testPlanCurrency
           ..interval = testPlanInterval
           ..name = testPlanName
-      ).create()
-          .then((Plan plan) {
-            testPlan = plan;
-            return new CustomerCreation().create();
-          })
-          .then((Customer customer) {
-            testCustomer = customer;
-            return testCardCreation.create(testCustomer.id);
-          })
-          .then((Card card) {
-            testCard = card;
-            return (
-                new SubscriptionCreation()
-                    ..plan = testPlan.id
-            ).create(testCustomer.id);
-          })
-          .then((Subscription subscription) {
-            expect(subscription.plan.id, equals(testPlanId));
-            expect(subscription.customer, equals(testCustomer.id));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      Customer customer = await new CustomerCreation().create();
+      await testCardCreation.create(customer.id);
+      Subscription subscription = await (new SubscriptionCreation()
+          ..plan = plan.id
+      ).create(customer.id);
+      expect(subscription.plan.id, equals(testPlanId));
+      expect(subscription.customer, equals(customer.id));
 
     });
 
 
-    test('SubscriptionCreation full', () {
+    test('SubscriptionCreation full', () async {
 
       // Coupon fields
-      Coupon testCoupon1;
       String testCouponId1 = 'test coupon id1';
       String testCouponDuration1 = 'forever';
       int testCouponPercentOff1 = 15;
@@ -165,7 +145,6 @@ main(List<String> args) {
           ..duration = testCouponDuration1
           ..percentOff = testCouponPercentOff1;
 
-      Coupon testCoupon2;
       String testCouponId2 = 'test coupon id2';
       String testCouponDuration2 = 'forever';
       int testCouponPercentOff2 = 10;
@@ -175,11 +154,7 @@ main(List<String> args) {
           ..duration = testCouponDuration2
           ..percentOff = testCouponPercentOff2;
 
-      // Customer fields
-      Customer testCustomer;
-
       // Card fields
-      Card testCard1;
       String testCardNumber1 = '4242424242424242';
       int testCardExpMonth1 = 12;
       int testCardExpYear1 = 2016;
@@ -189,7 +164,6 @@ main(List<String> args) {
           ..expMonth = testCardExpMonth1
           ..expYear = testCardExpYear1;
 
-      Card testCard2;
       String testCardNumber2 = '5555555555554444';
       int testCardExpMonth2 = 3;
       int testCardExpYear2 = 2016;
@@ -200,7 +174,6 @@ main(List<String> args) {
           ..expYear = testCardExpYear2;
 
       // Plan fields
-      Plan testPlan1;
       String testPlanId1 = 'test plan id1';
       int testPlanAmount1 = 100;
       String testPlanCurrency1 = 'usd';
@@ -214,7 +187,6 @@ main(List<String> args) {
           ..interval = testPlanInterval1
           ..name = testPlanName1;
 
-      Plan testPlan2;
       String testPlanId2 = 'test plan id2';
       int testPlanAmount2 = 200;
       String testPlanCurrency2 = 'usd';
@@ -239,83 +211,54 @@ main(List<String> args) {
       // application_fee_percent can only be tested with OAuth key
       Map testSubscriptionMetadata2 = {'foo': 'bar2'};
 
-      testPlanCreation1.create()
-          .then((Plan plan) {
-            testPlan1 = plan;
-            return testPlanCreation2.create();
-          })
-          .then((Plan plan) {
-            testPlan2 = plan;
-            return testCouponCreation1.create();
-          })
-          .then((Coupon coupon) {
-            testCoupon1 = coupon;
-            return testCouponCreation2.create();
-          })
-          .then((Coupon coupon) {
-            testCoupon2 = coupon;
-            return new CustomerCreation().create();
-          })
-          .then((Customer customer) {
-            testCustomer = customer;
-            return (
-                new SubscriptionCreation()
-                    ..plan = testPlan1.id
-                    ..coupon = testCoupon1.id
-                    ..trialEnd = testSubscriptionTrialEnd1
-                    ..card = testCardCreation1
-                    ..quantity = testSubscriptionQuantity1
-                    ..metadata = testSubscriptionMetadata1
-            ).create(testCustomer.id);
-          })
-          .then((Subscription subscription) {
-            expect(subscription.plan.id, equals(testPlanId1));
-            expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff1));
-            expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd1 * 1000)));
-            expect(subscription.customer, equals(testCustomer.id));
-            expect(subscription.quantity, equals(testSubscriptionQuantity1));
-            expect(subscription.metadata, equals(testSubscriptionMetadata1));
-            return Subscription.retrieve(testCustomer.id, subscription.id , data: {'expand': ['customer']});
-          })
-          // testing the expand functionality of retrieve
-          .then((Subscription subscription) {
-            expect(subscription.customer, equals(subscription.customerExpand.id));
+      Plan plan1 = await testPlanCreation1.create();
+      Plan plan2 = await testPlanCreation2.create();
+      Coupon coupon1 = await testCouponCreation1.create();
+      Coupon coupon2 = await testCouponCreation2.create();
+      Customer customer = await new CustomerCreation().create();
+      Subscription subscription = await (new SubscriptionCreation()
+          ..plan = plan1.id
+          ..coupon = coupon1.id
+          ..trialEnd = testSubscriptionTrialEnd1
+          ..card = testCardCreation1
+          ..quantity = testSubscriptionQuantity1
+          ..metadata = testSubscriptionMetadata1
+      ).create(customer.id);
+      expect(subscription.plan.id, equals(testPlanId1));
+      expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff1));
+      expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd1 * 1000)));
+      expect(subscription.customer, equals(customer.id));
+      expect(subscription.quantity, equals(testSubscriptionQuantity1));
+      expect(subscription.metadata, equals(testSubscriptionMetadata1));
+      subscription = await Subscription.retrieve(customer.id, subscription.id , data: {'expand': ['customer']});
+      // testing the expand functionality of retrieve
+      expect(subscription.customer, equals(subscription.customerExpand.id));
 
-            // testing the CustomerUpdate
-            return (new SubscriptionUpdate()
-                ..plan = testPlan2.id
-                ..coupon = testCoupon2.id
-                ..trialEnd = testSubscriptionTrialEnd2
-                ..card = testCardCreation2
-                ..quantity = testSubscriptionQuantity2
-                ..metadata = testSubscriptionMetadata2
-            ).update(testCustomer.id, subscription.id);
-          })
-          .then((Subscription subscription) {
-            expect(subscription.plan.id, equals(testPlanId2));
-            expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff2));
-            expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd2 * 1000)));
-            expect(subscription.customer, equals(testCustomer.id));
-            expect(subscription.quantity, equals(testSubscriptionQuantity2));
-            expect(subscription.metadata, equals(testSubscriptionMetadata2));
-            return Subscription.cancel(testCustomer.id, subscription.id);
-          })
-          // testing cancel
-          .then((Subscription subscription) {
-            expect(subscription.status, equals('canceled'));
-            expect(subscription.cancelAtPeriodEnd, isFalse);
-          })
-          .then(expectAsync((_) => true));
+      // testing the CustomerUpdate
+      subscription = await (new SubscriptionUpdate()
+          ..plan = plan2.id
+          ..coupon = coupon2.id
+          ..trialEnd = testSubscriptionTrialEnd2
+          ..card = testCardCreation2
+          ..quantity = testSubscriptionQuantity2
+          ..metadata = testSubscriptionMetadata2
+      ).update(customer.id, subscription.id);
+      expect(subscription.plan.id, equals(testPlanId2));
+      expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff2));
+      expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd2 * 1000)));
+      expect(subscription.customer, equals(customer.id));
+      expect(subscription.quantity, equals(testSubscriptionQuantity2));
+      expect(subscription.metadata, equals(testSubscriptionMetadata2));
+      subscription = await Subscription.cancel(customer.id, subscription.id);
+      // testing cancel
+      expect(subscription.status, equals('canceled'));
+      expect(subscription.cancelAtPeriodEnd, isFalse);
 
     });
 
-    test('List parameters subscription', () {
+    test('List parameters subscription', () async {
 
       // Card fields
-      Customer testCustomer;
-
-      // Card fields
-      Card testCard;
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
       int testCardExpYear = 2016;
@@ -326,7 +269,6 @@ main(List<String> args) {
           ..expYear = testCardExpYear;
 
       // Plan fields
-      Plan testPlan;
       String testPlanId = 'test plan id';
       int testPlanAmount = 100;
       String testPlanCurrency = 'usd';
@@ -340,41 +282,24 @@ main(List<String> args) {
           ..interval = testPlanInterval
           ..name = testPlanName;
 
-      (new CustomerCreation()
+      Customer customer = await (new CustomerCreation()
           ..card = testCardCreation
-      ).create()
-          .then((Customer customer) {
-            testCustomer = customer;
-            return testPlanCreation.create();
-          })
-          .then((Plan plan) {
-            testPlan = plan;
-            List<Future> queue = [];
-            for (var i = 0; i < 20; i++) {
-              queue.add(
-                (new SubscriptionCreation()
-                    ..plan = plan.id
-                ).create(testCustomer.id)
-              );
-            }
-            return Future.wait(queue);
-          })
-          .then((_) => Subscription.list(testCustomer.id, limit: 10))
-          .then((SubscriptionCollection subscriptions) {
-            expect(subscriptions.data.length, equals(10));
-            expect(subscriptions.hasMore, equals(true));
-            return Subscription.list(testCustomer.id, limit: 10, startingAfter: subscriptions.data.last.id);
-          })
-          .then((SubscriptionCollection subscriptions) {
-            expect(subscriptions.data.length, equals(10));
-            expect(subscriptions.hasMore, equals(false));
-            return Subscription.list(testCustomer.id, limit: 10, endingBefore: subscriptions.data.first.id);
-          })
-          .then((SubscriptionCollection subscriptions) {
-            expect(subscriptions.data.length, equals(10));
-            expect(subscriptions.hasMore, equals(false));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      Plan plan = await testPlanCreation.create();
+      for (var i = 0; i < 20; i++) {
+        await (new SubscriptionCreation()
+            ..plan = plan.id
+        ).create(customer.id);
+      }
+      SubscriptionCollection subscriptions = await Subscription.list(customer.id, limit: 10);
+      expect(subscriptions.data.length, equals(10));
+      expect(subscriptions.hasMore, equals(true));
+      subscriptions = await Subscription.list(customer.id, limit: 10, startingAfter: subscriptions.data.last.id);
+      expect(subscriptions.data.length, equals(10));
+      expect(subscriptions.hasMore, equals(false));
+      subscriptions = await Subscription.list(customer.id, limit: 10, endingBefore: subscriptions.data.first.id);
+      expect(subscriptions.data.length, equals(10));
+      expect(subscriptions.hasMore, equals(false));
 
     });
 
