@@ -111,10 +111,8 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('ChargeCreation minimal', () {
+    test('ChargeCreation minimal', () async {
 
-      // Customer fields
-      Customer testCustomer;
       // Card fields
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
@@ -122,34 +120,23 @@ main(List<String> args) {
       // Charge fields
       int testChargeAmount = 100;
       String testChargeCurrency = 'usd';
-      new CustomerCreation().create()
-          .then((Customer customer) {
-            testCustomer = customer;
-            return (new CardCreation()
-                ..number = testCardNumber
-                ..expMonth = testCardExpMonth
-                ..expYear = testCardExpYear
-            ).create(testCustomer.id);
-          })
-          .then((Card card) {
-            return (new ChargeCreation()
-                ..amount = testChargeAmount
-                ..currency = testChargeCurrency
-                ..customer = testCustomer.id
-            ).create();
-          })
-          .then((Charge charge) {
-            expect(charge.amount, equals(testChargeAmount));
-            expect(charge.currency, equals(testChargeCurrency));
-          })
-          .then(expectAsync((_) => true));
+      Customer customer = await new CustomerCreation().create();
+      await (new CardCreation()
+          ..number = testCardNumber
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear
+      ).create(customer.id);
+      Charge charge = await (new ChargeCreation()
+          ..amount = testChargeAmount
+          ..currency = testChargeCurrency
+          ..customer = customer.id
+      ).create();
+      expect(charge.amount, equals(testChargeAmount));
+      expect(charge.currency, equals(testChargeCurrency));
 
     });
 
-    test('ChargeCreation full', () {
-
-      // Customer fields
-      Customer testCustomer;
+    test('ChargeCreation full', () async {
 
       // Card fields
       String testCardNumber = '4242424242424242';
@@ -157,7 +144,6 @@ main(List<String> args) {
       int testCardExpYear = 2016;
 
       // Charge fields
-      Charge testCharge;
       int testChargeAmount = 100;
       String testChargeCurrency = 'usd';
       String testChargeDescription1 = 'test description1';
@@ -168,59 +154,42 @@ main(List<String> args) {
       String testChargeStatementDescriptor = 'test descriptor';
       // application_fee can not be tested
 
-      new CustomerCreation().create()
-          .then((Customer customer) {
-            testCustomer = customer;
-            return (new CardCreation()
-                ..number = testCardNumber
-                ..expMonth = testCardExpMonth
-                ..expYear = testCardExpYear
-            ).create(testCustomer.id);
-          })
-          .then((Card card) {
-            return (new ChargeCreation()
-                ..amount = testChargeAmount
-                ..currency = testChargeCurrency
-                ..customer = testCustomer.id
-                ..description = testChargeDescription1
-                ..metadata = testChargeMetadata1
-                ..capture = testChargeCapture
-                ..statementDescriptor = testChargeStatementDescriptor
-            ).create();
-          })
-          .then((Charge charge) {
-            testCharge = charge;
-            expect(charge.amount, equals(testChargeAmount));
-            expect(charge.currency, equals(testChargeCurrency));
-            expect(charge.description, equals(testChargeDescription1));
-            expect(charge.metadata, equals(testChargeMetadata1));
-            expect(charge.captured, equals(testChargeCapture));
-            expect(charge.statement_descriptor, equals(testChargeStatementDescriptor));
-            // testing the expand functionality of retrieve
-            return Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
-          })
-          .then((Charge charge) {
-            expect(charge.customer, equals(charge.customerExpand.id));
+      Customer customer = await new CustomerCreation().create();
+      await (new CardCreation()
+          ..number = testCardNumber
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear
+      ).create(customer.id);
+      Charge charge = await (new ChargeCreation()
+          ..amount = testChargeAmount
+          ..currency = testChargeCurrency
+          ..customer = customer.id
+          ..description = testChargeDescription1
+          ..metadata = testChargeMetadata1
+          ..capture = testChargeCapture
+          ..statementDescriptor = testChargeStatementDescriptor
+      ).create();
+      expect(charge.amount, equals(testChargeAmount));
+      expect(charge.currency, equals(testChargeCurrency));
+      expect(charge.description, equals(testChargeDescription1));
+      expect(charge.metadata, equals(testChargeMetadata1));
+      expect(charge.captured, equals(testChargeCapture));
+      expect(charge.statement_descriptor, equals(testChargeStatementDescriptor));
+      // testing the expand functionality of retrieve
+      charge = await Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
+      expect(charge.customer, equals(charge.customerExpand.id));
 
-            // testing the ChargeUpdate
-            return (new ChargeUpdate()
-                ..description = testChargeDescription2
-                ..metadata = testChargeMetadata2
-            ).update(testCharge.id);
-          })
-          .then((Charge charge) {
-            testCharge = charge;
-            expect(charge.description, equals(testChargeDescription2));
-            expect(charge.metadata, equals(testChargeMetadata2));
-          })
-          .then(expectAsync((_) => true));
+      // testing the ChargeUpdate
+      charge = await (new ChargeUpdate()
+          ..description = testChargeDescription2
+          ..metadata = testChargeMetadata2
+      ).update(charge.id);
+      expect(charge.description, equals(testChargeDescription2));
+      expect(charge.metadata, equals(testChargeMetadata2));
 
     });
 
-    test('Refund a Charge', () {
-
-      // Customer fields
-      Customer testCustomer;
+    test('Refund a Charge', () async {
 
       // Card fields
       String testCardNumber = '4242424242424242';
@@ -233,34 +202,23 @@ main(List<String> args) {
       String testChargeCurrency = 'usd';
       // application_fee can not be tested
 
-      new CustomerCreation().create()
-          .then((Customer customer) {
-            testCustomer = customer;
-            return (new CardCreation()
-                ..number = testCardNumber
-                ..expMonth = testCardExpMonth
-                ..expYear = testCardExpYear
-            ).create(testCustomer.id);
-          })
-          .then((Card card) {
-            return (new ChargeCreation()
-                ..amount = testChargeAmount
-                ..currency = testChargeCurrency
-                ..customer = testCustomer.id
-            ).create();
-          })
-          .then((Charge charge) => Charge.refund(charge.id, amount: testChargeRefundAmount))
-          .then((Charge charge) {
-            expect(charge.refunds.data.first.amount, testChargeRefundAmount);
-          })
-          .then(expectAsync((_) => true));
+      Customer customer = await new CustomerCreation().create();
+      await (new CardCreation()
+          ..number = testCardNumber
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear
+      ).create(customer.id);
+      Charge charge = await (new ChargeCreation()
+          ..amount = testChargeAmount
+          ..currency = testChargeCurrency
+          ..customer = customer.id
+      ).create();
+      charge = await Charge.refund(charge.id, amount: testChargeRefundAmount);
+      expect(charge.refunds.data.first.amount, testChargeRefundAmount);
 
     });
 
-    test('Capture a Charge', () {
-
-      // Customer fields
-      Customer testCustomer;
+    test('Capture a Charge', () async {
 
       // Card fields
       String testCardNumber = '4242424242424242';
@@ -273,87 +231,57 @@ main(List<String> args) {
       String testChargeCurrency = 'usd';
       // application_fee can not be tested
 
-      new CustomerCreation().create()
-          .then((Customer customer) {
-            testCustomer = customer;
-            return (new CardCreation()
-                ..number = testCardNumber
-                ..expMonth = testCardExpMonth
-                ..expYear = testCardExpYear
-            ).create(testCustomer.id);
-          })
-          .then((Card card) {
-            return (new ChargeCreation()
-                ..amount = testChargeAmount
-                ..currency = testChargeCurrency
-                ..customer = testCustomer.id
-                ..capture = false
-            ).create();
-          })
-          .then((Charge charge) => Charge.capture(charge.id, amount: testChargeCaptureAmount))
-          .then((Charge charge) {
-            expect(charge.captured, true);
-          })
-          .then(expectAsync((_) => true));
+      Customer customer = await new CustomerCreation().create();
+      await (new CardCreation()
+          ..number = testCardNumber
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear
+      ).create(customer.id);
+      Charge charge = await (new ChargeCreation()
+          ..amount = testChargeAmount
+          ..currency = testChargeCurrency
+          ..customer = customer.id
+          ..capture = false
+      ).create();
+      charge = await Charge.capture(charge.id, amount: testChargeCaptureAmount);
+      expect(charge.captured, true);
 
     });
 
-    test('List parameters charge', () {
+    test('List parameters charge', () async {
 
-      // Customer fields
-      Customer testCustomer;
-
-      // Card fields
-      Card testCard;
       String testCardNumber = '4242424242424242';
       int testCardExpMonth = 12;
       int testCardExpYear = 2016;
 
-      new CustomerCreation().create()
-          .then((Customer customer) {
-            testCustomer = customer;
-            return (new CardCreation()
-                ..number = testCardNumber
-                ..expMonth = testCardExpMonth
-                ..expYear = testCardExpYear
-            ).create(testCustomer.id);
-          })
-          .then((Card card) {
-            testCard = card;
-            List<Future> queue = [];
-            for (var i = 0; i < 20; i++) {
-              // Charge fields
-              int testChargeAmount = 100;
-              int testChargeCaptureAmount = 90;
-              String testChargeCurrency = 'usd';
-              // application_fee can not be tested
-              queue.add(
-                  (new ChargeCreation()
-                      ..amount = testChargeAmount
-                      ..currency = testChargeCurrency
-                      ..customer = testCustomer.id
-                      ..capture = false
-                  ).create()
-              );
-            }
-            return Future.wait(queue);
-          })
-          .then((_) => Charge.list(customer: testCustomer.id, limit: 10))
-          .then((ChargeCollection charge) {
-            expect(charge.data.length, equals(10));
-            expect(charge.hasMore, equals(true));
-            return Charge.list(customer: testCustomer.id, limit: 10, startingAfter: charge.data.last.id);
-          })
-          .then((ChargeCollection charge) {
-            expect(charge.data.length, equals(10));
-            expect(charge.hasMore, equals(false));
-            return Charge.list(customer: testCustomer.id, limit: 10, endingBefore: charge.data.first.id);
-          })
-          .then((ChargeCollection charge) {
-            expect(charge.data.length, equals(10));
-            expect(charge.hasMore, equals(false));
-          })
-          .then(expectAsync((_) => true));
+      Customer customer = await new CustomerCreation().create();
+      await (new CardCreation()
+          ..number = testCardNumber
+          ..expMonth = testCardExpMonth
+          ..expYear = testCardExpYear
+      ).create(customer.id);
+      for (var i = 0; i < 20; i++) {
+        // Charge fields
+        int testChargeAmount = 100;
+        String testChargeCurrency = 'usd';
+        // application_fee can not be tested
+
+        await (new ChargeCreation()
+            ..amount = testChargeAmount
+            ..currency = testChargeCurrency
+            ..customer = customer.id
+            ..capture = false
+        ).create();
+      }
+      ChargeCollection charges = await Charge.list(customer: customer.id, limit: 10);
+      expect(charges.data.length, equals(10));
+      expect(charges.hasMore, equals(true));
+      charges = await Charge.list(customer: customer.id, limit: 10, startingAfter: charges.data.last.id);
+      expect(charges.data.length, equals(10));
+      expect(charges.hasMore, equals(false));
+      charges = await Charge.list(customer: customer.id, limit: 10, endingBefore: charges.data.first.id);
+      expect(charges.data.length, equals(10));
+      expect(charges.hasMore, equals(false));
 
     });
 
