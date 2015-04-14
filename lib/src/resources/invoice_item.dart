@@ -4,7 +4,7 @@ part of stripe;
 /**
  * [Invoice items](https://stripe.com/docs/api/curl#invoiceitems)
  */
-class Invoiceitem extends Resource {
+class InvoiceItem extends Resource {
 
   String get id => _dataMap['id'];
 
@@ -54,44 +54,44 @@ class Invoiceitem extends Resource {
 
   String get subscription => _dataMap['subscription'];
 
-  Invoiceitem.fromMap(Map dataMap) : super.fromMap(dataMap);
+  InvoiceItem.fromMap(Map dataMap) : super.fromMap(dataMap);
 
   /**
    * [Retrieving an Invoice Item](https://stripe.com/docs/api/curl#retrieve_invoiceitem)
    */
-  static Future<Invoiceitem> retrieve(String invoiceitemId, {final Map data}) async {
-    var dataMap = await StripeService.retrieve([Invoiceitem._path, invoiceitemId], data: data);
-    return new Invoiceitem.fromMap(dataMap);
+  static Future<InvoiceItem> retrieve(String invoiceItemId, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([InvoiceItem._path, invoiceItemId], data: data);
+    return new InvoiceItem.fromMap(dataMap);
   }
 
   /**
    * [List all Invoice Items](https://stripe.com/docs/api/curl#list_invoiceitems)
    * TODO: implement missing argument: `created`
    */
-  static Future<InvoiceitemCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
+  static Future<InvoiceItemCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
     Map data = {};
     if (customer != null) data['customer'] = customer;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
     if (data == {}) data = null;
-    var dataMap = await StripeService.list([Invoiceitem._path], data: data);
-    return new InvoiceitemCollection.fromMap(dataMap);
+    var dataMap = await StripeService.list([InvoiceItem._path], data: data);
+    return new InvoiceItemCollection.fromMap(dataMap);
   }
 
   /**
    * [Deleting an Invoice Item](https://stripe.com/docs/api/curl#delete_invoiceitem)
    */
-  static Future delete(String invoiceitemId) => StripeService.delete([Invoiceitem._path, invoiceitemId]);
+  static Future delete(String invoiceItemId) => StripeService.delete([InvoiceItem._path, invoiceItemId]);
 
 }
 
 
-class InvoiceitemCollection extends ResourceCollection {
+class InvoiceItemCollection extends ResourceCollection {
 
-  Invoiceitem _getInstanceFromMap(map) => new Invoiceitem.fromMap(map);
+  InvoiceItem _getInstanceFromMap(map) => new InvoiceItem.fromMap(map);
 
-  InvoiceitemCollection.fromMap(Map map) : super.fromMap(map);
+  InvoiceItemCollection.fromMap(Map map) : super.fromMap(map);
 
 }
 
@@ -99,7 +99,7 @@ class InvoiceitemCollection extends ResourceCollection {
 /**
  * [Creating an Invoice Item](https://stripe.com/docs/api/curl#create_invoiceitem)
  */
-class InvoiceitemCreation extends ResourceRequest {
+class InvoiceItemCreation extends ResourceRequest {
 
   @required
   set customer (String customer) => _setMap('customer', customer);
@@ -118,9 +118,9 @@ class InvoiceitemCreation extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Invoiceitem> create() async {
-    var dataMap = await StripeService.create([Invoiceitem._path], _getMap());
-    return new Invoiceitem.fromMap(dataMap);
+  Future<InvoiceItem> create() async {
+    var dataMap = await StripeService.create([InvoiceItem._path], _getMap());
+    return new InvoiceItem.fromMap(dataMap);
   }
 
 }
@@ -129,7 +129,7 @@ class InvoiceitemCreation extends ResourceRequest {
 /**
  * [Updating an Invoice Item](https://stripe.com/docs/api/curl#update_invoiceitem)
  */
-class InvoiceitemUpdate extends ResourceRequest {
+class InvoiceItemUpdate extends ResourceRequest {
 
   set amount (int amount) => _setMap('amount', amount);
 
@@ -137,9 +137,9 @@ class InvoiceitemUpdate extends ResourceRequest {
 
   set metadata (Map metadata) => _setMap('metadata', metadata);
 
-  Future<Invoiceitem> update(String invoiceitemId) async {
-    var dataMap = await StripeService.update([Invoiceitem._path, invoiceitemId], _getMap());
-    return new Invoiceitem.fromMap(dataMap);
+  Future<InvoiceItem> update(String invoiceItemId) async {
+    var dataMap = await StripeService.update([InvoiceItem._path, invoiceItemId], _getMap());
+    return new InvoiceItem.fromMap(dataMap);
   }
 
 }

@@ -31,7 +31,7 @@ Future tearDown() async {
   print('Teardown Start');
   await deleteAllCustomers();
   await deleteAllCoupons();
-  await deleteAllInvoiceitems();
+  await deleteAllInvoiceItems();
   await deleteAllPlans();
   await deleteAllRecipients();
   print('Teardown End');
@@ -61,12 +61,12 @@ Future deleteAllCoupons() async {
 }
 
 
-Future deleteAllInvoiceitems() async {
+Future deleteAllInvoiceItems() async {
 
-  InvoiceitemCollection invoiceitems = await Invoiceitem.list(limit: 100);
-  for (Invoiceitem invoiceitem in invoiceitems.data) {
-    await Invoiceitem.delete(invoiceitem.id);
-    print('Delete invoiceitem: ${invoiceitem.id}');
+  InvoiceItemCollection invoiceItems = await InvoiceItem.list(limit: 100);
+  for (InvoiceItem invoiceItem in invoiceItems.data) {
+    await InvoiceItem.delete(invoiceItem.id);
+    print('Delete invoice item: ${invoiceItem.id}');
   }
 
 }

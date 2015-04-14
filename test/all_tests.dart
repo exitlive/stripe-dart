@@ -13,7 +13,7 @@ import 'resources/customer_tests.dart' as customerTests;
 import 'resources/discount_tests.dart' as discountTests;
 import 'resources/dispute_tests.dart' as disputeTests;
 import 'resources/event_tests.dart' as eventTests;
-import 'resources/invoiceitem_tests.dart' as invoiceitemTests;
+import 'resources/invoice_item_tests.dart' as invoiceItemTests;
 import 'resources/invoice_tests.dart' as invoiceTests;
 import 'resources/plan_tests.dart' as planTests;
 import 'resources/recipient_tests.dart' as recipientTests;
@@ -40,7 +40,7 @@ main(List<String> args) {
   discountTests.main(args);
   disputeTests.main(args);
   eventTests.main(args);
-  invoiceitemTests.main(args);
+  invoiceItemTests.main(args);
   invoiceTests.main(args);
   planTests.main(args);
   recipientTests.main(args);

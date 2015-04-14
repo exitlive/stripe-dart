@@ -1,4 +1,4 @@
-library invoiceitem_tests;
+library invoice_item_tests;
 
 import 'dart:convert';
 
@@ -35,7 +35,7 @@ main(List<String> args) {
     test('fromMap() properly popullates all values', () {
 
       var map = JSON.decode(exampleAccount);
-      var invoiceItem = new Invoiceitem.fromMap(map);
+      var invoiceItem = new InvoiceItem.fromMap(map);
       expect(invoiceItem.id, equals(map['id']));
       expect(invoiceItem.date, equals(new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000)));
       expect(invoiceItem.amount, equals(map['amount']));
@@ -79,14 +79,14 @@ main(List<String> args) {
           ..expMonth = testCardExpMonth
           ..expYear = testCardExpYear
       ).create(customer.id);
-      Invoiceitem invoiceitem = await (new InvoiceitemCreation()
+      InvoiceItem invoiceItem = await (new InvoiceItemCreation()
           ..customer = customer.id
           ..amount = testChargeAmount
           ..currency = testChargeCurrency
       ).create();
-      expect(invoiceitem.amount, equals(testChargeAmount));
-      expect(invoiceitem.currency, equals(testChargeCurrency));
-      expect(invoiceitem.customer, equals(customer.id));
+      expect(invoiceItem.amount, equals(testChargeAmount));
+      expect(invoiceItem.currency, equals(testChargeCurrency));
+      expect(invoiceItem.customer, equals(customer.id));
 
     });
 
@@ -134,7 +134,7 @@ main(List<String> args) {
       Subscription subscription = await (new SubscriptionCreation()
           ..plan = plan.id
       ).create(customer.id);
-      Invoiceitem invoiceitem = await (new InvoiceitemCreation()
+      InvoiceItem invoiceItem = await (new InvoiceItemCreation()
           ..customer = customer.id
           ..amount = testInvoiceitemAmount1
           ..currency = testInvoiceitemCurrency
@@ -142,33 +142,33 @@ main(List<String> args) {
           ..description = testInvoiceitemDescription1
           ..metadata = testInvoiceitemMetadata1
       ).create();
-      expect(invoiceitem.amount, equals(testInvoiceitemAmount1));
-      expect(invoiceitem.currency, equals(testInvoiceitemCurrency));
-      expect(invoiceitem.customer, equals(customer.id));
-      expect(invoiceitem.subscription, equals(subscription.id));
-      expect(invoiceitem.description, equals(testInvoiceitemDescription1));
-      expect(invoiceitem.metadata, equals(testInvoiceitemMetadata1));
+      expect(invoiceItem.amount, equals(testInvoiceitemAmount1));
+      expect(invoiceItem.currency, equals(testInvoiceitemCurrency));
+      expect(invoiceItem.customer, equals(customer.id));
+      expect(invoiceItem.subscription, equals(subscription.id));
+      expect(invoiceItem.description, equals(testInvoiceitemDescription1));
+      expect(invoiceItem.metadata, equals(testInvoiceitemMetadata1));
       // seems that expanding currently does not work according to the API specification
       // testing retrieve
-      invoiceitem = await Invoiceitem.retrieve(invoiceitem.id);
-      expect(invoiceitem.amount, equals(testInvoiceitemAmount1));
-      expect(invoiceitem.currency, equals(testChargeCurrency));
-      expect(invoiceitem.customer, equals(customer.id));
-      expect(invoiceitem.subscription, equals(subscription.id));
-      expect(invoiceitem.description, equals(testInvoiceitemDescription1));
-      expect(invoiceitem.metadata, equals(testInvoiceitemMetadata1));
+      invoiceItem = await InvoiceItem.retrieve(invoiceItem.id);
+      expect(invoiceItem.amount, equals(testInvoiceitemAmount1));
+      expect(invoiceItem.currency, equals(testChargeCurrency));
+      expect(invoiceItem.customer, equals(customer.id));
+      expect(invoiceItem.subscription, equals(subscription.id));
+      expect(invoiceItem.description, equals(testInvoiceitemDescription1));
+      expect(invoiceItem.metadata, equals(testInvoiceitemMetadata1));
       // testing InvoiceitemUpdate
-      invoiceitem = await (new InvoiceitemUpdate()
+      invoiceItem = await (new InvoiceItemUpdate()
           ..amount = testInvoiceitemAmount2
           ..description = testInvoiceitemDescription2
           ..metadata = testInvoiceitemMetadata2
-      ).update(invoiceitem.id);
-      expect(invoiceitem.amount, equals(testInvoiceitemAmount2));
-      expect(invoiceitem.description, equals(testInvoiceitemDescription2));
-      expect(invoiceitem.metadata, equals(testInvoiceitemMetadata2));
+      ).update(invoiceItem.id);
+      expect(invoiceItem.amount, equals(testInvoiceitemAmount2));
+      expect(invoiceItem.description, equals(testInvoiceitemDescription2));
+      expect(invoiceItem.metadata, equals(testInvoiceitemMetadata2));
       // testing delete
-      Map response = await Invoiceitem.delete(invoiceitem.id);
-      expect(response['id'], equals(invoiceitem.id));
+      Map response = await InvoiceItem.delete(invoiceItem.id);
+      expect(response['id'], equals(invoiceItem.id));
       expect(response['deleted'], isTrue);
 
     });
@@ -193,22 +193,22 @@ main(List<String> args) {
       ).create(customer.id);
 
       for (var i = 0; i < 20; i++) {
-        await (new InvoiceitemCreation()
+        await (new InvoiceItemCreation()
             ..customer = customer.id
             ..amount = testChargeAmount
             ..currency = testChargeCurrency
         ).create();
       }
 
-      InvoiceitemCollection invoiceitems = await Invoiceitem.list(limit: 10);
-      expect(invoiceitems.data.length, equals(10));
-      expect(invoiceitems.hasMore, equals(true));
-      invoiceitems = await Invoiceitem.list(limit: 10, startingAfter: invoiceitems.data.last.id);
-      expect(invoiceitems.data.length, equals(10));
-      expect(invoiceitems.hasMore, equals(false));
-      invoiceitems = await Invoiceitem.list(limit: 10, endingBefore: invoiceitems.data.first.id);
-      expect(invoiceitems.data.length, equals(10));
-      expect(invoiceitems.hasMore, equals(false));
+      InvoiceItemCollection invoiceItems = await InvoiceItem.list(limit: 10);
+      expect(invoiceItems.data.length, equals(10));
+      expect(invoiceItems.hasMore, equals(true));
+      invoiceItems = await InvoiceItem.list(limit: 10, startingAfter: invoiceItems.data.last.id);
+      expect(invoiceItems.data.length, equals(10));
+      expect(invoiceItems.hasMore, equals(false));
+      invoiceItems = await InvoiceItem.list(limit: 10, endingBefore: invoiceItems.data.first.id);
+      expect(invoiceItems.data.length, equals(10));
+      expect(invoiceItems.hasMore, equals(false));
 
     });
 
