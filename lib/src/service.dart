@@ -71,7 +71,7 @@ abstract class StripeService {
     } else {
       uri = new Uri(scheme: 'https', host: host, path: path, userInfo: '${apiKey}:');
     }
-    log.info('Making ${method} request to API ${uri}');
+    log.finest('Sending ${method} request to API ${uri}');
     var responseStatusCode;
     HttpClientRequest request = await _getClient().openUrl(method, uri);
 
