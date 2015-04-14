@@ -206,7 +206,7 @@ main(List<String> args) {
 
   });
 
-  solo_group('Event online', () {
+  group('Event online', () {
 
     setUp(() {
       return utils.setUp();
