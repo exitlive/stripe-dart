@@ -199,7 +199,6 @@ main(List<String> args) {
       int expMonth = 12;
       int expYear = 2016;
       Customer customer = await new CustomerCreation().create();
-      List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
         await (new CardCreation()
             ..number = number
