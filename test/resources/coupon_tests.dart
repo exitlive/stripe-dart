@@ -57,7 +57,7 @@ main(List<String> args) {
 
   });
 
-  solo_group('Coupon online', () {
+  group('Coupon online', () {
 
     setUp(() {
       return utils.setUp();
