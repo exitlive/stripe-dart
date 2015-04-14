@@ -57,7 +57,7 @@ main(List<String> args) {
 
   });
 
-  group('Coupon online', () {
+  solo_group('Coupon online', () {
 
     setUp(() {
       return utils.setUp();
@@ -67,27 +67,24 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('CouponCreation minimal', () {
+    test('CouponCreation minimal', () async {
 
       // Coupon fields
       String testDuration = 'forever';
       int testPercentOff = 5;
 
-      (new CouponCreation()
+      Coupon coupon = await (new CouponCreation()
           ..duration = testDuration
           ..percentOff = testPercentOff
-      ).create()
-          .then((Coupon coupon) {
-            expect(coupon.id, new isInstanceOf<String>());
-            expect(coupon.duration, equals(testDuration));
-            expect(coupon.percentOff, equals(testPercentOff));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(coupon.id, new isInstanceOf<String>());
+      expect(coupon.duration, equals(testDuration));
+      expect(coupon.percentOff, equals(testPercentOff));
 
     });
 
 
-    test('CouponCreation full', () {
+    test('CouponCreation full', () async {
 
       // Coupon fields
       String testId = 'test id';
@@ -99,7 +96,7 @@ main(List<String> args) {
       Map testMetadata = {'foo': 'bar'};
       int testRedeemBy = 1451520000;
 
-      (new CouponCreation()
+      Coupon coupon = await (new CouponCreation()
           ..id = testId
           ..duration = testDuration
           ..amountOff = testAmountOff
@@ -108,89 +105,69 @@ main(List<String> args) {
           ..maxRedemptions = testMaxRedemptions
           ..metadata = testMetadata
           ..redeemBy = testRedeemBy
-      ).create()
-          .then((Coupon coupon) {
-            expect(coupon.id, equals(testId));
-            expect(coupon.duration, equals(testDuration));
-            expect(coupon.amountOff, equals(testAmountOff));
-            expect(coupon.currency, equals(testCurrency));
-            expect(coupon.durationInMonths, equals(testDurationInMoths));
-            expect(coupon.maxRedemptions, equals(testMaxRedemptions));
-            expect(coupon.metadata, equals(testMetadata));
-            expect(coupon.redeemBy, equals(testRedeemBy));
-            return Coupon.retrieve(coupon.id);
-          })
-          // testing retrieve
-          .then((Coupon coupon) {
-            expect(coupon.id, equals(testId));
-            expect(coupon.duration, equals(testDuration));
-            expect(coupon.amountOff, equals(testAmountOff));
-            expect(coupon.currency, equals(testCurrency));
-            expect(coupon.durationInMonths, equals(testDurationInMoths));
-            expect(coupon.maxRedemptions, equals(testMaxRedemptions));
-            expect(coupon.metadata, equals(testMetadata));
-            expect(coupon.redeemBy, equals(testRedeemBy));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(coupon.id, equals(testId));
+      expect(coupon.duration, equals(testDuration));
+      expect(coupon.amountOff, equals(testAmountOff));
+      expect(coupon.currency, equals(testCurrency));
+      expect(coupon.durationInMonths, equals(testDurationInMoths));
+      expect(coupon.maxRedemptions, equals(testMaxRedemptions));
+      expect(coupon.metadata, equals(testMetadata));
+      expect(coupon.redeemBy, equals(testRedeemBy));
+      coupon = await Coupon.retrieve(coupon.id);
+      // testing retrieve
+      expect(coupon.id, equals(testId));
+      expect(coupon.duration, equals(testDuration));
+      expect(coupon.amountOff, equals(testAmountOff));
+      expect(coupon.currency, equals(testCurrency));
+      expect(coupon.durationInMonths, equals(testDurationInMoths));
+      expect(coupon.maxRedemptions, equals(testMaxRedemptions));
+      expect(coupon.metadata, equals(testMetadata));
+      expect(coupon.redeemBy, equals(testRedeemBy));
 
     });
 
-    test('Delete Coupon', () {
+    test('Delete Coupon', () async {
 
       // Coupon fields
-      Coupon testCoupon;
       String testDuration = 'forever';
       int testPercentOff = 5;
 
-      (new CouponCreation()
+      Coupon coupon = await (new CouponCreation()
           ..duration = testDuration
           ..percentOff = testPercentOff
-      ).create()
-          .then((Coupon coupon) {
-            testCoupon = coupon;
-            expect(coupon.id, new isInstanceOf<String>());
-            expect(coupon.duration, equals(testDuration));
-            expect(coupon.percentOff, equals(testPercentOff));
-            return Coupon.delete(coupon.id);
-          })
-          .then((Map response) {
-            expect(response['deleted'], isTrue);
-            expect(response['id'], equals(testCoupon.id));
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(coupon.id, new isInstanceOf<String>());
+      expect(coupon.duration, equals(testDuration));
+      expect(coupon.percentOff, equals(testPercentOff));
+      Map response = await Coupon.delete(coupon.id);
+      expect(response['deleted'], isTrue);
+      expect(response['id'], equals(coupon.id));
 
     });
 
-    test('List parameters Coupon', () {
+    test('List parameters Coupon', () async {
 
       // Coupon fields
       String testDuration = 'forever';
       int testPercentOff = 5;
       List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
-        queue.add((new CouponCreation()
+        await (new CouponCreation()
             ..duration = testDuration
             ..percentOff = testPercentOff
-        ).create());
+        ).create();
       }
 
-      Future.wait(queue)
-          .then((_) => Coupon.list(limit: 10))
-          .then((CouponCollection coupons) {
-            expect(coupons.data.length, equals(10));
-            expect(coupons.hasMore, equals(true));
-            return Coupon.list(limit: 10, startingAfter: coupons.data.last.id);
-          })
-          .then((CouponCollection coupons) {
-            expect(coupons.data.length, equals(10));
-            expect(coupons.hasMore, equals(false));
-            return Coupon.list(limit: 10, endingBefore: coupons.data.first.id);
-          })
-          .then((CouponCollection coupons) {
-            expect(coupons.data.length, equals(10));
-            expect(coupons.hasMore, equals(false));
-          })
-          .then(expectAsync((_) => true));
+      CouponCollection coupons = await Coupon.list(limit: 10);
+      expect(coupons.data.length, equals(10));
+      expect(coupons.hasMore, equals(true));
+      coupons = await Coupon.list(limit: 10, startingAfter: coupons.data.last.id);
+      expect(coupons.data.length, equals(10));
+      expect(coupons.hasMore, equals(false));
+      coupons = await Coupon.list(limit: 10, endingBefore: coupons.data.first.id);
+      expect(coupons.data.length, equals(10));
+      expect(coupons.hasMore, equals(false));
 
     });
 
