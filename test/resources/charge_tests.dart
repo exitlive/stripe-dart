@@ -1,6 +1,5 @@
 library charge_tests;
 
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:unittest/unittest.dart';

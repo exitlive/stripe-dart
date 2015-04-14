@@ -1,6 +1,5 @@
 library coupon_tests;
 
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:unittest/unittest.dart';
@@ -151,7 +150,6 @@ main(List<String> args) {
       // Coupon fields
       String testDuration = 'forever';
       int testPercentOff = 5;
-      List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
         await (new CouponCreation()
             ..duration = testDuration
