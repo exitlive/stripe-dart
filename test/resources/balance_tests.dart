@@ -82,14 +82,12 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('Retrieve Balance', () {
+    test('Retrieve Balance', () async {
 
-      Balance.retrieve()
-          .then((Balance balance) {
-            expect(balance.livemode, equals(false));
-            // other tests will depend on your stripe account
-          })
-          .then(expectAsync((_) => true));
+      Balance balance = await Balance.retrieve();
+      expect(balance.livemode, equals(false));
+      // other tests will depend on your stripe account
+
     });
 
   });
