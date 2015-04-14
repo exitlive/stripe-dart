@@ -10,7 +10,7 @@ import '../utils.dart' as utils;
 
 var exampleAccount = """
     {
-      "object": "invoiceItem",
+      "object": "invoiceitem",
       "id": "ii_1046ct41dfVNZFcq7D6Z8lys",
       "date": 1401116624,
       "amount": 100,
