@@ -213,31 +213,27 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('TransferCreation minimal', () {
+    test('TransferCreation minimal', () async {
 
       // Transfer fields
       int testTransferAmount = 100;
       String testTransferCurrency = 'usd';
       String testTransferRecipient = 'self';
 
-      (new TransferCreation()
+      Transfer transfer = await (new TransferCreation()
           ..amount = testTransferAmount
           ..currency = testTransferCurrency
           ..recipient = testTransferRecipient
-      ).create()
-          .then((Transfer transfer) {
-            expect(transfer.amount, equals(testTransferAmount));
-            expect(transfer.currency, equals(testTransferCurrency));
-            expect(transfer.recipient, isNull);
-          })
-          .then(expectAsync((_) => true));
+      ).create();
+      expect(transfer.amount, equals(testTransferAmount));
+      expect(transfer.currency, equals(testTransferCurrency));
+      expect(transfer.recipient, isNull);
 
     });
 
-    test('TransferCreation full', () {
+    test('TransferCreation full', () async {
 
       // Recipient fields
-      Recipient testRecipient;
       String testRecipientName = 'test name';
       String testRecipientType = 'corporation';
 
@@ -266,90 +262,72 @@ main(List<String> args) {
       String testTransferDescription2 = 'test description2';
       Map testTransferMetadata2 = {'foo': 'bar2'};
 
-      testRecipientCreation.create()
-          .then((Recipient recipient) {
-            testRecipient = recipient;
-            return (new TransferCreation()
-                ..amount = testTransferAmount
-                ..currency = testTransferCurrency
-                ..recipient = recipient.id
-                ..description = testTransferDescription1
-                ..statementDescriptor = testTransferStatementDescriptor
-                ..metadata = testTransferMetadata1
-            ).create();
-          })
-          .then((Transfer transfer) {
-            expect(transfer.amount, equals(testTransferAmount));
-            expect(transfer.currency, equals(testTransferCurrency));
-            expect(transfer.recipient, testRecipient.id);
-            expect(transfer.description, testTransferDescription1);
-            expect(transfer.statementDescriptor, testTransferStatementDescriptor);
-            expect(transfer.metadata, testTransferMetadata1);
-            return Transfer.retrieve(transfer.id, data: {'expand': ['balance_transaction']});
-          })
-          // testing the expand functionality of retrieve
-          .then((Transfer transfer) {
-            expect(transfer.balanceTransaction, equals(transfer.balanceTransactionExpand.id));
-            expect(transfer.balanceTransactionExpand.amount, equals(testTransferAmount * -1));
-            // testing the TransferUpdate
-            return (new TransferUpdate()
-                ..description = testTransferDescription2
-                ..metadata = testTransferMetadata2
-            ).update(transfer.id);
-          })
-          .then((Transfer transfer) {
-            expect(transfer.amount, equals(testTransferAmount));
-            expect(transfer.currency, equals(testTransferCurrency));
-            expect(transfer.recipient, testRecipient.id);
-            expect(transfer.description, testTransferDescription2);
-            expect(transfer.statementDescriptor, testTransferStatementDescriptor);
-            expect(transfer.metadata, testTransferMetadata2);
-            // testing transfer cancel
-            return Transfer.cancel(transfer.id);
-          })
-          .catchError((e) {
-            // transfer has already been submitted
-            expect(e, new isInstanceOf<InvalidRequestErrorException>());
-            expect(e.errorMessage, equals('Transfers to non-Stripe accounts can currently only be reversed while they are pending.'));
-          })
-          .then(expectAsync((_) => true));
+      Recipient recipient = await testRecipientCreation.create();
+      Transfer transfer = await (new TransferCreation()
+          ..amount = testTransferAmount
+          ..currency = testTransferCurrency
+          ..recipient = recipient.id
+          ..description = testTransferDescription1
+          ..statementDescriptor = testTransferStatementDescriptor
+          ..metadata = testTransferMetadata1
+      ).create();
+      expect(transfer.amount, equals(testTransferAmount));
+      expect(transfer.currency, equals(testTransferCurrency));
+      expect(transfer.recipient, recipient.id);
+      expect(transfer.description, testTransferDescription1);
+      expect(transfer.statementDescriptor, testTransferStatementDescriptor);
+      expect(transfer.metadata, testTransferMetadata1);
+      transfer = await Transfer.retrieve(transfer.id, data: {'expand': ['balance_transaction']});
+      // testing the expand functionality of retrieve
+      expect(transfer.balanceTransaction, equals(transfer.balanceTransactionExpand.id));
+      expect(transfer.balanceTransactionExpand.amount, equals(testTransferAmount * -1));
+      // testing the TransferUpdate
+      transfer = await (new TransferUpdate()
+          ..description = testTransferDescription2
+          ..metadata = testTransferMetadata2
+      ).update(transfer.id);
+      expect(transfer.amount, equals(testTransferAmount));
+      expect(transfer.currency, equals(testTransferCurrency));
+      expect(transfer.recipient, recipient.id);
+      expect(transfer.description, testTransferDescription2);
+      expect(transfer.statementDescriptor, testTransferStatementDescriptor);
+      expect(transfer.metadata, testTransferMetadata2);
+      // testing transfer cancel
+      try {
+        await Transfer.cancel(transfer.id);
+      } catch (e) {
+        // transfer has already been submitted
+        expect(e, new isInstanceOf<InvalidRequestErrorException>());
+        expect(e.errorMessage, equals('Transfers to non-Stripe accounts can currently only be reversed while they are pending.'));
+      }
 
     });
 
-    test('List parameters Transfer', () {
+    test('List parameters Transfer', () async {
 
       // Transfer fields
       int testTransferAmount = 100;
       String testTransferCurrency = 'usd';
       String testTransferRecipient = 'self';
 
-      List<Future> queue = [];
       for (var i = 0; i < 20; i++) {
-        queue.add((new TransferCreation()
+        await (new TransferCreation()
             ..amount = testTransferAmount
             ..currency = testTransferCurrency
             ..recipient = testTransferRecipient
-        ).create());
+        ).create();
       }
 
-      Future.wait(queue)
-          .then((_) => Transfer.list(limit: 10))
-          .then((TransferCollection transfers) {
-            expect(transfers.data.length, equals(10));
-            expect(transfers.hasMore, equals(true));
-            return Transfer.list(limit: 10, startingAfter: transfers.data.last.id);
-          })
-          .then((TransferCollection transfers) {
-            expect(transfers.data.length, equals(10));
-            // will also include transfers from past tests
-            expect(transfers.hasMore, equals(true));
-            return Transfer.list(limit: 10, endingBefore: transfers.data.first.id);
-          })
-          .then((TransferCollection transfers) {
-            expect(transfers.data.length, equals(10));
-            expect(transfers.hasMore, equals(false));
-          })
-          .then(expectAsync((_) => true));
+      TransferCollection transfers = await Transfer.list(limit: 10);
+      expect(transfers.data.length, equals(10));
+      expect(transfers.hasMore, equals(true));
+      transfers = await Transfer.list(limit: 10, startingAfter: transfers.data.last.id);
+      expect(transfers.data.length, equals(10));
+      // will also include transfers from past tests
+      expect(transfers.hasMore, equals(true));
+      transfers = await Transfer.list(limit: 10, endingBefore: transfers.data.first.id);
+      expect(transfers.data.length, equals(10));
+      expect(transfers.hasMore, equals(false));
 
     });
 
