@@ -54,10 +54,6 @@ main(List<String> args) {
 
   group('Invoice item online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });

@@ -208,10 +208,6 @@ main(List<String> args) {
 
   group('Event online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });

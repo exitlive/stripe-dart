@@ -58,10 +58,6 @@ main(List<String> args) {
 
   group('Coupon online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });

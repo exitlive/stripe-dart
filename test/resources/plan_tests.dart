@@ -54,10 +54,6 @@ main(List<String> args) {
 
   group('Plan online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });

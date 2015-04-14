@@ -74,10 +74,6 @@ main(List<String> args) {
 
   group('Customer online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });

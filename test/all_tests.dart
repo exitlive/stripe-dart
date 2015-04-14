@@ -24,7 +24,7 @@ import 'resources/transfer_tests.dart' as transferTests;
 
 main(List<String> args) {
 
-  Logger.root.level = Level.FINEST;
+  Logger.root.level = Level.INFO;
   Logger.root.onRecord.listen((LogRecord record) => print('${record.loggerName} (${record.level}): ${record.message}'));
 
   resourceTests.main();

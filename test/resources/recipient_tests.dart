@@ -62,10 +62,6 @@ main(List<String> args) {
 
   group('Recipient online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });

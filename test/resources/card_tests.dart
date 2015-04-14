@@ -65,10 +65,6 @@ main(List<String> args) {
 
   group('Card online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });

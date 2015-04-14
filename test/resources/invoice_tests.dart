@@ -141,10 +141,6 @@ main(List<String> args) {
 
   group('Invoice online', () {
 
-    setUp(() {
-      return utils.setUp();
-    });
-
     tearDown(() {
       return utils.tearDown();
     });
