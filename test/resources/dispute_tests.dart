@@ -34,16 +34,16 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleDispute);
       var dispute = new Dispute.fromMap(map);
-      expect(dispute.charge, equals(map['charge']));
-      expect(dispute.amount, equals(map['amount']));
-      expect(dispute.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(dispute.status, equals(map['status']));
-      expect(dispute.livemode, equals(map['livemode']));
-      expect(dispute.currency, equals(map['currency']));
-      expect(dispute.reason, equals(map['reason']));
-      expect(dispute.balanceTransaction, equals(map['balance_transaction']));
-      expect(dispute.evidenceDueBy, equals(new DateTime.fromMillisecondsSinceEpoch(map['evidence_due_by'] * 1000)));
-      expect(dispute.evidence, equals(map['evidence']));
+      expect(dispute.charge, map['charge']);
+      expect(dispute.amount, map['amount']);
+      expect(dispute.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(dispute.status, map['status']);
+      expect(dispute.livemode, map['livemode']);
+      expect(dispute.currency, map['currency']);
+      expect(dispute.reason, map['reason']);
+      expect(dispute.balanceTransaction, map['balance_transaction']);
+      expect(dispute.evidenceDueBy, new DateTime.fromMillisecondsSinceEpoch(map['evidence_due_by'] * 1000));
+      expect(dispute.evidence, map['evidence']);
 
     });
 

@@ -42,22 +42,22 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleCard);
       var card = new Card.fromMap(map);
-      expect(card.id, equals(map['id']));
-      expect(card.last4, equals(map['last4']));
-      expect(card.type, equals(map['type']));
-      expect(card.expMonth, equals(map['exp_month']));
-      expect(card.expYear, equals(map['exp_year']));
-      expect(card.fingerprint, equals(map['fingerprint']));
-      expect(card.customer, equals(map['customer']));
-      expect(card.addressLine1, equals(map['address_line1']));
-      expect(card.addressLine2, equals(map['address_line2']));
-      expect(card.addressCity, equals(map['address_city']));
-      expect(card.addressState, equals(map['address_state']));
-      expect(card.addressZip, equals(map['address_zip']));
-      expect(card.addressCountry, equals(map['address_country']));
-      expect(card.cvcCheck, equals(map['cvc_check']));
-      expect(card.addressLine1Check, equals(map['address_line1_check']));
-      expect(card.addressZipCheck, equals(map['address_zip_check']));
+      expect(card.id, map['id']);
+      expect(card.last4, map['last4']);
+      expect(card.type, map['type']);
+      expect(card.expMonth, map['exp_month']);
+      expect(card.expYear, map['exp_year']);
+      expect(card.fingerprint, map['fingerprint']);
+      expect(card.customer, map['customer']);
+      expect(card.addressLine1, map['address_line1']);
+      expect(card.addressLine2, map['address_line2']);
+      expect(card.addressCity, map['address_city']);
+      expect(card.addressState, map['address_state']);
+      expect(card.addressZip, map['address_zip']);
+      expect(card.addressCountry, map['address_country']);
+      expect(card.cvcCheck, map['cvc_check']);
+      expect(card.addressLine1Check, map['address_line1_check']);
+      expect(card.addressZipCheck, map['address_zip_check']);
 
     });
 
@@ -82,9 +82,9 @@ main(List<String> args) {
           ..expYear = expYear
       ).create(customer.id);
       expect(card.id, new isInstanceOf<String>());
-      expect(card.last4, equals(number.substring(number.length - 4)));
-      expect(card.expMonth, equals(expMonth));
-      expect(card.expYear, equals(expYear));
+      expect(card.last4, number.substring(number.length - 4));
+      expect(card.expMonth, expMonth);
+      expect(card.expYear, expYear);
 
     });
 
@@ -127,23 +127,23 @@ main(List<String> args) {
           ..addressCountry = testCardAddressCountry1
       ).create(customer.id);
       expect(card.id, new isInstanceOf<String>());
-      expect(card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
-      expect(card.expMonth, equals(testCardExpMonth1));
-      expect(card.expYear, equals(testCardExpYear1));
-      expect(card.cvcCheck, equals('pass'));
-      expect(card.name, equals(testCardName1));
-      expect(card.addressLine1, equals(testCardAddressLine1A));
-      expect(card.addressLine1Check, equals('pass'));
-      expect(card.addressLine2, equals(testCardAddressLine2A));
-      expect(card.addressCity, equals(testCardAddressCity1));
-      expect(card.addressZip, equals(testCardAddressZip1));
-      expect(card.addressZipCheck, equals('pass'));
-      expect(card.addressState, equals(testCardAddressState1));
-      expect(card.addressCountry, equals(testCardAddressCountry1));
+      expect(card.last4, testCardNumber.substring(testCardNumber.length - 4));
+      expect(card.expMonth, testCardExpMonth1);
+      expect(card.expYear, testCardExpYear1);
+      expect(card.cvcCheck, 'pass');
+      expect(card.name, testCardName1);
+      expect(card.addressLine1, testCardAddressLine1A);
+      expect(card.addressLine1Check, 'pass');
+      expect(card.addressLine2, testCardAddressLine2A);
+      expect(card.addressCity, testCardAddressCity1);
+      expect(card.addressZip, testCardAddressZip1);
+      expect(card.addressZipCheck, 'pass');
+      expect(card.addressState, testCardAddressState1);
+      expect(card.addressCountry, testCardAddressCountry1);
       // testing the expand functionality of retrieve
       card = await Card.retrieve(customer.id, card.id, data: {'expand': ['customer']});
-      expect(card.customer, equals(customer.id));
-      expect(card.customerExpand.id, equals(customer.id));
+      expect(card.customer, customer.id);
+      expect(card.customerExpand.id, customer.id);
       // testing the CardUpdate
       card = await (new CardUpdate()
           ..addressCity = testCardAddressCity2
@@ -156,17 +156,17 @@ main(List<String> args) {
           ..expYear = testCardExpYear2
           ..name = testCardName2
       ).update(customer.id, card.id);
-      expect(card.expMonth, equals(testCardExpMonth2));
-      expect(card.expYear, equals(testCardExpYear2));
-      expect(card.name, equals(testCardName2));
-      expect(card.addressLine1, equals(testCardAddressLine1B));
-      expect(card.addressLine1Check, equals('pass'));
-      expect(card.addressLine2, equals(testCardAddressLine2B));
-      expect(card.addressCity, equals(testCardAddressCity2));
-      expect(card.addressZip, equals(testCardAddressZip2));
-      expect(card.addressZipCheck, equals('pass'));
-      expect(card.addressState, equals(testCardAddressState2));
-      expect(card.addressCountry, equals(testCardAddressCountry2));
+      expect(card.expMonth, testCardExpMonth2);
+      expect(card.expYear, testCardExpYear2);
+      expect(card.name, testCardName2);
+      expect(card.addressLine1, testCardAddressLine1B);
+      expect(card.addressLine1Check, 'pass');
+      expect(card.addressLine2, testCardAddressLine2B);
+      expect(card.addressCity, testCardAddressCity2);
+      expect(card.addressZip, testCardAddressZip2);
+      expect(card.addressZipCheck, 'pass');
+      expect(card.addressState, testCardAddressState2);
+      expect(card.addressCountry, testCardAddressCountry2);
 
     });
 
@@ -184,7 +184,7 @@ main(List<String> args) {
       ).create(customer.id);
       Map response = await Card.delete(customer.id, card.id);
       expect(response['deleted'], isTrue);
-      expect(response['id'], equals(card.id));
+      expect(response['id'], card.id);
 
     });
 
@@ -202,14 +202,14 @@ main(List<String> args) {
         ).create(customer.id);
       }
       CardCollection cards = await Card.list(customer.id, limit: 10);
-      expect(cards.data.length, equals(10));
-      expect(cards.hasMore, equals(true));
+      expect(cards.data.length, 10);
+      expect(cards.hasMore, true);
       cards = await Card.list(customer.id, limit: 10, startingAfter: cards.data.last.id);
-      expect(cards.data.length, equals(10));
-      expect(cards.hasMore, equals(false));
+      expect(cards.data.length, 10);
+      expect(cards.hasMore, false);
       cards = await Card.list(customer.id, limit: 10, endingBefore: cards.data.first.id);
-      expect(cards.data.length, equals(10));
-      expect(cards.hasMore, equals(false));
+      expect(cards.data.length, 10);
+      expect(cards.hasMore, false);
 
     });
 

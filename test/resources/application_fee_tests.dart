@@ -38,18 +38,18 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleApplicationFee);
       var applicationFee = new ApplicationFee.fromMap(map);
-      expect(applicationFee.id, equals(map['id']));
-      expect(applicationFee.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(applicationFee.livemode, equals(map['livemode']));
-      expect(applicationFee.amount, equals(map['amount']));
-      expect(applicationFee.currency, equals(map['currency']));
-      expect(applicationFee.refunded, equals(map['refunded']));
-      expect(applicationFee.amountRefunded, equals(map['amount_refunded']));
-      expect(applicationFee.refunds, equals(map['refunds']));
-      expect(applicationFee.balanceTransaction, equals(map['balance_transaction']));
-      expect(applicationFee.account, equals(map['account']));
-      expect(applicationFee.application, equals(map['application']));
-      expect(applicationFee.charge, equals(map['charge']));
+      expect(applicationFee.id, map['id']);
+      expect(applicationFee.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(applicationFee.livemode, map['livemode']);
+      expect(applicationFee.amount, map['amount']);
+      expect(applicationFee.currency, map['currency']);
+      expect(applicationFee.refunded, map['refunded']);
+      expect(applicationFee.amountRefunded, map['amount_refunded']);
+      expect(applicationFee.refunds, map['refunds']);
+      expect(applicationFee.balanceTransaction, map['balance_transaction']);
+      expect(applicationFee.account, map['account']);
+      expect(applicationFee.application, map['application']);
+      expect(applicationFee.charge, map['charge']);
 
     });
 

@@ -45,25 +45,25 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleDiscount);
       var discount = new Discount.fromMap(map);
-      expect(discount.start, equals(new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000)));
-      expect(discount.objectName, equals(map['object']));
-      expect(discount.customer, equals(map['customer']));
-      expect(discount.subscription, equals(map['subscription']));
-      expect(discount.end, equals(map['end']));
-      expect(discount.coupon.id, equals(map['coupon']['id']));
-      expect(discount.coupon.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['coupon']['created'] * 1000)));
-      expect(discount.coupon.percentOff, equals(map['coupon']['percent_off']));
-      expect(discount.coupon.amountOff, equals(map['coupon']['amount_off']));
-      expect(discount.coupon.currency, equals(map['coupon']['currency']));
-      expect(discount.coupon.objectName, equals(map['coupon']['object']));
-      expect(discount.coupon.livemode, equals(map['coupon']['livemode']));
-      expect(discount.coupon.duration, equals(map['coupon']['duration']));
-      expect(discount.coupon.redeemBy, equals(map['coupon']['redeem_by']));
-      expect(discount.coupon.maxRedemptions, equals(map['coupon']['max_redemptions']));
-      expect(discount.coupon.timesRedeemed, equals(map['coupon']['times_redeemed']));
-      expect(discount.coupon.durationInMonths, equals(map['coupon']['duration_in_months']));
-      expect(discount.coupon.valid, equals(map['coupon']['valid']));
-      expect(discount.coupon.metadata, equals(map['coupon']['metadata']));
+      expect(discount.start, new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000));
+      expect(discount.objectName, map['object']);
+      expect(discount.customer, map['customer']);
+      expect(discount.subscription, map['subscription']);
+      expect(discount.end, map['end']);
+      expect(discount.coupon.id, map['coupon']['id']);
+      expect(discount.coupon.created, new DateTime.fromMillisecondsSinceEpoch(map['coupon']['created'] * 1000));
+      expect(discount.coupon.percentOff, map['coupon']['percent_off']);
+      expect(discount.coupon.amountOff, map['coupon']['amount_off']);
+      expect(discount.coupon.currency, map['coupon']['currency']);
+      expect(discount.coupon.objectName, map['coupon']['object']);
+      expect(discount.coupon.livemode, map['coupon']['livemode']);
+      expect(discount.coupon.duration, map['coupon']['duration']);
+      expect(discount.coupon.redeemBy, map['coupon']['redeem_by']);
+      expect(discount.coupon.maxRedemptions, map['coupon']['max_redemptions']);
+      expect(discount.coupon.timesRedeemed, map['coupon']['times_redeemed']);
+      expect(discount.coupon.durationInMonths, map['coupon']['duration_in_months']);
+      expect(discount.coupon.valid, map['coupon']['valid']);
+      expect(discount.coupon.metadata, map['coupon']['metadata']);
 
     });
 
@@ -90,11 +90,11 @@ main(List<String> args) {
       Customer customer = await (new CustomerCreation()
           ..coupon = coupon.id
       ).create();
-      expect(customer.discount.coupon.percentOff, equals(testCouponPercentOff));
+      expect(customer.discount.coupon.percentOff, testCouponPercentOff);
       Discount discount = customer.discount;
       Map response = await Discount.deleteForCustomer(customer.id);
       expect(response['deleted'], isTrue);
-      expect(response['id'], equals(discount.id));
+      expect(response['id'], discount.id);
       customer = await Customer.retrieve(customer.id);
       expect(customer.discount, isNull);
 
@@ -141,11 +141,11 @@ main(List<String> args) {
           ..plan = plan.id
           ..coupon = coupon.id
       ).create(customer.id);
-      expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff));
+      expect(subscription.discount.coupon.percentOff, testCouponPercentOff);
       Discount discount = subscription.discount;
       Map response = await Discount.deleteForSubscription(customer.id, subscription.id);
       expect(response['deleted'], isTrue);
-      expect(response['id'], equals(discount.id));
+      expect(response['id'], discount.id);
       subscription = await Subscription.retrieve(customer.id, subscription.id);
       expect(subscription.discount, isNull);
 

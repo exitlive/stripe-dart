@@ -38,19 +38,19 @@ main(List<String> args) {
 
       var coupon = new Coupon.fromMap(map);
 
-      expect(coupon.id, equals(map['id']));
-      expect(coupon.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(coupon.percentOff, equals(map['percent_off']));
-      expect(coupon.amountOff, equals(map['amount_off']));
-      expect(coupon.currency, equals(map['currency']));
-      expect(coupon.livemode, equals(map['livemode']));
-      expect(coupon.duration, equals(map['duration']));
-      expect(coupon.redeemBy, equals(map['redeem_by']));
-      expect(coupon.maxRedemptions, equals(map['max_redemptions']));
-      expect(coupon.timesRedeemed, equals(map['times_redeemed']));
-      expect(coupon.durationInMonths, equals(map['duration_in_months']));
-      expect(coupon.valid, equals(map['valid']));
-      expect(coupon.metadata, equals(map['metadata']));
+      expect(coupon.id, map['id']);
+      expect(coupon.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(coupon.percentOff, map['percent_off']);
+      expect(coupon.amountOff, map['amount_off']);
+      expect(coupon.currency, map['currency']);
+      expect(coupon.livemode, map['livemode']);
+      expect(coupon.duration, map['duration']);
+      expect(coupon.redeemBy, map['redeem_by']);
+      expect(coupon.maxRedemptions, map['max_redemptions']);
+      expect(coupon.timesRedeemed, map['times_redeemed']);
+      expect(coupon.durationInMonths, map['duration_in_months']);
+      expect(coupon.valid, map['valid']);
+      expect(coupon.metadata, map['metadata']);
 
     });
 
@@ -73,8 +73,8 @@ main(List<String> args) {
           ..percentOff = testPercentOff
       ).create();
       expect(coupon.id, new isInstanceOf<String>());
-      expect(coupon.duration, equals(testDuration));
-      expect(coupon.percentOff, equals(testPercentOff));
+      expect(coupon.duration, testDuration);
+      expect(coupon.percentOff, testPercentOff);
 
     });
 
@@ -101,24 +101,24 @@ main(List<String> args) {
           ..metadata = testMetadata
           ..redeemBy = testRedeemBy
       ).create();
-      expect(coupon.id, equals(testId));
-      expect(coupon.duration, equals(testDuration));
-      expect(coupon.amountOff, equals(testAmountOff));
-      expect(coupon.currency, equals(testCurrency));
-      expect(coupon.durationInMonths, equals(testDurationInMoths));
-      expect(coupon.maxRedemptions, equals(testMaxRedemptions));
-      expect(coupon.metadata, equals(testMetadata));
-      expect(coupon.redeemBy, equals(testRedeemBy));
+      expect(coupon.id, testId);
+      expect(coupon.duration, testDuration);
+      expect(coupon.amountOff, testAmountOff);
+      expect(coupon.currency, testCurrency);
+      expect(coupon.durationInMonths, testDurationInMoths);
+      expect(coupon.maxRedemptions, testMaxRedemptions);
+      expect(coupon.metadata, testMetadata);
+      expect(coupon.redeemBy, testRedeemBy);
       coupon = await Coupon.retrieve(coupon.id);
       // testing retrieve
-      expect(coupon.id, equals(testId));
-      expect(coupon.duration, equals(testDuration));
-      expect(coupon.amountOff, equals(testAmountOff));
-      expect(coupon.currency, equals(testCurrency));
-      expect(coupon.durationInMonths, equals(testDurationInMoths));
-      expect(coupon.maxRedemptions, equals(testMaxRedemptions));
-      expect(coupon.metadata, equals(testMetadata));
-      expect(coupon.redeemBy, equals(testRedeemBy));
+      expect(coupon.id, testId);
+      expect(coupon.duration, testDuration);
+      expect(coupon.amountOff, testAmountOff);
+      expect(coupon.currency, testCurrency);
+      expect(coupon.durationInMonths, testDurationInMoths);
+      expect(coupon.maxRedemptions, testMaxRedemptions);
+      expect(coupon.metadata, testMetadata);
+      expect(coupon.redeemBy, testRedeemBy);
 
     });
 
@@ -133,11 +133,11 @@ main(List<String> args) {
           ..percentOff = testPercentOff
       ).create();
       expect(coupon.id, new isInstanceOf<String>());
-      expect(coupon.duration, equals(testDuration));
-      expect(coupon.percentOff, equals(testPercentOff));
+      expect(coupon.duration, testDuration);
+      expect(coupon.percentOff, testPercentOff);
       Map response = await Coupon.delete(coupon.id);
       expect(response['deleted'], isTrue);
-      expect(response['id'], equals(coupon.id));
+      expect(response['id'], coupon.id);
 
     });
 
@@ -154,14 +154,14 @@ main(List<String> args) {
       }
 
       CouponCollection coupons = await Coupon.list(limit: 10);
-      expect(coupons.data.length, equals(10));
-      expect(coupons.hasMore, equals(true));
+      expect(coupons.data.length, 10);
+      expect(coupons.hasMore, true);
       coupons = await Coupon.list(limit: 10, startingAfter: coupons.data.last.id);
-      expect(coupons.data.length, equals(10));
-      expect(coupons.hasMore, equals(false));
+      expect(coupons.data.length, 10);
+      expect(coupons.hasMore, false);
       coupons = await Coupon.list(limit: 10, endingBefore: coupons.data.first.id);
-      expect(coupons.data.length, equals(10));
-      expect(coupons.hasMore, equals(false));
+      expect(coupons.data.length, 10);
+      expect(coupons.hasMore, false);
 
     });
 

@@ -39,17 +39,17 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleAccount);
       var account = new Account.fromMap(map);
-      expect(account.id, equals(map['id']));
-      expect(account.email, equals(map['email']));
-      expect(account.statementDescriptor, equals(map['statement_descriptor']));
-      expect(account.displayName, equals(map['display_name']));
-      expect(account.timezone, equals(map['timezone']));
-      expect(account.detailsSubmitted, equals(map['details_submitted']));
-      expect(account.chargeEnabled, equals(map['charge_enabled']));
-      expect(account.transferEnabled, equals(map['transfer_enabled']));
-      expect(account.currenciesSupported, equals(map['currencies_supported']));
-      expect(account.defaultCurrency, equals(map['default_currency']));
-      expect(account.country, equals(map['country']));
+      expect(account.id, map['id']);
+      expect(account.email, map['email']);
+      expect(account.statementDescriptor, map['statement_descriptor']);
+      expect(account.displayName, map['display_name']);
+      expect(account.timezone, map['timezone']);
+      expect(account.detailsSubmitted, map['details_submitted']);
+      expect(account.chargeEnabled, map['charge_enabled']);
+      expect(account.transferEnabled, map['transfer_enabled']);
+      expect(account.currenciesSupported, map['currencies_supported']);
+      expect(account.defaultCurrency, map['default_currency']);
+      expect(account.country, map['country']);
 
     });
 
@@ -60,7 +60,7 @@ main(List<String> args) {
     test('Retrieve Account', () async {
 
       Account account = await Account.retrieve();
-      expect(account.id.substring(0, 3), equals('acc'));
+      expect(account.id.substring(0, 3), 'acc');
       // other tests will depend on your stripe account
 
     });

@@ -63,10 +63,10 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleBalance);
       var balance = new Balance.fromMap(map);
-      expect(balance.pending.first.amount, equals(map['pending'][0]['amount']));
-      expect(balance.pending.first.currency, equals(map['pending'][0]['currency']));
-      expect(balance.available.first.amount, equals(map['available'][0]['amount']));
-      expect(balance.available.first.currency, equals(map['available'][0]['currency']));
+      expect(balance.pending.first.amount, map['pending'][0]['amount']);
+      expect(balance.pending.first.currency, map['pending'][0]['currency']);
+      expect(balance.available.first.amount, map['available'][0]['amount']);
+      expect(balance.available.first.currency, map['available'][0]['currency']);
 
     });
 
@@ -81,7 +81,7 @@ main(List<String> args) {
     test('Retrieve Balance', () async {
 
       Balance balance = await Balance.retrieve();
-      expect(balance.livemode, equals(false));
+      expect(balance.livemode, false);
       // other tests will depend on your stripe account
 
     });
@@ -94,22 +94,22 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleBalanceTransaction);
       var balanceTransaction = new BalanceTransaction.fromMap(map);
-      expect(balanceTransaction.id, equals(map['id']));
-      expect(balanceTransaction.amount, equals(map['amount']));
-      expect(balanceTransaction.currency, equals(map['currency']));
-      expect(balanceTransaction.net, equals(map['net']));
-      expect(balanceTransaction.type, equals(map['type']));
-      expect(balanceTransaction.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(balanceTransaction.availableOn, equals(new DateTime.fromMillisecondsSinceEpoch(map['available_on'] * 1000)));
-      expect(balanceTransaction.status, equals(map['status']));
-      expect(balanceTransaction.fee, equals(map['fee']));
-      expect(balanceTransaction.feeDetails.first.amount, equals(map['fee_details'].first['amount']));
-      expect(balanceTransaction.feeDetails.first.currency, equals(map['fee_details'].first['currency']));
-      expect(balanceTransaction.feeDetails.first.type, equals(map['fee_details'].first['type']));
-      expect(balanceTransaction.feeDetails.first.description, equals(map['fee_details'].first['description']));
-      expect(balanceTransaction.feeDetails.first.application, equals(map['fee_details'].first['application']));
-      expect(balanceTransaction.source, equals(map['source']));
-      expect(balanceTransaction.description, equals(map['description']));
+      expect(balanceTransaction.id, map['id']);
+      expect(balanceTransaction.amount, map['amount']);
+      expect(balanceTransaction.currency, map['currency']);
+      expect(balanceTransaction.net, map['net']);
+      expect(balanceTransaction.type, map['type']);
+      expect(balanceTransaction.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(balanceTransaction.availableOn, new DateTime.fromMillisecondsSinceEpoch(map['available_on'] * 1000));
+      expect(balanceTransaction.status, map['status']);
+      expect(balanceTransaction.fee, map['fee']);
+      expect(balanceTransaction.feeDetails.first.amount, map['fee_details'].first['amount']);
+      expect(balanceTransaction.feeDetails.first.currency, map['fee_details'].first['currency']);
+      expect(balanceTransaction.feeDetails.first.type, map['fee_details'].first['type']);
+      expect(balanceTransaction.feeDetails.first.description, map['fee_details'].first['description']);
+      expect(balanceTransaction.feeDetails.first.application, map['fee_details'].first['application']);
+      expect(balanceTransaction.source, map['source']);
+      expect(balanceTransaction.description, map['description']);
 
     });
 

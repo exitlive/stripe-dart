@@ -196,11 +196,11 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleEvent);
       var event = new Event.fromMap(map);
-      expect(event.id, equals(map['id']));
-      expect(event.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(event.livemode, equals(map['livemode']));
-      expect(event.type, equals(map['type']));
-      expect(event.data.object, equals(map['data']['object']));
+      expect(event.id, map['id']);
+      expect(event.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(event.livemode, map['livemode']);
+      expect(event.type, map['type']);
+      expect(event.data.object, map['data']['object']);
 
     });
 
@@ -217,13 +217,13 @@ main(List<String> args) {
       Customer customer = await new CustomerCreation().create();
       EventCollection events = await Event.list(limit: 1, type: 'customer.created');
       Event eventFromList = events.data.first;
-      expect(eventFromList.data.object['id'], equals(customer.id));
+      expect(eventFromList.data.object['id'], customer.id);
       Event eventFromRetrieve = await Event.retrieve(eventFromList.id);
-      expect(eventFromRetrieve.created, equals(eventFromList.created));
-      expect(eventFromRetrieve.data.object, equals(eventFromList.data.object));
-      expect(eventFromRetrieve.id, equals(eventFromList.id));
-      expect(eventFromRetrieve.livemode, equals(eventFromList.livemode));
-      expect(eventFromRetrieve.type, equals(eventFromList.type));
+      expect(eventFromRetrieve.created, eventFromList.created);
+      expect(eventFromRetrieve.data.object, eventFromList.data.object);
+      expect(eventFromRetrieve.id, eventFromList.id);
+      expect(eventFromRetrieve.livemode, eventFromList.livemode);
+      expect(eventFromRetrieve.type, eventFromList.type);
 
     });
 

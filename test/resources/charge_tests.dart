@@ -75,26 +75,26 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleCharge);
       var charge = new Charge.fromMap(map);
-      expect(charge.id, equals(map['id']));
-      expect(charge.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(charge.livemode, equals(map['livemode']));
-      expect(charge.paid, equals(map['paid']));
-      expect(charge.amount, equals(map['amount']));
-      expect(charge.currency, equals(map['currency']));
-      expect(charge.refunded, equals(map['refunded']));
-      expect(charge.customer, equals(map['customer']));
+      expect(charge.id, map['id']);
+      expect(charge.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(charge.livemode, map['livemode']);
+      expect(charge.paid, map['paid']);
+      expect(charge.amount, map['amount']);
+      expect(charge.currency, map['currency']);
+      expect(charge.refunded, map['refunded']);
+      expect(charge.customer, map['customer']);
       expect(charge.card, new isInstanceOf<Card>());
       expect(charge.card.id, new Card.fromMap(map['card']).id);
-      expect(charge.description, equals(map['description']));
-      expect(charge.metadata, equals(map['metadata']));
-      expect(charge.statement_descriptor, equals(map['statement_descriptor']));
-      expect(charge.captured, equals(map['captured']));
-      expect(charge.failureMessage, equals(map['failureMessage']));
-      expect(charge.failureCode, equals(map['failureCode']));
-      expect(charge.amountRefunded, equals(map['amountRefunded']));
-      expect(charge.refunds.data.length, equals(map['refunds']['data'].length));
-      expect(charge.dispute, equals(map['dispute']));
-      expect(charge.balanceTransaction, equals(map['balance_transaction']));
+      expect(charge.description, map['description']);
+      expect(charge.metadata, map['metadata']);
+      expect(charge.statement_descriptor, map['statement_descriptor']);
+      expect(charge.captured, map['captured']);
+      expect(charge.failureMessage, map['failureMessage']);
+      expect(charge.failureCode, map['failureCode']);
+      expect(charge.amountRefunded, map['amountRefunded']);
+      expect(charge.refunds.data.length, map['refunds']['data'].length);
+      expect(charge.dispute, map['dispute']);
+      expect(charge.balanceTransaction, map['balance_transaction']);
 
     });
 
@@ -126,8 +126,8 @@ main(List<String> args) {
           ..currency = testChargeCurrency
           ..customer = customer.id
       ).create();
-      expect(charge.amount, equals(testChargeAmount));
-      expect(charge.currency, equals(testChargeCurrency));
+      expect(charge.amount, testChargeAmount);
+      expect(charge.currency, testChargeCurrency);
 
     });
 
@@ -164,23 +164,23 @@ main(List<String> args) {
           ..capture = testChargeCapture
           ..statementDescriptor = testChargeStatementDescriptor
       ).create();
-      expect(charge.amount, equals(testChargeAmount));
-      expect(charge.currency, equals(testChargeCurrency));
-      expect(charge.description, equals(testChargeDescription1));
-      expect(charge.metadata, equals(testChargeMetadata1));
-      expect(charge.captured, equals(testChargeCapture));
-      expect(charge.statement_descriptor, equals(testChargeStatementDescriptor));
+      expect(charge.amount, testChargeAmount);
+      expect(charge.currency, testChargeCurrency);
+      expect(charge.description, testChargeDescription1);
+      expect(charge.metadata, testChargeMetadata1);
+      expect(charge.captured, testChargeCapture);
+      expect(charge.statement_descriptor, testChargeStatementDescriptor);
       // testing the expand functionality of retrieve
       charge = await Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
-      expect(charge.customer, equals(charge.customerExpand.id));
+      expect(charge.customer, charge.customerExpand.id);
 
       // testing the ChargeUpdate
       charge = await (new ChargeUpdate()
           ..description = testChargeDescription2
           ..metadata = testChargeMetadata2
       ).update(charge.id);
-      expect(charge.description, equals(testChargeDescription2));
-      expect(charge.metadata, equals(testChargeMetadata2));
+      expect(charge.description, testChargeDescription2);
+      expect(charge.metadata, testChargeMetadata2);
 
     });
 
@@ -269,14 +269,14 @@ main(List<String> args) {
         ).create();
       }
       ChargeCollection charges = await Charge.list(customer: customer.id, limit: 10);
-      expect(charges.data.length, equals(10));
-      expect(charges.hasMore, equals(true));
+      expect(charges.data.length, 10);
+      expect(charges.hasMore, true);
       charges = await Charge.list(customer: customer.id, limit: 10, startingAfter: charges.data.last.id);
-      expect(charges.data.length, equals(10));
-      expect(charges.hasMore, equals(false));
+      expect(charges.data.length, 10);
+      expect(charges.hasMore, false);
       charges = await Charge.list(customer: customer.id, limit: 10, endingBefore: charges.data.first.id);
-      expect(charges.data.length, equals(10));
-      expect(charges.hasMore, equals(false));
+      expect(charges.data.length, 10);
+      expect(charges.hasMore, false);
 
     });
 

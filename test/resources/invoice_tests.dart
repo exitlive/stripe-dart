@@ -88,52 +88,52 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleInvoice);
       var invoice = new Invoice.fromMap(map);
-      expect(invoice.date, equals(new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000)));
-      expect(invoice.id, equals(map['id']));
-      expect(invoice.periodStart, equals(new DateTime.fromMillisecondsSinceEpoch(map['period_start'] * 1000)));
-      expect(invoice.periodEnd, equals(new DateTime.fromMillisecondsSinceEpoch(map['period_end'] * 1000)));
-      expect(invoice.lines.data.first.id, equals(map['lines']['data'][0]['id']));
-      expect(invoice.lines.data.first.type, equals(map['lines']['data'][0]['type']));
-      expect(invoice.lines.data.first.livemode, equals(map['lines']['data'][0]['livemode']));
-      expect(invoice.lines.data.first.amount, equals(map['lines']['data'][0]['amount']));
-      expect(invoice.lines.data.first.currency, equals(map['lines']['data'][0]['currency']));
-      expect(invoice.lines.data.first.proration, equals(map['lines']['data'][0]['proration']));
-      expect(invoice.lines.data.first.period.start, equals(map['lines']['data'][0]['period']['start']));
-      expect(invoice.lines.data.first.period.end, equals(map['lines']['data'][0]['period']['end']));
-      expect(invoice.lines.data.first.quantity, equals(map['lines']['data'][0]['quantity']));
-      expect(invoice.lines.data.first.plan.interval, equals(map['lines']['data'][0]['plan']['interval']));
-      expect(invoice.lines.data.first.plan.name, equals(map['lines']['data'][0]['plan']['name']));
-      expect(invoice.lines.data.first.plan.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['lines']['data'][0]['plan']['created'] * 1000)));
-      expect(invoice.lines.data.first.plan.amount, equals(map['lines']['data'][0]['plan']['amount']));
-      expect(invoice.lines.data.first.plan.currency, equals(map['lines']['data'][0]['plan']['currency']));
-      expect(invoice.lines.data.first.plan.id, equals(map['lines']['data'][0]['plan']['id']));
-      expect(invoice.lines.data.first.plan.livemode, equals(map['lines']['data'][0]['plan']['livemode']));
-      expect(invoice.lines.data.first.plan.intervalCount, equals(map['lines']['data'][0]['plan']['interval_count']));
-      expect(invoice.lines.data.first.plan.trialPeriodDays, equals(map['lines']['data'][0]['plan']['trialPeriodDays']));
-      expect(invoice.lines.data.first.plan.metadata, equals(map['lines']['data'][0]['plan']['metadata']));
-      expect(invoice.lines.data.first.plan.statementDescriptor, equals(map['lines']['data'][0]['plan']['statement_descriptor']));
-      expect(invoice.lines.data.first.description, equals(map['lines']['data'][0]['description']));
-      expect(invoice.lines.data.first.metadata, equals(map['lines']['data'][0]['metadata']));
-      expect(invoice.lines.url, equals(map['lines']['url']));
-      expect(invoice.subtotal, equals(map['subtotal']));
-      expect(invoice.total, equals(map['total']));
-      expect(invoice.customer, equals(map['customer']));
-      expect(invoice.attempted, equals(map['attempted']));
-      expect(invoice.closed, equals(map['closed']));
-      expect(invoice.livemode, equals(map['livemode']));
-      expect(invoice.attemptCount, equals(map['attempt_count']));
-      expect(invoice.amountDue, equals(map['amount_due']));
-      expect(invoice.currency, equals(map['currency']));
-      expect(invoice.startingBalance, equals(map['starting_balance']));
-      expect(invoice.endingBalance, equals(map['ending_balance']));
-      expect(invoice.nextPaymentAttempt, equals(map['next_payment_attempt']));
-      expect(invoice.webhooksDeliveredAt, equals(new DateTime.fromMillisecondsSinceEpoch(map['webhooks_delivered_at'] * 1000)));
-      expect(invoice.charge, equals(map['charge']));
-      expect(invoice.discount, equals(map['discount']));
-      expect(invoice.applicationFee, equals(map['application_fee']));
-      expect(invoice.subscription, equals(map['subscription']));
-      expect(invoice.metadata, equals(map['metadata']));
-      expect(invoice.description, equals(map['description']));
+      expect(invoice.date, new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000));
+      expect(invoice.id, map['id']);
+      expect(invoice.periodStart, new DateTime.fromMillisecondsSinceEpoch(map['period_start'] * 1000));
+      expect(invoice.periodEnd, new DateTime.fromMillisecondsSinceEpoch(map['period_end'] * 1000));
+      expect(invoice.lines.data.first.id, map['lines']['data'][0]['id']);
+      expect(invoice.lines.data.first.type, map['lines']['data'][0]['type']);
+      expect(invoice.lines.data.first.livemode, map['lines']['data'][0]['livemode']);
+      expect(invoice.lines.data.first.amount, map['lines']['data'][0]['amount']);
+      expect(invoice.lines.data.first.currency, map['lines']['data'][0]['currency']);
+      expect(invoice.lines.data.first.proration, map['lines']['data'][0]['proration']);
+      expect(invoice.lines.data.first.period.start, map['lines']['data'][0]['period']['start']);
+      expect(invoice.lines.data.first.period.end, map['lines']['data'][0]['period']['end']);
+      expect(invoice.lines.data.first.quantity, map['lines']['data'][0]['quantity']);
+      expect(invoice.lines.data.first.plan.interval, map['lines']['data'][0]['plan']['interval']);
+      expect(invoice.lines.data.first.plan.name, map['lines']['data'][0]['plan']['name']);
+      expect(invoice.lines.data.first.plan.created, new DateTime.fromMillisecondsSinceEpoch(map['lines']['data'][0]['plan']['created'] * 1000));
+      expect(invoice.lines.data.first.plan.amount, map['lines']['data'][0]['plan']['amount']);
+      expect(invoice.lines.data.first.plan.currency, map['lines']['data'][0]['plan']['currency']);
+      expect(invoice.lines.data.first.plan.id, map['lines']['data'][0]['plan']['id']);
+      expect(invoice.lines.data.first.plan.livemode, map['lines']['data'][0]['plan']['livemode']);
+      expect(invoice.lines.data.first.plan.intervalCount, map['lines']['data'][0]['plan']['interval_count']);
+      expect(invoice.lines.data.first.plan.trialPeriodDays, map['lines']['data'][0]['plan']['trialPeriodDays']);
+      expect(invoice.lines.data.first.plan.metadata, map['lines']['data'][0]['plan']['metadata']);
+      expect(invoice.lines.data.first.plan.statementDescriptor, map['lines']['data'][0]['plan']['statement_descriptor']);
+      expect(invoice.lines.data.first.description, map['lines']['data'][0]['description']);
+      expect(invoice.lines.data.first.metadata, map['lines']['data'][0]['metadata']);
+      expect(invoice.lines.url, map['lines']['url']);
+      expect(invoice.subtotal, map['subtotal']);
+      expect(invoice.total, map['total']);
+      expect(invoice.customer, map['customer']);
+      expect(invoice.attempted, map['attempted']);
+      expect(invoice.closed, map['closed']);
+      expect(invoice.livemode, map['livemode']);
+      expect(invoice.attemptCount, map['attempt_count']);
+      expect(invoice.amountDue, map['amount_due']);
+      expect(invoice.currency, map['currency']);
+      expect(invoice.startingBalance, map['starting_balance']);
+      expect(invoice.endingBalance, map['ending_balance']);
+      expect(invoice.nextPaymentAttempt, map['next_payment_attempt']);
+      expect(invoice.webhooksDeliveredAt, new DateTime.fromMillisecondsSinceEpoch(map['webhooks_delivered_at'] * 1000));
+      expect(invoice.charge, map['charge']);
+      expect(invoice.discount, map['discount']);
+      expect(invoice.applicationFee, map['application_fee']);
+      expect(invoice.subscription, map['subscription']);
+      expect(invoice.metadata, map['metadata']);
+      expect(invoice.description, map['description']);
 
     });
 
@@ -155,7 +155,7 @@ main(List<String> args) {
       } catch (e) {
         // nothing to invoice for a new customer
         expect(e, new isInstanceOf<InvalidRequestErrorException>());
-        expect(e.errorMessage, equals('Nothing to invoice for customer'));
+        expect(e.errorMessage, 'Nothing to invoice for customer');
       }
 
     });
@@ -214,7 +214,7 @@ main(List<String> args) {
       } catch (e) {
         // nothing to invoice for a new customer
         expect(e, new isInstanceOf<InvalidRequestErrorException>());
-        expect(e.errorMessage, equals('Nothing to invoice for subscription'));
+        expect(e.errorMessage, 'Nothing to invoice for subscription');
       }
 
     });

@@ -36,17 +36,17 @@ main(List<String> args) {
 
       var map = JSON.decode(examplePlan);
       var plan = new Plan.fromMap(map);
-      expect(plan.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(plan.id, equals(map['id']));
-      expect(plan.livemode, equals(map['livemode']));
-      expect(plan.interval, equals(map['interval']));
-      expect(plan.name, equals(map['name']));
-      expect(plan.amount, equals(map['amount']));
-      expect(plan.metadata, equals(map['metadata']));
-      expect(plan.currency, equals(map['currency']));
-      expect(plan.intervalCount, equals(map['interval_count']));
-      expect(plan.trialPeriodDays, equals(map['trial_period_days']));
-      expect(plan.currency, equals(map['currency']));
+      expect(plan.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(plan.id, map['id']);
+      expect(plan.livemode, map['livemode']);
+      expect(plan.interval, map['interval']);
+      expect(plan.name, map['name']);
+      expect(plan.amount, map['amount']);
+      expect(plan.metadata, map['metadata']);
+      expect(plan.currency, map['currency']);
+      expect(plan.intervalCount, map['interval_count']);
+      expect(plan.trialPeriodDays, map['trial_period_days']);
+      expect(plan.currency, map['currency']);
 
     });
 
@@ -75,10 +75,10 @@ main(List<String> args) {
           ..name = testPlanName
       ).create();
       expect(plan.id, testPlanId);
-      expect(plan.amount, equals(testPlanAmount));
-      expect(plan.currency, equals(testPlanCurrency));
-      expect(plan.interval, equals(testPlanInterval));
-      expect(plan.name, equals(testPlanName));
+      expect(plan.amount, testPlanAmount);
+      expect(plan.currency, testPlanCurrency);
+      expect(plan.interval, testPlanInterval);
+      expect(plan.name, testPlanName);
 
     });
 
@@ -111,24 +111,24 @@ main(List<String> args) {
           ..statementDescriptor = testPlanStatementDescriptor1
       ).create();
       expect(plan.id, testPlanId);
-      expect(plan.amount, equals(testPlanAmount));
-      expect(plan.currency, equals(testPlanCurrency));
-      expect(plan.interval, equals(testPlanInterval));
-      expect(plan.intervalCount, equals(testPlanIntervalCount));
-      expect(plan.name, equals(testPlanName1));
-      expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
-      expect(plan.metadata, equals(testPlanMetadata1));
-      expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
+      expect(plan.amount, testPlanAmount);
+      expect(plan.currency, testPlanCurrency);
+      expect(plan.interval, testPlanInterval);
+      expect(plan.intervalCount, testPlanIntervalCount);
+      expect(plan.name, testPlanName1);
+      expect(plan.trialPeriodDays, testPlanTrialPeriodDays);
+      expect(plan.metadata, testPlanMetadata1);
+      expect(plan.statementDescriptor, testPlanStatementDescriptor1);
       plan = await Plan.retrieve(plan.id);
       expect(plan.id, testPlanId);
-      expect(plan.amount, equals(testPlanAmount));
-      expect(plan.currency, equals(testPlanCurrency));
-      expect(plan.interval, equals(testPlanInterval));
-      expect(plan.intervalCount, equals(testPlanIntervalCount));
-      expect(plan.name, equals(testPlanName1));
-      expect(plan.trialPeriodDays, equals(testPlanTrialPeriodDays));
-      expect(plan.metadata, equals(testPlanMetadata1));
-      expect(plan.statementDescriptor, equals(testPlanStatementDescriptor1));
+      expect(plan.amount, testPlanAmount);
+      expect(plan.currency, testPlanCurrency);
+      expect(plan.interval, testPlanInterval);
+      expect(plan.intervalCount, testPlanIntervalCount);
+      expect(plan.name, testPlanName1);
+      expect(plan.trialPeriodDays, testPlanTrialPeriodDays);
+      expect(plan.metadata, testPlanMetadata1);
+      expect(plan.statementDescriptor, testPlanStatementDescriptor1);
       plan = await (new PlanUpdate()
           ..name = testPlanName2
           ..metadata = testPlanMetadata2
@@ -136,9 +136,9 @@ main(List<String> args) {
       ).update(plan.id);
       // testing update
       expect(plan.id, testPlanId);
-      expect(plan.name, equals(testPlanName2));
-      expect(plan.metadata, equals(testPlanMetadata2));
-      expect(plan.statementDescriptor, equals(testPlanStatementDescriptor2));
+      expect(plan.name, testPlanName2);
+      expect(plan.metadata, testPlanMetadata2);
+      expect(plan.statementDescriptor, testPlanStatementDescriptor2);
 
     });
 
@@ -159,13 +159,13 @@ main(List<String> args) {
           ..name = testPlanName
       ).create();
       expect(plan.id, testPlanId);
-      expect(plan.amount, equals(testPlanAmount));
-      expect(plan.currency, equals(testPlanCurrency));
-      expect(plan.interval, equals(testPlanInterval));
-      expect(plan.name, equals(testPlanName));
+      expect(plan.amount, testPlanAmount);
+      expect(plan.currency, testPlanCurrency);
+      expect(plan.interval, testPlanInterval);
+      expect(plan.name, testPlanName);
       Map response = await Plan.delete(plan.id);
       expect(response['deleted'], isTrue);
-      expect(response['id'], equals(plan.id));
+      expect(response['id'], plan.id);
 
     });
 
@@ -188,14 +188,14 @@ main(List<String> args) {
         ).create();
       }
       PlanCollection plans = await Plan.list(limit: 10);
-      expect(plans.data.length, equals(10));
-      expect(plans.hasMore, equals(true));
+      expect(plans.data.length, 10);
+      expect(plans.hasMore, true);
       plans = await Plan.list(limit: 10, startingAfter: plans.data.last.id);
-      expect(plans.data.length, equals(10));
-      expect(plans.hasMore, equals(false));
+      expect(plans.data.length, 10);
+      expect(plans.hasMore, false);
       plans = await Plan.list(limit: 10, endingBefore: plans.data.first.id);
-      expect(plans.data.length, equals(10));
-      expect(plans.hasMore, equals(false));
+      expect(plans.data.length, 10);
+      expect(plans.hasMore, false);
 
     });
 

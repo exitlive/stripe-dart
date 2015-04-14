@@ -47,27 +47,27 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleToken);
       var token = new Token.fromMap(map);
-      expect(token.id, equals(map['id']));
-      expect(token.livemode, equals(map['livemode']));
-      expect(token.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(token.used, equals(map['used']));
-      expect(token.type, equals(map['type']));
+      expect(token.id, map['id']);
+      expect(token.livemode, map['livemode']);
+      expect(token.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(token.used, map['used']);
+      expect(token.type, map['type']);
       Card card = token.card;
-      expect(card.id, equals(map['card']['id']));
-      expect(card.last4, equals(map['card']['last4']));
-      expect(card.type, equals(map['card']['type']));
-      expect(card.expMonth, equals(map['card']['exp_month']));
-      expect(card.expYear, equals(map['card']['exp_year']));
-      expect(card.fingerprint, equals(map['card']['fingerprint']));
-      expect(card.country, equals(map['card']['country']));
-      expect(card.name, equals(map['card']['name']));
-      expect(card.addressLine1, equals(map['card']['address_line1']));
-      expect(card.addressLine2, equals(map['card']['address_line2']));
-      expect(card.addressCity, equals(map['card']['address_city']));
-      expect(card.addressState, equals(map['card']['address_state']));
-      expect(card.addressZip, equals(map['card']['address_zip']));
-      expect(card.addressCountry, equals(map['card']['address_country']));
-      expect(card.customer, equals(map['card']['customer']));
+      expect(card.id, map['card']['id']);
+      expect(card.last4, map['card']['last4']);
+      expect(card.type, map['card']['type']);
+      expect(card.expMonth, map['card']['exp_month']);
+      expect(card.expYear, map['card']['exp_year']);
+      expect(card.fingerprint, map['card']['fingerprint']);
+      expect(card.country, map['card']['country']);
+      expect(card.name, map['card']['name']);
+      expect(card.addressLine1, map['card']['address_line1']);
+      expect(card.addressLine2, map['card']['address_line2']);
+      expect(card.addressCity, map['card']['address_city']);
+      expect(card.addressState, map['card']['address_state']);
+      expect(card.addressZip, map['card']['address_zip']);
+      expect(card.addressCountry, map['card']['address_country']);
+      expect(card.customer, map['card']['customer']);
 
     });
 
@@ -93,21 +93,21 @@ main(List<String> args) {
           ..expYear = testCardExpYear
       )).create();
       expect(token.id, new isInstanceOf<String>());
-      expect(token.card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
-      expect(token.card.expMonth, equals(testCardExpMonth));
-      expect(token.card.expYear, equals(testCardExpYear));
+      expect(token.card.last4, testCardNumber.substring(testCardNumber.length - 4));
+      expect(token.card.expMonth, testCardExpMonth);
+      expect(token.card.expYear, testCardExpYear);
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
-      expect(token.type, equals('card'));
+      expect(token.type, 'card');
       // testing retrieve
       token = await Token.retrieve(token.id);
       expect(token.id, new isInstanceOf<String>());
-      expect(token.card.last4, equals(testCardNumber.substring(testCardNumber.length - 4)));
-      expect(token.card.expMonth, equals(testCardExpMonth));
-      expect(token.card.expYear, equals(testCardExpYear));
+      expect(token.card.last4, testCardNumber.substring(testCardNumber.length - 4));
+      expect(token.card.expMonth, testCardExpMonth);
+      expect(token.card.expYear, testCardExpYear);
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
-      expect(token.type, equals('card'));
+      expect(token.type, 'card');
 
     });
 
@@ -128,19 +128,19 @@ main(List<String> args) {
           ..bankAccount = testBankAccount
       ).create();
       expect(token.id, new isInstanceOf<String>());
-      expect(token.bankAccount.country, equals(testBankAccountCountry));
-      expect(token.bankAccount.last4, equals(testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4)));
+      expect(token.bankAccount.country, testBankAccountCountry);
+      expect(token.bankAccount.last4, testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4));
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
-      expect(token.type, equals('bank_account'));
+      expect(token.type, 'bank_account');
       // testing retrieve
       token = await Token.retrieve(token.id);
       expect(token.id, new isInstanceOf<String>());
-      expect(token.bankAccount.country, equals(testBankAccountCountry));
-      expect(token.bankAccount.last4, equals(testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4)));
+      expect(token.bankAccount.country, testBankAccountCountry);
+      expect(token.bankAccount.last4, testBankAccountAccountNumber.substring(testBankAccountAccountNumber.length - 4));
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
-      expect(token.type, equals('bank_account'));
+      expect(token.type, 'bank_account');
 
     });
 

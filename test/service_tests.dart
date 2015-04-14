@@ -14,7 +14,7 @@ main() {
       test('encodeMap()', () {
 
         var encoded = StripeService.encodeMap({ 'test': 'val&ue', 'test 2': '/' });
-        expect(encoded, equals('test=val%26ue&test%202=%2F'));
+        expect(encoded, 'test=val%26ue&test%202=%2F');
 
       });
 

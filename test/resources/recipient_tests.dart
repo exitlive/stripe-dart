@@ -45,16 +45,16 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleRecipient);
       var recipient = new Recipient.fromMap(map);
-      expect(recipient.id, equals(map['id']));
-      expect(recipient.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000)));
-      expect(recipient.livemode, equals(map['livemode']));
-      expect(recipient.type, equals(map['type']));
-      expect(recipient.description, equals(map['description']));
-      expect(recipient.email, equals(map['email']));
-      expect(recipient.name, equals(map['name']));
-      expect(recipient.verified, equals(map['verified']));
-      expect(recipient.metadata, equals(map['metadata']));
-      expect(recipient.activeAccount, equals(map['active_account']));
+      expect(recipient.id, map['id']);
+      expect(recipient.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(recipient.livemode, map['livemode']);
+      expect(recipient.type, map['type']);
+      expect(recipient.description, map['description']);
+      expect(recipient.email, map['email']);
+      expect(recipient.name, map['name']);
+      expect(recipient.verified, map['verified']);
+      expect(recipient.metadata, map['metadata']);
+      expect(recipient.activeAccount, map['active_account']);
 
     });
 
@@ -77,8 +77,8 @@ main(List<String> args) {
           ..type = testRecipientType
       ).create();
       expect(recipient.id, new isInstanceOf<String>());
-      expect(recipient.name, equals(testRecipientName));
-      expect(recipient.type, equals(testRecipientType));
+      expect(recipient.name, testRecipientName);
+      expect(recipient.type, testRecipientType);
 
     });
 
@@ -124,30 +124,30 @@ main(List<String> args) {
           ..metadata = testRecipientMetadata1
       ).create();
       expect(recipient.id, new isInstanceOf<String>());
-      expect(recipient.name, equals(testRecipientName1));
-      expect(recipient.type, equals(testRecipientType));
+      expect(recipient.name, testRecipientName1);
+      expect(recipient.type, testRecipientType);
 
-      expect(recipient.activeAccount.country, equals(testBankAccountCountry));
-      expect(recipient.activeAccount.currency, equals('usd'));
-      expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
+      expect(recipient.activeAccount.country, testBankAccountCountry);
+      expect(recipient.activeAccount.currency, 'usd');
+      expect(recipient.activeAccount.last4, testBankAccountAccountNumber1.substring(8));
       expect(recipient.activeAccount.status, 'new');
 
-      expect(recipient.email, equals(testRecipientEmail1));
-      expect(recipient.description, equals(testRecipientDescription1));
-      expect(recipient.metadata, equals(testRecipientMetadata1));
+      expect(recipient.email, testRecipientEmail1);
+      expect(recipient.description, testRecipientDescription1);
+      expect(recipient.metadata, testRecipientMetadata1);
       recipient = await Recipient.retrieve(recipient.id);
       expect(recipient.id, new isInstanceOf<String>());
-      expect(recipient.name, equals(testRecipientName1));
-      expect(recipient.type, equals(testRecipientType));
+      expect(recipient.name, testRecipientName1);
+      expect(recipient.type, testRecipientType);
 
-      expect(recipient.activeAccount.country, equals(testBankAccountCountry));
-      expect(recipient.activeAccount.currency, equals('usd'));
-      expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber1.substring(8)));
+      expect(recipient.activeAccount.country, testBankAccountCountry);
+      expect(recipient.activeAccount.currency, 'usd');
+      expect(recipient.activeAccount.last4, testBankAccountAccountNumber1.substring(8));
       expect(recipient.activeAccount.status, 'new');
 
-      expect(recipient.email, equals(testRecipientEmail1));
-      expect(recipient.description, equals(testRecipientDescription1));
-      expect(recipient.metadata, equals(testRecipientMetadata1));
+      expect(recipient.email, testRecipientEmail1);
+      expect(recipient.description, testRecipientDescription1);
+      expect(recipient.metadata, testRecipientMetadata1);
       recipient = await (new RecipientUpdate()
           ..name = testRecipientName2
           ..taxId = testRecipientTaxId2
@@ -157,17 +157,17 @@ main(List<String> args) {
           ..metadata = testRecipientMetadata2
       ).update(recipient.id);
       expect(recipient.id, new isInstanceOf<String>());
-      expect(recipient.name, equals(testRecipientName2));
-      expect(recipient.type, equals(testRecipientType));
+      expect(recipient.name, testRecipientName2);
+      expect(recipient.type, testRecipientType);
 
-      expect(recipient.activeAccount.country, equals(testBankAccountCountry));
-      expect(recipient.activeAccount.currency, equals('usd'));
-      expect(recipient.activeAccount.last4, equals(testBankAccountAccountNumber2.substring(8)));
+      expect(recipient.activeAccount.country, testBankAccountCountry);
+      expect(recipient.activeAccount.currency, 'usd');
+      expect(recipient.activeAccount.last4, testBankAccountAccountNumber2.substring(8));
       expect(recipient.activeAccount.status, 'new');
 
-      expect(recipient.email, equals(testRecipientEmail2));
-      expect(recipient.description, equals(testRecipientDescription2));
-      expect(recipient.metadata, equals(testRecipientMetadata2));
+      expect(recipient.email, testRecipientEmail2);
+      expect(recipient.description, testRecipientDescription2);
+      expect(recipient.metadata, testRecipientMetadata2);
 
     });
 
@@ -181,11 +181,11 @@ main(List<String> args) {
           ..type = testRecipientType
       ).create();
       expect(recipient.id, new isInstanceOf<String>());
-      expect(recipient.name, equals(testRecipientName));
-      expect(recipient.type, equals(testRecipientType));
+      expect(recipient.name, testRecipientName);
+      expect(recipient.type, testRecipientType);
       Map response = await Recipient.delete(recipient.id);
       expect(response['deleted'], isTrue);
-      expect(response['id'], equals(recipient.id));
+      expect(response['id'], recipient.id);
 
     });
 
@@ -203,14 +203,14 @@ main(List<String> args) {
       }
 
       RecipientCollection recipients = await Recipient.list(limit: 10);
-      expect(recipients.data.length, equals(10));
-      expect(recipients.hasMore, equals(true));
+      expect(recipients.data.length, 10);
+      expect(recipients.hasMore, true);
       recipients = await Recipient.list(limit: 10, startingAfter: recipients.data.last.id);
-      expect(recipients.data.length, equals(10));
-      expect(recipients.hasMore, equals(false));
+      expect(recipients.data.length, 10);
+      expect(recipients.hasMore, false);
       recipients = await Recipient.list(limit: 10, endingBefore: recipients.data.first.id);
-      expect(recipients.data.length, equals(10));
-      expect(recipients.hasMore, equals(false));
+      expect(recipients.data.length, 10);
+      expect(recipients.hasMore, false);
 
     });
 

@@ -55,32 +55,32 @@ main(List<String> args) {
 
       var map = JSON.decode(exampleSubscription);
       var subscription = new Subscription.fromMap(map);
-      expect(subscription.id, equals(map['id']));
-      expect(subscription.plan.interval, equals(map['plan']['interval']));
-      expect(subscription.plan.name, equals(map['plan']['name']));
-      expect(subscription.plan.created, equals(new DateTime.fromMillisecondsSinceEpoch(map['plan']['created'] * 1000)));
-      expect(subscription.plan.amount, equals(map['plan']['amount']));
-      expect(subscription.plan.currency, equals(map['plan']['currency']));
-      expect(subscription.plan.id, equals(map['plan']['id']));
-      expect(subscription.plan.livemode, equals(map['plan']['livemode']));
-      expect(subscription.plan.intervalCount, equals(map['plan']['interval_count']));
-      expect(subscription.plan.trialPeriodDays, equals(map['plan']['trial_period_days']));
-      expect(subscription.plan.metadata, equals(map['plan']['metadata']));
-      expect(subscription.plan.statementDescriptor, equals(map['plan']['statement_descriptor']));
-      expect(subscription.start, equals(new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000)));
-      expect(subscription.status, equals(map['status']));
-      expect(subscription.customer, equals(map['customer']));
-      expect(subscription.cancelAtPeriodEnd, equals(map['cancel_at_period_end']));
-      expect(subscription.currentPeriodStart, equals(new DateTime.fromMillisecondsSinceEpoch(map['current_period_start'] * 1000)));
-      expect(subscription.currentPeriodEnd, equals(new DateTime.fromMillisecondsSinceEpoch(map['current_period_end'] * 1000)));
-      expect(subscription.endedAt, equals(map['endet_at']));
-      expect(subscription.trialStart, equals(map['trial_start']));
-      expect(subscription.trialEnd, equals(map['trial_end']));
-      expect(subscription.canceledAt, equals(map['canceled_at']));
-      expect(subscription.quantity, equals(map['quantity']));
-      expect(subscription.applicationFeePercent, equals(map['application_fee_percent']));
-      expect(subscription.discount, equals(map['discount']));
-      expect(subscription.metadata, equals(map['metadata']));
+      expect(subscription.id, map['id']);
+      expect(subscription.plan.interval, map['plan']['interval']);
+      expect(subscription.plan.name, map['plan']['name']);
+      expect(subscription.plan.created, new DateTime.fromMillisecondsSinceEpoch(map['plan']['created'] * 1000));
+      expect(subscription.plan.amount, map['plan']['amount']);
+      expect(subscription.plan.currency, map['plan']['currency']);
+      expect(subscription.plan.id, map['plan']['id']);
+      expect(subscription.plan.livemode, map['plan']['livemode']);
+      expect(subscription.plan.intervalCount, map['plan']['interval_count']);
+      expect(subscription.plan.trialPeriodDays, map['plan']['trial_period_days']);
+      expect(subscription.plan.metadata, map['plan']['metadata']);
+      expect(subscription.plan.statementDescriptor, map['plan']['statement_descriptor']);
+      expect(subscription.start, new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000));
+      expect(subscription.status, map['status']);
+      expect(subscription.customer, map['customer']);
+      expect(subscription.cancelAtPeriodEnd, map['cancel_at_period_end']);
+      expect(subscription.currentPeriodStart, new DateTime.fromMillisecondsSinceEpoch(map['current_period_start'] * 1000));
+      expect(subscription.currentPeriodEnd, new DateTime.fromMillisecondsSinceEpoch(map['current_period_end'] * 1000));
+      expect(subscription.endedAt, map['endet_at']);
+      expect(subscription.trialStart, map['trial_start']);
+      expect(subscription.trialEnd, map['trial_end']);
+      expect(subscription.canceledAt, map['canceled_at']);
+      expect(subscription.quantity, map['quantity']);
+      expect(subscription.applicationFeePercent, map['application_fee_percent']);
+      expect(subscription.discount, map['discount']);
+      expect(subscription.metadata, map['metadata']);
 
     });
 
@@ -123,8 +123,8 @@ main(List<String> args) {
       Subscription subscription = await (new SubscriptionCreation()
           ..plan = plan.id
       ).create(customer.id);
-      expect(subscription.plan.id, equals(testPlanId));
-      expect(subscription.customer, equals(customer.id));
+      expect(subscription.plan.id, testPlanId);
+      expect(subscription.customer, customer.id);
 
     });
 
@@ -220,15 +220,15 @@ main(List<String> args) {
           ..quantity = testSubscriptionQuantity1
           ..metadata = testSubscriptionMetadata1
       ).create(customer.id);
-      expect(subscription.plan.id, equals(testPlanId1));
-      expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff1));
-      expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd1 * 1000)));
-      expect(subscription.customer, equals(customer.id));
-      expect(subscription.quantity, equals(testSubscriptionQuantity1));
-      expect(subscription.metadata, equals(testSubscriptionMetadata1));
+      expect(subscription.plan.id, testPlanId1);
+      expect(subscription.discount.coupon.percentOff, testCouponPercentOff1);
+      expect(subscription.trialEnd, new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd1 * 1000));
+      expect(subscription.customer, customer.id);
+      expect(subscription.quantity, testSubscriptionQuantity1);
+      expect(subscription.metadata, testSubscriptionMetadata1);
       subscription = await Subscription.retrieve(customer.id, subscription.id , data: {'expand': ['customer']});
       // testing the expand functionality of retrieve
-      expect(subscription.customer, equals(subscription.customerExpand.id));
+      expect(subscription.customer, subscription.customerExpand.id);
 
       // testing the CustomerUpdate
       subscription = await (new SubscriptionUpdate()
@@ -239,15 +239,15 @@ main(List<String> args) {
           ..quantity = testSubscriptionQuantity2
           ..metadata = testSubscriptionMetadata2
       ).update(customer.id, subscription.id);
-      expect(subscription.plan.id, equals(testPlanId2));
-      expect(subscription.discount.coupon.percentOff, equals(testCouponPercentOff2));
-      expect(subscription.trialEnd, equals(new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd2 * 1000)));
-      expect(subscription.customer, equals(customer.id));
-      expect(subscription.quantity, equals(testSubscriptionQuantity2));
-      expect(subscription.metadata, equals(testSubscriptionMetadata2));
+      expect(subscription.plan.id, testPlanId2);
+      expect(subscription.discount.coupon.percentOff, testCouponPercentOff2);
+      expect(subscription.trialEnd, new DateTime.fromMillisecondsSinceEpoch(testSubscriptionTrialEnd2 * 1000));
+      expect(subscription.customer, customer.id);
+      expect(subscription.quantity, testSubscriptionQuantity2);
+      expect(subscription.metadata, testSubscriptionMetadata2);
       subscription = await Subscription.cancel(customer.id, subscription.id);
       // testing cancel
-      expect(subscription.status, equals('canceled'));
+      expect(subscription.status, 'canceled');
       expect(subscription.cancelAtPeriodEnd, isFalse);
 
     });
@@ -288,14 +288,14 @@ main(List<String> args) {
         ).create(customer.id);
       }
       SubscriptionCollection subscriptions = await Subscription.list(customer.id, limit: 10);
-      expect(subscriptions.data.length, equals(10));
-      expect(subscriptions.hasMore, equals(true));
+      expect(subscriptions.data.length, 10);
+      expect(subscriptions.hasMore, true);
       subscriptions = await Subscription.list(customer.id, limit: 10, startingAfter: subscriptions.data.last.id);
-      expect(subscriptions.data.length, equals(10));
-      expect(subscriptions.hasMore, equals(false));
+      expect(subscriptions.data.length, 10);
+      expect(subscriptions.hasMore, false);
       subscriptions = await Subscription.list(customer.id, limit: 10, endingBefore: subscriptions.data.first.id);
-      expect(subscriptions.data.length, equals(10));
-      expect(subscriptions.hasMore, equals(false));
+      expect(subscriptions.data.length, 10);
+      expect(subscriptions.hasMore, false);
 
     });
 
