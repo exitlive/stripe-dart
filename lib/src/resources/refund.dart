@@ -5,7 +5,7 @@ class Refund extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'refund';
+  final String objectName = 'refund';
 
   int get amount => _dataMap['amount'];
 

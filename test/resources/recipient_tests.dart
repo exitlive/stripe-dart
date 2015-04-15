@@ -69,10 +69,10 @@ main(List<String> args) {
     test('RecipientCreation minimal', () async {
 
       // Recipient fields
-      String recipientName = 'test name';
-      String recipientType = 'corporation';
+      var recipientName = 'test name',
+          recipientType = 'corporation';
 
-      Recipient recipient = await (new RecipientCreation()
+      var recipient = await (new RecipientCreation()
           ..name = recipientName
           ..type = recipientType
       ).create();
@@ -85,37 +85,37 @@ main(List<String> args) {
     test('RecipientCreation full', () async {
 
       // Recipient fields
-      String recipientName1 = 'Test Name1';
-      String recipientType = 'individual';
-      String recipientEmail1 = 'test@test1.com';
-      String recipientDescription1 = 'test description1';
-      Map recipientMetadata1 = {'foo': 'bar1'};
+      var recipientName1 = 'Test Name1',
+          recipientType = 'individual',
+          recipientEmail1 = 'test@test1.com',
+          recipientDescription1 = 'test description1',
+          recipientMetadata1 = {'foo': 'bar1'},
 
-      String recipientName2 = 'Test Name2';
-      String recipientTaxId2 = '000000000';
-      String recipientEmail2 = 'test@test2.com';
-      String recipientDescription2 = 'test description2';
-      Map recipientMetadata2 = {'foo': 'bar2'};
+          recipientName2 = 'Test Name2',
+          recipientTaxId2 = '000000000',
+          recipientEmail2 = 'test@test2.com',
+          recipientDescription2 = 'test description2',
+          recipientMetadata2 = {'foo': 'bar2'},
 
-      // BankAccount fields
-      String bankAccountCountry = 'US';
-      String bankAccountRoutingNumber = '110000000';
-      String bankAccountAccountNumber1 = '000111111116';
-      String bankAccountAccountNumber2 = '000123456789';
+          // BankAccount fields
+          bankAccountCountry = 'US',
+          bankAccountRoutingNumber = '110000000',
+          bankAccountAccountNumber1 = '000111111116',
+          bankAccountAccountNumber2 = '000123456789';
 
-      BankAccountRequest recipientBankAccount1 = (new BankAccountRequest()
+      var recipientBankAccount1 = (new BankAccountRequest()
           ..country = bankAccountCountry
           ..routingNumber = bankAccountRoutingNumber
           ..accountNumber = bankAccountAccountNumber1
       );
 
-      BankAccountRequest recipientBankAccount2 = (new BankAccountRequest()
+      var recipientBankAccount2 = (new BankAccountRequest()
           ..country = bankAccountCountry
           ..routingNumber = bankAccountRoutingNumber
           ..accountNumber = bankAccountAccountNumber2
       );
 
-      Recipient recipient = await (new RecipientCreation()
+      var recipient = await (new RecipientCreation()
           ..name = recipientName1
           ..type = recipientType
           ..bankAccount = recipientBankAccount1
@@ -174,16 +174,16 @@ main(List<String> args) {
     test('Delete Recipient', () async {
 
       // Recipient fields
-      String recipientName = 'test name';
-      String recipientType = 'corporation';
-      Recipient recipient = await (new RecipientCreation()
+      var recipientName = 'test name',
+          recipientType = 'corporation';
+      var recipient = await (new RecipientCreation()
           ..name = recipientName
           ..type = recipientType
       ).create();
       expect(recipient.id, new isInstanceOf<String>());
       expect(recipient.name, recipientName);
       expect(recipient.type, recipientType);
-      Map response = await Recipient.delete(recipient.id);
+      var response = await Recipient.delete(recipient.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], recipient.id);
 
@@ -192,8 +192,8 @@ main(List<String> args) {
     test('List parameters Recipient', () async {
 
       // Recipient fields
-      String recipientName = 'test name';
-      String recipientType = 'corporation';
+      var recipientName = 'test name',
+          recipientType = 'corporation';
 
       for (var i = 0; i < 20; i++) {
         await (new RecipientCreation()
@@ -202,7 +202,7 @@ main(List<String> args) {
         ).create();
       }
 
-      RecipientCollection recipients = await Recipient.list(limit: 10);
+      var recipients = await Recipient.list(limit: 10);
       expect(recipients.data.length, 10);
       expect(recipients.hasMore, isTrue);
       recipients = await Recipient.list(limit: 10, startingAfter: recipients.data.last.id);

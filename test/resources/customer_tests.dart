@@ -80,7 +80,7 @@ main(List<String> args) {
 
     test('CustomerCreation minimal', () async {
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
 
     });
@@ -89,51 +89,51 @@ main(List<String> args) {
     test('CustomerCreation full', () async {
 
       // Card fields
-      String cardNumber1 = '4242424242424242';
-      int cardExpMonth1 = 12;
-      int cardExpYear1 = 2016;
+      var cardNumber1 = '4242424242424242',
+          cardExpMonth1 = 12,
+          cardExpYear1 = 2016;
 
-      CardCreation cardCreation1 = new CardCreation()
+      var cardCreation1 = new CardCreation()
           ..number = cardNumber1 // only the last 4 digits can be tested
           ..expMonth = cardExpMonth1
           ..expYear = cardExpYear1;
 
-      String cardNumber2 = '5555555555554444';
-      int cardExpMonth2 = 3;
-      int cardExpYear2 = 2016;
+      var cardNumber2 = '5555555555554444',
+          cardExpMonth2 = 3,
+          cardExpYear2 = 2016;
 
-      CardCreation cardCreation2 = new CardCreation()
+      var cardCreation2 = new CardCreation()
           ..number = cardNumber2 // only the last 4 digits can be tested
           ..expMonth = cardExpMonth2
           ..expYear = cardExpYear2;
 
       // Coupon fields
-      String couponId1 = 'test coupon id1';
-      String couponDuration1 = 'forever';
-      int couponPercentOff1 = 15;
+      var couponId1 = 'test coupon id1',
+          couponDuration1 = 'forever',
+          couponPercentOff1 = 15;
 
-      CouponCreation couponCreation1 = new CouponCreation()
+      var couponCreation1 = new CouponCreation()
           ..id = couponId1
           ..duration = couponDuration1
           ..percentOff = couponPercentOff1;
 
-      String couponId2 = 'test coupon id2';
-      String couponDuration2 = 'forever';
-      int couponPercentOff2 = 20;
+      var couponId2 = 'test coupon id2',
+          couponDuration2 = 'forever',
+          couponPercentOff2 = 20;
 
-      CouponCreation couponCreation2 = new CouponCreation()
+      var couponCreation2 = new CouponCreation()
           ..id = couponId2
           ..duration = couponDuration2
           ..percentOff = couponPercentOff2;
 
       // Plan fields
-      String planId = 'test plan id';
-      int planAmount = 200;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test plan name';
+      var planId = 'test plan id',
+          planAmount = 200,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test plan name';
 
-      PlanCreation planCreation = new PlanCreation()
+      var planCreation = new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
@@ -141,19 +141,19 @@ main(List<String> args) {
           ..name = planName;
 
       // Customer fields
-      int customerAccountBalance1 = 100001;
-      String customerDescription1 = 'test description1';
-      String customerEmail1 = 'test1@test.com';
-      Map customerMetadata1 = {'foo': 'bar1'};
-      int customerQuantity = 5;
-      int customerTrialEnd = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000;
-      // for update tests
-      int customerAccountBalance2 = 200002;
-      String customerDescription2 = 'test description2';
-      String customerEmail2 = 'test2@test.com';
-      Map customerMetadata2 = {'foo': 'bar2'};
+      var customerAccountBalance1 = 100001,
+          customerDescription1 = 'test description1',
+          customerEmail1 = 'test1@test.com',
+          customerMetadata1 = {'foo': 'bar1'},
+          customerQuantity = 5,
+          customerTrialEnd = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000,
+          // for update tests
+          customerAccountBalance2 = 200002,
+          customerDescription2 = 'test description2',
+          customerEmail2 = 'test2@test.com',
+          customerMetadata2 = {'foo': 'bar2'};
 
-      CustomerCreation customerCreation = new CustomerCreation()
+      var customerCreation = new CustomerCreation()
           ..accountBalance = customerAccountBalance1
           ..card = cardCreation1
           ..coupon = couponId1
@@ -167,7 +167,7 @@ main(List<String> args) {
       await couponCreation1.create();
       await couponCreation2.create();
       await planCreation.create();
-      Customer customer = await customerCreation.create();
+      var customer = await customerCreation.create();
       expect(customer.id, new isInstanceOf<String>());
 
       // card tests
@@ -187,7 +187,7 @@ main(List<String> args) {
       expect(customer.email, customerEmail1);
 
       // plan / subscription tests
-      Subscription subscription = customer.subscriptions.data.first;
+      var subscription = customer.subscriptions.data.first;
       expect(subscription.customer, customer.id);
       expect(subscription.applicationFeePercent, isNull);
       expect(subscription.cancelAtPeriodEnd, isFalse);
@@ -203,7 +203,7 @@ main(List<String> args) {
       expect(subscription.plan.id, planId);
       expect(subscription.plan.interval, planInterval);
       expect(subscription.plan.name, planName);
-      InvoiceCollection invoices = await Invoice.list(customer: customer.id);
+      var invoices = await Invoice.list(customer: customer.id);
       expect(invoices.data.first.startingBalance, customerAccountBalance1);
       customer = await Customer.retrieve(customer.id, data: {'expand': ['default_card']});
       // testing the expand functionality of retrieve
@@ -211,7 +211,7 @@ main(List<String> args) {
       expect(customer.defaultCardExpand.last4, cardNumber1.substring(cardNumber1.length - 4));
 
       // testing the CustomerUpdate
-      Customer updatedCustomer = await (new CustomerUpdate()
+      var updatedCustomer = await (new CustomerUpdate()
           ..accountBalance = customerAccountBalance2
           ..card = cardCreation2
           ..coupon = couponId2
@@ -230,8 +230,8 @@ main(List<String> args) {
 
     test('Delete Customer', () async {
 
-      Customer customer = await new CustomerCreation().create();
-      Map response = await Customer.delete(customer.id);
+      var customer = await new CustomerCreation().create();
+      var response = await Customer.delete(customer.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], customer.id);
 
@@ -243,7 +243,7 @@ main(List<String> args) {
         await new CustomerCreation().create();
       }
 
-      CustomerCollection customers = await Customer.list(limit: 10);
+      var customers = await Customer.list(limit: 10);
       expect(customers.data.length, 10);
       expect(customers.hasMore, isTrue);
       customers = await Customer.list(limit: 10, startingAfter: customers.data.last.id);

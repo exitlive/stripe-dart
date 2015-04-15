@@ -8,9 +8,9 @@ class Account extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'account';
+  final String objectName = 'account';
 
-  static String _path = 'account';
+  static var _path = 'account';
 
   bool get chargeEnabled => _dataMap['charge_enabled'];
 

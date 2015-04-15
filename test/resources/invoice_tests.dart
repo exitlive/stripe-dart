@@ -139,7 +139,7 @@ main(List<String> args) {
 
   });
 
-  solo_group('Invoice online', () {
+  group('Invoice online', () {
 
     tearDown(() {
       return utils.tearDown();
@@ -147,7 +147,7 @@ main(List<String> args) {
 
     test('InvoiceCreation minimal', () async {
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       try {
         await (new InvoiceCreation()
             ..customer = customer.id
@@ -163,45 +163,45 @@ main(List<String> args) {
     test('InvoiceCreation full', () async {
 
       // Card fields
-      String cardNumber = '5555555555554444';
-      int cardExpMonth = 3;
-      int cardExpYear = 2016;
+      var cardNumber = '5555555555554444',
+          cardExpMonth = 3,
+          cardExpYear = 2016;
 
-      CardCreation cardCreation = new CardCreation()
+      var cardCreation = new CardCreation()
           ..number = cardNumber // only the last 4 digits can be tested
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear;
 
       // Plan fields
-      String planId = 'test plan id';
-      int planAmount = 200;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test plan name';
+      var planId = 'test plan id',
+          planAmount = 200,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test plan name',
 
-      // Charge fields
-      int cardAmount = 100;
-      String cardCurrency = 'usd';
+          // Charge fields
+          cardAmount = 100,
+          cardCurrency = 'usd',
 
-      // Invoice fields
-      String invoiceDescription = 'test description';
-      Map invoiceMetadata = {'foo': 'bar'};
+          // Invoice fields
+          invoiceDescription = 'test description',
+          invoiceMetadata = {'foo': 'bar'};
 
-      Plan plan = await (new PlanCreation()
+      var plan = await (new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
           ..interval = planInterval
           ..name = planName
       ).create();
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
       await (new ChargeCreation()
           ..amount = cardAmount
           ..currency = cardCurrency
           ..customer = customer.id
       ).create();
-      Subscription subscription = await (new SubscriptionCreation()
+      var subscription = await (new SubscriptionCreation()
           ..plan = plan.id
       ).create(customer.id);
       try {
@@ -214,7 +214,7 @@ main(List<String> args) {
       } catch (e) {
         // nothing to invoice for a new customer
         expect(e, new isInstanceOf<InvalidRequestErrorException>());
-        expect(e.errorMessage, 'Nthing to invoice for subscription');
+        expect(e.errorMessage, 'Nothing to invoice for subscription');
       }
 
     });

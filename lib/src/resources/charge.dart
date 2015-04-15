@@ -8,9 +8,9 @@ class Charge extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'charge';
+  final String objectName = 'charge';
 
-  static String _path = 'charges';
+  static var _path = 'charges';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -109,7 +109,7 @@ class Charge extends Resource {
    * [Refunding a Charge](https://stripe.com/docs/api/curl#refund_charge)
    */
   static Future<Charge> refund(String id, {int amount, bool refundApplicationFee}) async {
-    Map data = {};
+    var data = {};
     if (amount != null) data['amount'] = amount;
     if (refundApplicationFee != null) data['refund_application_fee'] = refundApplicationFee;
     if (data == {}) data = null;
@@ -121,7 +121,7 @@ class Charge extends Resource {
    * [Capture a charge](https://stripe.com/docs/api/curl#charge_capture)
    */
   static Future<Charge> capture(String id, {int amount, bool refundApplicationFee}) async {
-    Map data = {};
+    var data = {};
     if (amount != null) data['amount'] = amount;
     if (refundApplicationFee != null) data['refund_application_fee'] = refundApplicationFee;
     if (data == {}) data = null;
@@ -134,7 +134,7 @@ class Charge extends Resource {
    * TODO: implement missing argument: `created`
    */
   static Future<ChargeCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (customer != null) data['customer'] = customer;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;

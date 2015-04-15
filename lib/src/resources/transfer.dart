@@ -10,7 +10,7 @@ class Transfer extends ApiResource {
 
   final String objectName = 'transfer';
 
-  static String _path = 'transfers';
+  static var _path = 'transfers';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -82,7 +82,7 @@ class Transfer extends ApiResource {
    * TODO: implement missing arguments: `created` and `date`
    */
   static Future<TransferCollection> list({int limit, String startingAfter, String endingBefore, String recipient, String status}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;

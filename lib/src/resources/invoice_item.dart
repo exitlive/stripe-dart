@@ -8,9 +8,9 @@ class InvoiceItem extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'invoiceitem';
+  final String objectName = 'invoiceitem';
 
-  static String _path = 'invoiceitems';
+  static var _path = 'invoiceitems';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -69,7 +69,7 @@ class InvoiceItem extends Resource {
    * TODO: implement missing argument: `created`
    */
   static Future<InvoiceItemCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (customer != null) data['customer'] = customer;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
@@ -82,7 +82,7 @@ class InvoiceItem extends Resource {
   /**
    * [Deleting an Invoice Item](https://stripe.com/docs/api/curl#delete_invoiceitem)
    */
-  static Future delete(String invoiceItemId) => StripeService.delete([InvoiceItem._path, invoiceItemId]);
+  static Future<Map> delete(String invoiceItemId) => StripeService.delete([InvoiceItem._path, invoiceItemId]);
 
 }
 

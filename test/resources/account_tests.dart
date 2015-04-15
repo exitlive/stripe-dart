@@ -59,7 +59,7 @@ main(List<String> args) {
 
     test('Retrieve Account', () async {
 
-      Account account = await Account.retrieve();
+      var account = await Account.retrieve();
       expect(account.id.substring(0, 3), 'acc');
       // other tests will depend on your stripe account
 

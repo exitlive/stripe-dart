@@ -8,9 +8,9 @@ class Recipient extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'recipient';
+  final String objectName = 'recipient';
 
-  static String _path = 'recipients';
+  static var _path = 'recipients';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -48,7 +48,7 @@ class Recipient extends Resource {
    * [List all Recipients](https://stripe.com/docs/api/curl#list_recipients)
    */
   static Future<RecipientCollection> list({int limit, String startingAfter, String endingBefore, bool verified}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
@@ -61,7 +61,7 @@ class Recipient extends Resource {
   /**
    * [Deleting a Recipient](https://stripe.com/docs/api/curl#delete_recipient)
    */
-  static Future delete(String recipientId) => StripeService.delete([Recipient._path, recipientId]);
+  static Future<Map> delete(String recipientId) => StripeService.delete([Recipient._path, recipientId]);
 
 }
 
@@ -133,7 +133,7 @@ class BankAccount extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'bank_account';
+  final String objectName = 'bank_account';
 
   String get bankName => _dataMap['bank_name'];
 

@@ -10,7 +10,7 @@ class Event extends ApiResource {
 
   final String objectName = 'event';
 
-  static String _path = 'events';
+  static var _path = 'events';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -43,7 +43,7 @@ class Event extends ApiResource {
    * TODO: implement missing argument: `created`
    */
   static Future<EventCollection> list({int limit, String startingAfter, String endingBefore, String type}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;

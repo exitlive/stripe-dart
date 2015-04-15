@@ -65,10 +65,10 @@ main(List<String> args) {
     test('CouponCreation minimal', () async {
 
       // Coupon fields
-      String couponDuration = 'forever';
-      int couponPercentOff = 5;
+      var couponDuration = 'forever',
+          couponPercentOff = 5;
 
-      Coupon coupon = await (new CouponCreation()
+      var coupon = await (new CouponCreation()
           ..duration = couponDuration
           ..percentOff = couponPercentOff
       ).create();
@@ -82,16 +82,16 @@ main(List<String> args) {
     test('CouponCreation full', () async {
 
       // Coupon fields
-      String couponId = 'test id';
-      String couponDuration = 'repeating';
-      int couponAmountOff = 10;
-      String couponCurrency = 'usd';
-      int couponDurationInMoths = 12;
-      int couponMaxRedemptions = 3;
-      Map couponMetadata = {'foo': 'bar'};
-      int couponRedeemBy = 1451520000;
+      var couponId = 'test id',
+          couponDuration = 'repeating',
+          couponAmountOff = 10,
+          couponCurrency = 'usd',
+          couponDurationInMoths = 12,
+          couponMaxRedemptions = 3,
+          couponMetadata = {'foo': 'bar'},
+          couponRedeemBy = 1451520000;
 
-      Coupon coupon = await (new CouponCreation()
+      var coupon = await (new CouponCreation()
           ..id = couponId
           ..duration = couponDuration
           ..amountOff = couponAmountOff
@@ -125,17 +125,17 @@ main(List<String> args) {
     test('Delete Coupon', () async {
 
       // Coupon fields
-      String couponDuration = 'forever';
-      int couponPercentOff = 5;
+      var couponDuration = 'forever',
+          couponPercentOff = 5;
 
-      Coupon coupon = await (new CouponCreation()
+      var coupon = await (new CouponCreation()
           ..duration = couponDuration
           ..percentOff = couponPercentOff
       ).create();
       expect(coupon.id, new isInstanceOf<String>());
       expect(coupon.duration, couponDuration);
       expect(coupon.percentOff, couponPercentOff);
-      Map response = await Coupon.delete(coupon.id);
+      var response = await Coupon.delete(coupon.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], coupon.id);
 
@@ -144,8 +144,8 @@ main(List<String> args) {
     test('List parameters Coupon', () async {
 
       // Coupon fields
-      String couponDuration = 'forever';
-      int couponPercentOff = 5;
+      var couponDuration = 'forever',
+          couponPercentOff = 5;
       for (var i = 0; i < 20; i++) {
         await (new CouponCreation()
             ..duration = couponDuration
@@ -153,7 +153,7 @@ main(List<String> args) {
         ).create();
       }
 
-      CouponCollection coupons = await Coupon.list(limit: 10);
+      var coupons = await Coupon.list(limit: 10);
       expect(coupons.data.length, 10);
       expect(coupons.hasMore, isTrue);
       coupons = await Coupon.list(limit: 10, startingAfter: coupons.data.last.id);

@@ -214,11 +214,11 @@ main(List<String> args) {
 
     test('List and retrieve Events', () async {
 
-      Customer customer = await new CustomerCreation().create();
-      EventCollection events = await Event.list(limit: 1, type: 'customer.created');
-      Event eventFromList = events.data.first;
+      var customer = await new CustomerCreation().create();
+      var events = await Event.list(limit: 1, type: 'customer.created');
+      var eventFromList = events.data.first;
       expect(eventFromList.data.object['id'], customer.id);
-      Event eventFromRetrieve = await Event.retrieve(eventFromList.id);
+      var eventFromRetrieve = await Event.retrieve(eventFromList.id);
       expect(eventFromRetrieve.created, eventFromList.created);
       expect(eventFromRetrieve.data.object, eventFromList.data.object);
       expect(eventFromRetrieve.id, eventFromList.id);

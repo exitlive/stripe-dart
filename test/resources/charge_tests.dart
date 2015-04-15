@@ -109,19 +109,21 @@ main(List<String> args) {
     test('ChargeCreation minimal', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
-      // Charge fields
-      int chargeAmount = 100;
-      String chargeCurrency = 'usd';
-      Customer customer = await new CustomerCreation().create();
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016,
+
+          // Charge fields
+          chargeAmount = 100,
+          chargeCurrency = 'usd';
+
+      var customer = await new CustomerCreation().create();
       await (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear
       ).create(customer.id);
-      Charge charge = await (new ChargeCreation()
+      var charge = await (new ChargeCreation()
           ..amount = chargeAmount
           ..currency = chargeCurrency
           ..customer = customer.id
@@ -134,28 +136,28 @@ main(List<String> args) {
     test('ChargeCreation full', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016,
 
-      // Charge fields
-      int chargeAmount = 100;
-      String chargeCurrency = 'usd';
-      String chargeDescription1 = 'test description1';
-      String chargeDescription2 = 'test description2';
-      Map chargeMetadata1 = {'foo': 'bar1'};
-      Map chargeMetadata2 = {'foo': 'bar2'};
-      bool chargeCapture = false;
-      String chargeStatementDescriptor = 'test descriptor';
-      // application_fee can not be tested
+          // Charge fields
+          chargeAmount = 100,
+          chargeCurrency = 'usd',
+          chargeDescription1 = 'test description1',
+          chargeDescription2 = 'test description2',
+          chargeMetadata1 = {'foo': 'bar1'},
+          chargeMetadata2 = {'foo': 'bar2'},
+          chargeCapture = false,
+          chargeStatementDescriptor = 'test descriptor';
+          // application_fee can not be tested
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear
       ).create(customer.id);
-      Charge charge = await (new ChargeCreation()
+      var charge = await (new ChargeCreation()
           ..amount = chargeAmount
           ..currency = chargeCurrency
           ..customer = customer.id
@@ -187,23 +189,23 @@ main(List<String> args) {
     test('Refund a Charge', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016,
 
-      // Charge fields
-      int chargeAmount = 100;
-      int chargeRefundAmount = 90;
-      String chargeCurrency = 'usd';
-      // application_fee can not be tested
+          // Charge fields
+          chargeAmount = 100,
+          chargeRefundAmount = 90,
+          chargeCurrency = 'usd';
+          // application_fee can not be tested
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear
       ).create(customer.id);
-      Charge charge = await (new ChargeCreation()
+      var charge = await (new ChargeCreation()
           ..amount = chargeAmount
           ..currency = chargeCurrency
           ..customer = customer.id
@@ -216,23 +218,23 @@ main(List<String> args) {
     test('Capture a Charge', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016,
 
-      // Charge fields
-      int chargeAmount = 100;
-      int chargeCaptureAmount = 90;
-      String chargeCurrency = 'usd';
-      // application_fee can not be tested
+          // Charge fields
+          chargeAmount = 100,
+          chargeCaptureAmount = 90,
+          chargeCurrency = 'usd';
+          // application_fee can not be tested
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear
       ).create(customer.id);
-      Charge charge = await (new ChargeCreation()
+      var charge = await (new ChargeCreation()
           ..amount = chargeAmount
           ..currency = chargeCurrency
           ..customer = customer.id
@@ -245,11 +247,11 @@ main(List<String> args) {
 
     test('List parameters charge', () async {
 
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016;
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
@@ -257,8 +259,8 @@ main(List<String> args) {
       ).create(customer.id);
       for (var i = 0; i < 20; i++) {
         // Charge fields
-        int chargeAmount = 100;
-        String chargeCurrency = 'usd';
+        var chargeAmount = 100,
+            chargeCurrency = 'usd';
         // application_fee can not be tested
 
         await (new ChargeCreation()
@@ -268,7 +270,7 @@ main(List<String> args) {
             ..capture = false
         ).create();
       }
-      ChargeCollection charges = await Charge.list(customer: customer.id, limit: 10);
+      var charges = await Charge.list(customer: customer.id, limit: 10);
       expect(charges.data.length, 10);
       expect(charges.hasMore, isTrue);
       charges = await Charge.list(customer: customer.id, limit: 10, startingAfter: charges.data.last.id);

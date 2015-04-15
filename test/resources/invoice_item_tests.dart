@@ -61,21 +61,21 @@ main(List<String> args) {
     test('Create Invoice item minimal', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016,
 
-      // Charge fields
-      int chargeAmount = 100;
-      String chargeCurrency = 'usd';
+          // Charge fields
+          chargeAmount = 100,
+          chargeCurrency = 'usd';
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear
       ).create(customer.id);
-      InvoiceItem invoiceItem = await (new InvoiceItemCreation()
+      var invoiceItem = await (new InvoiceItemCreation()
           ..customer = customer.id
           ..amount = chargeAmount
           ..currency = chargeCurrency
@@ -89,48 +89,48 @@ main(List<String> args) {
     test('Create Invoice item full', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016;
 
-      CardCreation cardCreation = new CardCreation()
+      var cardCreation = new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear;
 
       // Charge fields
-      String chargeCurrency = 'usd';
+      var chargeCurrency = 'usd',
 
-      // Plan fields
-      String planId = 'test plan id';
-      int planAmount = 200;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test plan name';
+          // Plan fields
+          planId = 'test plan id',
+          planAmount = 200,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test plan name',
 
-      // Invoiceitem fields
-      String invoiceItemCurrency = 'usd';
-      int invoiceItemAmount1 = 200;
-      String invoiceItemDescription1 = 'test description1';
-      Map invoiceItemMetadata1 = {'foo': 'bar1'};
+          // Invoiceitem fields
+          invoiceItemCurrency = 'usd',
+          invoiceItemAmount1 = 200,
+          invoiceItemDescription1 = 'test description1',
+          invoiceItemMetadata1 = {'foo': 'bar1'},
 
-      int invoiceItemAmount2 = 220;
-      String invoiceItemDescription2 = 'test description2';
-      Map invoiceItemMetadata2 = {'foo': 'bar2'};
+          invoiceItemAmount2 = 220,
+          invoiceItemDescription2 = 'test description2',
+          invoiceItemMetadata2 = {'foo': 'bar2'};
 
-      Plan plan = await (new PlanCreation()
+      var plan = await (new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
           ..interval = planInterval
           ..name = planName
       ).create();
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
-      Subscription subscription = await (new SubscriptionCreation()
+      var subscription = await (new SubscriptionCreation()
           ..plan = plan.id
       ).create(customer.id);
-      InvoiceItem invoiceItem = await (new InvoiceItemCreation()
+      var invoiceItem = await (new InvoiceItemCreation()
           ..customer = customer.id
           ..amount = invoiceItemAmount1
           ..currency = invoiceItemCurrency
@@ -163,7 +163,7 @@ main(List<String> args) {
       expect(invoiceItem.description, invoiceItemDescription2);
       expect(invoiceItem.metadata, invoiceItemMetadata2);
       // testing delete
-      Map response = await InvoiceItem.delete(invoiceItem.id);
+      var response = await InvoiceItem.delete(invoiceItem.id);
       expect(response['id'], invoiceItem.id);
       expect(response['deleted'], isTrue);
 
@@ -172,15 +172,15 @@ main(List<String> args) {
     test('List parameters Invoiceitem', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016,
 
       // Charge fields
-      int chargeAmount = 100;
-      String chargeCurrency = 'usd';
+          chargeAmount = 100,
+          chargeCurrency = 'usd';
 
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
 
       await (new CardCreation()
           ..number = cardNumber
@@ -196,7 +196,7 @@ main(List<String> args) {
         ).create();
       }
 
-      InvoiceItemCollection invoiceItems = await InvoiceItem.list(limit: 10);
+      var invoiceItems = await InvoiceItem.list(limit: 10);
       expect(invoiceItems.data.length, 10);
       expect(invoiceItems.hasMore, isTrue);
       invoiceItems = await InvoiceItem.list(limit: 10, startingAfter: invoiceItems.data.last.id);

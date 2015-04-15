@@ -8,9 +8,9 @@ class Coupon extends ApiResource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'coupon';
+  final String objectName = 'coupon';
 
-  static String _path = 'coupons';
+  static var _path = 'coupons';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -50,7 +50,7 @@ class Coupon extends ApiResource {
    * [List all Coupons](https://stripe.com/docs/api/curl#list_coupons)
    */
   static Future<CouponCollection> list({int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
@@ -62,7 +62,7 @@ class Coupon extends ApiResource {
   /**
    * [Deleting a coupon](https://stripe.com/docs/api/curl#delete_coupon)
    */
-  static Future delete(String id) => StripeService.delete([Coupon._path, id]);
+  static Future<Map> delete(String id) => StripeService.delete([Coupon._path, id]);
 
 }
 

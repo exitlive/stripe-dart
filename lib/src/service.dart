@@ -6,13 +6,13 @@ part of stripe;
  */
 abstract class StripeService {
 
-  static Logger log = new Logger('StripeService');
+  static var log = new Logger('StripeService');
 
-  static String host = 'api.stripe.com';
+  static var host = 'api.stripe.com';
 
-  static int port = 443;
+  static var port = 443;
 
-  static String basePath = 'v1';
+  static var basePath = 'v1';
 
   /// The Api key used to communicate with Stripe
   static String apiKey;
@@ -64,16 +64,16 @@ abstract class StripeService {
   static Future<Map> _request(final String method, final List<String> pathParts, { final Map data }) async {
 
     pathParts.insert(0, basePath);
-    String path = '/' + pathParts.map(Uri.encodeComponent).join('/');
-    var uri;
+    var path = '/' + pathParts.map(Uri.encodeComponent).join('/');
+    Uri uri;
     if (method == 'GET' && data != null) {
       uri = new Uri(scheme: 'https', host: host, path: path, query:encodeMap(data), userInfo: '${apiKey}:');
     } else {
       uri = new Uri(scheme: 'https', host: host, path: path, userInfo: '${apiKey}:');
     }
     log.finest('Sending ${method} request to API ${uri}');
-    var responseStatusCode;
-    HttpClientRequest request = await _getClient().openUrl(method, uri);
+    int responseStatusCode;
+    var request = await _getClient().openUrl(method, uri);
 
     if (method == 'POST' && data != null) {
       // Now convert the params to a list of UTF8 encoded bytes of a uri encoded
@@ -86,8 +86,8 @@ abstract class StripeService {
     HttpClientResponse response = await request.close();
     responseStatusCode = response.statusCode;
     var bodyData = await response.transform(UTF8.decoder).toList();
-    String body = bodyData.join('');
-    var map;
+    var body = bodyData.join('');
+    Map map;
     try {
       map = JSON.decode(body);
     } on Error {

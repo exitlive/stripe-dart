@@ -52,7 +52,7 @@ main(List<String> args) {
       expect(token.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
       expect(token.used, map['used']);
       expect(token.type, map['type']);
-      Card card = token.card;
+      var card = token.card;
       expect(card.id, map['card']['id']);
       expect(card.last4, map['card']['last4']);
       expect(card.type, map['card']['type']);
@@ -82,11 +82,11 @@ main(List<String> args) {
     test('CardTokenCreation', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016;
       await new CustomerCreation().create();
-      Token token = await (new CardTokenCreation()
+      var token = await (new CardTokenCreation()
           ..card = (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
@@ -114,17 +114,17 @@ main(List<String> args) {
     test('BankAccountTokenCreation', () async {
 
       // BankAccount fields
-      String bankAccountCountry = 'US';
-      String bankAccountRoutingNumber = '110000000';
-      String bankAccountAccountNumber = '000123456789';
+      var bankAccountCountry = 'US',
+          bankAccountRoutingNumber = '110000000',
+          bankAccountAccountNumber = '000123456789';
 
-      BankAccountRequest bankAccount = (new BankAccountRequest()
+      var bankAccount = (new BankAccountRequest()
           ..country = bankAccountCountry
           ..routingNumber = bankAccountRoutingNumber
           ..accountNumber = bankAccountAccountNumber
       );
 
-      Token token = await (new BankAccountTokenCreation()
+      var token = await (new BankAccountTokenCreation()
           ..bankAccount = bankAccount
       ).create();
       expect(token.id, new isInstanceOf<String>());

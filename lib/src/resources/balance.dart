@@ -6,9 +6,9 @@ part of stripe;
  */
 class Balance extends Resource {
 
-  String objectName = 'balance';
+  final String objectName = 'balance';
 
-  static String _path = 'balance';
+  static var _path = 'balance';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -41,9 +41,9 @@ class BalanceTransaction extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'balance_transaction';
+  final String objectName = 'balance_transaction';
 
-  static String _path = 'history';
+  static var _path = 'history';
 
   int get amount => _dataMap['amount'];
 
@@ -110,7 +110,7 @@ class BalanceTransaction extends Resource {
    * TODO: implement missing arguments: `available_on` and `created`
    */
   static Future<BalanceTransactionCollection> list({int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;

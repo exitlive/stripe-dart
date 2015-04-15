@@ -8,9 +8,9 @@ class ApplicationFee extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'application_fee';
+  final String objectName = 'application_fee';
 
-  static String _path = 'application_fees';
+  static var _path = 'application_fees';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -85,7 +85,7 @@ class ApplicationFee extends Resource {
    * [Refunding an Application Fee](https://stripe.com/docs/api/curl#refund_application_fee)
    */
   static Future<ApplicationFee> refund(String applicationFeeId, {int amount}) async {
-    Map data = {};
+    var data = {};
     if (amount != null) data['amount'] = amount;
     if (data == {}) data = null;
     var dataMap = await StripeService.post([ApplicationFee._path, applicationFeeId, 'refund'], data: data);
@@ -97,7 +97,7 @@ class ApplicationFee extends Resource {
    * TODO: implement missing argument: `created`
    */
   static Future<ApplicationFeeCollection> list({String charge, int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (charge != null) data['charge'] = charge;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;

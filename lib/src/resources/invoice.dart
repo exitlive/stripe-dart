@@ -8,9 +8,9 @@ class Invoice extends ApiResource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'invoice';
+  final String objectName = 'invoice';
 
-  static String _path = 'invoices';
+  static var _path = 'invoices';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -113,7 +113,7 @@ class Invoice extends ApiResource {
    * TODO: implement missing argument: `date`
    */
   static Future<InvoiceCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (customer != null) data['customer'] = customer;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
@@ -127,7 +127,7 @@ class Invoice extends ApiResource {
    * [Retrieving a Customer's Upcoming Invoice](https://stripe.com/docs/api/curl#retrieve_customer_invoice)
    */
   static Future<Invoice> retrieveUpcoming(String customerId, {String subscriptionId}) async {
-    Map data = {};
+    var data = {};
     data['customer'] = customerId;
     if (subscriptionId != null) data['subscription'] = subscriptionId;
     var dataMap = await StripeService.get([Invoice._path, 'upcoming'], data: data);
@@ -138,7 +138,7 @@ class Invoice extends ApiResource {
    * [Retrieve an invoice's line items](https://stripe.com/docs/api/curl#invoice_lines)
    */
   static Future<InvoiceLineItemCollection> retrieveLineItems(String invoiceId, {String customerId, int limit, String startingAfter, String endingBefore, String subscriptionId}) async {
-    Map data = {};
+    var data = {};
     if (customerId != null) data['customer'] = customerId;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
@@ -213,9 +213,9 @@ class InvoiceLineItem extends Resource {
 
   String get id => _dataMap['id'];
 
-  String objectName = 'line_item';
+  final String objectName = 'line_item';
 
-  static String _path = 'lines';
+  static var _path = 'lines';
 
   bool get livemode => _dataMap['livemode'];
 

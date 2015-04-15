@@ -10,7 +10,7 @@ class Card extends Resource {
 
   final String objectName = 'card';
 
-  static String _path = 'cards';
+  static var _path = 'cards';
 
   int get expMonth => _dataMap['exp_month'];
 
@@ -71,7 +71,7 @@ class Card extends Resource {
    * [Listing cards](https://stripe.com/docs/api/curl#list_cards)
    */
   static Future<CardCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
@@ -83,7 +83,7 @@ class Card extends Resource {
   /**
    * [Deleting cards](https://stripe.com/docs/api/curl#delete_card)
    */
-  static Future delete(String customerId, String cardId) => StripeService.delete([Customer._path, customerId, Card._path, cardId]);
+  static Future<Map> delete(String customerId, String cardId) => StripeService.delete([Customer._path, customerId, Card._path, cardId]);
 
 }
 

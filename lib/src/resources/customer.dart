@@ -10,7 +10,7 @@ class Customer extends ApiResource {
 
   final String objectName = 'customer';
 
-  static String _path = 'customers';
+  static var _path = 'customers';
 
   DateTime get created => _getDateTimeFromMap('created');
 
@@ -74,7 +74,7 @@ class Customer extends ApiResource {
    * TODO: implement missing argument: `created`
    */
   static Future<CustomerCollection> list({int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
@@ -86,7 +86,7 @@ class Customer extends ApiResource {
   /**
    * [Deleting a Customer](https://stripe.com/docs/api/curl#delete_customer)
    */
-  static Future delete(String id) => StripeService.delete([Customer._path, id]);
+  static Future<Map> delete(String id) => StripeService.delete([Customer._path, id]);
 
 }
 

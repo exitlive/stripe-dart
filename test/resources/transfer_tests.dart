@@ -211,11 +211,11 @@ main(List<String> args) {
     test('TransferCreation minimal', () async {
 
       // Transfer fields
-      int transferAmount = 100;
-      String transferCurrency = 'usd';
-      String transferRecipient = 'self';
+      var transferAmount = 100,
+          transferCurrency = 'usd',
+          transferRecipient = 'self';
 
-      Transfer transfer = await (new TransferCreation()
+      var transfer = await (new TransferCreation()
           ..amount = transferAmount
           ..currency = transferCurrency
           ..recipient = transferRecipient
@@ -229,36 +229,36 @@ main(List<String> args) {
     test('TransferCreation full', () async {
 
       // Recipient fields
-      String recipientName = 'test name';
-      String recipientType = 'corporation';
+      var recipientName = 'test name',
+          recipientType = 'corporation',
 
-      String bankAccountCountry = 'US';
-      String bankAccountRoutingNumber = '110000000';
-      String bankAccountAccountNumber = '000123456789';
+          bankAccountCountry = 'US',
+          bankAccountRoutingNumber = '110000000',
+          bankAccountAccountNumber = '000123456789';
 
-      BankAccountRequest recipientBankAccount = (new BankAccountRequest()
+      var recipientBankAccount = (new BankAccountRequest()
           ..country = bankAccountCountry
           ..routingNumber = bankAccountRoutingNumber
           ..accountNumber = bankAccountAccountNumber
       );
 
-      RecipientCreation recipientCreation = new RecipientCreation()
+      var recipientCreation = new RecipientCreation()
           ..name = recipientName
           ..type = recipientType
           ..bankAccount = recipientBankAccount;
 
       // Transfer fields
-      int transferAmount = 100;
-      String transferCurrency = 'usd';
-      String transferDescription1 = 'test description1';
-      String transferStatementDescriptor = 'descriptor';
-      Map transferMetadata1 = {'foo': 'bar1'};
+      var transferAmount = 100,
+          transferCurrency = 'usd',
+          transferDescription1 = 'test description1',
+          transferStatementDescriptor = 'descriptor',
+          transferMetadata1 = {'foo': 'bar1'},
 
-      String transferDescription2 = 'test description2';
-      Map transferMetadata2 = {'foo': 'bar2'};
+          transferDescription2 = 'test description2',
+          transferMetadata2 = {'foo': 'bar2'};
 
-      Recipient recipient = await recipientCreation.create();
-      Transfer transfer = await (new TransferCreation()
+      var recipient = await recipientCreation.create();
+      var transfer = await (new TransferCreation()
           ..amount = transferAmount
           ..currency = transferCurrency
           ..recipient = recipient.id
@@ -301,9 +301,9 @@ main(List<String> args) {
     test('List parameters Transfer', () async {
 
       // Transfer fields
-      int transferAmount = 100;
-      String transferCurrency = 'usd';
-      String transferRecipient = 'self';
+      var transferAmount = 100,
+          transferCurrency = 'usd',
+          transferRecipient = 'self';
 
       for (var i = 0; i < 20; i++) {
         await (new TransferCreation()
@@ -313,7 +313,7 @@ main(List<String> args) {
         ).create();
       }
 
-      TransferCollection transfers = await Transfer.list(limit: 10);
+      var transfers = await Transfer.list(limit: 10);
       expect(transfers.data.length, 10);
       expect(transfers.hasMore, isTrue);
       transfers = await Transfer.list(limit: 10, startingAfter: transfers.data.last.id);

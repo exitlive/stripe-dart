@@ -61,13 +61,13 @@ main(List<String> args) {
     test('PlanCreation minimal', () async {
 
       // plan fields
-      String planId = 'test id';
-      int planAmount = 10;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test name';
+      var planId = 'test id',
+          planAmount = 10,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test name';
 
-      Plan plan = await (new PlanCreation()
+      var plan = await (new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
@@ -85,21 +85,21 @@ main(List<String> args) {
     test('PlanCreation full', () async {
 
       // plan fields
-      String planId = 'test id';
-      int planAmount = 10;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      int planIntervalCount = 2;
-      String planName1 = 'test name';
-      int planTrialPeriodDays = 3;
-      Map planMetadata1 = {'foo': 'bar1'};
-      String planStatementDescriptor1 = 'descriptor1';
+      var planId = 'test id',
+          planAmount = 10,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planIntervalCount = 2,
+          planName1 = 'test name',
+          planTrialPeriodDays = 3,
+          planMetadata1 = {'foo': 'bar1'},
+          planStatementDescriptor1 = 'descriptor1',
 
-      String planName2 = 'test name2';
-      Map planMetadata2 = {'foo': 'bar2'};
-      String planStatementDescriptor2 = 'descriptor2';
+          planName2 = 'test name2',
+          planMetadata2 = {'foo': 'bar2'},
+          planStatementDescriptor2 = 'descriptor2';
 
-      Plan plan = await (new PlanCreation()
+      var plan = await (new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
@@ -145,13 +145,13 @@ main(List<String> args) {
     test('Delete Plan', () async {
 
       // plan fields
-      String planId = 'test id';
-      int planAmount = 10;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test name';
+      var planId = 'test id',
+          planAmount = 10,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test name';
 
-      Plan plan = await (new PlanCreation()
+      var plan = await (new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
@@ -163,7 +163,7 @@ main(List<String> args) {
       expect(plan.currency, planCurrency);
       expect(plan.interval, planInterval);
       expect(plan.name, planName);
-      Map response = await Plan.delete(plan.id);
+      var response = await Plan.delete(plan.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], plan.id);
 
@@ -172,11 +172,11 @@ main(List<String> args) {
     test('List parameters plan', () async {
 
       // plan fields
-      String planId = 'test id';
-      int planAmount = 10;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test name';
+      var planId = 'test id',
+          planAmount = 10,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test name';
 
       for (var i = 0; i < 20; i++) {
         await (new PlanCreation()
@@ -187,7 +187,7 @@ main(List<String> args) {
             ..name = planName + i.toString()
         ).create();
       }
-      PlanCollection plans = await Plan.list(limit: 10);
+      var plans = await Plan.list(limit: 10);
       expect(plans.data.length, 10);
       expect(plans.hasMore, isTrue);
       plans = await Plan.list(limit: 10, startingAfter: plans.data.last.id);

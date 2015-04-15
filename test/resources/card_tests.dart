@@ -71,12 +71,13 @@ main(List<String> args) {
 
     test('CardCreation minimal', () async {
 
-      String number = '4242424242424242';
-      int expMonth = 12;
-      int expYear = 2016;
-      Customer customer = await new CustomerCreation().create();
+      var number = '4242424242424242',
+          expMonth = 12,
+          expYear = 2016;
+
+      var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
-      Card card = await (new CardCreation()
+      var card = await (new CardCreation()
           ..number = number
           ..expMonth = expMonth
           ..expYear = expYear
@@ -90,30 +91,32 @@ main(List<String> args) {
 
     test('CardCreation full', () async {
 
-      String cardNumber = '4242424242424242';
-      int cardExpMonth1 = 12;
-      int cardExpYear1 = 2016;
-      int cardCvc = 123;
-      String cardName1 = 'Anita Bath';
-      String cardAddressLine1A = 'Teststreet 2/39A';
-      String cardAddressLine2A = 'line 2';
-      String cardAddressCity1 = 'Vienna';
-      String cardAddressZip1 = '1050';
-      String cardAddressState1 = 'Vienna';
-      String cardAddressCountry1 = 'Austria';
-      // for update tests
-      String cardAddressCity2 = 'Laguna Beach';
-      String cardAddressCountry2 = 'USA';
-      String cardAddressLine1B = 'Addresslinestreet 12/42A';
-      String cardAddressLine2B = 'additional address line';
-      String cardAddressState2 = 'California';
-      String cardAddressZip2 = '92651';
-      int cardExpMonth2 = 3;
-      int cardExpYear2 = 2016;
-      String cardName2 = 'Agatha Bath';
-      Customer customer = await new CustomerCreation().create();
+      var cardNumber = '4242424242424242',
+          cardExpMonth1 = 12,
+          cardExpYear1 = 2016,
+          cardCvc = 123,
+          cardName1 = 'Anita Bath',
+          cardAddressLine1A = 'Teststreet 2/39A',
+          cardAddressLine2A = 'line 2',
+          cardAddressCity1 = 'Vienna',
+          cardAddressZip1 = '1050',
+          cardAddressState1 = 'Vienna',
+          cardAddressCountry1 = 'Austria',
+
+          // for update tests
+          cardAddressCity2 = 'Laguna Beach',
+          cardAddressCountry2 = 'USA',
+          cardAddressLine1B = 'Addresslinestreet 12/42A',
+          cardAddressLine2B = 'additional address line',
+          cardAddressState2 = 'California',
+          cardAddressZip2 = '92651',
+          cardExpMonth2 = 3,
+          cardExpYear2 = 2016,
+          cardName2 = 'Agatha Bath';
+
+      var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
-      Card card = await (new CardCreation()
+      var card = await (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth1
           ..expYear = cardExpYear1
@@ -172,17 +175,18 @@ main(List<String> args) {
 
     test('Delete card', () async {
 
-      String number = '4242424242424242';
-      int expMonth = 12;
-      int expYear = 2016;
-      Customer customer = await new CustomerCreation().create();
+      var number = '4242424242424242',
+          expMonth = 12,
+          expYear = 2016;
+
+      var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
-      Card card = await (new CardCreation()
+      var card = await (new CardCreation()
           ..number = number
           ..expMonth = expMonth
           ..expYear = expYear
       ).create(customer.id);
-      Map response = await Card.delete(customer.id, card.id);
+      var response = await Card.delete(customer.id, card.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], card.id);
 
@@ -190,9 +194,9 @@ main(List<String> args) {
 
     test('List parameters card', () async {
 
-      String number = '4242424242424242';
-      int expMonth = 12;
-      int expYear = 2016;
+      var number = '4242424242424242',
+          expMonth = 12,
+          expYear = 2016;
       Customer customer = await new CustomerCreation().create();
       for (var i = 0; i < 20; i++) {
         await (new CardCreation()
@@ -201,7 +205,7 @@ main(List<String> args) {
             ..expYear = expYear
         ).create(customer.id);
       }
-      CardCollection cards = await Card.list(customer.id, limit: 10);
+      var cards = await Card.list(customer.id, limit: 10);
       expect(cards.data.length, 10);
       expect(cards.hasMore, isTrue);
       cards = await Card.list(customer.id, limit: 10, startingAfter: cards.data.last.id);

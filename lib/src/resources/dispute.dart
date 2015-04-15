@@ -8,7 +8,7 @@ class Dispute extends Resource {
 
   final String objectName = 'dispute';
 
-  static String _path = 'dispute';
+  static var _path = 'dispute';
 
   bool get livemode => _dataMap['livemode'];
 

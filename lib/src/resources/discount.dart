@@ -10,7 +10,7 @@ class Discount extends Resource {
 
   final String objectName = 'discount';
 
-  static String _path = 'discount';
+  static var _path = 'discount';
 
   Coupon get coupon {
     var value = _dataMap['coupon'];
@@ -31,12 +31,12 @@ class Discount extends Resource {
   /**
    * [Deleting a Customer-wide Discount](https://stripe.com/docs/api/curl#delete_discount)
    */
-  static Future deleteForCustomer(String customerId) => StripeService.delete([Customer._path, customerId, Discount._path]);
+  static Future<Map> deleteForCustomer(String customerId) => StripeService.delete([Customer._path, customerId, Discount._path]);
 
   /**
    * [Deleting a Subscription Discount](https://stripe.com/docs/api/curl#delete_subscription_discount)
    */
-  static Future deleteForSubscription(String customerId, String subscriptionId) {
+  static Future<Map> deleteForSubscription(String customerId, String subscriptionId) {
     return StripeService.delete([Customer._path, customerId, Subscription._path, subscriptionId, Discount._path]);
   }
 

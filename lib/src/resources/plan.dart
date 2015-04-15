@@ -10,7 +10,7 @@ class Plan extends ApiResource {
 
   final String objectName = 'plan';
 
-  static String _path = 'plans';
+  static var _path = 'plans';
 
   bool get livemode => _dataMap['livemode'];
 
@@ -46,7 +46,7 @@ class Plan extends ApiResource {
    * [List all Plans](https://stripe.com/docs/api/curl#list_plans)
    */
   static Future<PlanCollection> list({int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
@@ -58,7 +58,7 @@ class Plan extends ApiResource {
   /**
    * [Deleting a plan](https://stripe.com/docs/api/curl#delete_plan)
    */
-  static Future delete(String id) => StripeService.delete([Plan._path, id]);
+  static Future<Map> delete(String id) => StripeService.delete([Plan._path, id]);
 
 }
 

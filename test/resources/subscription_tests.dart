@@ -95,32 +95,32 @@ main(List<String> args) {
     test('SubscriptionCreation minimal', () async {
 
       // Card fields
-      String cardNumber = '5555555555554444';
-      int cardExpMonth = 3;
-      int cardExpYear = 2016;
+      var cardNumber = '5555555555554444',
+          cardExpMonth = 3,
+          cardExpYear = 2016;
 
-      CardCreation cardCreation = new CardCreation()
+      var cardCreation = new CardCreation()
           ..number = cardNumber // only the last 4 digits can be tested
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear;
 
       // Plan fields
-      String planId = 'test plan id';
-      int planAmount = 200;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test plan name';
+      var planId = 'test plan id',
+          planAmount = 200,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test plan name';
 
-      Plan plan = await (new PlanCreation()
+      var plan = await (new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
           ..interval = planInterval
           ..name = planName
       ).create();
-      Customer customer = await new CustomerCreation().create();
+      var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
-      Subscription subscription = await (new SubscriptionCreation()
+      var subscription = await (new SubscriptionCreation()
           ..plan = plan.id
       ).create(customer.id);
       expect(subscription.plan.id, planId);
@@ -132,64 +132,64 @@ main(List<String> args) {
     test('SubscriptionCreation full', () async {
 
       // Coupon fields
-      String couponId1 = 'test coupon id1';
-      String couponDuration1 = 'forever';
-      int couponPercentOff1 = 15;
+      var couponId1 = 'test coupon id1',
+          couponDuration1 = 'forever',
+          couponPercentOff1 = 15;
 
-      CouponCreation couponCreation1 = new CouponCreation()
+      var couponCreation1 = new CouponCreation()
           ..id = couponId1
           ..duration = couponDuration1
           ..percentOff = couponPercentOff1;
 
-      String couponId2 = 'test coupon id2';
-      String couponDuration2 = 'forever';
-      int couponPercentOff2 = 10;
+      var couponId2 = 'test coupon id2',
+          couponDuration2 = 'forever',
+          couponPercentOff2 = 10;
 
-      CouponCreation couponCreation2 = new CouponCreation()
+      var couponCreation2 = new CouponCreation()
           ..id = couponId2
           ..duration = couponDuration2
           ..percentOff = couponPercentOff2;
 
       // Card fields
-      String cardNumber1 = '4242424242424242';
-      int cardExpMonth1 = 12;
-      int cardExpYear1 = 2016;
+      var cardNumber1 = '4242424242424242',
+          cardExpMonth1 = 12,
+          cardExpYear1 = 2016;
 
-      CardCreation cardCreation1 = new CardCreation()
+      var cardCreation1 = new CardCreation()
           ..number = cardNumber1 // only the last 4 digits can be tested
           ..expMonth = cardExpMonth1
           ..expYear = cardExpYear1;
 
-      String cardNumber2 = '5555555555554444';
-      int cardExpMonth2 = 3;
-      int cardExpYear2 = 2016;
+      var cardNumber2 = '5555555555554444',
+          cardExpMonth2 = 3,
+          cardExpYear2 = 2016;
 
-      CardCreation cardCreation2 = new CardCreation()
+      var cardCreation2 = new CardCreation()
           ..number = cardNumber2 // only the last 4 digits can be tested
           ..expMonth = cardExpMonth2
           ..expYear = cardExpYear2;
 
       // Plan fields
-      String planId1 = 'test plan id1';
-      int planAmount1 = 100;
-      String planCurrency1 = 'usd';
-      String planInterval1 = 'month';
-      String planName1 = 'test plan name1';
+      var planId1 = 'test plan id1',
+          planAmount1 = 100,
+          planCurrency1 = 'usd',
+          planInterval1 = 'month',
+          planName1 = 'test plan name1';
 
-      PlanCreation planCreation1 = new PlanCreation()
+      var planCreation1 = new PlanCreation()
           ..id = planId1
           ..amount = planAmount1
           ..currency = planCurrency1
           ..interval = planInterval1
           ..name = planName1;
 
-      String planId2 = 'test plan id2';
-      int planAmount2 = 200;
-      String planCurrency2 = 'usd';
-      String planInterval2 = 'month';
-      String planName2 = 'test plan name2';
+      var planId2 = 'test plan id2',
+          planAmount2 = 200,
+          planCurrency2 = 'usd',
+          planInterval2 = 'month',
+          planName2 = 'test plan name2';
 
-      PlanCreation planCreation2 = new PlanCreation()
+      var planCreation2 = new PlanCreation()
           ..id = planId2
           ..amount = planAmount2
           ..currency = planCurrency2
@@ -197,22 +197,22 @@ main(List<String> args) {
           ..name = planName2;
 
       // Subscription fields
-      int subscriptionTrialEnd1 = new DateTime.now().add(new Duration(days: 30)).millisecondsSinceEpoch ~/ 1000;
-      int subscriptionQuantity1 = 3;
-      // application_fee_percent can only be tested with OAuth key
-      Map subscriptionMetadata1 = {'foo': 'bar1'};
+      var subscriptionTrialEnd1 = new DateTime.now().add(new Duration(days: 30)).millisecondsSinceEpoch ~/ 1000,
+          subscriptionQuantity1 = 3,
+          // application_fee_percent can only be tested with OAuth key
+          subscriptionMetadata1 = {'foo': 'bar1'},
 
-      int subscriptionTrialEnd2 = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000;
-      int subscriptionQuantity2 = 1;
-      // application_fee_percent can only be tested with OAuth key
-      Map subscriptionMetadata2 = {'foo': 'bar2'};
+          subscriptionTrialEnd2 = new DateTime.now().add(new Duration(days: 60)).millisecondsSinceEpoch ~/ 1000,
+          subscriptionQuantity2 = 1,
+          // application_fee_percent can only be tested with OAuth key
+          subscriptionMetadata2 = {'foo': 'bar2'};
 
-      Plan plan1 = await planCreation1.create();
-      Plan plan2 = await planCreation2.create();
-      Coupon coupon1 = await couponCreation1.create();
-      Coupon coupon2 = await couponCreation2.create();
-      Customer customer = await new CustomerCreation().create();
-      Subscription subscription = await (new SubscriptionCreation()
+      var plan1 = await planCreation1.create();
+      var plan2 = await planCreation2.create();
+      var coupon1 = await couponCreation1.create();
+      var coupon2 = await couponCreation2.create();
+      var customer = await new CustomerCreation().create();
+      var subscription = await (new SubscriptionCreation()
           ..plan = plan1.id
           ..coupon = coupon1.id
           ..trialEnd = subscriptionTrialEnd1
@@ -255,39 +255,39 @@ main(List<String> args) {
     test('List parameters subscription', () async {
 
       // Card fields
-      String cardNumber = '4242424242424242';
-      int cardExpMonth = 12;
-      int cardExpYear = 2016;
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016;
 
-      CardCreation cardCreation = new CardCreation()
+      var cardCreation = new CardCreation()
           ..number = cardNumber // only the last 4 digits can be tested
           ..expMonth = cardExpMonth
           ..expYear = cardExpYear;
 
       // Plan fields
-      String planId = 'test plan id';
-      int planAmount = 100;
-      String planCurrency = 'usd';
-      String planInterval = 'month';
-      String planName = 'test plan name';
+      var planId = 'test plan id',
+          planAmount = 100,
+          planCurrency = 'usd',
+          planInterval = 'month',
+          planName = 'test plan name';
 
-      PlanCreation planCreation = new PlanCreation()
+      var planCreation = new PlanCreation()
           ..id = planId
           ..amount = planAmount
           ..currency = planCurrency
           ..interval = planInterval
           ..name = planName;
 
-      Customer customer = await (new CustomerCreation()
+      var customer = await (new CustomerCreation()
           ..card = cardCreation
       ).create();
-      Plan plan = await planCreation.create();
+      var plan = await planCreation.create();
       for (var i = 0; i < 20; i++) {
         await (new SubscriptionCreation()
             ..plan = plan.id
         ).create(customer.id);
       }
-      SubscriptionCollection subscriptions = await Subscription.list(customer.id, limit: 10);
+      var subscriptions = await Subscription.list(customer.id, limit: 10);
       expect(subscriptions.data.length, 10);
       expect(subscriptions.hasMore, isTrue);
       subscriptions = await Subscription.list(customer.id, limit: 10, startingAfter: subscriptions.data.last.id);

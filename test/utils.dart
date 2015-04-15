@@ -34,7 +34,7 @@ Future tearDown() async {
 
 Future deleteAllCustomers() async {
 
-  CustomerCollection customers = await Customer.list(limit: 100);
+  var customers = await Customer.list(limit: 100);
   for (Customer customer in customers.data) {
     log.finest('Delete customer: ${customer.id}');
     await Customer.delete(customer.id);
@@ -45,7 +45,7 @@ Future deleteAllCustomers() async {
 
 Future deleteAllCoupons() async {
 
-  CouponCollection coupons = await Coupon.list(limit: 100);
+  var coupons = await Coupon.list(limit: 100);
   for (Coupon coupon in coupons.data) {
     log.finest('Delete coupon: ${coupon.id}');
     await Coupon.delete(coupon.id);
@@ -56,7 +56,7 @@ Future deleteAllCoupons() async {
 
 Future deleteAllInvoiceItems() async {
 
-  InvoiceItemCollection invoiceItems = await InvoiceItem.list(limit: 100);
+  var invoiceItems = await InvoiceItem.list(limit: 100);
   for (InvoiceItem invoiceItem in invoiceItems.data) {
     await InvoiceItem.delete(invoiceItem.id);
     log.finest('Delete invoice item: ${invoiceItem.id}');
@@ -67,7 +67,7 @@ Future deleteAllInvoiceItems() async {
 
 Future deleteAllRecipients() async {
 
-  RecipientCollection recipients = await Recipient.list(limit: 100);
+  var recipients = await Recipient.list(limit: 100);
   for (Recipient recipient in recipients.data) {
     await Recipient.delete(recipient.id);
     log.finest('Delete customer: ${recipient.id}');
@@ -78,7 +78,7 @@ Future deleteAllRecipients() async {
 
 Future deleteAllPlans() async {
 
-  PlanCollection plans = await Plan.list(limit: 100);
+  var plans = await Plan.list(limit: 100);
   for (Plan plan in plans.data) {
     await Plan.delete(plan.id);
     log.finest('Delete plan: ${plan.id}');

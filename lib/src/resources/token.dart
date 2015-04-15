@@ -10,7 +10,7 @@ class Token extends ApiResource {
 
   final String objectName = 'token';
 
-  static String _path = 'tokens';
+  static var _path = 'tokens';
 
   bool get livemode => _dataMap['livemode'];
 

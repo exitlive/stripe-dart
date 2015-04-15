@@ -10,7 +10,7 @@ class Subscription extends ApiResource {
 
   final String objectName = 'subscription';
 
-  static String _path = 'subscriptions';
+  static var _path = 'subscriptions';
 
   bool get cancelAtPeriodEnd => _dataMap['cancel_at_period_end'];
 
@@ -75,7 +75,7 @@ class Subscription extends ApiResource {
    * [Canceling a Customer's Subscription](https://stripe.com/docs/api/curl#cancel_subscription)
    */
   static Future<Subscription> cancel(String customerId, String subscriptionId, {bool atPeriodEnd, final Map data}) async {
-    Map data = {};
+    var data = {};
     if (atPeriodEnd != null) data['at_period_end'] = atPeriodEnd;
     if (data == {}) data = null;
     var dataMap = await StripeService.delete([Customer._path, customerId, Subscription._path, subscriptionId], data: data);
@@ -86,7 +86,7 @@ class Subscription extends ApiResource {
    * [Listing subscriptions](https://stripe.com/docs/api/curl#list_subscriptions)
    */
   static Future<SubscriptionCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) async {
-    Map data = {};
+    var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
     if (endingBefore != null) data['ending_before'] = endingBefore;
