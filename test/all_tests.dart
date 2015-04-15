@@ -39,13 +39,13 @@ class TestConfiguration extends SimpleConfiguration {
     var result = '';
     switch (testCase.result) {
       case FAIL:
-        result = '[$redColor${testCase.result.toUpperCase()}$resetColor]';
+        result = '[$redColor${testCase.result.toUpperCase()}$whiteColor]';
         break;
       case ERROR:
-        result = '[$redColor${testCase.result.toUpperCase()}$resetColor]';
+        result = '[$redColor${testCase.result.toUpperCase()}$whiteColor]';
         break;
       case PASS:
-        result = '[$greenColor${testCase.result.toUpperCase()}$resetColor]';
+        result = '[$greenColor${testCase.result.toUpperCase()}$whiteColor]';
         break;
       default:
         result = '[${testCase.result.toUpperCase()}]';
@@ -53,7 +53,7 @@ class TestConfiguration extends SimpleConfiguration {
 
     log.info('$result: ${testCase.description}');
     if (!testCase.passed) {
-      log.info('$redColor${testCase.message}$resetColor');
+      log.info('$redColor${testCase.message}$whiteColor');
       log.severe(new Trace.from(testCase.stackTrace).terse);
     }
   }
