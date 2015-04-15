@@ -26,9 +26,12 @@ import 'package:stack_trace/stack_trace.dart';
 /// Unittest configuration
 class TestConfiguration extends SimpleConfiguration {
 
-  final String greenColor = '\u001b[33;32m';
-  final String redColor = '\u001b[33;31m';
-  final String whiteColor = '\u001B[37m';
+  // change color to green
+  final String cg = '\u001b[33;32m';
+  // change color to red
+  final String cr = '\u001b[33;31m';
+  // change color to white
+  final String cw = '\u001B[37m';
 
   var log = new Logger('Test');
 
@@ -39,21 +42,21 @@ class TestConfiguration extends SimpleConfiguration {
     var result = '';
     switch (testCase.result) {
       case FAIL:
-        result = '[$redColor${testCase.result.toUpperCase()}$whiteColor]';
+        result = '$cr${testCase.result.toUpperCase()}$cw';
         break;
       case ERROR:
-        result = '[$redColor${testCase.result.toUpperCase()}$whiteColor]';
+        result = '$cr${testCase.result.toUpperCase()}$cw';
         break;
       case PASS:
-        result = '[$greenColor${testCase.result.toUpperCase()}$whiteColor]';
+        result = '$cg${testCase.result.toUpperCase()}$cw';
         break;
       default:
-        result = '[${testCase.result.toUpperCase()}]';
+        result = '${testCase.result.toUpperCase()}';
     }
 
     log.info('$result: ${testCase.description}');
     if (!testCase.passed) {
-      log.info('$redColor${testCase.message}$whiteColor');
+      log.info('$cr${testCase.message}$cw');
       log.severe(new Trace.from(testCase.stackTrace).terse);
     }
   }

@@ -139,7 +139,7 @@ main(List<String> args) {
 
   });
 
-  group('Invoice online', () {
+  solo_group('Invoice online', () {
 
     tearDown(() {
       return utils.tearDown();
@@ -214,7 +214,7 @@ main(List<String> args) {
       } catch (e) {
         // nothing to invoice for a new customer
         expect(e, new isInstanceOf<InvalidRequestErrorException>());
-        expect(e.errorMessage, 'Nothing to invoice for subscription');
+        expect(e.errorMessage, 'Nthing to invoice for subscription');
       }
 
     });
