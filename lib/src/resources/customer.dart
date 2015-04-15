@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Customers](https://stripe.com/docs/api/curl#customers)
  */
 class Customer extends ApiResource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'customer';
@@ -23,7 +21,7 @@ class Customer extends ApiResource {
   String get defaultCard {
     var value = _dataMap['default_card'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Card.fromMap(value).id;
   }
 
@@ -87,41 +85,35 @@ class Customer extends ApiResource {
    * [Deleting a Customer](https://stripe.com/docs/api/curl#delete_customer)
    */
   static Future<Map> delete(String id) => StripeService.delete([Customer._path, id]);
-
 }
 
-
 class CustomerCollection extends ResourceCollection {
-
   Customer _getInstanceFromMap(map) => new Customer.fromMap(map);
 
   CustomerCollection.fromMap(Map map) : super.fromMap(map);
-
 }
-
 
 /**
  * [Creating a New Customer](https://stripe.com/docs/api/curl#create_customer)
  */
 class CustomerCreation extends ResourceRequest {
+  set accountBalance(int accountBalance) => _setMap('account_balance', accountBalance);
 
-  set accountBalance (int accountBalance) => _setMap('account_balance', accountBalance);
+  set card(CardCreation card) => _setMap('card', card);
 
-  set card (CardCreation card) => _setMap('card', card);
+  set coupon(String coupon) => _setMap('coupon', coupon);
 
-  set coupon (String coupon) => _setMap('coupon', coupon);
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
+  set email(String email) => _setMap('email', email);
 
-  set email (String email) => _setMap('email', email);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set plan(String plan) => _setMap('plan', plan);
 
-  set plan (String plan) => _setMap('plan', plan);
+  set quantity(int quantity) => _setMap('quantity', quantity);
 
-  set quantity (int quantity) => _setMap('quantity', quantity);
-
-  set trialEnd (int trialEnd) => _setMap('trial_end', trialEnd);
+  set trialEnd(int trialEnd) => _setMap('trial_end', trialEnd);
 
   trialEndNow() => _setMap('trial_end', 'now');
 
@@ -129,32 +121,28 @@ class CustomerCreation extends ResourceRequest {
     var dataMap = await StripeService.create([Customer._path], _getMap());
     return new Customer.fromMap(dataMap);
   }
-
 }
-
 
 /**
  * [Updating a Customer](https://stripe.com/docs/api/curl#update_customer)
  */
 class CustomerUpdate extends ResourceRequest {
+  set accountBalance(int accountBalance) => _setMap('account_balance', accountBalance);
 
-  set accountBalance (int accountBalance) => _setMap('account_balance', accountBalance);
+  set card(CardCreation card) => _setMap('card', card);
 
-  set card (CardCreation card) => _setMap('card', card);
+  set coupon(String coupon) => _setMap('coupon', coupon);
 
-  set coupon (String coupon) => _setMap('coupon', coupon);
+  set defaultCard(String defaultCard) => _setMap('default_card', defaultCard);
 
-  set defaultCard (String defaultCard) => _setMap('default_card', defaultCard);
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
+  set email(String email) => _setMap('email', email);
 
-  set email (String email) => _setMap('email', email);
-
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Customer> update(String id) async {
     var dataMap = await StripeService.update([Customer._path, id], _getMap());
     return new Customer.fromMap(dataMap);
   }
-
 }

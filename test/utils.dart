@@ -9,18 +9,15 @@ import 'package:logging/logging.dart';
 var log = new Logger('Test Utils');
 
 setApiKeyFromArgs(List<String> args) {
-
   if (args.length < 1) {
     log.severe('Error. Most tests can not execute without a Stripe API key.');
     log.severe('Provide your stripe API key as the first command line argument!');
     exit(1);
   }
   StripeService.apiKey = args.first;
-
 }
 
 Future tearDown() async {
-
   log.finest('Teardown Start');
   await deleteAllCustomers();
   await deleteAllCoupons();
@@ -28,60 +25,44 @@ Future tearDown() async {
   await deleteAllPlans();
   await deleteAllRecipients();
   log.finest('Teardown End');
-
 }
 
-
 Future deleteAllCustomers() async {
-
   var customers = await Customer.list(limit: 100);
   for (Customer customer in customers.data) {
     log.finest('Delete customer: ${customer.id}');
     await Customer.delete(customer.id);
   }
-
 }
 
-
 Future deleteAllCoupons() async {
-
   var coupons = await Coupon.list(limit: 100);
   for (Coupon coupon in coupons.data) {
     log.finest('Delete coupon: ${coupon.id}');
     await Coupon.delete(coupon.id);
   }
-
 }
 
-
 Future deleteAllInvoiceItems() async {
-
   var invoiceItems = await InvoiceItem.list(limit: 100);
   for (InvoiceItem invoiceItem in invoiceItems.data) {
     await InvoiceItem.delete(invoiceItem.id);
     log.finest('Delete invoice item: ${invoiceItem.id}');
   }
-
 }
 
-
 Future deleteAllRecipients() async {
-
   var recipients = await Recipient.list(limit: 100);
   for (Recipient recipient in recipients.data) {
     await Recipient.delete(recipient.id);
     log.finest('Delete customer: ${recipient.id}');
   }
-
 }
 
-
 Future deleteAllPlans() async {
-
   var plans = await Plan.list(limit: 100);
   for (Plan plan in plans.data) {
     await Plan.delete(plan.id);
     log.finest('Delete plan: ${plan.id}');
   }
-
 }

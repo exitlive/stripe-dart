@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var examplePlan = """
     {
       "interval": "month",
@@ -25,15 +24,11 @@ var examplePlan = """
       "statement_descriptor": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Plan offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(examplePlan);
       var plan = new Plan.fromMap(map);
       expect(plan.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
@@ -47,13 +42,10 @@ main(List<String> args) {
       expect(plan.intervalCount, map['interval_count']);
       expect(plan.trialPeriodDays, map['trial_period_days']);
       expect(plan.currency, map['currency']);
-
     });
-
   });
 
   group('Plan online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
@@ -68,18 +60,16 @@ main(List<String> args) {
           planName = 'test name';
 
       var plan = await (new PlanCreation()
-          ..id = planId
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..name = planName
-      ).create();
+        ..id = planId
+        ..amount = planAmount
+        ..currency = planCurrency
+        ..interval = planInterval
+        ..name = planName).create();
       expect(plan.id, planId);
       expect(plan.amount, planAmount);
       expect(plan.currency, planCurrency);
       expect(plan.interval, planInterval);
       expect(plan.name, planName);
-
     });
 
     test('PlanCreation full', () async {
@@ -94,22 +84,20 @@ main(List<String> args) {
           planTrialPeriodDays = 3,
           planMetadata1 = {'foo': 'bar1'},
           planStatementDescriptor1 = 'descriptor1',
-
           planName2 = 'test name2',
           planMetadata2 = {'foo': 'bar2'},
           planStatementDescriptor2 = 'descriptor2';
 
       var plan = await (new PlanCreation()
-          ..id = planId
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..intervalCount = planIntervalCount
-          ..name = planName1
-          ..trialPeriodDays = planTrialPeriodDays
-          ..metadata = planMetadata1
-          ..statementDescriptor = planStatementDescriptor1
-      ).create();
+        ..id = planId
+        ..amount = planAmount
+        ..currency = planCurrency
+        ..interval = planInterval
+        ..intervalCount = planIntervalCount
+        ..name = planName1
+        ..trialPeriodDays = planTrialPeriodDays
+        ..metadata = planMetadata1
+        ..statementDescriptor = planStatementDescriptor1).create();
       expect(plan.id, planId);
       expect(plan.amount, planAmount);
       expect(plan.currency, planCurrency);
@@ -130,16 +118,14 @@ main(List<String> args) {
       expect(plan.metadata, planMetadata1);
       expect(plan.statementDescriptor, planStatementDescriptor1);
       plan = await (new PlanUpdate()
-          ..name = planName2
-          ..metadata = planMetadata2
-          ..statementDescriptor = planStatementDescriptor2
-      ).update(plan.id);
+        ..name = planName2
+        ..metadata = planMetadata2
+        ..statementDescriptor = planStatementDescriptor2).update(plan.id);
       // testing update
       expect(plan.id, planId);
       expect(plan.name, planName2);
       expect(plan.metadata, planMetadata2);
       expect(plan.statementDescriptor, planStatementDescriptor2);
-
     });
 
     test('Delete Plan', () async {
@@ -152,12 +138,11 @@ main(List<String> args) {
           planName = 'test name';
 
       var plan = await (new PlanCreation()
-          ..id = planId
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..name = planName
-      ).create();
+        ..id = planId
+        ..amount = planAmount
+        ..currency = planCurrency
+        ..interval = planInterval
+        ..name = planName).create();
       expect(plan.id, planId);
       expect(plan.amount, planAmount);
       expect(plan.currency, planCurrency);
@@ -166,7 +151,6 @@ main(List<String> args) {
       var response = await Plan.delete(plan.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], plan.id);
-
     });
 
     test('List parameters plan', () async {
@@ -180,12 +164,11 @@ main(List<String> args) {
 
       for (var i = 0; i < 20; i++) {
         await (new PlanCreation()
-            ..id = planId + i.toString()
-            ..amount = planAmount
-            ..currency = planCurrency
-            ..interval = planInterval
-            ..name = planName + i.toString()
-        ).create();
+          ..id = planId + i.toString()
+          ..amount = planAmount
+          ..currency = planCurrency
+          ..interval = planInterval
+          ..name = planName + i.toString()).create();
       }
       var plans = await Plan.list(limit: 10);
       expect(plans.data.length, 10);
@@ -196,9 +179,6 @@ main(List<String> args) {
       plans = await Plan.list(limit: 10, endingBefore: plans.data.first.id);
       expect(plans.data.length, 10);
       expect(plans.hasMore, isFalse);
-
     });
-
   });
-
 }

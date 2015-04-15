@@ -26,13 +26,10 @@ var exampleCoupon = """
       }
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Coupon offline', () {
-
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(exampleCoupon);
 
@@ -51,13 +48,10 @@ main(List<String> args) {
       expect(coupon.durationInMonths, map['duration_in_months']);
       expect(coupon.valid, map['valid']);
       expect(coupon.metadata, map['metadata']);
-
     });
-
   });
 
   group('Coupon online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
@@ -69,15 +63,12 @@ main(List<String> args) {
           couponPercentOff = 5;
 
       var coupon = await (new CouponCreation()
-          ..duration = couponDuration
-          ..percentOff = couponPercentOff
-      ).create();
+        ..duration = couponDuration
+        ..percentOff = couponPercentOff).create();
       expect(coupon.id, new isInstanceOf<String>());
       expect(coupon.duration, couponDuration);
       expect(coupon.percentOff, couponPercentOff);
-
     });
-
 
     test('CouponCreation full', () async {
 
@@ -92,15 +83,14 @@ main(List<String> args) {
           couponRedeemBy = 1451520000;
 
       var coupon = await (new CouponCreation()
-          ..id = couponId
-          ..duration = couponDuration
-          ..amountOff = couponAmountOff
-          ..currency = couponCurrency
-          ..durationInMonths = couponDurationInMoths
-          ..maxRedemptions = couponMaxRedemptions
-          ..metadata = couponMetadata
-          ..redeemBy = couponRedeemBy
-      ).create();
+        ..id = couponId
+        ..duration = couponDuration
+        ..amountOff = couponAmountOff
+        ..currency = couponCurrency
+        ..durationInMonths = couponDurationInMoths
+        ..maxRedemptions = couponMaxRedemptions
+        ..metadata = couponMetadata
+        ..redeemBy = couponRedeemBy).create();
       expect(coupon.id, couponId);
       expect(coupon.duration, couponDuration);
       expect(coupon.amountOff, couponAmountOff);
@@ -119,7 +109,6 @@ main(List<String> args) {
       expect(coupon.maxRedemptions, couponMaxRedemptions);
       expect(coupon.metadata, couponMetadata);
       expect(coupon.redeemBy, couponRedeemBy);
-
     });
 
     test('Delete Coupon', () async {
@@ -129,16 +118,14 @@ main(List<String> args) {
           couponPercentOff = 5;
 
       var coupon = await (new CouponCreation()
-          ..duration = couponDuration
-          ..percentOff = couponPercentOff
-      ).create();
+        ..duration = couponDuration
+        ..percentOff = couponPercentOff).create();
       expect(coupon.id, new isInstanceOf<String>());
       expect(coupon.duration, couponDuration);
       expect(coupon.percentOff, couponPercentOff);
       var response = await Coupon.delete(coupon.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], coupon.id);
-
     });
 
     test('List parameters Coupon', () async {
@@ -148,9 +135,8 @@ main(List<String> args) {
           couponPercentOff = 5;
       for (var i = 0; i < 20; i++) {
         await (new CouponCreation()
-            ..duration = couponDuration
-            ..percentOff = couponPercentOff
-        ).create();
+          ..duration = couponDuration
+          ..percentOff = couponPercentOff).create();
       }
 
       var coupons = await Coupon.list(limit: 10);
@@ -162,9 +148,6 @@ main(List<String> args) {
       coupons = await Coupon.list(limit: 10, endingBefore: coupons.data.first.id);
       expect(coupons.data.length, 10);
       expect(coupons.hasMore, isFalse);
-
     });
-
   });
-
 }

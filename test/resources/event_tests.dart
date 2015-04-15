@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleEvent = """
     {
       "id": "evt_1046Ri41dfVNZFcqJ8BRwM05",
@@ -185,15 +184,11 @@ var exampleEvent = """
       "request": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Event offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleEvent);
       var event = new Event.fromMap(map);
       expect(event.id, map['id']);
@@ -201,19 +196,15 @@ main(List<String> args) {
       expect(event.livemode, map['livemode']);
       expect(event.type, map['type']);
       expect(event.data.object, map['data']['object']);
-
     });
-
   });
 
   group('Event online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
 
     test('List and retrieve Events', () async {
-
       var customer = await new CustomerCreation().create();
       var events = await Event.list(limit: 1, type: 'customer.created');
       var eventFromList = events.data.first;
@@ -224,9 +215,6 @@ main(List<String> args) {
       expect(eventFromRetrieve.id, eventFromList.id);
       expect(eventFromRetrieve.livemode, eventFromList.livemode);
       expect(eventFromRetrieve.type, eventFromList.type);
-
     });
-
   });
-
 }

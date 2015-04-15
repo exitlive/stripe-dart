@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Recipient](https://stripe.com/docs/api/curl#create_recipient)
  */
 class Recipient extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'recipient';
@@ -62,75 +60,63 @@ class Recipient extends Resource {
    * [Deleting a Recipient](https://stripe.com/docs/api/curl#delete_recipient)
    */
   static Future<Map> delete(String recipientId) => StripeService.delete([Recipient._path, recipientId]);
-
 }
 
-
 class RecipientCollection extends ResourceCollection {
-
   Recipient _getInstanceFromMap(map) => new Recipient.fromMap(map);
 
   RecipientCollection.fromMap(Map map) : super.fromMap(map);
-
 }
-
 
 /**
  * [Creating a New Recipient](https://stripe.com/docs/api/curl#create_recipient)
  */
 class RecipientCreation extends ResourceRequest {
+  @required
+  set name(String name) => _setMap('name', name);
 
   @required
-  set name (String name) => _setMap('name', name);
+  set type(String type) => _setMap('type', type);
 
-  @required
-  set type (String type) => _setMap('type', type);
+  set taxId(String taxId) => _setMap('tax_id', taxId);
 
-  set taxId (String taxId) => _setMap('tax_id', taxId);
+  set bankAccount(BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
 
-  set bankAccount (BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
+  set email(String email) => _setMap('email', email);
 
-  set email (String email) => _setMap('email', email);
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
-
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Recipient> create() async {
     var dataMap = await StripeService.create([Recipient._path], _getMap());
     return new Recipient.fromMap(dataMap);
   }
-
 }
-
 
 /**
  * [Updating a recipient](https://stripe.com/docs/api/curl#update_recipient)
  */
 class RecipientUpdate extends ResourceRequest {
+  set name(String name) => _setMap('name', name);
 
-  set name (String name) => _setMap('name', name);
+  set taxId(String taxId) => _setMap('tax_id', taxId);
 
-  set taxId (String taxId) => _setMap('tax_id', taxId);
+  set bankAccount(BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
 
-  set bankAccount (BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
+  set email(String email) => _setMap('email', email);
 
-  set email (String email) => _setMap('email', email);
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
-
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Recipient> update(String id) async {
     var dataMap = await StripeService.update([Recipient._path, id], _getMap());
     return new Recipient.fromMap(dataMap);
   }
-
 }
 
-
 class BankAccount extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'bank_account';
@@ -148,16 +134,12 @@ class BankAccount extends Resource {
   String get fingerprint => _dataMap['fingerprint'];
 
   BankAccount.fromMap(Map dataMap) : super.fromMap(dataMap);
-
 }
 
-
 class BankAccountRequest extends ResourceRequest {
+  set country(String country) => _setMap('country', country);
 
-  set country (String country) => _setMap('country', country);
+  set routingNumber(String routingNumber) => _setMap('routing_number', routingNumber);
 
-  set routingNumber (String routingNumber) => _setMap('routing_number', routingNumber);
-
-  set accountNumber (String accountNumber) => _setMap('account_number', accountNumber);
-
+  set accountNumber(String accountNumber) => _setMap('account_number', accountNumber);
 }

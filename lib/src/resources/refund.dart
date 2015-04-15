@@ -1,8 +1,6 @@
 part of stripe;
 
-
 class Refund extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'refund';
@@ -16,7 +14,7 @@ class Refund extends Resource {
   String get balanceTransaction {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new BalanceTransaction.fromMap(value).id;
   }
 
@@ -27,13 +25,10 @@ class Refund extends Resource {
   }
 
   Refund.fromMap(Map dataMap) : super.fromMap(dataMap);
-
 }
 
 class RefundCollection extends ResourceCollection {
-
   Refund _getInstanceFromMap(map) => new Refund.fromMap(map);
 
   RefundCollection.fromMap(Map map) : super.fromMap(map);
-
 }

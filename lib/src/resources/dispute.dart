@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Disputes](https://stripe.com/docs/api/curl#disputes)
  */
 class Dispute extends Resource {
-
   final String objectName = 'dispute';
 
   static var _path = 'dispute';
@@ -17,7 +15,7 @@ class Dispute extends Resource {
   String get charge {
     var value = _dataMap['charge'];
     if (value == null) return null;
-    else if(value is String) return _dataMap['charge'];
+    else if (value is String) return _dataMap['charge'];
     else return new Charge.fromMap(value).id;
   }
 
@@ -38,7 +36,7 @@ class Dispute extends Resource {
   String get balanceTransaction {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else if(value is String) return _dataMap['balance_transaction'];
+    else if (value is String) return _dataMap['balance_transaction'];
     else return new BalanceTransaction.fromMap(value).id;
   }
 
@@ -60,20 +58,16 @@ class Dispute extends Resource {
    * [Closing a dispute](https://stripe.com/docs/api/curl#close_dispute)
    */
   static Future close(String chargeId) => StripeService.post([Charge._path, chargeId, Dispute._path, 'close']);
-
 }
-
 
 /**
  * [Updating a dispute](https://stripe.com/docs/api/curl#update_dispute)
  */
 class DisputeUpdate extends ResourceRequest {
-
-  set evidence (String evidence) => _setMap('evidence', evidence);
+  set evidence(String evidence) => _setMap('evidence', evidence);
 
   Future<Customer> update(String chargeId) async {
     var dataMap = await StripeService.update([Charge._path, chargeId, Dispute._path], _getMap());
     return new Customer.fromMap(dataMap);
   }
-
 }

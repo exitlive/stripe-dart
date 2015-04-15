@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleRecipient = """
     {
       "id": "rp_14gyAY41dfVNZFcqD6nfNcbw",
@@ -34,15 +33,11 @@ var exampleRecipient = """
       "default_card": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Recipient offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleRecipient);
       var recipient = new Recipient.fromMap(map);
       expect(recipient.id, map['id']);
@@ -55,13 +50,10 @@ main(List<String> args) {
       expect(recipient.verified, map['verified']);
       expect(recipient.metadata, map['metadata']);
       expect(recipient.activeAccount, map['active_account']);
-
     });
-
   });
 
   group('Recipient online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
@@ -73,13 +65,11 @@ main(List<String> args) {
           recipientType = 'corporation';
 
       var recipient = await (new RecipientCreation()
-          ..name = recipientName
-          ..type = recipientType
-      ).create();
+        ..name = recipientName
+        ..type = recipientType).create();
       expect(recipient.id, new isInstanceOf<String>());
       expect(recipient.name, recipientName);
       expect(recipient.type, recipientType);
-
     });
 
     test('RecipientCreation full', () async {
@@ -90,7 +80,6 @@ main(List<String> args) {
           recipientEmail1 = 'test@test1.com',
           recipientDescription1 = 'test description1',
           recipientMetadata1 = {'foo': 'bar1'},
-
           recipientName2 = 'Test Name2',
           recipientTaxId2 = '000000000',
           recipientEmail2 = 'test@test2.com',
@@ -104,25 +93,22 @@ main(List<String> args) {
           bankAccountAccountNumber2 = '000123456789';
 
       var recipientBankAccount1 = (new BankAccountRequest()
-          ..country = bankAccountCountry
-          ..routingNumber = bankAccountRoutingNumber
-          ..accountNumber = bankAccountAccountNumber1
-      );
+        ..country = bankAccountCountry
+        ..routingNumber = bankAccountRoutingNumber
+        ..accountNumber = bankAccountAccountNumber1);
 
       var recipientBankAccount2 = (new BankAccountRequest()
-          ..country = bankAccountCountry
-          ..routingNumber = bankAccountRoutingNumber
-          ..accountNumber = bankAccountAccountNumber2
-      );
+        ..country = bankAccountCountry
+        ..routingNumber = bankAccountRoutingNumber
+        ..accountNumber = bankAccountAccountNumber2);
 
       var recipient = await (new RecipientCreation()
-          ..name = recipientName1
-          ..type = recipientType
-          ..bankAccount = recipientBankAccount1
-          ..email = recipientEmail1
-          ..description = recipientDescription1
-          ..metadata = recipientMetadata1
-      ).create();
+        ..name = recipientName1
+        ..type = recipientType
+        ..bankAccount = recipientBankAccount1
+        ..email = recipientEmail1
+        ..description = recipientDescription1
+        ..metadata = recipientMetadata1).create();
       expect(recipient.id, new isInstanceOf<String>());
       expect(recipient.name, recipientName1);
       expect(recipient.type, recipientType);
@@ -149,13 +135,12 @@ main(List<String> args) {
       expect(recipient.description, recipientDescription1);
       expect(recipient.metadata, recipientMetadata1);
       recipient = await (new RecipientUpdate()
-          ..name = recipientName2
-          ..taxId = recipientTaxId2
-          ..bankAccount = recipientBankAccount2
-          ..email = recipientEmail2
-          ..description = recipientDescription2
-          ..metadata = recipientMetadata2
-      ).update(recipient.id);
+        ..name = recipientName2
+        ..taxId = recipientTaxId2
+        ..bankAccount = recipientBankAccount2
+        ..email = recipientEmail2
+        ..description = recipientDescription2
+        ..metadata = recipientMetadata2).update(recipient.id);
       expect(recipient.id, new isInstanceOf<String>());
       expect(recipient.name, recipientName2);
       expect(recipient.type, recipientType);
@@ -168,7 +153,6 @@ main(List<String> args) {
       expect(recipient.email, recipientEmail2);
       expect(recipient.description, recipientDescription2);
       expect(recipient.metadata, recipientMetadata2);
-
     });
 
     test('Delete Recipient', () async {
@@ -177,16 +161,14 @@ main(List<String> args) {
       var recipientName = 'test name',
           recipientType = 'corporation';
       var recipient = await (new RecipientCreation()
-          ..name = recipientName
-          ..type = recipientType
-      ).create();
+        ..name = recipientName
+        ..type = recipientType).create();
       expect(recipient.id, new isInstanceOf<String>());
       expect(recipient.name, recipientName);
       expect(recipient.type, recipientType);
       var response = await Recipient.delete(recipient.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], recipient.id);
-
     });
 
     test('List parameters Recipient', () async {
@@ -197,9 +179,8 @@ main(List<String> args) {
 
       for (var i = 0; i < 20; i++) {
         await (new RecipientCreation()
-            ..name = recipientName + i.toString()
-            ..type = recipientType
-        ).create();
+          ..name = recipientName + i.toString()
+          ..type = recipientType).create();
       }
 
       var recipients = await Recipient.list(limit: 10);
@@ -211,9 +192,6 @@ main(List<String> args) {
       recipients = await Recipient.list(limit: 10, endingBefore: recipients.data.first.id);
       expect(recipients.data.length, 10);
       expect(recipients.hasMore, isFalse);
-
     });
-
   });
-
 }

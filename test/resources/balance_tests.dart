@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleBalance = """
     {
       "pending": [
@@ -25,7 +24,6 @@ var exampleBalance = """
       "livemode": false,
       "object": "balance"
     }""";
-
 
 var exampleBalanceTransaction = """
     {
@@ -52,46 +50,35 @@ var exampleBalanceTransaction = """
       "description": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Balance offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleBalance);
       var balance = new Balance.fromMap(map);
       expect(balance.pending.first.amount, map['pending'][0]['amount']);
       expect(balance.pending.first.currency, map['pending'][0]['currency']);
       expect(balance.available.first.amount, map['available'][0]['amount']);
       expect(balance.available.first.currency, map['available'][0]['currency']);
-
     });
-
   });
 
   group('Balance online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
 
     test('Retrieve Balance', () async {
-
       var balance = await Balance.retrieve();
       expect(balance.livemode, isFalse);
       // other tests will depend on your stripe account
 
     });
-
   });
 
   group('BalanceTransaction offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleBalanceTransaction);
       var balanceTransaction = new BalanceTransaction.fromMap(map);
       expect(balanceTransaction.id, map['id']);
@@ -110,9 +97,6 @@ main(List<String> args) {
       expect(balanceTransaction.feeDetails.first.application, map['fee_details'].first['application']);
       expect(balanceTransaction.source, map['source']);
       expect(balanceTransaction.description, map['description']);
-
     });
-
   });
-
 }

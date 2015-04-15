@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Charges](https://stripe.com/docs/api/curl#charges)
  */
 class Charge extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'charge';
@@ -43,7 +41,7 @@ class Charge extends Resource {
   String get balanceTransaction {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else if(value is String) return _dataMap['balance_transaction'];
+    else if (value is String) return _dataMap['balance_transaction'];
     else return new BalanceTransaction.fromMap(value).id;
   }
 
@@ -56,7 +54,7 @@ class Charge extends Resource {
   String get customer {
     var value = _dataMap['customer'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Customer.fromMap(value).id;
   }
 
@@ -81,7 +79,7 @@ class Charge extends Resource {
   String get invoice {
     var value = _dataMap['invoice'];
     if (value == null) return null;
-    else if(value is String) return _dataMap['invoice'];
+    else if (value is String) return _dataMap['invoice'];
     else return new Invoice.fromMap(value).id;
   }
 
@@ -143,68 +141,58 @@ class Charge extends Resource {
     var dataMap = await StripeService.list([Charge._path], data: data);
     return new ChargeCollection.fromMap(dataMap);
   }
-
 }
 
-
 class ChargeCollection extends ResourceCollection {
-
   Charge _getInstanceFromMap(map) => new Charge.fromMap(map);
 
   ChargeCollection.fromMap(Map map) : super.fromMap(map);
-
 }
-
 
 /**
  * [Creating a new charge (charging a credit card)](https://stripe.com/docs/api/curl#create_charge)
  */
 class ChargeCreation extends ResourceRequest {
+  @required
+  set amount(int amount) => _setMap('amount', amount);
 
   @required
-  set amount (int amount) => _setMap('amount', amount);
+  set currency(String currency) => _setMap('currency', currency);
 
-  @required
-  set currency (String currency) => _setMap('currency', currency);
+  set customer(String customer) => _setMap('customer', customer);
 
-  set customer (String customer) => _setMap('customer', customer);
+  set cardId(String cardId) => _setMap('card', cardId);
 
-  set cardId (String cardId) => _setMap('card', cardId);
+  set cardToken(String cardToken) => _setMap('card', cardToken);
 
-  set cardToken (String cardToken) => _setMap('card', cardToken);
+  set card(CardCreation card) => _setMap('card', card);
 
-  set card (CardCreation card) => _setMap('card', card);
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set capture(bool capture) => _setMap('capture', capture.toString());
 
-  set capture (bool capture) => _setMap('capture', capture.toString());
+  set statementDescriptor(String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
-  set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
-
-  set applicationFee (int applicationFee) => _setMap('application_fee', applicationFee);
+  set applicationFee(int applicationFee) => _setMap('application_fee', applicationFee);
 
   Future<Charge> create() async {
     var dataMap = await StripeService.create([Charge._path], _getMap());
     return new Charge.fromMap(dataMap);
   }
-
 }
-
 
 /**
  * [Updating a Charge](https://stripe.com/docs/api/curl#update_charge)
  */
 class ChargeUpdate extends ResourceRequest {
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
-
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Charge> update(String id) async {
     var dataMap = await StripeService.update([Charge._path, id], _getMap());
     return new Charge.fromMap(dataMap);
   }
-
 }

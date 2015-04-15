@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleCustomer = """
     {
       "object": "customer",
@@ -41,15 +40,11 @@ var exampleCustomer = """
       "default_card": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Customer offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleCustomer);
       var customer = new Customer.fromMap(map);
       expect(customer.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
@@ -67,24 +62,18 @@ main(List<String> args) {
       expect(customer.cards.data.length, map['cards']['data'].length);
       expect(customer.cards.url, map['cards']['url']);
       expect(customer.defaultCard, map['default_card']);
-
     });
-
   });
 
   group('Customer online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
 
     test('CustomerCreation minimal', () async {
-
       var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
-
     });
-
 
     test('CustomerCreation full', () async {
 
@@ -94,18 +83,18 @@ main(List<String> args) {
           cardExpYear1 = 2016;
 
       var cardCreation1 = new CardCreation()
-          ..number = cardNumber1 // only the last 4 digits can be tested
-          ..expMonth = cardExpMonth1
-          ..expYear = cardExpYear1;
+        ..number = cardNumber1 // only the last 4 digits can be tested
+        ..expMonth = cardExpMonth1
+        ..expYear = cardExpYear1;
 
       var cardNumber2 = '5555555555554444',
           cardExpMonth2 = 3,
           cardExpYear2 = 2016;
 
       var cardCreation2 = new CardCreation()
-          ..number = cardNumber2 // only the last 4 digits can be tested
-          ..expMonth = cardExpMonth2
-          ..expYear = cardExpYear2;
+        ..number = cardNumber2 // only the last 4 digits can be tested
+        ..expMonth = cardExpMonth2
+        ..expYear = cardExpYear2;
 
       // Coupon fields
       var couponId1 = 'test coupon id1',
@@ -113,18 +102,18 @@ main(List<String> args) {
           couponPercentOff1 = 15;
 
       var couponCreation1 = new CouponCreation()
-          ..id = couponId1
-          ..duration = couponDuration1
-          ..percentOff = couponPercentOff1;
+        ..id = couponId1
+        ..duration = couponDuration1
+        ..percentOff = couponPercentOff1;
 
       var couponId2 = 'test coupon id2',
           couponDuration2 = 'forever',
           couponPercentOff2 = 20;
 
       var couponCreation2 = new CouponCreation()
-          ..id = couponId2
-          ..duration = couponDuration2
-          ..percentOff = couponPercentOff2;
+        ..id = couponId2
+        ..duration = couponDuration2
+        ..percentOff = couponPercentOff2;
 
       // Plan fields
       var planId = 'test plan id',
@@ -134,11 +123,11 @@ main(List<String> args) {
           planName = 'test plan name';
 
       var planCreation = new PlanCreation()
-          ..id = planId
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..name = planName;
+        ..id = planId
+        ..amount = planAmount
+        ..currency = planCurrency
+        ..interval = planInterval
+        ..name = planName;
 
       // Customer fields
       var customerAccountBalance1 = 100001,
@@ -154,15 +143,15 @@ main(List<String> args) {
           customerMetadata2 = {'foo': 'bar2'};
 
       var customerCreation = new CustomerCreation()
-          ..accountBalance = customerAccountBalance1
-          ..card = cardCreation1
-          ..coupon = couponId1
-          ..description = customerDescription1
-          ..email = customerEmail1
-          ..metadata = customerMetadata1
-          ..plan = planId
-          ..quantity = customerQuantity
-          ..trialEnd = customerTrialEnd;
+        ..accountBalance = customerAccountBalance1
+        ..card = cardCreation1
+        ..coupon = couponId1
+        ..description = customerDescription1
+        ..email = customerEmail1
+        ..metadata = customerMetadata1
+        ..plan = planId
+        ..quantity = customerQuantity
+        ..trialEnd = customerTrialEnd;
 
       await couponCreation1.create();
       await couponCreation2.create();
@@ -212,33 +201,28 @@ main(List<String> args) {
 
       // testing the CustomerUpdate
       var updatedCustomer = await (new CustomerUpdate()
-          ..accountBalance = customerAccountBalance2
-          ..card = cardCreation2
-          ..coupon = couponId2
-          ..description = customerDescription2
-          ..email = customerEmail2
-          ..metadata = customerMetadata2
-      ).update(customer.id);
+        ..accountBalance = customerAccountBalance2
+        ..card = cardCreation2
+        ..coupon = couponId2
+        ..description = customerDescription2
+        ..email = customerEmail2
+        ..metadata = customerMetadata2).update(customer.id);
       expect(updatedCustomer.accountBalance, customerAccountBalance2);
       expect(updatedCustomer.defaultCard, isNot(customer.defaultCard));
       expect(updatedCustomer.discount.coupon.percentOff, couponPercentOff2);
       expect(updatedCustomer.description, customerDescription2);
       expect(updatedCustomer.email, customerEmail2);
       expect(updatedCustomer.metadata, customerMetadata2);
-
     });
 
     test('Delete Customer', () async {
-
       var customer = await new CustomerCreation().create();
       var response = await Customer.delete(customer.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], customer.id);
-
     });
 
     test('List parameters Customer', () async {
-
       for (var i = 0; i < 20; i++) {
         await new CustomerCreation().create();
       }
@@ -252,9 +236,6 @@ main(List<String> args) {
       customers = await Customer.list(limit: 10, endingBefore: customers.data.first.id);
       expect(customers.data.length, 10);
       expect(customers.hasMore, isFalse);
-
     });
-
   });
-
 }

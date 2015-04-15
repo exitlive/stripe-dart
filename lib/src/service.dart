@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * The service to communicate with the REST stripe API.
  */
 abstract class StripeService {
-
   static var log = new Logger('StripeService');
 
   static var host = 'api.stripe.com';
@@ -28,7 +26,8 @@ abstract class StripeService {
   /**
    * Makes a delete request to the Stripe API
    */
-  static Future<Map> delete(final List<String> pathParts, {final Map data}) => _request('DELETE', pathParts, data: data);
+  static Future<Map> delete(final List<String> pathParts, {final Map data}) =>
+      _request('DELETE', pathParts, data: data);
 
   /**
    * Makes a get request to the Stripe API for a single resource item
@@ -61,13 +60,12 @@ abstract class StripeService {
     return _request('POST', pathParts, data: data);
   }
 
-  static Future<Map> _request(final String method, final List<String> pathParts, { final Map data }) async {
-
+  static Future<Map> _request(final String method, final List<String> pathParts, {final Map data}) async {
     pathParts.insert(0, basePath);
     var path = '/' + pathParts.map(Uri.encodeComponent).join('/');
     Uri uri;
     if (method == 'GET' && data != null) {
-      uri = new Uri(scheme: 'https', host: host, path: path, query:encodeMap(data), userInfo: '${apiKey}:');
+      uri = new Uri(scheme: 'https', host: host, path: path, query: encodeMap(data), userInfo: '${apiKey}:');
     } else {
       uri = new Uri(scheme: 'https', host: host, path: path, userInfo: '${apiKey}:');
     }
@@ -95,10 +93,11 @@ abstract class StripeService {
     }
     if (responseStatusCode != 200) {
       if (map['error'] == null) {
-        throw new InvalidRequestErrorException('The status code returned was ${responseStatusCode} but no error was provided.');
+        throw new InvalidRequestErrorException(
+            'The status code returned was ${responseStatusCode} but no error was provided.');
       }
       Map error = map['error'];
-      switch(error['type']) {
+      switch (error['type']) {
         case 'invalid_request_error':
           throw new InvalidRequestErrorException(error['message']);
           break;
@@ -109,11 +108,11 @@ abstract class StripeService {
           throw new CardErrorException(error['message'], error['code'], error['param']);
           break;
         default:
-          throw new InvalidRequestErrorException('The status code returned was ${responseStatusCode} but no error type was provided.');
+          throw new InvalidRequestErrorException(
+              'The status code returned was ${responseStatusCode} but no error type was provided.');
       }
     }
     return map;
-
   }
 
   /**
@@ -143,5 +142,4 @@ abstract class StripeService {
     }
     return output.join('&');
   }
-
 }

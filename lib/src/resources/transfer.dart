@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Transfers](https://stripe.com/docs/api/curl#transfers)
  */
 class Transfer extends ApiResource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'transfer';
@@ -29,7 +27,7 @@ class Transfer extends ApiResource {
   String get balanceTransaction {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new BalanceTransaction.fromMap(value).id;
   }
 
@@ -81,7 +79,8 @@ class Transfer extends ApiResource {
    * [List all Transfers](https://stripe.com/docs/api/curl#list_transfers)
    * TODO: implement missing arguments: `created` and `date`
    */
-  static Future<TransferCollection> list({int limit, String startingAfter, String endingBefore, String recipient, String status}) async {
+  static Future<TransferCollection> list(
+      {int limit, String startingAfter, String endingBefore, String recipient, String status}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
@@ -92,63 +91,53 @@ class Transfer extends ApiResource {
     var dataMap = await StripeService.list([Transfer._path], data: data);
     return new TransferCollection.fromMap(dataMap);
   }
-
 }
 
-
 class TransferCollection extends ResourceCollection {
-
   Transfer _getInstanceFromMap(map) => new Transfer.fromMap(map);
 
   TransferCollection.fromMap(Map map) : super.fromMap(map);
-
 }
-
 
 /**
  * [Creating a new transfer](https://stripe.com/docs/api/curl#create_transfer)
  */
 class TransferCreation extends ResourceRequest {
+  @required
+  set amount(int amount) => _setMap('amount', amount);
 
   @required
-  set amount (int amount) => _setMap('amount', amount);
+  set currency(String currency) => _setMap('currency', currency);
 
   @required
-  set currency (String currency) => _setMap('currency', currency);
+  set recipient(String recipient) => _setMap('recipient', recipient);
 
-  @required
-  set recipient (String recipient) => _setMap('recipient', recipient);
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
+  set bankAccount(BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
 
-  set bankAccount (BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
+  set card(String card) => _setMap('card', card);
 
-  set card (String card) => _setMap('card', card);
+  set statementDescriptor(String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
-  set statementDescriptor (String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
-
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Transfer> create() async {
     var dataMap = await StripeService.create([Transfer._path], _getMap());
     return new Transfer.fromMap(dataMap);
   }
-
 }
-
 
 /**
  * [Updating a Transfer](https://stripe.com/docs/api/curl#update_transfer)
  */
 class TransferUpdate extends ResourceRequest {
+  set description(String description) => _setMap('description', description);
 
-  set description (String description) => _setMap('description', description);
-
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Transfer> update(String transferId) async {
     var dataMap = await StripeService.create([Transfer._path, transferId], _getMap());
     return new Transfer.fromMap(dataMap);
   }
-
 }

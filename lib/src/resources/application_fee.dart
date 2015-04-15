@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Application Fees](https://stripe.com/docs/api/curl#application_fees)
  */
 class ApplicationFee extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'application_fee';
@@ -17,7 +15,7 @@ class ApplicationFee extends Resource {
   String get account {
     var value = _dataMap['account'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Account.fromMap(value).id;
   }
 
@@ -34,7 +32,7 @@ class ApplicationFee extends Resource {
   String get balanceTransaction {
     var value = _dataMap['balance_transaction'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new BalanceTransaction.fromMap(value).id;
   }
 
@@ -47,7 +45,7 @@ class ApplicationFee extends Resource {
   String get charge {
     var value = _dataMap['charge'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Charge.fromMap(value).id;
   }
 
@@ -96,7 +94,8 @@ class ApplicationFee extends Resource {
    * [List all Application Fees](https://stripe.com/docs/api/curl#list_application_fees)
    * TODO: implement missing argument: `created`
    */
-  static Future<ApplicationFeeCollection> list({String charge, int limit, String startingAfter, String endingBefore}) async {
+  static Future<ApplicationFeeCollection> list(
+      {String charge, int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (charge != null) data['charge'] = charge;
     if (limit != null) data['limit'] = limit;
@@ -106,14 +105,10 @@ class ApplicationFee extends Resource {
     var dataMap = await StripeService.list([ApplicationFee._path], data: data);
     return new ApplicationFeeCollection.fromMap(dataMap);
   }
-
 }
 
-
 class ApplicationFeeCollection extends ResourceCollection {
-
   ApplicationFee _getInstanceFromMap(map) => new ApplicationFee.fromMap(map);
 
   ApplicationFeeCollection.fromMap(Map map) : super.fromMap(map);
-
 }

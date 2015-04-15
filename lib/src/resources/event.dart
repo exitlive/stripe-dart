@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Event](https://stripe.com/docs/api/curl#events)
  */
 class Event extends ApiResource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'event';
@@ -16,7 +14,7 @@ class Event extends ApiResource {
 
   DateTime get created => _getDateTimeFromMap('created');
 
-  EventData get data  {
+  EventData get data {
     var value = _dataMap['data'];
     if (value == null) return null;
     else return new EventData.fromMap(value);
@@ -52,21 +50,15 @@ class Event extends ApiResource {
     var dataMap = await StripeService.list([Event._path], data: data);
     return new EventCollection.fromMap(dataMap);
   }
-
 }
 
-
 class EventCollection extends ResourceCollection {
-
   Event _getInstanceFromMap(map) => new Event.fromMap(map);
 
   EventCollection.fromMap(Map map) : super.fromMap(map);
-
 }
 
-
 class EventData {
-
   Map _dataMap;
 
   Map get object => _dataMap['object'];
@@ -74,5 +66,4 @@ class EventData {
   Map get previousAttribute => _dataMap['previous_attribute'];
 
   EventData.fromMap(this._dataMap);
-
 }

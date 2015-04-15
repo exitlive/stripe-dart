@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleToken = """
     {
       "id": "tok_103z9O41dfVNZFcqpeOFk6jX",
@@ -36,15 +35,11 @@ var exampleToken = """
       }
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Token offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleToken);
       var token = new Token.fromMap(map);
       expect(token.id, map['id']);
@@ -68,13 +63,10 @@ main(List<String> args) {
       expect(card.addressZip, map['card']['address_zip']);
       expect(card.addressCountry, map['card']['address_country']);
       expect(card.customer, map['card']['customer']);
-
     });
-
   });
 
   group('Token online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
@@ -87,11 +79,10 @@ main(List<String> args) {
           cardExpYear = 2016;
       await new CustomerCreation().create();
       var token = await (new CardTokenCreation()
-          ..card = (new CardCreation()
+        ..card = (new CardCreation()
           ..number = cardNumber
           ..expMonth = cardExpMonth
-          ..expYear = cardExpYear
-      )).create();
+          ..expYear = cardExpYear)).create();
       expect(token.id, new isInstanceOf<String>());
       expect(token.card.last4, cardNumber.substring(cardNumber.length - 4));
       expect(token.card.expMonth, cardExpMonth);
@@ -108,7 +99,6 @@ main(List<String> args) {
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'card');
-
     });
 
     test('BankAccountTokenCreation', () async {
@@ -119,14 +109,11 @@ main(List<String> args) {
           bankAccountAccountNumber = '000123456789';
 
       var bankAccount = (new BankAccountRequest()
-          ..country = bankAccountCountry
-          ..routingNumber = bankAccountRoutingNumber
-          ..accountNumber = bankAccountAccountNumber
-      );
+        ..country = bankAccountCountry
+        ..routingNumber = bankAccountRoutingNumber
+        ..accountNumber = bankAccountAccountNumber);
 
-      var token = await (new BankAccountTokenCreation()
-          ..bankAccount = bankAccount
-      ).create();
+      var token = await (new BankAccountTokenCreation()..bankAccount = bankAccount).create();
       expect(token.id, new isInstanceOf<String>());
       expect(token.bankAccount.country, bankAccountCountry);
       expect(token.bankAccount.last4, bankAccountAccountNumber.substring(bankAccountAccountNumber.length - 4));
@@ -141,9 +128,6 @@ main(List<String> args) {
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'bank_account');
-
     });
-
   });
-
 }

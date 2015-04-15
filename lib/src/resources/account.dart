@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Account](https://stripe.com/docs/api/curl#account)
  */
 class Account extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'account';
@@ -41,5 +39,4 @@ class Account extends Resource {
     var dataMap = await StripeService.retrieve([Account._path]);
     return new Account.fromMap(dataMap);
   }
-
 }

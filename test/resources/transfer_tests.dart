@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleTransfer = """
     {
       "id": "tr_1046Ri41dfVNZFcqQ325IJCE",
@@ -173,15 +172,11 @@ var exampleTransfer = """
       "recipient": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Transfer offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleTransfer);
       var transfer = new Transfer.fromMap(map);
       expect(transfer.id, map['id']);
@@ -197,13 +192,10 @@ main(List<String> args) {
       expect(transfer.metadata, map['metadata']);
       expect(transfer.statementDescriptor, map['statement_descriptor']);
       expect(transfer.recipient, map['recipient']);
-
     });
-
   });
 
   group('Token online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
@@ -216,14 +208,12 @@ main(List<String> args) {
           transferRecipient = 'self';
 
       var transfer = await (new TransferCreation()
-          ..amount = transferAmount
-          ..currency = transferCurrency
-          ..recipient = transferRecipient
-      ).create();
+        ..amount = transferAmount
+        ..currency = transferCurrency
+        ..recipient = transferRecipient).create();
       expect(transfer.amount, transferAmount);
       expect(transfer.currency, transferCurrency);
       expect(transfer.recipient, isNull);
-
     });
 
     test('TransferCreation full', () async {
@@ -231,21 +221,19 @@ main(List<String> args) {
       // Recipient fields
       var recipientName = 'test name',
           recipientType = 'corporation',
-
           bankAccountCountry = 'US',
           bankAccountRoutingNumber = '110000000',
           bankAccountAccountNumber = '000123456789';
 
       var recipientBankAccount = (new BankAccountRequest()
-          ..country = bankAccountCountry
-          ..routingNumber = bankAccountRoutingNumber
-          ..accountNumber = bankAccountAccountNumber
-      );
+        ..country = bankAccountCountry
+        ..routingNumber = bankAccountRoutingNumber
+        ..accountNumber = bankAccountAccountNumber);
 
       var recipientCreation = new RecipientCreation()
-          ..name = recipientName
-          ..type = recipientType
-          ..bankAccount = recipientBankAccount;
+        ..name = recipientName
+        ..type = recipientType
+        ..bankAccount = recipientBankAccount;
 
       // Transfer fields
       var transferAmount = 100,
@@ -253,19 +241,17 @@ main(List<String> args) {
           transferDescription1 = 'test description1',
           transferStatementDescriptor = 'descriptor',
           transferMetadata1 = {'foo': 'bar1'},
-
           transferDescription2 = 'test description2',
           transferMetadata2 = {'foo': 'bar2'};
 
       var recipient = await recipientCreation.create();
       var transfer = await (new TransferCreation()
-          ..amount = transferAmount
-          ..currency = transferCurrency
-          ..recipient = recipient.id
-          ..description = transferDescription1
-          ..statementDescriptor = transferStatementDescriptor
-          ..metadata = transferMetadata1
-      ).create();
+        ..amount = transferAmount
+        ..currency = transferCurrency
+        ..recipient = recipient.id
+        ..description = transferDescription1
+        ..statementDescriptor = transferStatementDescriptor
+        ..metadata = transferMetadata1).create();
       expect(transfer.amount, transferAmount);
       expect(transfer.currency, transferCurrency);
       expect(transfer.recipient, recipient.id);
@@ -278,9 +264,8 @@ main(List<String> args) {
       expect(transfer.balanceTransactionExpand.amount, transferAmount * -1);
       // testing the TransferUpdate
       transfer = await (new TransferUpdate()
-          ..description = transferDescription2
-          ..metadata = transferMetadata2
-      ).update(transfer.id);
+        ..description = transferDescription2
+        ..metadata = transferMetadata2).update(transfer.id);
       expect(transfer.amount, transferAmount);
       expect(transfer.currency, transferCurrency);
       expect(transfer.recipient, recipient.id);
@@ -293,9 +278,9 @@ main(List<String> args) {
       } catch (e) {
         // transfer has already been submitted
         expect(e, new isInstanceOf<InvalidRequestErrorException>());
-        expect(e.errorMessage, 'Transfers to non-Stripe accounts can currently only be reversed while they are pending.');
+        expect(
+            e.errorMessage, 'Transfers to non-Stripe accounts can currently only be reversed while they are pending.');
       }
-
     });
 
     test('List parameters Transfer', () async {
@@ -307,10 +292,9 @@ main(List<String> args) {
 
       for (var i = 0; i < 20; i++) {
         await (new TransferCreation()
-            ..amount = transferAmount
-            ..currency = transferCurrency
-            ..recipient = transferRecipient
-        ).create();
+          ..amount = transferAmount
+          ..currency = transferCurrency
+          ..recipient = transferRecipient).create();
       }
 
       var transfers = await Transfer.list(limit: 10);
@@ -323,9 +307,6 @@ main(List<String> args) {
       transfers = await Transfer.list(limit: 10, endingBefore: transfers.data.first.id);
       expect(transfers.data.length, 10);
       expect(transfers.hasMore, isFalse);
-
     });
-
   });
-
 }

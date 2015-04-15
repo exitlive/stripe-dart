@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Card](https://stripe.com/docs/api/curl#cards)
  */
 class Card extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'card';
@@ -43,7 +41,7 @@ class Card extends Resource {
   String get customer {
     var value = _dataMap['customer'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Customer.fromMap(value).id;
   }
 
@@ -83,100 +81,88 @@ class Card extends Resource {
   /**
    * [Deleting cards](https://stripe.com/docs/api/curl#delete_card)
    */
-  static Future<Map> delete(String customerId, String cardId) => StripeService.delete([Customer._path, customerId, Card._path, cardId]);
-
+  static Future<Map> delete(String customerId, String cardId) =>
+      StripeService.delete([Customer._path, customerId, Card._path, cardId]);
 }
 
-
 class CardCollection extends ResourceCollection {
-
   Card _getInstanceFromMap(map) => new Card.fromMap(map);
 
   CardCollection.fromMap(Map map) : super.fromMap(map);
-
 }
-
 
 /**
  * [Creating a new card](https://stripe.com/docs/api/curl#create_card)
  */
 class CardCreation extends ResourceRequest {
+  @required
+  set number(String number) => _setMap('number', number);
 
   @required
-  set number (String number) => _setMap('number', number);
+  set expMonth(int expMonth) => _setMap('exp_month', expMonth);
 
   @required
-  set expMonth (int expMonth) => _setMap('exp_month', expMonth);
+  set expYear(int expYear) => _setMap('exp_year', expYear);
 
-  @required
-  set expYear (int expYear) => _setMap('exp_year', expYear);
+  set cvc(int cvc) => _setMap('cvc', cvc);
 
-  set cvc (int cvc) => _setMap('cvc', cvc);
+  set name(String name) => _setMap('name', name);
 
-  set name (String name) => _setMap('name', name);
+  set addressLine1(String addressLine1) => _setMap('address_line1', addressLine1);
 
-  set addressLine1 (String addressLine1) => _setMap('address_line1', addressLine1);
+  set addressLine2(String addressLine2) => _setMap('address_line2', addressLine2);
 
-  set addressLine2 (String addressLine2) => _setMap('address_line2', addressLine2);
+  set addressCity(String addressCity) => _setMap('address_city', addressCity);
 
-  set addressCity (String addressCity) => _setMap('address_city', addressCity);
+  set addressZip(String addressZip) => _setMap('address_zip', addressZip);
 
-  set addressZip (String addressZip) => _setMap('address_zip', addressZip);
+  set addressState(String addressState) => _setMap('address_state', addressState);
 
-  set addressState (String addressState) => _setMap('address_state', addressState);
-
-  set addressCountry (String addressCountry) => _setMap('address_country', addressCountry);
+  set addressCountry(String addressCountry) => _setMap('address_country', addressCountry);
 
   Future<Card> create(String customerId) async {
     var dataMap = await StripeService.create([Customer._path, customerId, Card._path], {'card': _getMap()});
     return new Card.fromMap(dataMap);
   }
-
 }
-
 
 /**
  * [Creating a new card](https://stripe.com/docs/api/curl#create_card)
  */
 class CardCreationWithToken extends ResourceRequest {
-
   @required
-  set token (String token) => _setMap('card', token);
+  set token(String token) => _setMap('card', token);
 
   Future<Card> create(String customerId) async {
     var dataMap = await StripeService.create([Customer._path, customerId, Card._path], _getMap());
     return new Card.fromMap(dataMap);
   }
-
 }
-
 
 /**
  * [Updating a card](https://stripe.com/docs/api/curl#update_card)
  */
 class CardUpdate extends ResourceRequest {
+  set addressCity(String addressCity) => _setMap('address_city', addressCity);
 
-  set addressCity (String addressCity) => _setMap('address_city', addressCity);
+  set addressCountry(String addressCountry) => _setMap('address_country', addressCountry);
 
-  set addressCountry (String addressCountry) => _setMap('address_country', addressCountry);
+  set addressLine1(String addressLine1) => _setMap('address_line1', addressLine1);
 
-  set addressLine1 (String addressLine1) => _setMap('address_line1', addressLine1);
+  set addressLine2(String addressLine2) => _setMap('address_line2', addressLine2);
 
-  set addressLine2 (String addressLine2) => _setMap('address_line2', addressLine2);
+  set addressState(String addressState) => _setMap('address_state', addressState);
 
-  set addressState (String addressState) => _setMap('address_state', addressState);
+  set addressZip(String addressZip) => _setMap('address_zip', addressZip);
 
-  set addressZip (String addressZip) => _setMap('address_zip', addressZip);
+  set expMonth(int expMonth) => _setMap('exp_month', expMonth);
 
-  set expMonth (int expMonth) => _setMap('exp_month', expMonth);
+  set expYear(int expYear) => _setMap('exp_year', expYear);
 
-  set expYear (int expYear) => _setMap('exp_year', expYear);
-
-  set name (String name) => _setMap('name', name);
+  set name(String name) => _setMap('name', name);
 
   Future<Card> update(String customerId, String cardId) async {
     var dataMap = await StripeService.update([Customer._path, customerId, Card._path, cardId], _getMap());
     return new Card.fromMap(dataMap);
   }
-
 }

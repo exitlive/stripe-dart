@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleDiscount = """
     {
       "coupon": {
@@ -34,15 +33,11 @@ var exampleDiscount = """
       "end": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Discount offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleDiscount);
       var discount = new Discount.fromMap(map);
       expect(discount.start, new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000));
@@ -64,13 +59,10 @@ main(List<String> args) {
       expect(discount.coupon.durationInMonths, map['coupon']['duration_in_months']);
       expect(discount.coupon.valid, map['coupon']['valid']);
       expect(discount.coupon.metadata, map['coupon']['metadata']);
-
     });
-
   });
 
   group('Discount online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
@@ -83,13 +75,10 @@ main(List<String> args) {
           couponPercentOff = 15;
 
       var coupon = await (new CouponCreation()
-          ..id = couponId
-          ..duration = couponDuration
-          ..percentOff = couponPercentOff
-      ).create();
-      var customer = await (new CustomerCreation()
-          ..coupon = coupon.id
-      ).create();
+        ..id = couponId
+        ..duration = couponDuration
+        ..percentOff = couponPercentOff).create();
+      var customer = await (new CustomerCreation()..coupon = coupon.id).create();
       expect(customer.discount.coupon.percentOff, couponPercentOff);
       var discount = customer.discount;
       var response = await Discount.deleteForCustomer(customer.id);
@@ -97,19 +86,17 @@ main(List<String> args) {
       expect(response['id'], discount.id);
       customer = await Customer.retrieve(customer.id);
       expect(customer.discount, isNull);
-
     });
 
     test('delete from Subscription', () async {
-
       var cardNumber = '5555555555554444',
           cardExpMonth = 3,
           cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
-          ..number = cardNumber // only the last 4 digits can be tested
-          ..expMonth = cardExpMonth
-          ..expYear = cardExpYear;
+        ..number = cardNumber // only the last 4 digits can be tested
+        ..expMonth = cardExpMonth
+        ..expYear = cardExpYear;
 
       // Plan fields
       var planId = 'test plan id',
@@ -124,23 +111,20 @@ main(List<String> args) {
           couponPercentOff = 15;
 
       var coupon = await (new CouponCreation()
-          ..id = couponId
-          ..duration = couponDuration
-          ..percentOff = couponPercentOff
-      ).create();
+        ..id = couponId
+        ..duration = couponDuration
+        ..percentOff = couponPercentOff).create();
       var plan = await (new PlanCreation()
-          ..id = planId
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..name = planName
-      ).create();
+        ..id = planId
+        ..amount = planAmount
+        ..currency = planCurrency
+        ..interval = planInterval
+        ..name = planName).create();
       var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
       var subscription = await (new SubscriptionCreation()
-          ..plan = plan.id
-          ..coupon = coupon.id
-      ).create(customer.id);
+        ..plan = plan.id
+        ..coupon = coupon.id).create(customer.id);
       expect(subscription.discount.coupon.percentOff, couponPercentOff);
       var discount = subscription.discount;
       var response = await Discount.deleteForSubscription(customer.id, subscription.id);
@@ -148,9 +132,6 @@ main(List<String> args) {
       expect(response['id'], discount.id);
       subscription = await Subscription.retrieve(customer.id, subscription.id);
       expect(subscription.discount, isNull);
-
     });
-
   });
-
 }

@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleInvoice = """
     {
       "date": 1400855490,
@@ -77,15 +76,11 @@ var exampleInvoice = """
       "description": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Invoice offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleInvoice);
       var invoice = new Invoice.fromMap(map);
       expect(invoice.date, new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000));
@@ -103,7 +98,8 @@ main(List<String> args) {
       expect(invoice.lines.data.first.quantity, map['lines']['data'][0]['quantity']);
       expect(invoice.lines.data.first.plan.interval, map['lines']['data'][0]['plan']['interval']);
       expect(invoice.lines.data.first.plan.name, map['lines']['data'][0]['plan']['name']);
-      expect(invoice.lines.data.first.plan.created, new DateTime.fromMillisecondsSinceEpoch(map['lines']['data'][0]['plan']['created'] * 1000));
+      expect(invoice.lines.data.first.plan.created,
+          new DateTime.fromMillisecondsSinceEpoch(map['lines']['data'][0]['plan']['created'] * 1000));
       expect(invoice.lines.data.first.plan.amount, map['lines']['data'][0]['plan']['amount']);
       expect(invoice.lines.data.first.plan.currency, map['lines']['data'][0]['plan']['currency']);
       expect(invoice.lines.data.first.plan.id, map['lines']['data'][0]['plan']['id']);
@@ -111,7 +107,8 @@ main(List<String> args) {
       expect(invoice.lines.data.first.plan.intervalCount, map['lines']['data'][0]['plan']['interval_count']);
       expect(invoice.lines.data.first.plan.trialPeriodDays, map['lines']['data'][0]['plan']['trialPeriodDays']);
       expect(invoice.lines.data.first.plan.metadata, map['lines']['data'][0]['plan']['metadata']);
-      expect(invoice.lines.data.first.plan.statementDescriptor, map['lines']['data'][0]['plan']['statement_descriptor']);
+      expect(
+          invoice.lines.data.first.plan.statementDescriptor, map['lines']['data'][0]['plan']['statement_descriptor']);
       expect(invoice.lines.data.first.description, map['lines']['data'][0]['description']);
       expect(invoice.lines.data.first.metadata, map['lines']['data'][0]['metadata']);
       expect(invoice.lines.url, map['lines']['url']);
@@ -134,30 +131,23 @@ main(List<String> args) {
       expect(invoice.subscription, map['subscription']);
       expect(invoice.metadata, map['metadata']);
       expect(invoice.description, map['description']);
-
     });
-
   });
 
   group('Invoice online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
 
     test('InvoiceCreation minimal', () async {
-
       var customer = await new CustomerCreation().create();
       try {
-        await (new InvoiceCreation()
-            ..customer = customer.id
-        ).create();
+        await (new InvoiceCreation()..customer = customer.id).create();
       } catch (e) {
         // nothing to invoice for a new customer
         expect(e, new isInstanceOf<InvalidRequestErrorException>());
         expect(e.errorMessage, 'Nothing to invoice for customer');
       }
-
     });
 
     test('InvoiceCreation full', () async {
@@ -168,9 +158,9 @@ main(List<String> args) {
           cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
-          ..number = cardNumber // only the last 4 digits can be tested
-          ..expMonth = cardExpMonth
-          ..expYear = cardExpYear;
+        ..number = cardNumber // only the last 4 digits can be tested
+        ..expMonth = cardExpMonth
+        ..expYear = cardExpYear;
 
       // Plan fields
       var planId = 'test plan id',
@@ -188,37 +178,29 @@ main(List<String> args) {
           invoiceMetadata = {'foo': 'bar'};
 
       var plan = await (new PlanCreation()
-          ..id = planId
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..name = planName
-      ).create();
+        ..id = planId
+        ..amount = planAmount
+        ..currency = planCurrency
+        ..interval = planInterval
+        ..name = planName).create();
       var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
       await (new ChargeCreation()
-          ..amount = cardAmount
-          ..currency = cardCurrency
-          ..customer = customer.id
-      ).create();
-      var subscription = await (new SubscriptionCreation()
-          ..plan = plan.id
-      ).create(customer.id);
+        ..amount = cardAmount
+        ..currency = cardCurrency
+        ..customer = customer.id).create();
+      var subscription = await (new SubscriptionCreation()..plan = plan.id).create(customer.id);
       try {
         await (new InvoiceCreation()
-            ..customer = customer.id
-            ..description = invoiceDescription
-            ..metadata = invoiceMetadata
-            ..subscription = subscription.id
-        ).create();
+          ..customer = customer.id
+          ..description = invoiceDescription
+          ..metadata = invoiceMetadata
+          ..subscription = subscription.id).create();
       } catch (e) {
         // nothing to invoice for a new customer
         expect(e, new isInstanceOf<InvalidRequestErrorException>());
         expect(e.errorMessage, 'Nothing to invoice for subscription');
       }
-
     });
-
   });
-
 }

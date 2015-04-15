@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Subscriptions](https://stripe.com/docs/api/curl#subscriptions)
  */
 class Subscription extends ApiResource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'subscription';
@@ -17,7 +15,7 @@ class Subscription extends ApiResource {
   String get customer {
     var value = _dataMap['customer'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Customer.fromMap(value).id;
   }
 
@@ -67,25 +65,29 @@ class Subscription extends ApiResource {
    * [Retrieving a customer's subscription](https://stripe.com/docs/api/curl#retrieve_subscription)
    */
   static Future<Subscription> retrieve(String customerId, String subscriptionId, {final Map data}) async {
-    var dataMap = await StripeService.retrieve([Customer._path, customerId, Subscription._path, subscriptionId], data: data);
+    var dataMap =
+        await StripeService.retrieve([Customer._path, customerId, Subscription._path, subscriptionId], data: data);
     return new Subscription.fromMap(dataMap);
   }
 
   /**
    * [Canceling a Customer's Subscription](https://stripe.com/docs/api/curl#cancel_subscription)
    */
-  static Future<Subscription> cancel(String customerId, String subscriptionId, {bool atPeriodEnd, final Map data}) async {
+  static Future<Subscription> cancel(String customerId, String subscriptionId,
+      {bool atPeriodEnd, final Map data}) async {
     var data = {};
     if (atPeriodEnd != null) data['at_period_end'] = atPeriodEnd;
     if (data == {}) data = null;
-    var dataMap = await StripeService.delete([Customer._path, customerId, Subscription._path, subscriptionId], data: data);
+    var dataMap =
+        await StripeService.delete([Customer._path, customerId, Subscription._path, subscriptionId], data: data);
     return new Subscription.fromMap(dataMap);
   }
 
   /**
    * [Listing subscriptions](https://stripe.com/docs/api/curl#list_subscriptions)
    */
-  static Future<SubscriptionCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) async {
+  static Future<SubscriptionCollection> list(String customerId,
+      {int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
@@ -94,71 +96,62 @@ class Subscription extends ApiResource {
     var dataMap = await StripeService.list([Customer._path, customerId, Subscription._path], data: data);
     return new SubscriptionCollection.fromMap(dataMap);
   }
-
 }
 
-
 class SubscriptionCollection extends ResourceCollection {
-
   Subscription _getInstanceFromMap(map) => new Subscription.fromMap(map);
 
   SubscriptionCollection.fromMap(Map map) : super.fromMap(map);
-
 }
-
 
 /**
  * [Creating a new subscription](https://stripe.com/docs/api/curl#create_subscription)
  */
 class SubscriptionCreation extends ResourceRequest {
-
   @required
-  set plan (String plan) => _setMap('plan', plan);
+  set plan(String plan) => _setMap('plan', plan);
 
-  set coupon (String coupon) => _setMap('coupon', coupon);
+  set coupon(String coupon) => _setMap('coupon', coupon);
 
-  set trialEnd (int trialEnd) => _setMap('trial_end', trialEnd);
+  set trialEnd(int trialEnd) => _setMap('trial_end', trialEnd);
 
-  set card (CardCreation card) => _setMap('card', card);
+  set card(CardCreation card) => _setMap('card', card);
 
-  set quantity (int quantity) => _setMap('quantity', quantity);
+  set quantity(int quantity) => _setMap('quantity', quantity);
 
-  set applicationFeePercent (int applicationFeePercent) => _setMap('application_fee_percent', applicationFeePercent);
+  set applicationFeePercent(int applicationFeePercent) => _setMap('application_fee_percent', applicationFeePercent);
 
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Subscription> create(String customerId) async {
     var dataMap = await StripeService.create([Customer._path, customerId, Subscription._path], _getMap());
     return new Subscription.fromMap(dataMap);
   }
-
 }
-
 
 /**
  * [Updating a Subscription](https://stripe.com/docs/api/curl#update_subscription)
  */
 class SubscriptionUpdate extends ResourceRequest {
+  set plan(String plan) => _setMap('plan', plan);
 
-  set plan (String plan) => _setMap('plan', plan);
+  set coupon(String coupon) => _setMap('coupon', coupon);
 
-  set coupon (String coupon) => _setMap('coupon', coupon);
+  set prorate(bool prorate) => _setMap('prorate', prorate);
 
-  set prorate (bool prorate) => _setMap('prorate', prorate);
+  set trialEnd(int trialEnd) => _setMap('trial_end', trialEnd);
 
-  set trialEnd (int trialEnd) => _setMap('trial_end', trialEnd);
+  set card(CardCreation card) => _setMap('card', card);
 
-  set card (CardCreation card) => _setMap('card', card);
+  set quantity(int quantity) => _setMap('quantity', quantity);
 
-  set quantity (int quantity) => _setMap('quantity', quantity);
+  set applicationFeePercent(int applicationFeePercent) => _setMap('application_fee_percent', applicationFeePercent);
 
-  set applicationFeePercent (int applicationFeePercent) => _setMap('application_fee_percent', applicationFeePercent);
-
-  set metadata (Map metadata) => _setMap('metadata', metadata);
+  set metadata(Map metadata) => _setMap('metadata', metadata);
 
   Future<Subscription> update(String customerId, String subscriptionId) async {
-    var dataMap = await StripeService.create([Customer._path, customerId, Subscription._path, subscriptionId], _getMap());
+    var dataMap =
+        await StripeService.create([Customer._path, customerId, Subscription._path, subscriptionId], _getMap());
     return new Subscription.fromMap(dataMap);
   }
-
 }

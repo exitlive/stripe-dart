@@ -1,11 +1,9 @@
 part of stripe;
 
-
 /**
  * [Balance](https://stripe.com/docs/api/curl#balance)
  */
 class Balance extends Resource {
-
   final String objectName = 'balance';
 
   static var _path = 'balance';
@@ -33,12 +31,9 @@ class Balance extends Resource {
     var dataMap = await StripeService.get([Balance._path]);
     return new Balance.fromMap(dataMap);
   }
-
 }
 
-
 class BalanceTransaction extends Resource {
-
   String get id => _dataMap['id'];
 
   final String objectName = 'balance_transaction';
@@ -72,7 +67,7 @@ class BalanceTransaction extends Resource {
   String get source {
     var value = _dataMap['source'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Charge.fromMap(value).id;
   }
 
@@ -85,7 +80,7 @@ class BalanceTransaction extends Resource {
   String get recipient {
     var value = _dataMap['recipient'];
     if (value == null) return null;
-    else if(value is String) return value;
+    else if (value is String) return value;
     else return new Recipient.fromMap(value).id;
   }
 
@@ -118,21 +113,15 @@ class BalanceTransaction extends Resource {
     var dataMap = await StripeService.list([Balance._path, BalanceTransaction._path], data: data);
     return new BalanceTransactionCollection.fromMap(dataMap);
   }
-
 }
 
-
 class BalanceTransactionCollection extends ResourceCollection {
-
   Card _getInstanceFromMap(map) => new Card.fromMap(map);
 
   BalanceTransactionCollection.fromMap(Map map) : super.fromMap(map);
-
 }
 
-
 class Fund {
-
   Map _dataMap;
 
   int get amount => _dataMap['amount'];
@@ -140,12 +129,9 @@ class Fund {
   String get currency => _dataMap['currency'];
 
   Fund.fromMap(this._dataMap);
-
 }
 
-
 class FeeDetails {
-
   Map _dataMap;
 
   int get amount => _dataMap['amount'];
@@ -159,5 +145,4 @@ class FeeDetails {
   String get description => _dataMap['description'];
 
   FeeDetails.fromMap(this._dataMap);
-
 }

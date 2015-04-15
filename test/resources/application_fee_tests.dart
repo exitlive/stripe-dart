@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleApplicationFee = """
     {
       "id": "fee_46ctshdXTn0txu",
@@ -27,15 +26,11 @@ var exampleApplicationFee = """
       "charge": "ch_1046aN41dfVNZFcq1TGLAbRm"
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Account offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleApplicationFee);
       var applicationFee = new ApplicationFee.fromMap(map);
       expect(applicationFee.id, map['id']);
@@ -50,9 +45,6 @@ main(List<String> args) {
       expect(applicationFee.account, map['account']);
       expect(applicationFee.application, map['application']);
       expect(applicationFee.charge, map['charge']);
-
     });
-
   });
-
 }

@@ -79,10 +79,8 @@ class TestConfiguration extends SimpleConfiguration {
 }
 
 main(List<String> args) {
-
   Logger.root.level = Level.INFO;
   Logger.root.onRecord.listen((LogRecord record) => print('${record.message}'));
-
 
   unittestConfiguration = new TestConfiguration();
   resourceTests.main();
@@ -105,5 +103,4 @@ main(List<String> args) {
   subscriptionTests.main(args);
   tokenTests.main(args);
   transferTests.main(args);
-
 }

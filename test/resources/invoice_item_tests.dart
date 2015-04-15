@@ -7,7 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-
 var exampleAccount = """
     {
       "object": "invoiceitem",
@@ -25,15 +24,11 @@ var exampleAccount = """
       "subscription": null
     }""";
 
-
 main(List<String> args) {
-
   utils.setApiKeyFromArgs(args);
 
   group('Invoice item offline', () {
-
     test('fromMap() properly popullates all values', () {
-
       var map = JSON.decode(exampleAccount);
       var invoiceItem = new InvoiceItem.fromMap(map);
       expect(invoiceItem.id, map['id']);
@@ -47,13 +42,10 @@ main(List<String> args) {
       expect(invoiceItem.metadata, map['metadata']);
       expect(invoiceItem.invoice, map['invoice']);
       expect(invoiceItem.subscription, map['subscription']);
-
     });
-
   });
 
   group('Invoice item online', () {
-
     tearDown(() {
       return utils.tearDown();
     });
@@ -71,19 +63,16 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-          ..number = cardNumber
-          ..expMonth = cardExpMonth
-          ..expYear = cardExpYear
-      ).create(customer.id);
+        ..number = cardNumber
+        ..expMonth = cardExpMonth
+        ..expYear = cardExpYear).create(customer.id);
       var invoiceItem = await (new InvoiceItemCreation()
-          ..customer = customer.id
-          ..amount = chargeAmount
-          ..currency = chargeCurrency
-      ).create();
+        ..customer = customer.id
+        ..amount = chargeAmount
+        ..currency = chargeCurrency).create();
       expect(invoiceItem.amount, chargeAmount);
       expect(invoiceItem.currency, chargeCurrency);
       expect(invoiceItem.customer, customer.id);
-
     });
 
     test('Create Invoice item full', () async {
@@ -94,9 +83,9 @@ main(List<String> args) {
           cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
-          ..number = cardNumber
-          ..expMonth = cardExpMonth
-          ..expYear = cardExpYear;
+        ..number = cardNumber
+        ..expMonth = cardExpMonth
+        ..expYear = cardExpYear;
 
       // Charge fields
       var chargeCurrency = 'usd',
@@ -113,31 +102,26 @@ main(List<String> args) {
           invoiceItemAmount1 = 200,
           invoiceItemDescription1 = 'test description1',
           invoiceItemMetadata1 = {'foo': 'bar1'},
-
           invoiceItemAmount2 = 220,
           invoiceItemDescription2 = 'test description2',
           invoiceItemMetadata2 = {'foo': 'bar2'};
 
       var plan = await (new PlanCreation()
-          ..id = planId
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..name = planName
-      ).create();
+        ..id = planId
+        ..amount = planAmount
+        ..currency = planCurrency
+        ..interval = planInterval
+        ..name = planName).create();
       var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
-      var subscription = await (new SubscriptionCreation()
-          ..plan = plan.id
-      ).create(customer.id);
+      var subscription = await (new SubscriptionCreation()..plan = plan.id).create(customer.id);
       var invoiceItem = await (new InvoiceItemCreation()
-          ..customer = customer.id
-          ..amount = invoiceItemAmount1
-          ..currency = invoiceItemCurrency
-          ..subscription = subscription.id
-          ..description = invoiceItemDescription1
-          ..metadata = invoiceItemMetadata1
-      ).create();
+        ..customer = customer.id
+        ..amount = invoiceItemAmount1
+        ..currency = invoiceItemCurrency
+        ..subscription = subscription.id
+        ..description = invoiceItemDescription1
+        ..metadata = invoiceItemMetadata1).create();
       expect(invoiceItem.amount, invoiceItemAmount1);
       expect(invoiceItem.currency, invoiceItemCurrency);
       expect(invoiceItem.customer, customer.id);
@@ -155,10 +139,9 @@ main(List<String> args) {
       expect(invoiceItem.metadata, invoiceItemMetadata1);
       // testing InvoiceitemUpdate
       invoiceItem = await (new InvoiceItemUpdate()
-          ..amount = invoiceItemAmount2
-          ..description = invoiceItemDescription2
-          ..metadata = invoiceItemMetadata2
-      ).update(invoiceItem.id);
+        ..amount = invoiceItemAmount2
+        ..description = invoiceItemDescription2
+        ..metadata = invoiceItemMetadata2).update(invoiceItem.id);
       expect(invoiceItem.amount, invoiceItemAmount2);
       expect(invoiceItem.description, invoiceItemDescription2);
       expect(invoiceItem.metadata, invoiceItemMetadata2);
@@ -166,7 +149,6 @@ main(List<String> args) {
       var response = await InvoiceItem.delete(invoiceItem.id);
       expect(response['id'], invoiceItem.id);
       expect(response['deleted'], isTrue);
-
     });
 
     test('List parameters Invoiceitem', () async {
@@ -176,24 +158,22 @@ main(List<String> args) {
           cardExpMonth = 12,
           cardExpYear = 2016,
 
-      // Charge fields
+          // Charge fields
           chargeAmount = 100,
           chargeCurrency = 'usd';
 
       var customer = await new CustomerCreation().create();
 
       await (new CardCreation()
-          ..number = cardNumber
-          ..expMonth = cardExpMonth
-          ..expYear = cardExpYear
-      ).create(customer.id);
+        ..number = cardNumber
+        ..expMonth = cardExpMonth
+        ..expYear = cardExpYear).create(customer.id);
 
       for (var i = 0; i < 20; i++) {
         await (new InvoiceItemCreation()
-            ..customer = customer.id
-            ..amount = chargeAmount
-            ..currency = chargeCurrency
-        ).create();
+          ..customer = customer.id
+          ..amount = chargeAmount
+          ..currency = chargeCurrency).create();
       }
 
       var invoiceItems = await InvoiceItem.list(limit: 10);
@@ -205,9 +185,6 @@ main(List<String> args) {
       invoiceItems = await InvoiceItem.list(limit: 10, endingBefore: invoiceItems.data.first.id);
       expect(invoiceItems.data.length, 10);
       expect(invoiceItems.hasMore, isFalse);
-
     });
-
   });
-
 }
