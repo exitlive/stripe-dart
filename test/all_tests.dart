@@ -28,7 +28,7 @@ class TestConfiguration extends SimpleConfiguration {
 
   final String greenColor = '\u001b[33;32m';
   final String redColor = '\u001b[33;31m';
-  final String resetColor = '\u001b[33;0m';
+  final String whiteColor = '\u001B[37m';
 
   var log = new Logger('Test');
 
