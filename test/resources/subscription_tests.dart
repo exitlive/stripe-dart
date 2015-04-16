@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleSubscription = """
+var exampleSubscription = '''
     {
       "id": "sub_43wlRGGERnM2nU",
       "plan": {
@@ -41,7 +41,7 @@ var exampleSubscription = """
       "discount": null,
       "metadata": {
       }
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

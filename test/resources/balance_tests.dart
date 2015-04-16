@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleBalance = """
+var exampleBalance = '''
     {
       "pending": [
         {
@@ -23,9 +23,9 @@ var exampleBalance = """
       ],
       "livemode": false,
       "object": "balance"
-    }""";
+    }''';
 
-var exampleBalanceTransaction = """
+var exampleBalanceTransaction = '''
     {
       "id": "txn_10427j41dfVNZFcqQpEyIITM",
       "object": "balance_transaction",
@@ -48,7 +48,7 @@ var exampleBalanceTransaction = """
       ],
       "source": "ch_10427j41dfVNZFcqhfaTmJUU",
       "description": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

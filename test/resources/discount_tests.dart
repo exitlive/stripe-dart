@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleDiscount = """
+var exampleDiscount = '''
     {
       "coupon": {
         "id": "25OFF",
@@ -31,7 +31,7 @@ var exampleDiscount = """
       "customer": "cus_41UmfewrwpkH2c",
       "subscription": null,
       "end": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleTransfer = """
+var exampleTransfer = '''
     {
       "id": "tr_1046Ri41dfVNZFcqQ325IJCE",
       "object": "transfer",
@@ -170,7 +170,7 @@ var exampleTransfer = """
       },
       "statement_descriptor": null,
       "recipient": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

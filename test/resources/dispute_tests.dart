@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleDispute = """
+var exampleDispute = '''
     {
       "charge": "ch_10442N41dfVNZFcqXcbfGBel",
       "amount": 1000,
@@ -20,7 +20,7 @@ var exampleDispute = """
       "balance_transaction": "txn_10427j41dfVNZFcqQpEyIITM",
       "evidence_due_by": 1402271999,
       "evidence": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

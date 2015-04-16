@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var examplePlan = """
+var examplePlan = '''
     {
       "interval": "month",
       "name": "Gold Special",
@@ -22,7 +22,7 @@ var examplePlan = """
       "metadata": {
       },
       "statement_descriptor": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

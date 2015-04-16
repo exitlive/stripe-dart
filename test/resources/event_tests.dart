@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleEvent = """
+var exampleEvent = '''
     {
       "id": "evt_1046Ri41dfVNZFcqJ8BRwM05",
       "created": 1401075077,
@@ -182,7 +182,7 @@ var exampleEvent = """
       "object": "event",
       "pending_webhooks": 0,
       "request": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

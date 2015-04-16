@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleApplicationFee = """
+var exampleApplicationFee = '''
     {
       "id": "fee_46ctshdXTn0txu",
       "object": "application_fee",
@@ -24,7 +24,7 @@ var exampleApplicationFee = """
       "account": "acct_103yoB41dfVNZFcq",
       "application": "ca_46ctJf0EUeVbeYGw6K81MlkMuX8kWdAb",
       "charge": "ch_1046aN41dfVNZFcq1TGLAbRm"
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

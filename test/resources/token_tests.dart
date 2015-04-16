@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleToken = """
+var exampleToken = '''
     {
       "id": "tok_103z9O41dfVNZFcqpeOFk6jX",
       "livemode": false,
@@ -33,7 +33,7 @@ var exampleToken = """
         "address_country": null,
         "customer": null
       }
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

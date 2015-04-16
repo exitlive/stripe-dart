@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleCustomer = """
+var exampleCustomer = '''
     {
       "object": "customer",
       "created": 1399894618,
@@ -38,7 +38,7 @@ var exampleCustomer = """
         ]
       },
       "default_card": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleCoupon = """
+var exampleCoupon = '''
     {
       "id": "50-pc-forever-once",
       "created": 1397741615,
@@ -24,7 +24,7 @@ var exampleCoupon = """
       "valid": false,
       "metadata": {
       }
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);

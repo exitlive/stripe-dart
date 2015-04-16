@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleInvoice = """
+var exampleInvoice = '''
     {
       "date": 1400855490,
       "id": "in_1045Uh41dfVNZFcqMyRp9Tml",
@@ -74,7 +74,7 @@ var exampleInvoice = """
       "metadata": {
       },
       "description": null
-    }""";
+    }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
