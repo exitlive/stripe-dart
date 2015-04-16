@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Invoice items](https://stripe.com/docs/api/curl#invoiceitems)
- */
+/// [Invoice items](https://stripe.com/docs/api/curl#invoiceitems)
 class InvoiceItem extends Resource {
   String get id => _dataMap['id'];
 
@@ -54,18 +52,14 @@ class InvoiceItem extends Resource {
 
   InvoiceItem.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving an Invoice Item](https://stripe.com/docs/api/curl#retrieve_invoiceitem)
-   */
+  /// [Retrieving an Invoice Item](https://stripe.com/docs/api/curl#retrieve_invoiceitem)
   static Future<InvoiceItem> retrieve(String invoiceItemId, {final Map data}) async {
     var dataMap = await StripeService.retrieve([InvoiceItem._path, invoiceItemId], data: data);
     return new InvoiceItem.fromMap(dataMap);
   }
 
-  /**
-   * [List all Invoice Items](https://stripe.com/docs/api/curl#list_invoiceitems)
-   * TODO: implement missing argument: `created`
-   */
+  /// [List all Invoice Items](https://stripe.com/docs/api/curl#list_invoiceitems)
+  /// TODO: implement missing argument: `created`
   static Future<InvoiceItemCollection> list(
       {String customer, int limit, String startingAfter, String endingBefore}) async {
     var data = {};
@@ -78,9 +72,7 @@ class InvoiceItem extends Resource {
     return new InvoiceItemCollection.fromMap(dataMap);
   }
 
-  /**
-   * [Deleting an Invoice Item](https://stripe.com/docs/api/curl#delete_invoiceitem)
-   */
+  /// [Deleting an Invoice Item](https://stripe.com/docs/api/curl#delete_invoiceitem)
   static Future<Map> delete(String invoiceItemId) => StripeService.delete([InvoiceItem._path, invoiceItemId]);
 }
 
@@ -90,9 +82,7 @@ class InvoiceItemCollection extends ResourceCollection {
   InvoiceItemCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating an Invoice Item](https://stripe.com/docs/api/curl#create_invoiceitem)
- */
+/// [Creating an Invoice Item](https://stripe.com/docs/api/curl#create_invoiceitem)
 class InvoiceItemCreation extends ResourceRequest {
   @required
   set customer(String customer) => _setMap('customer', customer);
@@ -117,9 +107,7 @@ class InvoiceItemCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating an Invoice Item](https://stripe.com/docs/api/curl#update_invoiceitem)
- */
+/// [Updating an Invoice Item](https://stripe.com/docs/api/curl#update_invoiceitem)
 class InvoiceItemUpdate extends ResourceRequest {
   set amount(int amount) => _setMap('amount', amount);
 

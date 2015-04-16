@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Card](https://stripe.com/docs/api/curl#cards)
- */
+/// [Card](https://stripe.com/docs/api/curl#cards)
 class Card extends Resource {
   String get id => _dataMap['id'];
 
@@ -57,17 +55,13 @@ class Card extends Resource {
 
   Card.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a customer's card](https://stripe.com/docs/api/curl#retrieve_card)
-   */
+  /// [Retrieving a customer's card](https://stripe.com/docs/api/curl#retrieve_card)
   static Future<Card> retrieve(String customerId, String cardId, {final Map data}) async {
     var dataMap = await StripeService.retrieve([Customer._path, customerId, Card._path, cardId], data: data);
     return new Card.fromMap(dataMap);
   }
 
-  /**
-   * [Listing cards](https://stripe.com/docs/api/curl#list_cards)
-   */
+  /// [Listing cards](https://stripe.com/docs/api/curl#list_cards)
   static Future<CardCollection> list(String customerId, {int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
@@ -78,9 +72,7 @@ class Card extends Resource {
     return new CardCollection.fromMap(dataMap);
   }
 
-  /**
-   * [Deleting cards](https://stripe.com/docs/api/curl#delete_card)
-   */
+  /// [Deleting cards](https://stripe.com/docs/api/curl#delete_card)
   static Future<Map> delete(String customerId, String cardId) =>
       StripeService.delete([Customer._path, customerId, Card._path, cardId]);
 }
@@ -91,9 +83,7 @@ class CardCollection extends ResourceCollection {
   CardCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating a new card](https://stripe.com/docs/api/curl#create_card)
- */
+/// [Creating a new card](https://stripe.com/docs/api/curl#create_card)
 class CardCreation extends ResourceRequest {
   @required
   set number(String number) => _setMap('number', number);
@@ -126,9 +116,7 @@ class CardCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Creating a new card](https://stripe.com/docs/api/curl#create_card)
- */
+/// [Creating a new card](https://stripe.com/docs/api/curl#create_card)
 class CardCreationWithToken extends ResourceRequest {
   @required
   set token(String token) => _setMap('card', token);
@@ -139,9 +127,7 @@ class CardCreationWithToken extends ResourceRequest {
   }
 }
 
-/**
- * [Updating a card](https://stripe.com/docs/api/curl#update_card)
- */
+/// [Updating a card](https://stripe.com/docs/api/curl#update_card)
 class CardUpdate extends ResourceRequest {
   set addressCity(String addressCity) => _setMap('address_city', addressCity);
 

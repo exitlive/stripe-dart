@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Recipient](https://stripe.com/docs/api/curl#create_recipient)
- */
+/// [Recipient](https://stripe.com/docs/api/curl#create_recipient)
 class Recipient extends Resource {
   String get id => _dataMap['id'];
 
@@ -34,17 +32,13 @@ class Recipient extends Resource {
 
   Recipient.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Recipient](https://stripe.com/docs/api/curl#retrieve_recipient)
-   */
+  /// [Retrieving a Recipient](https://stripe.com/docs/api/curl#retrieve_recipient)
   static Future<Recipient> retrieve(String recipientId) async {
     var dataMap = await StripeService.get([Recipient._path, recipientId]);
     return new Recipient.fromMap(dataMap);
   }
 
-  /**
-   * [List all Recipients](https://stripe.com/docs/api/curl#list_recipients)
-   */
+  /// [List all Recipients](https://stripe.com/docs/api/curl#list_recipients)
   static Future<RecipientCollection> list({int limit, String startingAfter, String endingBefore, bool verified}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
@@ -56,9 +50,7 @@ class Recipient extends Resource {
     return new RecipientCollection.fromMap(dataMap);
   }
 
-  /**
-   * [Deleting a Recipient](https://stripe.com/docs/api/curl#delete_recipient)
-   */
+  /// [Deleting a Recipient](https://stripe.com/docs/api/curl#delete_recipient)
   static Future<Map> delete(String recipientId) => StripeService.delete([Recipient._path, recipientId]);
 }
 
@@ -68,9 +60,7 @@ class RecipientCollection extends ResourceCollection {
   RecipientCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating a New Recipient](https://stripe.com/docs/api/curl#create_recipient)
- */
+/// [Creating a New Recipient](https://stripe.com/docs/api/curl#create_recipient)
 class RecipientCreation extends ResourceRequest {
   @required
   set name(String name) => _setMap('name', name);
@@ -94,9 +84,7 @@ class RecipientCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating a recipient](https://stripe.com/docs/api/curl#update_recipient)
- */
+/// [Updating a recipient](https://stripe.com/docs/api/curl#update_recipient)
 class RecipientUpdate extends ResourceRequest {
   set name(String name) => _setMap('name', name);
 

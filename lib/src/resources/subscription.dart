@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Subscriptions](https://stripe.com/docs/api/curl#subscriptions)
- */
+/// [Subscriptions](https://stripe.com/docs/api/curl#subscriptions)
 class Subscription extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -61,18 +59,14 @@ class Subscription extends ApiResource {
 
   Subscription.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a customer's subscription](https://stripe.com/docs/api/curl#retrieve_subscription)
-   */
+  /// [Retrieving a customer's subscription](https://stripe.com/docs/api/curl#retrieve_subscription)
   static Future<Subscription> retrieve(String customerId, String subscriptionId, {final Map data}) async {
     var dataMap =
         await StripeService.retrieve([Customer._path, customerId, Subscription._path, subscriptionId], data: data);
     return new Subscription.fromMap(dataMap);
   }
 
-  /**
-   * [Canceling a Customer's Subscription](https://stripe.com/docs/api/curl#cancel_subscription)
-   */
+  /// [Canceling a Customer's Subscription](https://stripe.com/docs/api/curl#cancel_subscription)
   static Future<Subscription> cancel(String customerId, String subscriptionId,
       {bool atPeriodEnd, final Map data}) async {
     var data = {};
@@ -83,9 +77,7 @@ class Subscription extends ApiResource {
     return new Subscription.fromMap(dataMap);
   }
 
-  /**
-   * [Listing subscriptions](https://stripe.com/docs/api/curl#list_subscriptions)
-   */
+  /// [Listing subscriptions](https://stripe.com/docs/api/curl#list_subscriptions)
   static Future<SubscriptionCollection> list(String customerId,
       {int limit, String startingAfter, String endingBefore}) async {
     var data = {};
@@ -104,9 +96,7 @@ class SubscriptionCollection extends ResourceCollection {
   SubscriptionCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating a new subscription](https://stripe.com/docs/api/curl#create_subscription)
- */
+/// [Creating a new subscription](https://stripe.com/docs/api/curl#create_subscription)
 class SubscriptionCreation extends ResourceRequest {
   @required
   set plan(String plan) => _setMap('plan', plan);
@@ -129,9 +119,7 @@ class SubscriptionCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating a Subscription](https://stripe.com/docs/api/curl#update_subscription)
- */
+/// [Updating a Subscription](https://stripe.com/docs/api/curl#update_subscription)
 class SubscriptionUpdate extends ResourceRequest {
   set plan(String plan) => _setMap('plan', plan);
 

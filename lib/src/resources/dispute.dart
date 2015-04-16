@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Disputes](https://stripe.com/docs/api/curl#disputes)
- */
+/// [Disputes](https://stripe.com/docs/api/curl#disputes)
 class Dispute extends Resource {
   final String objectName = 'dispute';
 
@@ -54,15 +52,11 @@ class Dispute extends Resource {
 
   Dispute.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Closing a dispute](https://stripe.com/docs/api/curl#close_dispute)
-   */
+  /// [Closing a dispute](https://stripe.com/docs/api/curl#close_dispute)
   static Future close(String chargeId) => StripeService.post([Charge._path, chargeId, Dispute._path, 'close']);
 }
 
-/**
- * [Updating a dispute](https://stripe.com/docs/api/curl#update_dispute)
- */
+/// [Updating a dispute](https://stripe.com/docs/api/curl#update_dispute)
 class DisputeUpdate extends ResourceRequest {
   set evidence(String evidence) => _setMap('evidence', evidence);
 

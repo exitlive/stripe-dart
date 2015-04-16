@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * The service to communicate with the REST stripe API.
- */
+/// The service to communicate with the REST stripe API.
 abstract class StripeService {
   static var log = new Logger('StripeService');
 
@@ -18,44 +16,30 @@ abstract class StripeService {
   /// Useful for testing.
   static HttpClient _getClient() => new HttpClient();
 
-  /**
-   * Makes a post request to the Stripe API to given path and parameters.
-   */
+  /// Makes a post request to the Stripe API to given path and parameters.
   static Future<Map> create(final List<String> pathParts, final Map data) => _request('POST', pathParts, data: data);
 
-  /**
-   * Makes a delete request to the Stripe API
-   */
+  /// Makes a delete request to the Stripe API
   static Future<Map> delete(final List<String> pathParts, {final Map data}) =>
       _request('DELETE', pathParts, data: data);
 
-  /**
-   * Makes a get request to the Stripe API for a single resource item
-   * [data] is used for expanding resources
-   */
+  /// Makes a get request to the Stripe API for a single resource item
+  /// [data] is used for expanding resources
   static Future<Map> retrieve(final List<String> pathParts, {final Map data}) => _request('GET', pathParts, data: data);
 
-  /**
-   * Makes a get request to the Stripe API to update an existing resource
-   */
+  /// Makes a get request to the Stripe API to update an existing resource
   static Future<Map> update(final List<String> pathParts, final Map data) => _request('POST', pathParts, data: data);
 
-  /**
-   * Makes a request to the Stripe API for all items of a resource
-   * [data] is used for pagination
-   */
+  /// Makes a request to the Stripe API for all items of a resource
+  /// [data] is used for pagination
   static Future<Map> list(final List<String> pathParts, {final Map data}) => _request('GET', pathParts, data: data);
 
-  /**
-   * Makes a request a get request to the Stripe API
-   */
+  /// Makes a request a get request to the Stripe API
   static Future<Map> get(final List<String> pathParts, {final Map data}) {
     return _request('GET', pathParts, data: data);
   }
 
-  /**
-   * Makes a request a post request to the Stripe API
-   */
+  /// Makes a request a post request to the Stripe API
   static Future<Map> post(final List<String> pathParts, {final Map data}) {
     return _request('POST', pathParts, data: data);
   }
@@ -115,9 +99,7 @@ abstract class StripeService {
     return map;
   }
 
-  /**
-   * Takes a map, and returns a properly escaped Uri String.
-   */
+  /// Takes a map, and returns a properly escaped Uri String.
   static String encodeMap(final Map data) {
     List<String> output = [];
     for (String k in data.keys) {

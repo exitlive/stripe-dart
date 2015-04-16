@@ -1,12 +1,10 @@
 part of stripe;
 
-/**
- * All objects sent through the Stripe REST API are [Resource]s, but only
- * [ApiResource]s can be created, deleted, etc...
- *
- * Instances of this Class can only be retrieved through the use of another
- * [ApiResource].
- */
+/// All objects sent through the Stripe REST API are [Resource]s, but only
+/// [ApiResource]s can be created, deleted, etc...
+///
+/// Instances of this Class can only be retrieved through the use of another
+/// [ApiResource].
 abstract class Resource {
   final Map _dataMap;
 
@@ -19,16 +17,12 @@ abstract class Resource {
         objectName) throw new InvalidDataReceivedException('The data received was not for object ${objectName}');
   }
 
-  /**
-   * Whenever a value has to be transformed when retrieved (like a DateTime),
-   * it is cached in this map to avoid duplicating objects.
-   */
+  /// Whenever a value has to be transformed when retrieved (like a DateTime),
+  /// it is cached in this map to avoid duplicating objects.
   Map _cachedDataMap = {};
 
-  /**
-   * Returns a DateTime from given dataMap key, and caches the value for future
-   * use.
-   */
+  /// Returns a DateTime from given dataMap key, and caches the value for future
+  /// use.
   DateTime _getDateTimeFromMap(String key) {
     var cachedValue;
     if ((cachedValue = _cachedDataMap[key]) != null) return cachedValue;
@@ -40,16 +34,12 @@ abstract class Resource {
   }
 }
 
-/**
- * The base class for request resources (eg: [CustomerCreation],
- * [CustomerUpdate], etc...)
- */
+/// The base class for request resources (eg: [CustomerCreation],
+/// [CustomerUpdate], etc...)
 abstract class ResourceRequest {
 
-  /**
-   * Holds all values that have been set/changed.
-   * You should not access this map directly, but use [_setMap] and [_getMap].
-   */
+  /// Holds all values that have been set/changed.
+  /// You should not access this map directly, but use [_setMap] and [_getMap].
   Map<String, dynamic> _map = {};
 
   _setMap(String key, dynamic value) {
@@ -58,9 +48,7 @@ abstract class ResourceRequest {
     _map[key] = value;
   }
 
-  /**
-   * Returns the [_map] and checks that all [required] fields are set.
-   */
+  /// Returns the [_map] and checks that all [required] fields are set.
   _getMap() {
     ClassMirror classMirror = reflect(this).type;
     Map<Symbol, MethodMirror> methods = classMirror.instanceMembers;

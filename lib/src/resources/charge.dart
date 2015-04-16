@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Charges](https://stripe.com/docs/api/curl#charges)
- */
+/// [Charges](https://stripe.com/docs/api/curl#charges)
 class Charge extends Resource {
   String get id => _dataMap['id'];
 
@@ -95,17 +93,13 @@ class Charge extends Resource {
 
   Charge.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Charge](https://stripe.com/docs/api/curl#retrieve_charge)
-   */
+  /// [Retrieving a Charge](https://stripe.com/docs/api/curl#retrieve_charge)
   static Future<Charge> retrieve(String id, {final Map data}) async {
     var dataMap = await StripeService.retrieve([Charge._path, id], data: data);
     return new Charge.fromMap(dataMap);
   }
 
-  /**
-   * [Refunding a Charge](https://stripe.com/docs/api/curl#refund_charge)
-   */
+  /// [Refunding a Charge](https://stripe.com/docs/api/curl#refund_charge)
   static Future<Charge> refund(String id, {int amount, bool refundApplicationFee}) async {
     var data = {};
     if (amount != null) data['amount'] = amount;
@@ -115,9 +109,7 @@ class Charge extends Resource {
     return new Charge.fromMap(dataMap);
   }
 
-  /**
-   * [Capture a charge](https://stripe.com/docs/api/curl#charge_capture)
-   */
+  /// [Capture a charge](https://stripe.com/docs/api/curl#charge_capture)
   static Future<Charge> capture(String id, {int amount, bool refundApplicationFee}) async {
     var data = {};
     if (amount != null) data['amount'] = amount;
@@ -127,10 +119,8 @@ class Charge extends Resource {
     return new Charge.fromMap(dataMap);
   }
 
-  /**
-   * [List all Charges](https://stripe.com/docs/api/curl#list_charges)
-   * TODO: implement missing argument: `created`
-   */
+  /// [List all Charges](https://stripe.com/docs/api/curl#list_charges)
+  /// TODO: implement missing argument: `created`
   static Future<ChargeCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (customer != null) data['customer'] = customer;
@@ -149,9 +139,7 @@ class ChargeCollection extends ResourceCollection {
   ChargeCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating a new charge (charging a credit card)](https://stripe.com/docs/api/curl#create_charge)
- */
+/// [Creating a new charge (charging a credit card)](https://stripe.com/docs/api/curl#create_charge)
 class ChargeCreation extends ResourceRequest {
   @required
   set amount(int amount) => _setMap('amount', amount);
@@ -183,9 +171,7 @@ class ChargeCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating a Charge](https://stripe.com/docs/api/curl#update_charge)
- */
+/// [Updating a Charge](https://stripe.com/docs/api/curl#update_charge)
 class ChargeUpdate extends ResourceRequest {
   set description(String description) => _setMap('description', description);
 

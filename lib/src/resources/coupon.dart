@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Coupons](https://stripe.com/docs/api/curl#coupons)
- */
+/// [Coupons](https://stripe.com/docs/api/curl#coupons)
 class Coupon extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -36,17 +34,13 @@ class Coupon extends ApiResource {
 
   Coupon.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Coupon](https://stripe.com/docs/api/curl#retrieve_coupon)
-   */
+  /// [Retrieving a Coupon](https://stripe.com/docs/api/curl#retrieve_coupon)
   static Future<Coupon> retrieve(String id) async {
     var dataMap = await StripeService.retrieve([Coupon._path, id]);
     return new Coupon.fromMap(dataMap);
   }
 
-  /**
-   * [List all Coupons](https://stripe.com/docs/api/curl#list_coupons)
-   */
+  /// [List all Coupons](https://stripe.com/docs/api/curl#list_coupons)
   static Future<CouponCollection> list({int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
@@ -57,9 +51,7 @@ class Coupon extends ApiResource {
     return new CouponCollection.fromMap(dataMap);
   }
 
-  /**
-   * [Deleting a coupon](https://stripe.com/docs/api/curl#delete_coupon)
-   */
+  /// [Deleting a coupon](https://stripe.com/docs/api/curl#delete_coupon)
   static Future<Map> delete(String id) => StripeService.delete([Coupon._path, id]);
 }
 
@@ -69,9 +61,7 @@ class CouponCollection extends ResourceCollection {
   CouponCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating coupons](https://stripe.com/docs/api/curl#create_coupon)
- */
+/// [Creating coupons](https://stripe.com/docs/api/curl#create_coupon)
 class CouponCreation extends ResourceRequest {
   set id(String id) => _setMap('id', id);
 

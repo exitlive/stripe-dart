@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Event](https://stripe.com/docs/api/curl#events)
- */
+/// [Event](https://stripe.com/docs/api/curl#events)
 class Event extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -28,18 +26,14 @@ class Event extends ApiResource {
 
   Event.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieve an event](https://stripe.com/docs/api/curl#retrieve_event)
-   */
+  /// [Retrieve an event](https://stripe.com/docs/api/curl#retrieve_event)
   static Future<Event> retrieve(String eventId) async {
     var dataMap = await StripeService.retrieve([Event._path, eventId]);
     return new Event.fromMap(dataMap);
   }
 
-  /**
-   * [List all events](https://stripe.com/docs/api/curl#list_events)
-   * TODO: implement missing argument: `created`
-   */
+  /// [List all events](https://stripe.com/docs/api/curl#list_events)
+  /// TODO: implement missing argument: `created`
   static Future<EventCollection> list({int limit, String startingAfter, String endingBefore, String type}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;

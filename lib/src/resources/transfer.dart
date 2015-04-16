@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Transfers](https://stripe.com/docs/api/curl#transfers)
- */
+/// [Transfers](https://stripe.com/docs/api/curl#transfers)
 class Transfer extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -59,26 +57,20 @@ class Transfer extends ApiResource {
 
   Transfer.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Transfer](https://stripe.com/docs/api/curl#retrieve_transfer)
-   */
+  /// [Retrieving a Transfer](https://stripe.com/docs/api/curl#retrieve_transfer)
   static Future<Transfer> retrieve(String transferId, {final Map data}) async {
     var dataMap = await StripeService.retrieve([Transfer._path, transferId], data: data);
     return new Transfer.fromMap(dataMap);
   }
 
-  /**
-   * [Canceling a Transfer](https://stripe.com/docs/api/curl#cancel_transfer)
-   */
+  /// [Canceling a Transfer](https://stripe.com/docs/api/curl#cancel_transfer)
   static Future<Transfer> cancel(String transferId) async {
     var dataMap = await StripeService.post([Transfer._path, transferId, 'cancel']);
     return new Transfer.fromMap(dataMap);
   }
 
-  /**
-   * [List all Transfers](https://stripe.com/docs/api/curl#list_transfers)
-   * TODO: implement missing arguments: `created` and `date`
-   */
+  /// [List all Transfers](https://stripe.com/docs/api/curl#list_transfers)
+  /// TODO: implement missing arguments: `created` and `date`
   static Future<TransferCollection> list(
       {int limit, String startingAfter, String endingBefore, String recipient, String status}) async {
     var data = {};
@@ -99,9 +91,7 @@ class TransferCollection extends ResourceCollection {
   TransferCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating a new transfer](https://stripe.com/docs/api/curl#create_transfer)
- */
+/// [Creating a new transfer](https://stripe.com/docs/api/curl#create_transfer)
 class TransferCreation extends ResourceRequest {
   @required
   set amount(int amount) => _setMap('amount', amount);
@@ -128,9 +118,7 @@ class TransferCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating a Transfer](https://stripe.com/docs/api/curl#update_transfer)
- */
+/// [Updating a Transfer](https://stripe.com/docs/api/curl#update_transfer)
 class TransferUpdate extends ResourceRequest {
   set description(String description) => _setMap('description', description);
 

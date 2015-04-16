@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Invoices](https://stripe.com/docs/api/curl#invoices)
- */
+/// [Invoices](https://stripe.com/docs/api/curl#invoices)
 class Invoice extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -90,26 +88,20 @@ class Invoice extends ApiResource {
 
   Invoice.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving an Invoice](https://stripe.com/docs/api/curl#retrieve_invoice)
-   */
+  /// [Retrieving an Invoice](https://stripe.com/docs/api/curl#retrieve_invoice)
   static Future<Invoice> retrieve(String invoiceId) async {
     var dataMap = await StripeService.retrieve([Invoice._path, invoiceId]);
     return new Invoice.fromMap(dataMap);
   }
 
-  /**
-   * [Paying an invoice](https://stripe.com/docs/api/curl#pay_invoice)
-   */
+  /// [Paying an invoice](https://stripe.com/docs/api/curl#pay_invoice)
   static Future<Invoice> pay(String invoiceId) async {
     var dataMap = await StripeService.post([Invoice._path, invoiceId, 'pay']);
     return new Invoice.fromMap(dataMap);
   }
 
-  /**
-   * [Retrieving a List of Invoices](https://stripe.com/docs/api/curl#list_customer_invoices)
-   * TODO: implement missing argument: `date`
-   */
+  /// [Retrieving a List of Invoices](https://stripe.com/docs/api/curl#list_customer_invoices)
+  /// TODO: implement missing argument: `date`
   static Future<InvoiceCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (customer != null) data['customer'] = customer;
@@ -121,9 +113,7 @@ class Invoice extends ApiResource {
     return new InvoiceCollection.fromMap(dataMap);
   }
 
-  /**
-   * [Retrieving a Customer's Upcoming Invoice](https://stripe.com/docs/api/curl#retrieve_customer_invoice)
-   */
+  /// [Retrieving a Customer's Upcoming Invoice](https://stripe.com/docs/api/curl#retrieve_customer_invoice)
   static Future<Invoice> retrieveUpcoming(String customerId, {String subscriptionId}) async {
     var data = {};
     data['customer'] = customerId;
@@ -132,9 +122,7 @@ class Invoice extends ApiResource {
     return new Invoice.fromMap(dataMap);
   }
 
-  /**
-   * [Retrieve an invoice's line items](https://stripe.com/docs/api/curl#invoice_lines)
-   */
+  /// [Retrieve an invoice's line items](https://stripe.com/docs/api/curl#invoice_lines)
   static Future<InvoiceLineItemCollection> retrieveLineItems(String invoiceId,
       {String customerId, int limit, String startingAfter, String endingBefore, String subscriptionId}) async {
     var data = {};
@@ -155,9 +143,7 @@ class InvoiceCollection extends ResourceCollection {
   InvoiceCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating an invoice](https://stripe.com/docs/api/curl#create_invoice)
- */
+/// [Creating an invoice](https://stripe.com/docs/api/curl#create_invoice)
 class InvoiceCreation extends ResourceRequest {
   @required
   set customer(String customer) => _setMap('customer', customer);
@@ -176,9 +162,7 @@ class InvoiceCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating an invoice](https://stripe.com/docs/api/curl#update_invoice)
- */
+/// [Updating an invoice](https://stripe.com/docs/api/curl#update_invoice)
 class InvoiceUpdate extends ResourceRequest {
   set applicationFee(int applicationFee) => _setMap('application_fee', applicationFee);
 
@@ -194,9 +178,7 @@ class InvoiceUpdate extends ResourceRequest {
   }
 }
 
-/**
- * [The invoice_line_item object](https://stripe.com/docs/api/curl#invoice_line_item_object)
- */
+/// [The invoice_line_item object](https://stripe.com/docs/api/curl#invoice_line_item_object)
 class InvoiceLineItem extends Resource {
   String get id => _dataMap['id'];
 

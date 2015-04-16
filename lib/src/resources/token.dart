@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Tokens](https://stripe.com/docs/api/curl#tokens)
- */
+/// [Tokens](https://stripe.com/docs/api/curl#tokens)
 class Token extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -32,18 +30,14 @@ class Token extends ApiResource {
 
   Token.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Token](https://stripe.com/docs/api/curl#retrieve_token)
-   */
+  /// [Retrieving a Token](https://stripe.com/docs/api/curl#retrieve_token)
   static Future<Token> retrieve(String tokenId) async {
     var dataMap = await StripeService.retrieve([Token._path, tokenId]);
     return new Token.fromMap(dataMap);
   }
 }
 
-/**
- * [Creating a Card Token](https://stripe.com/docs/api/curl#create_card_token)
- */
+/// [Creating a Card Token](https://stripe.com/docs/api/curl#create_card_token)
 class CardTokenCreation extends ResourceRequest {
   set card(CardCreation card) => _setMap('card', card);
 
@@ -55,9 +49,7 @@ class CardTokenCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Creating a Bank Account Token](https://stripe.com/docs/api/curl#create_bank_account_token)
- */
+/// [Creating a Bank Account Token](https://stripe.com/docs/api/curl#create_bank_account_token)
 class BankAccountTokenCreation extends ResourceRequest {
   set bankAccount(BankAccountRequest bankAccount) => _setMap('bank_account', bankAccount);
 

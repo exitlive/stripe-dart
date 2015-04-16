@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Application Fees](https://stripe.com/docs/api/curl#application_fees)
- */
+/// [Application Fees](https://stripe.com/docs/api/curl#application_fees)
 class ApplicationFee extends Resource {
   String get id => _dataMap['id'];
 
@@ -71,17 +69,13 @@ class ApplicationFee extends Resource {
 
   ApplicationFee.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving an Application Fee](https://stripe.com/docs/api/curl#retrieve_application_fee)
-   */
+  /// [Retrieving an Application Fee](https://stripe.com/docs/api/curl#retrieve_application_fee)
   static Future<ApplicationFee> retrieve(String applicationFeeId) async {
     var dataMap = await StripeService.get([ApplicationFee._path, applicationFeeId]);
     return new ApplicationFee.fromMap(dataMap);
   }
 
-  /**
-   * [Refunding an Application Fee](https://stripe.com/docs/api/curl#refund_application_fee)
-   */
+  /// [Refunding an Application Fee](https://stripe.com/docs/api/curl#refund_application_fee)
   static Future<ApplicationFee> refund(String applicationFeeId, {int amount}) async {
     var data = {};
     if (amount != null) data['amount'] = amount;
@@ -90,10 +84,8 @@ class ApplicationFee extends Resource {
     return new ApplicationFee.fromMap(dataMap);
   }
 
-  /**
-   * [List all Application Fees](https://stripe.com/docs/api/curl#list_application_fees)
-   * TODO: implement missing argument: `created`
-   */
+  /// [List all Application Fees](https://stripe.com/docs/api/curl#list_application_fees)
+  /// TODO: implement missing argument: `created`
   static Future<ApplicationFeeCollection> list(
       {String charge, int limit, String startingAfter, String endingBefore}) async {
     var data = {};

@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Plans](https://stripe.com/docs/api/curl#plans)
- */
+/// [Plans](https://stripe.com/docs/api/curl#plans)
 class Plan extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -32,17 +30,13 @@ class Plan extends ApiResource {
 
   Plan.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Plan](https://stripe.com/docs/api/curl#retrieve_plan)
-   */
+  /// [Retrieving a Plan](https://stripe.com/docs/api/curl#retrieve_plan)
   static Future<Plan> retrieve(String id) async {
     var dataMap = await StripeService.retrieve([Plan._path, id]);
     return new Plan.fromMap(dataMap);
   }
 
-  /**
-   * [List all Plans](https://stripe.com/docs/api/curl#list_plans)
-   */
+  /// [List all Plans](https://stripe.com/docs/api/curl#list_plans)
   static Future<PlanCollection> list({int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
@@ -53,9 +47,7 @@ class Plan extends ApiResource {
     return new PlanCollection.fromMap(dataMap);
   }
 
-  /**
-   * [Deleting a plan](https://stripe.com/docs/api/curl#delete_plan)
-   */
+  /// [Deleting a plan](https://stripe.com/docs/api/curl#delete_plan)
   static Future<Map> delete(String id) => StripeService.delete([Plan._path, id]);
 }
 
@@ -65,9 +57,7 @@ class PlanCollection extends ResourceCollection {
   PlanCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating plans](https://stripe.com/docs/api/curl#create_plan)
- */
+/// [Creating plans](https://stripe.com/docs/api/curl#create_plan)
 class PlanCreation extends ResourceRequest {
   @required
   set id(String id) => _setMap('id', id);
@@ -98,9 +88,7 @@ class PlanCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating a plan](https://stripe.com/docs/api/curl#update_plan)
- */
+/// [Updating a plan](https://stripe.com/docs/api/curl#update_plan)
 class PlanUpdate extends ResourceRequest {
   set name(String name) => _setMap('name', name);
 

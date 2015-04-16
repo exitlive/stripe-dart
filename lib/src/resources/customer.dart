@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Customers](https://stripe.com/docs/api/curl#customers)
- */
+/// [Customers](https://stripe.com/docs/api/curl#customers)
 class Customer extends ApiResource {
   String get id => _dataMap['id'];
 
@@ -59,18 +57,14 @@ class Customer extends ApiResource {
 
   Customer.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Customer](https://stripe.com/docs/api/curl#retrieve_customer)
-   */
+  /// [Retrieving a Customer](https://stripe.com/docs/api/curl#retrieve_customer)
   static Future<Customer> retrieve(String id, {final Map data}) async {
     var dataMap = await StripeService.retrieve([Customer._path, id], data: data);
     return new Customer.fromMap(dataMap);
   }
 
-  /**
-   * [List all Customers](https://stripe.com/docs/api/curl#list_customers)
-   * TODO: implement missing argument: `created`
-   */
+  /// [List all Customers](https://stripe.com/docs/api/curl#list_customers)
+  /// TODO: implement missing argument: `created`
   static Future<CustomerCollection> list({int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
@@ -81,9 +75,7 @@ class Customer extends ApiResource {
     return new CustomerCollection.fromMap(dataMap);
   }
 
-  /**
-   * [Deleting a Customer](https://stripe.com/docs/api/curl#delete_customer)
-   */
+  /// [Deleting a Customer](https://stripe.com/docs/api/curl#delete_customer)
   static Future<Map> delete(String id) => StripeService.delete([Customer._path, id]);
 }
 
@@ -93,9 +85,7 @@ class CustomerCollection extends ResourceCollection {
   CustomerCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/**
- * [Creating a New Customer](https://stripe.com/docs/api/curl#create_customer)
- */
+/// [Creating a New Customer](https://stripe.com/docs/api/curl#create_customer)
 class CustomerCreation extends ResourceRequest {
   set accountBalance(int accountBalance) => _setMap('account_balance', accountBalance);
 
@@ -123,9 +113,7 @@ class CustomerCreation extends ResourceRequest {
   }
 }
 
-/**
- * [Updating a Customer](https://stripe.com/docs/api/curl#update_customer)
- */
+/// [Updating a Customer](https://stripe.com/docs/api/curl#update_customer)
 class CustomerUpdate extends ResourceRequest {
   set accountBalance(int accountBalance) => _setMap('account_balance', accountBalance);
 

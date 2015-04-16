@@ -8,10 +8,8 @@ class InvalidDataReceivedException implements Exception {
   String toString() => 'Invalid data received: ${errorMessage}.';
 }
 
-/**
- * Missing argument errors indicate that not all required arguments were set for
- * the request.
- */
+/// Missing argument errors indicate that not all required arguments were set for
+/// the request.
 class MissingArgumentException implements Exception {
   final String errorMessage;
 
@@ -20,28 +18,22 @@ class MissingArgumentException implements Exception {
   String toString() => 'Missing arguments for this request: ${errorMessage}.';
 }
 
-/**
- * Exceptions thrown by Stripe
- */
+/// Exceptions thrown by Stripe
 abstract class StripeApiException implements Exception {
   final String errorMessage;
 
   StripeApiException(this.errorMessage);
 }
 
-/**
- * Invalid request errors arise when your request has invalid parameters.
- */
+/// Invalid request errors arise when your request has invalid parameters.
 class InvalidRequestErrorException extends StripeApiException {
   InvalidRequestErrorException(String errorMessage) : super(errorMessage);
 
   String toString() => 'Invalid request: ${errorMessage}.';
 }
 
-/**
- * Card errors are the most common type of error you should expect to handle.
- * They result when the user enters a card that can't be charged for some reason.
- */
+/// Card errors are the most common type of error you should expect to handle.
+/// They result when the user enters a card that can't be charged for some reason.
 class CardErrorException extends StripeApiException {
 
   /// A short string from amongst those listed on the right describing the kind
@@ -57,19 +49,15 @@ class CardErrorException extends StripeApiException {
   String toString() => 'Card error: ${errorMessage}.';
 }
 
-/**
- * API errors cover any other type of problem (e.g. a temporary problem with
- * Stripe's servers) and should turn up only very infrequently.
- */
+/// API errors cover any other type of problem (e.g. a temporary problem with
+/// Stripe's servers) and should turn up only very infrequently.
 class ApiErrorException extends StripeApiException {
   ApiErrorException(String errorMessage) : super(errorMessage);
 
   String toString() => 'Invalid request: ${errorMessage}.';
 }
 
-/**
- * Invalid request errors arise when your request has invalid parameters.
- */
+/// Invalid request errors arise when your request has invalid parameters.
 class BadRequestException extends StripeApiException {
   BadRequestException(String errorMessage) : super(errorMessage);
 

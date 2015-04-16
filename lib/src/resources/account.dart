@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Account](https://stripe.com/docs/api/curl#account)
- */
+/// [Account](https://stripe.com/docs/api/curl#account)
 class Account extends Resource {
   String get id => _dataMap['id'];
 
@@ -32,9 +30,7 @@ class Account extends Resource {
 
   Account.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieve an account](https://stripe.com/docs/api/curl#retrieve_account)
-   */
+  /// [Retrieve an account](https://stripe.com/docs/api/curl#retrieve_account)
   static Future<Account> retrieve() async {
     var dataMap = await StripeService.retrieve([Account._path]);
     return new Account.fromMap(dataMap);

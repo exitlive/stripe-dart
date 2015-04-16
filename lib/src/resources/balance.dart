@@ -1,8 +1,6 @@
 part of stripe;
 
-/**
- * [Balance](https://stripe.com/docs/api/curl#balance)
- */
+/// [Balance](https://stripe.com/docs/api/curl#balance)
 class Balance extends Resource {
   final String objectName = 'balance';
 
@@ -24,9 +22,7 @@ class Balance extends Resource {
 
   Balance.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieve a balance](https://stripe.com/docs/api/curl#retrieve_balance)
-   */
+  /// [Retrieve a balance](https://stripe.com/docs/api/curl#retrieve_balance)
   static Future<Balance> retrieve() async {
     var dataMap = await StripeService.get([Balance._path]);
     return new Balance.fromMap(dataMap);
@@ -92,18 +88,14 @@ class BalanceTransaction extends Resource {
 
   BalanceTransaction.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /**
-   * [Retrieving a Balance Transaction](https://stripe.com/docs/api/curl#retrieve_balance_transaction)
-   */
+  /// [Retrieving a Balance Transaction](https://stripe.com/docs/api/curl#retrieve_balance_transaction)
   static Future<BalanceTransaction> retrieve() async {
     var dataMap = await StripeService.get([BalanceTransaction._path]);
     return new BalanceTransaction.fromMap(dataMap);
   }
 
-  /**
-   * [Listing balance history](https://stripe.com/docs/api/curl#balance_history)
-   * TODO: implement missing arguments: `available_on` and `created`
-   */
+  /// [Listing balance history](https://stripe.com/docs/api/curl#balance_history)
+  /// TODO: implement missing arguments: `available_on` and `created`
   static Future<BalanceTransactionCollection> list({int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (limit != null) data['limit'] = limit;
