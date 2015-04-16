@@ -195,7 +195,7 @@ main(List<String> args) {
     });
   });
 
-  group('Token online', () {
+  group('Transfer online', () {
     tearDown(() {
       return utils.tearDown();
     });
