@@ -5,20 +5,17 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 
 class TestResource extends Resource {
-  final String objectName = 'test';
+  bool test = true;
   TestResource.fromMap(map) : super.fromMap(map);
-}
-
-class TestResource2 extends Resource {
-  TestResource2.fromMap(map) : super.fromMap(map);
 }
 
 main() {
   group('Resource', () {
-    test('should fail if the `object` key is not correct or null', () {
-      var map = {'object': 'incorrect'};
-      expect(() => new TestResource.fromMap(map), throwsException);
-      expect(() => new TestResource2.fromMap(map), throwsA(new isInstanceOf<AssertionError>()));
+    test('should not fail if datamap is null', () {
+      var map = null;
+      var testResource = new TestResource.fromMap(map);
+      expect(testResource, new isInstanceOf<TestResource>());
+      expect(testResource.test, isTrue);
     });
   });
 }

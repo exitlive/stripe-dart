@@ -8,14 +8,8 @@ part of stripe;
 abstract class Resource {
   final Map _dataMap;
 
-  final String objectName = null;
-
   /// Creates this resource from a JSON string.
-  Resource.fromMap(this._dataMap) {
-    assert(objectName != null);
-    if (_dataMap['object'] !=
-        objectName) throw new InvalidDataReceivedException('The data received was not for object ${objectName}');
-  }
+  Resource.fromMap(this._dataMap);
 
   /// Whenever a value has to be transformed when retrieved (like a DateTime),
   /// it is cached in this map to avoid duplicating objects.

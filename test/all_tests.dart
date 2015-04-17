@@ -1,6 +1,7 @@
 import 'package:logging/logging.dart';
 
 import 'resources/resource_tests.dart' as resourceTests;
+import 'resources/api_resource_tests.dart' as apiResourceTests;
 import 'service_tests.dart' as serviceTests;
 
 import 'resources/account_tests.dart' as accountTests;
@@ -84,6 +85,7 @@ main(List<String> args) {
 
   unittestConfiguration = new TestConfiguration();
   resourceTests.main();
+  apiResourceTests.main();
   serviceTests.main();
 
   accountTests.main(args);

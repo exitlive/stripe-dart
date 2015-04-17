@@ -1,7 +1,7 @@
 part of stripe;
 
 /// [Account](https://stripe.com/docs/api/curl#account)
-class Account extends Resource {
+class Account extends ApiResource {
   String get id => _dataMap['id'];
 
   final String objectName = 'account';

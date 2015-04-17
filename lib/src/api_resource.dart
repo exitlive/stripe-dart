@@ -1,6 +1,19 @@
 part of stripe;
 
-/// ApiResources are resources that can be created and sent to the Stripe REST Api.
+/// ApiResources are the main resources of the Stripe API
+/// Many of them provide functions to e.g. create, retrieve or delete
+/// Every ApiResource has a unique [name]
 abstract class ApiResource extends Resource {
-  ApiResource.fromMap(Map map) : super.fromMap(map);
+  final String objectName = null;
+
+  /// Creates this api resource from a JSON string.
+  ApiResource.fromMap(dataMap) : super.fromMap(dataMap) {
+    assert(objectName != null);
+    if (_dataMap == null)
+        throw new InvalidDataReceivedException('The dataMap must not be null');
+    if (_dataMap['object'] !=
+        objectName) throw new InvalidDataReceivedException('The data received was not for object ${objectName}');
+  }
+
+
 }
