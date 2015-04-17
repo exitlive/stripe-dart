@@ -12,11 +12,11 @@ part 'src/service.dart';
 part 'src/annotations.dart';
 
 // generic abstract classes
-part 'src/resources/api_resource.dart';
-part 'src/resources/resource.dart';
-part 'src/resources/resource_collection.dart';
+part 'src/api_resource.dart';
+part 'src/resource.dart';
+part 'src/resource_collection.dart';
 
-// resource classes
+// api resource classes
 part 'src/resources/account.dart';
 part 'src/resources/application_fee.dart';
 part 'src/resources/balance.dart';
