@@ -4,7 +4,7 @@ part of stripe;
 class Plan extends ApiResource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'plan';
+  final String object = 'plan';
 
   static var _path = 'plans';
 

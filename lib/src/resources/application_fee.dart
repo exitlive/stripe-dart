@@ -4,7 +4,7 @@ part of stripe;
 class ApplicationFee extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'application_fee';
+  final String object = 'application_fee';
 
   static var _path = 'application_fees';
 

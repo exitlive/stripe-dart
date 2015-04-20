@@ -4,7 +4,7 @@ part of stripe;
 class Invoice extends ApiResource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'invoice';
+  final String object = 'invoice';
 
   static var _path = 'invoices';
 
@@ -182,7 +182,7 @@ class InvoiceUpdate extends ResourceRequest {
 class InvoiceLineItem extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'line_item';
+  final String object = 'line_item';
 
   static var _path = 'lines';
 

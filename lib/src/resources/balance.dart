@@ -2,7 +2,7 @@ part of stripe;
 
 /// [Balance](https://stripe.com/docs/api/curl#balance)
 class Balance extends Resource {
-  final String objectName = 'balance';
+  final String object = 'balance';
 
   static var _path = 'balance';
 
@@ -32,7 +32,7 @@ class Balance extends Resource {
 class BalanceTransaction extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'balance_transaction';
+  final String object = 'balance_transaction';
 
   static var _path = 'history';
 

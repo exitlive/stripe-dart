@@ -4,7 +4,7 @@ part of stripe;
 class Token extends ApiResource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'token';
+  final String object = 'token';
 
   static var _path = 'tokens';
 

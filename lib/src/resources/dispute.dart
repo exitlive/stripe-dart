@@ -2,7 +2,7 @@ part of stripe;
 
 /// [Disputes](https://stripe.com/docs/api/curl#disputes)
 class Dispute extends Resource {
-  final String objectName = 'dispute';
+  final String object = 'dispute';
 
   static var _path = 'dispute';
 

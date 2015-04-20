@@ -4,7 +4,7 @@ part of stripe;
 class Card extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'card';
+  final String object = 'card';
 
   static var _path = 'cards';
 

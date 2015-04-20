@@ -4,7 +4,7 @@ part of stripe;
 class Discount extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'discount';
+  final String object = 'discount';
 
   static var _path = 'discount';
 

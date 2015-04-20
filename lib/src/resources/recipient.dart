@@ -4,7 +4,7 @@ part of stripe;
 class Recipient extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'recipient';
+  final String object = 'recipient';
 
   static var _path = 'recipients';
 
@@ -107,7 +107,7 @@ class RecipientUpdate extends ResourceRequest {
 class BankAccount extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'bank_account';
+  final String object = 'bank_account';
 
   String get bankName => _dataMap['bank_name'];
 

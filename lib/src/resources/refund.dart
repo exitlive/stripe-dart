@@ -3,7 +3,7 @@ part of stripe;
 class Refund extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'refund';
+  final String object = 'refund';
 
   int get amount => _dataMap['amount'];
 

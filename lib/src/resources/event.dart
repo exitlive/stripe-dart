@@ -4,7 +4,7 @@ part of stripe;
 class Event extends ApiResource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'event';
+  final String object = 'event';
 
   static var _path = 'events';
 

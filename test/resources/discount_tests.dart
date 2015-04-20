@@ -41,7 +41,6 @@ main(List<String> args) {
       var map = JSON.decode(exampleDiscount);
       var discount = new Discount.fromMap(map);
       expect(discount.start, new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000));
-      expect(discount.objectName, map['object']);
       expect(discount.customer, map['customer']);
       expect(discount.subscription, map['subscription']);
       expect(discount.end, map['end']);
@@ -50,7 +49,6 @@ main(List<String> args) {
       expect(discount.coupon.percentOff, map['coupon']['percent_off']);
       expect(discount.coupon.amountOff, map['coupon']['amount_off']);
       expect(discount.coupon.currency, map['coupon']['currency']);
-      expect(discount.coupon.objectName, map['coupon']['object']);
       expect(discount.coupon.livemode, map['coupon']['livemode']);
       expect(discount.coupon.duration, map['coupon']['duration']);
       expect(discount.coupon.redeemBy, map['coupon']['redeem_by']);

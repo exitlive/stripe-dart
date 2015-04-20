@@ -4,7 +4,7 @@ part of stripe;
 class InvoiceItem extends Resource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'invoiceitem';
+  final String object = 'invoiceitem';
 
   static var _path = 'invoiceitems';
 

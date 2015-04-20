@@ -4,7 +4,7 @@ part of stripe;
 class Subscription extends ApiResource {
   String get id => _dataMap['id'];
 
-  final String objectName = 'subscription';
+  final String object = 'subscription';
 
   static var _path = 'subscriptions';
 
