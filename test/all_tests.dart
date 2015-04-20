@@ -28,7 +28,6 @@ import 'api_resources/subscription_tests.dart' as subscriptionTests;
 import 'api_resources/token_tests.dart' as tokenTests;
 import 'api_resources/transfer_tests.dart' as transferTests;
 
-
 // resource tests
 import 'resources/address_tests.dart' as addressTests;
 import 'resources/shipping_tests.dart' as shippingTests;
@@ -123,5 +122,4 @@ main(List<String> args) {
   // resource tests
   addressTests.main(args);
   shippingTests.main(args);
-
 }

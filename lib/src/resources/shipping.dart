@@ -1,7 +1,6 @@
 part of stripe;
 
 class Shipping extends Resource {
-
   Address get address => new Address.fromMap(_dataMap['address']);
 
   String get name => _dataMap['name'];
@@ -13,5 +12,4 @@ class Shipping extends Resource {
   String get trackingNumber => _dataMap['tracking_number'];
 
   Shipping.fromMap(Map dataMap) : super.fromMap(dataMap);
-
 }

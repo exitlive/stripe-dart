@@ -30,7 +30,6 @@ abstract class Resource {
   Map toMap() {
     return _dataMap;
   }
-
 }
 
 /// The base class for request resources (eg: [CustomerCreation],
@@ -74,5 +73,4 @@ abstract class ResourceRequest {
   String _underscore(String camelized) {
     return camelized.replaceAllMapped(new RegExp(r'([A-Z])'), (Match match) => '_${match.group(1).toLowerCase()}');
   }
-
 }

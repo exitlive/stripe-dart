@@ -32,5 +32,4 @@ main(List<String> args) {
       expect(address.country, map['country']);
     });
   });
-
 }
