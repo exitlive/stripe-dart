@@ -85,7 +85,7 @@ main(List<String> args) {
     });
   });
 
-  solo_group('Charge online', () {
+  group('Charge online', () {
     tearDown(() {
       return utils.tearDown();
     });
