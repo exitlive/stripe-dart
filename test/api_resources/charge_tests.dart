@@ -51,10 +51,9 @@ var example = '''
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
-  solo_group('Charge offline', () {
+  group('Charge offline', () {
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(example);
-      print(map);
       var charge = new Charge.fromMap(map);
       expect(charge.id, map['id']);
       expect(charge.livemode, map['livemode']);
@@ -162,32 +161,6 @@ main(List<String> args) {
         ..metadata = chargeMetadata2).update(charge.id);
       expect(charge.description, chargeDescription2);
       expect(charge.metadata, chargeMetadata2);
-    });
-
-    test('Refund a Charge', () async {
-
-      // Card fields
-      var cardNumber = '4242424242424242',
-          cardExpMonth = 12,
-          cardExpYear = 2016,
-
-          // Charge fields
-          chargeAmount = 100,
-          chargeRefundAmount = 90,
-          chargeCurrency = 'usd';
-      // application_fee can not be tested
-
-      var customer = await new CustomerCreation().create();
-      await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
-      var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id).create();
-      charge = await Charge.refund(charge.id, amount: chargeRefundAmount);
-      expect(charge.refunds.data.first.amount, chargeRefundAmount);
     });
 
     test('Capture a Charge', () async {
