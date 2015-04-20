@@ -15,7 +15,6 @@ import 'refund_tests.dart' as refund;
 import 'invoice_tests.dart' as invoice;
 import '../resources/shipping_tests.dart' as shipping;
 
-
 var example = '''
     {
       "id": "ch_15tbwd41dfVNZFcq48lWk5V2",
@@ -67,7 +66,8 @@ main(List<String> args) {
       expect(charge.source.toMap(), new Card.fromMap(map['source']).toMap());
       expect(charge.status, map['status']);
       expect(charge.amountRefunded, map['amountRefunded']);
-      expect(charge.balanceTransactionExpand.toMap(), new BalanceTransaction.fromMap(map['balance_transaction']).toMap());
+      expect(
+          charge.balanceTransactionExpand.toMap(), new BalanceTransaction.fromMap(map['balance_transaction']).toMap());
       expect(charge.customerExpand.toMap(), new Customer.fromMap(map['customer']).toMap());
       expect(charge.description, map['description']);
       expect(charge.dispute.toMap(), new Dispute.fromMap(map['dispute']).toMap());

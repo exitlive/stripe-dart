@@ -1,6 +1,6 @@
 part of stripe;
 
-/// [Charges](https://stripe.com/docs/api/curl#charges)
+/// [Charges](https://stripe.com/docs/api#charges)
 class Charge extends Resource {
   String get id => _dataMap['id'];
 
@@ -107,14 +107,15 @@ class Charge extends Resource {
 
   Charge.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /// [Retrieving a Charge](https://stripe.com/docs/api/curl#retrieve_charge)
+  /// [Retrieve a charge](https://stripe.com/docs/api#retrieve_charge)
   static Future<Charge> retrieve(String id, {final Map data}) async {
     var dataMap = await StripeService.retrieve([Charge._path, id], data: data);
     return new Charge.fromMap(dataMap);
   }
 
-  /// [Capture a charge](https://stripe.com/docs/api/curl#charge_capture)
-  static Future<Charge> capture(String id, {int amount, String applicationFee, String receiptEmail, String statementDescriptor}) async {
+  /// [Capture a charge](https://stripe.com/docs/api#capture_charge)
+  static Future<Charge> capture(String id,
+      {int amount, String applicationFee, String receiptEmail, String statementDescriptor}) async {
     var data = {};
     if (amount != null) data['amount'] = amount;
     if (applicationFee != null) data['application_fee'] = applicationFee;
@@ -124,8 +125,9 @@ class Charge extends Resource {
     return new Charge.fromMap(dataMap);
   }
 
-  /// [List all Charges](https://stripe.com/docs/api/curl#list_charges)
-  static Future<ChargeCollection> list({var created, String customer, int limit, String startingAfter, String endingBefore}) async {
+  /// [List all Charges](https://stripe.com/docs/api#list_charges)
+  static Future<ChargeCollection> list(
+      {var created, String customer, int limit, String startingAfter, String endingBefore}) async {
     var data = {};
     if (created != null) data['created'] = created;
     if (customer != null) data['customer'] = customer;
@@ -143,7 +145,7 @@ class ChargeCollection extends ResourceCollection {
   ChargeCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/// [Creating a new charge (charging a credit card)](https://stripe.com/docs/api/curl#create_charge)
+/// [Create a charge](https://stripe.com/docs/api#create_charge)
 class ChargeCreation extends ResourceRequest {
   @required
   set amount(int amount) => _setMap('amount', amount);
@@ -179,7 +181,7 @@ class ChargeCreation extends ResourceRequest {
   }
 }
 
-/// [Updating a Charge](https://stripe.com/docs/api/curl#update_charge)
+/// [Update a charge](https://stripe.com/docs/api#update_charge)
 class ChargeUpdate extends ResourceRequest {
   set description(String description) => _setMap('description', description);
 
