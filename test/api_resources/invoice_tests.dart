@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleInvoice = '''
+var example = '''
     {
       "date": 1400855490,
       "id": "in_1045Uh41dfVNZFcqMyRp9Tml",
@@ -81,7 +81,7 @@ main(List<String> args) {
 
   group('Invoice offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleInvoice);
+      var map = JSON.decode(example);
       var invoice = new Invoice.fromMap(map);
       expect(invoice.date, new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000));
       expect(invoice.id, map['id']);

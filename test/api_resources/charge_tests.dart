@@ -7,89 +7,82 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleCharge = '''
+import 'balance_transaction_tests.dart' as balance_transaction;
+import 'card_tests.dart' as card;
+import 'customer_tests.dart' as customer;
+import 'dispute_tests.dart' as dispute;
+import 'refund_tests.dart' as refund;
+import 'invoice_tests.dart' as invoice;
+import '../resources/shipping_tests.dart' as shipping;
+
+
+var example = '''
     {
-      "id": "ch_14Vgs241dfVNZFcqCPsJ6tE3",
+      "id": "ch_15tbwd41dfVNZFcq48lWk5V2",
       "object": "charge",
-      "created": 1409047690,
       "livemode": false,
-      "paid": true,
       "amount": 100,
-      "currency": "usd",
-      "refunded": false,
-      "card": {
-        "id": "card_14Vgrn41dfVNZFcqRTHBOptX",
-        "object": "card",
-        "last4": "4242",
-        "brand": "Visa",
-        "funding": "credit",
-        "exp_month": 12,
-        "exp_year": 2016,
-        "fingerprint": "2OcV4uXscDkio6R5",
-        "country": "US",
-        "name": null,
-        "address_line1": null,
-        "address_line2": null,
-        "address_city": null,
-        "address_state": null,
-        "address_zip": null,
-        "address_country": null,
-        "cvc_check": null,
-        "address_line1_check": null,
-        "address_zip_check": null,
-        "customer": "cus_4f0tFpk50P2eqR"
-      },
       "captured": true,
-      "refunds": {
-        "object": "list",
-        "total_count": 0,
-        "has_more": false,
-        "url": "/v1/charges/ch_14Vgs241dfVNZFcqCPsJ6tE3/refunds",
-        "data": [
-    
-        ]
-      },
-      "balance_transaction": "txn_14Vgru41dfVNZFcqX95wJCtm",
-      "failure_message": null,
-      "failure_code": null,
+      "created": 1429524963,
+      "currency": "usd",
+      "paid": true,
+      "refunded": false,
+      "refunds": ${refund.collectionExample},
+      "source": ${card.example},
+      "status": "succeeded",
       "amount_refunded": 0,
-      "customer": "cus_4f0tFpk50P2eqR",
-      "invoice": "in_14Vgs141dfVNZFcqQYhvqV4Q",
-      "description": null,
-      "dispute": null,
-      "metadata": {
-      },
-      "statement_descriptor": null,
-      "receipt_email": null
+      "balance_transaction": ${balance_transaction.example},
+      "customer": ${customer.example},
+      "description": "description",
+      "dispute": ${dispute.example},
+      "failure_code": "failure_code",
+      "failure_message": "failure_message",      
+      "invoice": ${invoice.example},      
+      "metadata": ${utils.metadataExample},
+      "receipt_email": "receipt_email",
+      "receipt_number": "receipt_number",
+      "application_fee": "application_fee",
+      "destination": "destination",
+      "fraud_details": {"user_report": "safe"},
+      "shipping": ${shipping.example},
+      "statement_descriptor": "statement_descriptor"
     }''';
 
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
-  group('Charge offline', () {
+  solo_group('Charge offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleCharge);
+      var map = JSON.decode(example);
+      print(map);
       var charge = new Charge.fromMap(map);
       expect(charge.id, map['id']);
-      expect(charge.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
       expect(charge.livemode, map['livemode']);
-      expect(charge.paid, map['paid']);
       expect(charge.amount, map['amount']);
-      expect(charge.currency, map['currency']);
-      expect(charge.refunded, map['refunded']);
-      expect(charge.customer, map['customer']);
-      expect(charge.card, new isInstanceOf<Card>());
-      expect(charge.card.id, new Card.fromMap(map['card']).id);
-      expect(charge.description, map['description']);
-      expect(charge.metadata, map['metadata']);
-      expect(charge.statement_descriptor, map['statement_descriptor']);
       expect(charge.captured, map['captured']);
-      expect(charge.failureMessage, map['failureMessage']);
-      expect(charge.failureCode, map['failureCode']);
+      expect(charge.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(charge.currency, map['currency']);
+      expect(charge.paid, map['paid']);
+      expect(charge.refunded, map['refunded']);
+      expect(charge.refunds.toMap(), new RefundCollection.fromMap(map['refunds']).toMap());
+      expect(charge.source.toMap(), new Card.fromMap(map['source']).toMap());
+      expect(charge.status, map['status']);
       expect(charge.amountRefunded, map['amountRefunded']);
-      expect(charge.refunds.data.length, map['refunds']['data'].length);
-      expect(charge.dispute, map['dispute']);
-      expect(charge.balanceTransaction, map['balance_transaction']);
+      expect(charge.balanceTransactionExpand.toMap(), new BalanceTransaction.fromMap(map['balance_transaction']).toMap());
+      expect(charge.customerExpand.toMap(), new Customer.fromMap(map['customer']).toMap());
+      expect(charge.description, map['description']);
+      expect(charge.dispute.toMap(), new Dispute.fromMap(map['dispute']).toMap());
+      expect(charge.failureCode, map['failureCode']);
+      expect(charge.failureMessage, map['failureMessage']);
+      expect(charge.invoiceExpand.toMap(), new Invoice.fromMap(map['invoice']).toMap());
+      expect(charge.metadata, map['metadata']);
+      expect(charge.receiptEmail, map['receipt_email']);
+      expect(charge.receiptNumber, map['receipt_number']);
+      expect(charge.applicationFee, map['application_fee']);
+      expect(charge.destination, map['destination']);
+      expect(charge.fraudDetails, map['fraud_details']);
+      expect(charge.shipping.toMap(), new Shipping.fromMap(map['shipping']).toMap());
+      expect(charge.statement_descriptor, map['statement_descriptor']);
     });
   });
 

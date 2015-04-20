@@ -8,6 +8,15 @@ import 'package:logging/logging.dart';
 
 var log = new Logger('Test Utils');
 
+var metadataExample = '''
+    {
+      "string": "string",
+      "int": 10,
+      "bool": true,
+      "list": ["string", 10, true],
+      "map": {"foo": "bar"}
+    }''';
+
 setApiKeyFromArgs(List<String> args) {
   if (args.length < 1) {
     log.severe('Error. Most tests can not execute without a Stripe API key.');

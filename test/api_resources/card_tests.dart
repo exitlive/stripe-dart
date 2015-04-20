@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleCard = '''
+var example = '''
     {
       "id": "card_103yOK2eZvKYlo2CNWdHfG5K",
       "object": "card",
@@ -35,7 +35,7 @@ main(List<String> args) {
 
   group('Card offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleCard);
+      var map = JSON.decode(example);
       var card = new Card.fromMap(map);
       expect(card.id, map['id']);
       expect(card.last4, map['last4']);

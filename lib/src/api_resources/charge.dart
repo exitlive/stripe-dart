@@ -14,12 +14,6 @@ class Charge extends Resource {
 
   bool get captured => _dataMap['captured'];
 
-  Card get card {
-    var value = _dataMap['card'];
-    if (value == null) return null;
-    else return new Card.fromMap(value);
-  }
-
   DateTime get created => _getDateTimeFromMap('created');
 
   String get currency => _dataMap['currency'];
@@ -33,6 +27,14 @@ class Charge extends Resource {
     assert(refundMap != null);
     return new RefundCollection.fromMap(refundMap);
   }
+
+  Card get source {
+    var value = _dataMap['source'];
+    if (value == null) return null;
+    else return new Card.fromMap(value);
+  }
+
+  String get status => _dataMap['status'];
 
   int get amountRefunded => _dataMap['amountRefunded'];
 
@@ -88,6 +90,18 @@ class Charge extends Resource {
   }
 
   Map<String, String> get metadata => _dataMap['metadata'];
+
+  String get receiptEmail => _dataMap['receipt_email'];
+
+  String get receiptNumber => _dataMap['receipt_number'];
+
+  String get applicationFee => _dataMap['application_fee'];
+
+  String get destination => _dataMap['destination'];
+
+  Map<String, String> get fraudDetails => _dataMap['fraud_details'];
+
+  Shipping get shipping => new Shipping.fromMap(_dataMap['shipping']);
 
   String get statement_descriptor => _dataMap['statement_descriptor'];
 

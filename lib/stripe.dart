@@ -16,6 +16,10 @@ part 'src/api_resource.dart';
 part 'src/resource.dart';
 part 'src/resource_collection.dart';
 
+// resource classes
+part 'src/resources/address.dart';
+part 'src/resources/shipping.dart';
+
 // api resource classes
 part 'src/api_resources/account.dart';
 part 'src/api_resources/application_fee.dart';

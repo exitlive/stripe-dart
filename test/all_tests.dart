@@ -1,12 +1,17 @@
 import 'package:logging/logging.dart';
+import 'package:unittest/unittest.dart';
+import 'package:stack_trace/stack_trace.dart';
 
+// general tests
 import 'resource_tests.dart' as resourceTests;
 import 'api_resource_tests.dart' as apiResourceTests;
 import 'service_tests.dart' as serviceTests;
 
+// api resource tests
 import 'api_resources/account_tests.dart' as accountTests;
 import 'api_resources/application_fee_tests.dart' as applicationFeeTests;
 import 'api_resources/balance_tests.dart' as balanceTests;
+import 'api_resources/balance_transaction_tests.dart' as balanceTransactionTests;
 import 'api_resources/card_tests.dart' as cardTests;
 import 'api_resources/charge_tests.dart' as chargeTests;
 import 'api_resources/coupon_tests.dart' as couponTests;
@@ -18,11 +23,15 @@ import 'api_resources/invoice_item_tests.dart' as invoiceItemTests;
 import 'api_resources/invoice_tests.dart' as invoiceTests;
 import 'api_resources/plan_tests.dart' as planTests;
 import 'api_resources/recipient_tests.dart' as recipientTests;
+import 'api_resources/refund_tests.dart' as refundTests;
 import 'api_resources/subscription_tests.dart' as subscriptionTests;
 import 'api_resources/token_tests.dart' as tokenTests;
 import 'api_resources/transfer_tests.dart' as transferTests;
-import 'package:unittest/unittest.dart';
-import 'package:stack_trace/stack_trace.dart';
+
+
+// resource tests
+import 'resources/address_tests.dart' as addressTests;
+import 'resources/shipping_tests.dart' as shippingTests;
 
 /// Unittest configuration
 class TestConfiguration extends SimpleConfiguration {
@@ -84,13 +93,17 @@ main(List<String> args) {
   Logger.root.onRecord.listen((LogRecord record) => print('${record.message}'));
 
   unittestConfiguration = new TestConfiguration();
+
+  // general tests
   resourceTests.main();
   apiResourceTests.main();
   serviceTests.main();
 
+  // api resource tests
   accountTests.main(args);
   applicationFeeTests.main(args);
   balanceTests.main(args);
+  balanceTransactionTests.main(args);
   cardTests.main(args);
   chargeTests.main(args);
   couponTests.main(args);
@@ -102,7 +115,13 @@ main(List<String> args) {
   invoiceTests.main(args);
   planTests.main(args);
   recipientTests.main(args);
+  refundTests.main(args);
   subscriptionTests.main(args);
   tokenTests.main(args);
   transferTests.main(args);
+
+  // resource tests
+  addressTests.main(args);
+  shippingTests.main(args);
+
 }

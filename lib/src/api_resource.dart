@@ -14,6 +14,4 @@ abstract class ApiResource extends Resource {
     if (_dataMap['object'] !=
         object) throw new InvalidDataReceivedException('The data received was not for object ${object}');
   }
-
-
 }
