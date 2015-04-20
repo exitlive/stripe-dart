@@ -2,7 +2,7 @@ library api_resource_tests;
 
 import 'package:unittest/unittest.dart';
 
-import '../../lib/stripe.dart';
+import '../lib/stripe.dart';
 
 class TestResource extends ApiResource {
   final String object = 'test';

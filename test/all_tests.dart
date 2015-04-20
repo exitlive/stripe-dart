@@ -1,26 +1,26 @@
 import 'package:logging/logging.dart';
 
-import 'resources/resource_tests.dart' as resourceTests;
-import 'resources/api_resource_tests.dart' as apiResourceTests;
+import 'resource_tests.dart' as resourceTests;
+import 'api_resource_tests.dart' as apiResourceTests;
 import 'service_tests.dart' as serviceTests;
 
-import 'resources/account_tests.dart' as accountTests;
-import 'resources/application_fee_tests.dart' as applicationFeeTests;
-import 'resources/balance_tests.dart' as balanceTests;
-import 'resources/card_tests.dart' as cardTests;
-import 'resources/charge_tests.dart' as chargeTests;
-import 'resources/coupon_tests.dart' as couponTests;
-import 'resources/customer_tests.dart' as customerTests;
-import 'resources/discount_tests.dart' as discountTests;
-import 'resources/dispute_tests.dart' as disputeTests;
-import 'resources/event_tests.dart' as eventTests;
-import 'resources/invoice_item_tests.dart' as invoiceItemTests;
-import 'resources/invoice_tests.dart' as invoiceTests;
-import 'resources/plan_tests.dart' as planTests;
-import 'resources/recipient_tests.dart' as recipientTests;
-import 'resources/subscription_tests.dart' as subscriptionTests;
-import 'resources/token_tests.dart' as tokenTests;
-import 'resources/transfer_tests.dart' as transferTests;
+import 'api_resources/account_tests.dart' as accountTests;
+import 'api_resources/application_fee_tests.dart' as applicationFeeTests;
+import 'api_resources/balance_tests.dart' as balanceTests;
+import 'api_resources/card_tests.dart' as cardTests;
+import 'api_resources/charge_tests.dart' as chargeTests;
+import 'api_resources/coupon_tests.dart' as couponTests;
+import 'api_resources/customer_tests.dart' as customerTests;
+import 'api_resources/discount_tests.dart' as discountTests;
+import 'api_resources/dispute_tests.dart' as disputeTests;
+import 'api_resources/event_tests.dart' as eventTests;
+import 'api_resources/invoice_item_tests.dart' as invoiceItemTests;
+import 'api_resources/invoice_tests.dart' as invoiceTests;
+import 'api_resources/plan_tests.dart' as planTests;
+import 'api_resources/recipient_tests.dart' as recipientTests;
+import 'api_resources/subscription_tests.dart' as subscriptionTests;
+import 'api_resources/token_tests.dart' as tokenTests;
+import 'api_resources/transfer_tests.dart' as transferTests;
 import 'package:unittest/unittest.dart';
 import 'package:stack_trace/stack_trace.dart';
 
