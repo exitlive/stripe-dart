@@ -30,6 +30,15 @@ var example = '''
       "address_zip_check": null
     }''';
 
+var collectionExample = '''
+    {
+      "object": "list",
+      "total_count": 1,
+      "has_more": false,
+      "url": "/v1/customers/cus_65o6CvzZy0OcMf/sources",
+      "data": [${example}]
+    }''';
+
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 

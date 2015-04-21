@@ -35,9 +35,9 @@ main(List<String> args) {
       var refund = new Refund.fromMap(map);
       expect(refund.id, map['id']);
       expect(refund.amount, map['amount']);
-      expect(refund.amount, map['amount']);
-      expect(refund.amount, map['amount']);
-      expect(refund.amount, map['amount']);
+      expect(refund.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
+      expect(refund.currency, map['currency']);
+      expect(refund.balanceTransaction, map['balance_transaction']);
     });
   });
 

@@ -155,9 +155,9 @@ class ChargeCreation extends ResourceRequest {
 
   set customer(String customer) => _setMap('customer', customer);
 
-  set cardToken(String cardToken) => _setMap('source', cardToken);
+  set sourceToken(String sourceToken) => _setMap('source', sourceToken);
 
-  set card(CardCreation card) => _setMap('source', card);
+  set source(CardCreation source) => _setMap('source', source);
 
   set description(String description) => _setMap('description', description);
 

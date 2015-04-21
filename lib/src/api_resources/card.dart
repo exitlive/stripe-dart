@@ -85,6 +85,10 @@ class CardCollection extends ResourceCollection {
 
 /// [Creating a new card](https://stripe.com/docs/api/curl#create_card)
 class CardCreation extends ResourceRequest {
+  CardCreation() {
+    _setMap('object', 'card');
+  }
+
   @required
   set number(String number) => _setMap('number', number);
 
