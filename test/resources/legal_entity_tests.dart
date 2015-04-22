@@ -28,7 +28,7 @@ var example = '''
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
-  solo_group('LegalEntity offline', () {
+  group('LegalEntity offline', () {
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(example);
       var legalEntity = new LegalEntity.fromMap(map);
