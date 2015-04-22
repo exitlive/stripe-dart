@@ -22,14 +22,15 @@ import 'api_resources/event_tests.dart' as eventTests;
 import 'api_resources/invoice_item_tests.dart' as invoiceItemTests;
 import 'api_resources/invoice_tests.dart' as invoiceTests;
 import 'api_resources/plan_tests.dart' as planTests;
-import 'api_resources/recipient_tests.dart' as recipientTests;
 import 'api_resources/refund_tests.dart' as refundTests;
 import 'api_resources/subscription_tests.dart' as subscriptionTests;
 import 'api_resources/token_tests.dart' as tokenTests;
 import 'api_resources/transfer_tests.dart' as transferTests;
+import 'api_resources/transfer_reversal_tests.dart' as transferReversalTests;
 
 // resource tests
 import 'resources/address_tests.dart' as addressTests;
+import 'resources/bank_account_tests.dart' as bankAccountTests;
 import 'resources/shipping_tests.dart' as shippingTests;
 
 /// Unittest configuration
@@ -113,13 +114,14 @@ main(List<String> args) {
   invoiceItemTests.main(args);
   invoiceTests.main(args);
   planTests.main(args);
-  recipientTests.main(args);
   refundTests.main(args);
   subscriptionTests.main(args);
   tokenTests.main(args);
   transferTests.main(args);
+  transferReversalTests.main(args);
 
   // resource tests
   addressTests.main(args);
+  bankAccountTests.main(args);
   shippingTests.main(args);
 }

@@ -18,6 +18,7 @@ part 'src/resource_collection.dart';
 
 // resource classes
 part 'src/resources/address.dart';
+part 'src/resources/bank_account.dart';
 part 'src/resources/shipping.dart';
 
 // api resource classes
@@ -34,8 +35,8 @@ part 'src/api_resources/event.dart';
 part 'src/api_resources/invoice.dart';
 part 'src/api_resources/invoice_item.dart';
 part 'src/api_resources/plan.dart';
-part 'src/api_resources/recipient.dart';
 part 'src/api_resources/refund.dart';
 part 'src/api_resources/subscription.dart';
 part 'src/api_resources/token.dart';
 part 'src/api_resources/transfer.dart';
+part 'src/api_resources/transfer_reversal.dart';
