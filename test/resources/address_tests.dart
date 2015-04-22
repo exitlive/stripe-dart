@@ -14,7 +14,7 @@ var example = '''
       "city": "city",
       "state": "state",
       "postal_code": "postal code",
-      "country": "country"
+      "country": "US"
     }''';
 
 main(List<String> args) {
