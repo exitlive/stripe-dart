@@ -34,6 +34,7 @@ import 'resources/address_tests.dart' as addressTests;
 import 'resources/bank_account_tests.dart' as bankAccountTests;
 import 'resources/date_tests.dart' as dateTests;
 import 'resources/shipping_tests.dart' as shippingTests;
+import 'resources/verification_tests.dart' as verificationTests;
 
 /// Unittest configuration
 class TestConfiguration extends SimpleConfiguration {
@@ -128,4 +129,5 @@ main(List<String> args) {
   bankAccountTests.main(args);
   dateTests.main(args);
   shippingTests.main(args);
+  verificationTests.main(args);
 }
