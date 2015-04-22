@@ -31,6 +31,7 @@ import 'api_resources/transfer_reversal_tests.dart' as transferReversalTests;
 // resource tests
 import 'resources/address_tests.dart' as addressTests;
 import 'resources/bank_account_tests.dart' as bankAccountTests;
+import 'resources/date_tests.dart' as dateTests;
 import 'resources/shipping_tests.dart' as shippingTests;
 
 /// Unittest configuration
@@ -123,5 +124,6 @@ main(List<String> args) {
   // resource tests
   addressTests.main(args);
   bankAccountTests.main(args);
+  dateTests.main(args);
   shippingTests.main(args);
 }

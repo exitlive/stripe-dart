@@ -19,6 +19,8 @@ part 'src/resource_collection.dart';
 // resource classes
 part 'src/resources/address.dart';
 part 'src/resources/bank_account.dart';
+part 'src/resources/date.dart';
+part 'src/resources/legal_entity.dart';
 part 'src/resources/shipping.dart';
 
 // api resource classes
