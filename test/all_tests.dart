@@ -30,6 +30,7 @@ import 'api_resources/transfer_tests.dart' as transferTests;
 import 'api_resources/transfer_reversal_tests.dart' as transferReversalTests;
 
 // resource tests
+import 'resources/additional_owner_tests.dart' as additionalOwnerTests;
 import 'resources/address_tests.dart' as addressTests;
 import 'resources/bank_account_tests.dart' as bankAccountTests;
 import 'resources/date_tests.dart' as dateTests;
@@ -125,6 +126,7 @@ main(List<String> args) {
   transferReversalTests.main(args);
 
   // resource tests
+  additionalOwnerTests.main(args);
   addressTests.main(args);
   bankAccountTests.main(args);
   dateTests.main(args);
