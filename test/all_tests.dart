@@ -34,6 +34,7 @@ import 'resources/additional_owner_tests.dart' as additionalOwnerTests;
 import 'resources/address_tests.dart' as addressTests;
 import 'resources/bank_account_tests.dart' as bankAccountTests;
 import 'resources/date_tests.dart' as dateTests;
+import 'resources/legal_entity_tests.dart' as legalEntityTests;
 import 'resources/shipping_tests.dart' as shippingTests;
 import 'resources/verification_tests.dart' as verificationTests;
 
@@ -130,6 +131,7 @@ main(List<String> args) {
   addressTests.main(args);
   bankAccountTests.main(args);
   dateTests.main(args);
+  legalEntityTests.main(args);
   shippingTests.main(args);
   verificationTests.main(args);
 }
