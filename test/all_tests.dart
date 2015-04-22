@@ -19,6 +19,7 @@ import 'api_resources/customer_tests.dart' as customerTests;
 import 'api_resources/discount_tests.dart' as discountTests;
 import 'api_resources/dispute_tests.dart' as disputeTests;
 import 'api_resources/event_tests.dart' as eventTests;
+import 'api_resources/file_upload_tests.dart' as fileUploadTests;
 import 'api_resources/invoice_item_tests.dart' as invoiceItemTests;
 import 'api_resources/invoice_tests.dart' as invoiceTests;
 import 'api_resources/plan_tests.dart' as planTests;
@@ -112,6 +113,7 @@ main(List<String> args) {
   discountTests.main(args);
   disputeTests.main(args);
   eventTests.main(args);
+  fileUploadTests.main(args);
   invoiceItemTests.main(args);
   invoiceTests.main(args);
   planTests.main(args);
