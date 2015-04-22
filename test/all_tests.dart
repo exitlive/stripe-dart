@@ -37,6 +37,7 @@ import 'resources/date_tests.dart' as dateTests;
 import 'resources/legal_entity_tests.dart' as legalEntityTests;
 import 'resources/shipping_tests.dart' as shippingTests;
 import 'resources/tos_acceptance_tests.dart' as tosAcceptanceTests;
+import 'resources/transfer_schedule_tests.dart' as transferScheduleTests;
 import 'resources/verification_tests.dart' as verificationTests;
 
 /// Unittest configuration
@@ -135,5 +136,6 @@ main(List<String> args) {
   legalEntityTests.main(args);
   shippingTests.main(args);
   tosAcceptanceTests.main(args);
+  transferScheduleTests.main(args);
   verificationTests.main(args);
 }

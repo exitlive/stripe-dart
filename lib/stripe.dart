@@ -24,6 +24,7 @@ part 'src/resources/date.dart';
 part 'src/resources/legal_entity.dart';
 part 'src/resources/shipping.dart';
 part 'src/resources/tos_acceptance.dart';
+part 'src/resources/transfer_schedule.dart';
 part 'src/resources/verification.dart';
 
 // api resource classes
