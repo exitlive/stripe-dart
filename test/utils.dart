@@ -32,7 +32,6 @@ Future tearDown() async {
   await deleteAllCoupons();
   await deleteAllInvoiceItems();
   await deleteAllPlans();
-  await deleteAllRecipients();
   log.finest('Teardown End');
 }
 
@@ -57,14 +56,6 @@ Future deleteAllInvoiceItems() async {
   for (InvoiceItem invoiceItem in invoiceItems.data) {
     await InvoiceItem.delete(invoiceItem.id);
     log.finest('Delete invoice item: ${invoiceItem.id}');
-  }
-}
-
-Future deleteAllRecipients() async {
-  var recipients = await Recipient.list(limit: 100);
-  for (Recipient recipient in recipients.data) {
-    await Recipient.delete(recipient.id);
-    log.finest('Delete customer: ${recipient.id}');
   }
 }
 
