@@ -21,6 +21,15 @@ var example = '''
       "routing_number": "routing_number"
     }''';
 
+var collectionExample = '''
+    {
+      "object": "list",
+      "total_count": 1,
+      "has_more": false,
+      "url": "/v1/accounts/acct_103yoB41dfVNZFcq/bank_accounts",
+      "data": [${example}]
+    }''';
+
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
