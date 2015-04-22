@@ -17,7 +17,7 @@ var example = '''
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
-  solo_group('Date offline', () {
+  group('Date offline', () {
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(example);
       var date = new Date.fromMap(map);
