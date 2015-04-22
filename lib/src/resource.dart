@@ -30,6 +30,13 @@ abstract class Resource {
   Map toMap() {
     return _dataMap;
   }
+
+  String _getIdForExpandable(String key) {
+    var value = _dataMap[key];
+    if (value is String) return value;
+    else if (value is Map && value.containsKey('id')) return value['id'];
+    else return null;
+  }
 }
 
 /// The base class for request resources (eg: [CustomerCreation],
