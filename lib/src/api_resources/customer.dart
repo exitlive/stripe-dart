@@ -17,10 +17,7 @@ class Customer extends ApiResource {
   String get currency => _dataMap['currency'];
 
   String get defaultSource {
-    var value = _dataMap['default_source'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Card.fromMap(value).id;
+    return this._getIdForExpandable('default_source');
   }
 
   Card get defaultSourceExpand {
@@ -58,8 +55,8 @@ class Customer extends ApiResource {
   Customer.fromMap(Map dataMap) : super.fromMap(dataMap);
 
   /// [Retrieve a customer](https://stripe.com/docs/api#retrieve_customer)
-  static Future<Customer> retrieve(String id, {final Map data}) async {
-    var dataMap = await StripeService.retrieve([Customer._path, id], data: data);
+  static Future<Customer> retrieve(String customerId, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([Customer._path, customerId], data: data);
     return new Customer.fromMap(dataMap);
   }
 
@@ -76,7 +73,7 @@ class Customer extends ApiResource {
   }
 
   /// [Delete a customer](https://stripe.com/docs/api#delete_customer)
-  static Future<Map> delete(String id) => StripeService.delete([Customer._path, id]);
+  static Future<Map> delete(String customerId) => StripeService.delete([Customer._path, customerId]);
 }
 
 class CustomerCollection extends ResourceCollection {
@@ -127,8 +124,8 @@ class CustomerUpdate extends ResourceRequest {
 
   set source(CardCreation source) => _setMap('source', source);
 
-  Future<Customer> update(String id) async {
-    var dataMap = await StripeService.update([Customer._path, id], _getMap());
+  Future<Customer> update(String customerId) async {
+    var dataMap = await StripeService.update([Customer._path, customerId], _getMap());
     return new Customer.fromMap(dataMap);
   }
 }
