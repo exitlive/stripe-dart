@@ -1,7 +1,7 @@
 part of stripe;
 
 /// [Charges](https://stripe.com/docs/api#charges)
-class Charge extends Resource {
+class Charge extends ApiResource {
   String get id => _dataMap['id'];
 
   final String object = 'charge';
@@ -23,9 +23,9 @@ class Charge extends Resource {
   bool get refunded => _dataMap['refunded'];
 
   RefundCollection get refunds {
-    Map refundMap = _dataMap['refunds'];
-    assert(refundMap != null);
-    return new RefundCollection.fromMap(refundMap);
+    Map value = _dataMap['refunds'];
+    assert(value != null);
+    return new RefundCollection.fromMap(value);
   }
 
   Card get source {
@@ -39,10 +39,7 @@ class Charge extends Resource {
   int get amountRefunded => _dataMap['amountRefunded'];
 
   String get balanceTransaction {
-    var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else if (value is String) return _dataMap['balance_transaction'];
-    else return new BalanceTransaction.fromMap(value).id;
+    return this._getIdForExpandable('balance_transaction');
   }
 
   BalanceTransaction get balanceTransactionExpand {
@@ -52,10 +49,7 @@ class Charge extends Resource {
   }
 
   String get customer {
-    var value = _dataMap['customer'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Customer.fromMap(value).id;
+    return this._getIdForExpandable('customer');
   }
 
   Customer get customerExpand {
@@ -77,10 +71,7 @@ class Charge extends Resource {
   String get failureMessage => _dataMap['failureMessage'];
 
   String get invoice {
-    var value = _dataMap['invoice'];
-    if (value == null) return null;
-    else if (value is String) return _dataMap['invoice'];
-    else return new Invoice.fromMap(value).id;
+    return this._getIdForExpandable('invoice');
   }
 
   Invoice get invoiceExpand {
@@ -101,27 +92,31 @@ class Charge extends Resource {
 
   Map<String, String> get fraudDetails => _dataMap['fraud_details'];
 
-  Shipping get shipping => new Shipping.fromMap(_dataMap['shipping']);
+  Shipping get shipping {
+    var value = _dataMap['shipping'];
+    if (value == null) return null;
+    else return new Shipping.fromMap(value);
+  }
 
   String get statement_descriptor => _dataMap['statement_descriptor'];
 
   Charge.fromMap(Map dataMap) : super.fromMap(dataMap);
 
   /// [Retrieve a charge](https://stripe.com/docs/api#retrieve_charge)
-  static Future<Charge> retrieve(String id, {final Map data}) async {
-    var dataMap = await StripeService.retrieve([Charge._path, id], data: data);
+  static Future<Charge> retrieve(String chargeId, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([Charge._path, chargeId], data: data);
     return new Charge.fromMap(dataMap);
   }
 
   /// [Capture a charge](https://stripe.com/docs/api#capture_charge)
-  static Future<Charge> capture(String id,
+  static Future<Charge> capture(String chargeId,
       {int amount, String applicationFee, String receiptEmail, String statementDescriptor}) async {
     var data = {};
     if (amount != null) data['amount'] = amount;
     if (applicationFee != null) data['application_fee'] = applicationFee;
     if (receiptEmail != null) data['receipt_email'] = receiptEmail;
     if (statementDescriptor != null) data['statement_descriptor'] = statementDescriptor;
-    var dataMap = await StripeService.post([Charge._path, id, 'capture'], data: data);
+    var dataMap = await StripeService.post([Charge._path, chargeId, 'capture'], data: data);
     return new Charge.fromMap(dataMap);
   }
 
@@ -191,8 +186,8 @@ class ChargeUpdate extends ResourceRequest {
 
   set fraudDetails(Map fraudDetails) => _setMap('fraud_details', fraudDetails);
 
-  Future<Charge> update(String id) async {
-    var dataMap = await StripeService.update([Charge._path, id], _getMap());
+  Future<Charge> update(String chargeId) async {
+    var dataMap = await StripeService.update([Charge._path, chargeId], _getMap());
     return new Charge.fromMap(dataMap);
   }
 }
