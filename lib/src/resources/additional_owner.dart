@@ -1,11 +1,23 @@
 part of stripe;
 
 class AdditionalOwner extends Resource {
-  Address get address => new Address.fromMap(_dataMap['address']);
+  Address get address {
+    var value = _dataMap['address'];
+    if (value == null) return null;
+    else return new Address.fromMap(value);
+  }
 
-  Date get dateOfBirth => new Date.fromMap(_dataMap['dob']);
+  Date get dateOfBirth {
+    var value = _dataMap['dob'];
+    if (value == null) return null;
+    else return new Date.fromMap(value);
+  }
 
-  Verification get verification => new Verification.fromMap(_dataMap['verification']);
+  Verification get verification {
+    var value = _dataMap['verification'];
+    if (value == null) return null;
+    else return new Verification.fromMap(value);
+  }
 
   String get firstName => _dataMap['first_name'];
 
