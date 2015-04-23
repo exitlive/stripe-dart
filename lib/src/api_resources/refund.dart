@@ -15,10 +15,7 @@ class Refund extends ApiResource {
   String get currency => _dataMap['currency'];
 
   String get balanceTransaction {
-    var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new BalanceTransaction.fromMap(value).id;
+    return this._getIdForExpandable('balance_transaction');
   }
 
   BalanceTransaction get balanceTransactionExpand {
