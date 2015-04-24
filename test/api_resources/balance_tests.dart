@@ -40,15 +40,10 @@ main(List<String> args) {
   });
 
   group('Balance online', () {
-    tearDown(() {
-      return utils.tearDown();
-    });
-
     test('Retrieve Balance', () async {
       var balance = await Balance.retrieve();
       expect(balance.livemode, isFalse);
       // other tests will depend on your stripe account
-
     });
   });
 }

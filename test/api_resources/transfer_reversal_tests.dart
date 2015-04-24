@@ -48,10 +48,6 @@ main(List<String> args) {
   });
 
   group('TransferReversal online', () {
-    tearDown(() {
-      return utils.tearDown();
-    });
-
     test('Create minimal', () async {
       // TODO: implement
     });

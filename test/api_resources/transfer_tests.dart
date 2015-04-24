@@ -70,10 +70,6 @@ main(List<String> args) {
   });
 
   group('Transfer online', () {
-    tearDown(() {
-      return utils.tearDown();
-    });
-
     test('Create minimal', () async {
       // TODO: implement
     });
