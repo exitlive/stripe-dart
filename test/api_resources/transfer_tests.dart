@@ -7,169 +7,35 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleTransfer = '''
+import 'card_tests.dart' as card;
+import 'charge_tests.dart' as charge;
+import 'balance_transaction_tests.dart' as balance_transaction;
+import 'transfer_reversal_tests.dart' as transfer_reversal;
+
+var example = '''
     {
       "id": "tr_1046Ri41dfVNZFcqQ325IJCE",
       "object": "transfer",
-      "created": 1401075076,
-      "date": 1401235200,
       "livemode": false,
-      "amount": 4141,
+      "amount": 100,
+      "created": 1401075076,
       "currency": "usd",
+      "date": 1401235200,
+      "reversals": ${transfer_reversal.collectionExample},
+      "reversed": false,
       "status": "pending",
       "type": "bank_account",
-      "balance_transaction": "txn_1044ML41dfVNZFcq7TtjDZeb",
-      "summary": {
-        "charge_gross": 7010,
-        "charge_fees": 2190,
-        "charge_fee_details": [
-          {
-            "amount": 2190,
-            "currency": "usd",
-            "type": "stripe_fee",
-            "description": null,
-            "application": null
-          }
-        ],
-        "refund_gross": -700,
-        "refund_fees": -21,
-        "refund_fee_details": [
-          {
-            "amount": -21,
-            "currency": "usd",
-            "type": "stripe_fee",
-            "description": null,
-            "application": null
-          }
-        ],
-        "adjustment_gross": 0,
-        "adjustment_fees": 0,
-        "adjustment_fee_details": [
-    
-        ],
-        "validation_fees": 0,
-        "validation_count": 0,
-        "charge_count": 66,
-        "refund_count": 14,
-        "adjustment_count": 0,
-        "net": 4141,
-        "currency": "usd",
-        "collected_fee_gross": 0,
-        "collected_fee_count": 0,
-        "collected_fee_refund_gross": 0,
-        "collected_fee_refund_count": 0
-      },
-      "transactions": {
-        "object": "list",
-        "total_count": 80,
-        "has_more": true,
-        "url": "/v1/transfers/tr_1046Ri41dfVNZFcqQ325IJCE/transactions",
-        "data": [
-          {
-            "id": "ch_1044o041dfVNZFcqIEgcg9P7",
-            "type": "charge",
-            "amount": 100,
-            "currency": "usd",
-            "net": 67,
-            "created": 1400696687,
-            "description": null,
-            "fee": 33,
-            "fee_details": [
-              {
-                "amount": 33,
-                "currency": "usd",
-                "type": "stripe_fee",
-                "description": "Stripe processing fees",
-                "application": null
-              }
-            ]
-          },
-          {
-            "id": "ch_1044o041dfVNZFcqrnWnjxRs",
-            "type": "charge",
-            "amount": 100,
-            "currency": "usd",
-            "net": 67,
-            "created": 1400696685,
-            "description": null,
-            "fee": 33,
-            "fee_details": [
-              {
-                "amount": 33,
-                "currency": "usd",
-                "type": "stripe_fee",
-                "description": "Stripe processing fees",
-                "application": null
-              }
-            ]
-          },
-          {
-            "id": "ch_1044o041dfVNZFcqzOvv2gr1",
-            "type": "charge",
-            "amount": 100,
-            "currency": "usd",
-            "net": 67,
-            "created": 1400696685,
-            "description": null,
-            "fee": 33,
-            "fee_details": [
-              {
-                "amount": 33,
-                "currency": "usd",
-                "type": "stripe_fee",
-                "description": "Stripe processing fees",
-                "application": null
-              }
-            ]
-          },
-          {
-            "id": "ch_1044o041dfVNZFcqzhFXD8Pl",
-            "type": "charge",
-            "amount": 100,
-            "currency": "usd",
-            "net": 67,
-            "created": 1400696684,
-            "description": null,
-            "fee": 33,
-            "fee_details": [
-              {
-                "amount": 33,
-                "currency": "usd",
-                "type": "stripe_fee",
-                "description": "Stripe processing fees",
-                "application": null
-              }
-            ]
-          },
-          {
-            "id": "ch_1044o041dfVNZFcqMpXTlhqm",
-            "type": "charge",
-            "amount": 100,
-            "currency": "usd",
-            "net": 67,
-            "created": 1400696683,
-            "description": null,
-            "fee": 33,
-            "fee_details": [
-              {
-                "amount": 33,
-                "currency": "usd",
-                "type": "stripe_fee",
-                "description": "Stripe processing fees",
-                "application": null
-              }
-            ]
-          }
-        ]
-      },
-      "other_transfers": [
-        "tr_1046Ri41dfVNZFcqQ325IJCE"
-      ],
+      "amount_reversed": 0,
+      "balance_transaction": ${balance_transaction.example},
       "description": "STRIPE TRANSFER",
-      "metadata": {
-      },
-      "statement_descriptor": null,
-      "recipient": null
+      "failure_code": "insufficient_funds",
+      "failure_message": "Your Stripe account has insufficient funds to cover the transfer.",
+      "metadata": ${utils.metadataExample},
+      "application_fee": "application_fee",
+      "destination": ${card.example},
+      "destination_payment": ${charge.example},
+      "source_transaction": ${charge.example},
+      "statement_descriptor": "statement_descriptor"
     }''';
 
 main(List<String> args) {
@@ -177,21 +43,29 @@ main(List<String> args) {
 
   group('Transfer offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleTransfer);
+      var map = JSON.decode(example);
       var transfer = new Transfer.fromMap(map);
       expect(transfer.id, map['id']);
-      expect(transfer.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
-      expect(transfer.date, new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000));
       expect(transfer.livemode, map['livemode']);
       expect(transfer.amount, map['amount']);
+      expect(transfer.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
       expect(transfer.currency, map['currency']);
+      expect(transfer.date, new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000));
+      expect(transfer.reversals.toMap(), new TransferReversalCollection.fromMap(map['reversals']).toMap());
+      expect(transfer.reversed, map['reversed']);
       expect(transfer.status, map['status']);
       expect(transfer.type, map['type']);
-      expect(transfer.balanceTransaction, map['balance_transaction']);
+      expect(transfer.amountReversed, map['amount_reversed']);
+      expect(transfer.balanceTransactionExpand.toMap(), new Balance.fromMap(map['balance_transaction']).toMap());
       expect(transfer.description, map['description']);
+      expect(transfer.failureCode, map['failure_code']);
+      expect(transfer.failureMessage, map['failure_message']);
       expect(transfer.metadata, map['metadata']);
+      expect(transfer.applicationFee, map['application_fee']);
+      expect(transfer.destinationExpand.toMap(), new Card.fromMap(map['destination']).toMap());
+      expect(transfer.destinationPaymentExpand.toMap(), new Charge.fromMap(map['destination_payment']).toMap());
+      expect(transfer.sourceTransactionExpand.toMap(), new Charge.fromMap(map['source_transaction']).toMap());
       expect(transfer.statementDescriptor, map['statement_descriptor']);
-      expect(transfer.recipient, map['recipient']);
     });
   });
 
@@ -200,113 +74,16 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('TransferCreation minimal', () async {
-
-      // Transfer fields
-      var transferAmount = 100,
-          transferCurrency = 'usd',
-          transferRecipient = 'self';
-
-      var transfer = await (new TransferCreation()
-        ..amount = transferAmount
-        ..currency = transferCurrency
-        ..recipient = transferRecipient).create();
-      expect(transfer.amount, transferAmount);
-      expect(transfer.currency, transferCurrency);
-      expect(transfer.recipient, isNull);
+    test('Create minimal', () async {
+      // TODO: implement
     });
 
-    test('TransferCreation full', () async {
-
-      // Recipient fields
-      var recipientName = 'test name',
-          recipientType = 'corporation',
-          bankAccountCountry = 'US',
-          bankAccountRoutingNumber = '110000000',
-          bankAccountAccountNumber = '000123456789';
-
-      var recipientBankAccount = (new BankAccountRequest()
-        ..country = bankAccountCountry
-        ..routingNumber = bankAccountRoutingNumber
-        ..accountNumber = bankAccountAccountNumber);
-
-      var recipientCreation = new RecipientCreation()
-        ..name = recipientName
-        ..type = recipientType
-        ..bankAccount = recipientBankAccount;
-
-      // Transfer fields
-      var transferAmount = 100,
-          transferCurrency = 'usd',
-          transferDescription1 = 'test description1',
-          transferStatementDescriptor = 'descriptor',
-          transferMetadata1 = {'foo': 'bar1'},
-          transferDescription2 = 'test description2',
-          transferMetadata2 = {'foo': 'bar2'};
-
-      var recipient = await recipientCreation.create();
-      var transfer = await (new TransferCreation()
-        ..amount = transferAmount
-        ..currency = transferCurrency
-        ..recipient = recipient.id
-        ..description = transferDescription1
-        ..statementDescriptor = transferStatementDescriptor
-        ..metadata = transferMetadata1).create();
-      expect(transfer.amount, transferAmount);
-      expect(transfer.currency, transferCurrency);
-      expect(transfer.recipient, recipient.id);
-      expect(transfer.description, transferDescription1);
-      expect(transfer.statementDescriptor, transferStatementDescriptor);
-      expect(transfer.metadata, transferMetadata1);
-      transfer = await Transfer.retrieve(transfer.id, data: {'expand': ['balance_transaction']});
-      // testing the expand functionality of retrieve
-      expect(transfer.balanceTransaction, transfer.balanceTransactionExpand.id);
-      expect(transfer.balanceTransactionExpand.amount, transferAmount * -1);
-      // testing the TransferUpdate
-      transfer = await (new TransferUpdate()
-        ..description = transferDescription2
-        ..metadata = transferMetadata2).update(transfer.id);
-      expect(transfer.amount, transferAmount);
-      expect(transfer.currency, transferCurrency);
-      expect(transfer.recipient, recipient.id);
-      expect(transfer.description, transferDescription2);
-      expect(transfer.statementDescriptor, transferStatementDescriptor);
-      expect(transfer.metadata, transferMetadata2);
-      // testing transfer cancel
-      try {
-        await Transfer.cancel(transfer.id);
-      } catch (e) {
-        // transfer has already been submitted
-        expect(e, new isInstanceOf<InvalidRequestErrorException>());
-        expect(
-            e.errorMessage, 'Transfers to non-Stripe accounts can currently only be reversed while they are pending.');
-      }
+    test('Create full', () async {
+      // TODO: implement
     });
 
-    test('List parameters Transfer', () async {
-
-      // Transfer fields
-      var transferAmount = 100,
-          transferCurrency = 'usd',
-          transferRecipient = 'self';
-
-      for (var i = 0; i < 20; i++) {
-        await (new TransferCreation()
-          ..amount = transferAmount
-          ..currency = transferCurrency
-          ..recipient = transferRecipient).create();
-      }
-
-      var transfers = await Transfer.list(limit: 10);
-      expect(transfers.data.length, 10);
-      expect(transfers.hasMore, isTrue);
-      transfers = await Transfer.list(limit: 10, startingAfter: transfers.data.last.id);
-      expect(transfers.data.length, 10);
-      // will also include transfers from past tests
-      expect(transfers.hasMore, isTrue);
-      transfers = await Transfer.list(limit: 10, endingBefore: transfers.data.first.id);
-      expect(transfers.data.length, 10);
-      expect(transfers.hasMore, isFalse);
+    test('List parameters', () async {
+      // TODO: implement
     });
   });
 }
