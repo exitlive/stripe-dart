@@ -38,7 +38,7 @@ var example = '''
       "failure_message": "failure_message",      
       "invoice": ${invoice.example},      
       "metadata": ${utils.metadataExample},
-      "receipt_email": "receipt_email",
+      "receipt_email": "test@test.com",
       "receipt_number": "receipt_number",
       "application_fee": "application_fee",
       "destination": "destination",
@@ -90,7 +90,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('ChargeCreation minimal', () async {
+    test('Create minimal', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -114,7 +114,7 @@ main(List<String> args) {
       expect(charge.currency, chargeCurrency);
     });
 
-    test('ChargeCreation full', () async {
+    test('Create full', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -163,7 +163,7 @@ main(List<String> args) {
       expect(charge.metadata, chargeMetadata2);
     });
 
-    test('Capture a Charge', () async {
+    test('Capture', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -190,7 +190,7 @@ main(List<String> args) {
       expect(charge.captured, isTrue);
     });
 
-    test('List parameters charge', () async {
+    test('List parameters', () async {
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
           cardExpYear = 2016;

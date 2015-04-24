@@ -94,7 +94,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('SubscriptionCreation minimal', () async {
+    test('Create minimal', () async {
 
       // Card fields
       var cardNumber = '5555555555554444',
@@ -126,7 +126,7 @@ main(List<String> args) {
       expect(subscription.customer, customer.id);
     });
 
-    test('SubscriptionCreation full', () async {
+    test('Create full', () async {
 
       // Coupon fields
       var couponId1 = 'test coupon id1',
@@ -245,7 +245,7 @@ main(List<String> args) {
       expect(subscription.cancelAtPeriodEnd, isFalse);
     });
 
-    test('List parameters subscription', () async {
+    test('List parameters', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',

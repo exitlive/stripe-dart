@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleCoupon = '''
+var example = '''
     {
       "id": "50-pc-forever-once",
       "created": 1397741615,
@@ -31,7 +31,7 @@ main(List<String> args) {
 
   group('Coupon offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleCoupon);
+      var map = JSON.decode(example);
 
       var coupon = new Coupon.fromMap(map);
 
@@ -56,7 +56,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('CouponCreation minimal', () async {
+    test('Create minimal', () async {
 
       // Coupon fields
       var couponDuration = 'forever',
@@ -70,7 +70,7 @@ main(List<String> args) {
       expect(coupon.percentOff, couponPercentOff);
     });
 
-    test('CouponCreation full', () async {
+    test('Create full', () async {
 
       // Coupon fields
       var couponId = 'test id',
@@ -111,7 +111,7 @@ main(List<String> args) {
       expect(coupon.redeemBy, couponRedeemBy);
     });
 
-    test('Delete Coupon', () async {
+    test('Delete', () async {
 
       // Coupon fields
       var couponDuration = 'forever',
@@ -128,7 +128,7 @@ main(List<String> args) {
       expect(response['id'], coupon.id);
     });
 
-    test('List parameters Coupon', () async {
+    test('List parameters', () async {
 
       // Coupon fields
       var couponDuration = 'forever',

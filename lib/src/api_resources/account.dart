@@ -100,7 +100,6 @@ class Account extends ApiResource {
 
 /// [Create an account](https://stripe.com/docs/api/curl#create_account)
 class AccountCreation extends ResourceRequest {
-
   set managed(String managed) => _setMap('managed', managed);
 
   set country(String country) => _setMap('country', country);
@@ -139,14 +138,13 @@ class AccountCreation extends ResourceRequest {
 
 /// [Update an account](https://stripe.com/docs/api/curl#update_account)
 class AccountUpdate extends ResourceRequest {
-
   set businessName(String businessName) => _setMap('business_name', businessName);
 
   set businessUrl(String businessUrl) => _setMap('business_url', businessUrl);
 
   set supportPhone(String supportPhone) => _setMap('support_phone', supportPhone);
 
-  set bankAccount(BankAccount bankAccount) => _setMap('bank_account', bankAccount);
+  set bankAccount(BankAccount bankAccount) => _setMap('bank_account', bankAccount.toMap());
 
   set debitNegativeBalances(bool debitNegativeBalances) => _setMap('debit_negative_balances', debitNegativeBalances);
 

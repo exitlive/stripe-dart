@@ -29,7 +29,7 @@ class Balance extends Resource {
   }
 }
 
-class BalanceTransaction extends Resource {
+class BalanceTransaction extends ApiResource {
   String get id => _dataMap['id'];
 
   final String object = 'balance_transaction';
@@ -61,29 +61,13 @@ class BalanceTransaction extends Resource {
   String get description => _dataMap['description'];
 
   String get source {
-    var value = _dataMap['source'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Charge.fromMap(value).id;
+    return this._getIdForExpandable('source');
   }
 
   Charge get sourceExpand {
     var value = _dataMap['source'];
     if (value == null) return null;
     else return new Charge.fromMap(value);
-  }
-
-  String get recipient {
-    var value = _dataMap['recipient'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Recipient.fromMap(value).id;
-  }
-
-  Recipient get recipientExpand {
-    var value = _dataMap['recipient'];
-    if (value == null) return null;
-    else return new Recipient.fromMap(value);
   }
 
   BalanceTransaction.fromMap(Map dataMap) : super.fromMap(dataMap);

@@ -1,7 +1,7 @@
 part of stripe;
 
 /// [Invoice items](https://stripe.com/docs/api/curl#invoiceitems)
-class InvoiceItem extends Resource {
+class InvoiceItem extends ApiResource {
   String get id => _dataMap['id'];
 
   final String object = 'invoiceitem';
@@ -15,10 +15,7 @@ class InvoiceItem extends Resource {
   String get currency => _dataMap['currency'];
 
   String get customer {
-    var value = _dataMap['customer'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Customer.fromMap(value).id;
+    return this._getIdForExpandable('customer');
   }
 
   Customer get customerExpand {
@@ -34,10 +31,7 @@ class InvoiceItem extends Resource {
   String get description => _dataMap['description'];
 
   String get invoice {
-    var value = _dataMap['invoice'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Invoice.fromMap(value).id;
+    return this._getIdForExpandable('invoice');
   }
 
   Invoice get invoiceExpand {

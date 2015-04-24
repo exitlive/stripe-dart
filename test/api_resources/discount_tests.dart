@@ -65,7 +65,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('delete from Customer', () async {
+    test('Delete from Customer', () async {
 
       // Coupon fields
       var couponId = 'test coupon id',
@@ -86,7 +86,7 @@ main(List<String> args) {
       expect(customer.discount, isNull);
     });
 
-    test('delete from Subscription', () async {
+    test('Delete from Subscription', () async {
       var cardNumber = '5555555555554444',
           cardExpMonth = 3,
           cardExpYear = 2016;

@@ -13,7 +13,6 @@ import '../resources/tos_acceptance_tests.dart' as tos_acceptance;
 import '../resources/transfer_schedule_tests.dart' as transfer_schedule;
 import '../resources/verification_tests.dart' as verification;
 
-
 var example = '''
     {
       "id": "acct_102yoB41dfVNZFcq",

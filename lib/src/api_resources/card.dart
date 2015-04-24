@@ -1,7 +1,7 @@
 part of stripe;
 
 /// [Card](https://stripe.com/docs/api/curl#cards)
-class Card extends Resource {
+class Card extends ApiResource {
   String get id => _dataMap['id'];
 
   final String object = 'card';
@@ -37,10 +37,7 @@ class Card extends Resource {
   String get country => _dataMap['country'];
 
   String get customer {
-    var value = _dataMap['customer'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Customer.fromMap(value).id;
+    return this._getIdForExpandable('customer');
   }
 
   Customer get customerExpand {

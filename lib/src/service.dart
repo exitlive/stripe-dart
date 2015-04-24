@@ -53,7 +53,8 @@ abstract class StripeService {
     return _request('POST', pathParts, data: data);
   }
 
-  static Future<Map> _request(final String method, final List<String> pathParts, {final Map data, String hostOverride}) async {
+  static Future<Map> _request(final String method, final List<String> pathParts,
+      {final Map data, String hostOverride}) async {
     pathParts.insert(0, basePath);
     var path = '/' + pathParts.map(Uri.encodeComponent).join('/');
     Uri uri;

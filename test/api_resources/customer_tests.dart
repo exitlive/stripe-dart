@@ -23,7 +23,7 @@ var example = '''
       "delinquent": false,
       "description": "description",
       "discount": ${discount.example},
-      "email": "email",
+      "email": "test@test.com",
       "metadata": ${utils.metadataExample},
       "sources": ${card.collectionExample},
       "subscriptions": ${subscription.collectionExample}
@@ -57,12 +57,12 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('CustomerCreation minimal', () async {
+    test('Create minimal', () async {
       var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
     });
 
-    test('CustomerCreation full', () async {
+    test('Create full', () async {
 
       // Card fields
       var cardNumber1 = '4242424242424242',
@@ -202,14 +202,14 @@ main(List<String> args) {
       expect(updatedCustomer.metadata, customerMetadata2);
     });
 
-    test('Delete Customer', () async {
+    test('Delete', () async {
       var customer = await new CustomerCreation().create();
       var response = await Customer.delete(customer.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], customer.id);
     });
 
-    test('List parameters Customer', () async {
+    test('List parameters', () async {
       for (var i = 0; i < 20; i++) {
         await new CustomerCreation().create();
       }

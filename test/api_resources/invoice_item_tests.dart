@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleAccount = '''
+var example = '''
     {
       "object": "invoiceitem",
       "id": "ii_1046ct41dfVNZFcq7D6Z8lys",
@@ -27,9 +27,9 @@ var exampleAccount = '''
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
-  group('Invoice item offline', () {
+  group('InvoiceItem offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleAccount);
+      var map = JSON.decode(example);
       var invoiceItem = new InvoiceItem.fromMap(map);
       expect(invoiceItem.id, map['id']);
       expect(invoiceItem.date, new DateTime.fromMillisecondsSinceEpoch(map['date'] * 1000));
@@ -45,12 +45,12 @@ main(List<String> args) {
     });
   });
 
-  group('Invoice item online', () {
+  group('InvoiceItem online', () {
     tearDown(() {
       return utils.tearDown();
     });
 
-    test('Create Invoice item minimal', () async {
+    test('Create minimal', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -75,7 +75,7 @@ main(List<String> args) {
       expect(invoiceItem.customer, customer.id);
     });
 
-    test('Create Invoice item full', () async {
+    test('Create full', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -151,7 +151,7 @@ main(List<String> args) {
       expect(response['deleted'], isTrue);
     });
 
-    test('List parameters Invoiceitem', () async {
+    test('List parameters', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',

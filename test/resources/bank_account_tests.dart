@@ -9,16 +9,17 @@ import '../utils.dart' as utils;
 
 var example = '''
     {
-      "id": "id",
+      "id": "ba_15v3kU41dfVNZFcqMGZuM4XF",
       "object": "bank_account",
       "country": "US",
       "currency": "usd",
       "default_for_currency": false,
-      "last4": "1234",
+      "last4": "6789",
       "status": "new",
-      "bank_name": "bank name",
-      "fingerprint": "fingerprint",
-      "routing_number": "routing_number"
+      "bank_name": "STRIPE TEST BANK",
+      "fingerprint": "w3wTQ7xfYhoIBIcK",
+      "routing_number": "110000000",
+      "account_number": "000123456789"
     }''';
 
 var collectionExample = '''
@@ -47,6 +48,7 @@ main(List<String> args) {
       expect(bankAccount.bankName, map['bank_name']);
       expect(bankAccount.fingerprint, map['fingerprint']);
       expect(bankAccount.routingNumber, map['routing_number']);
+      expect(bankAccount.accountNumber, map['account_number']);
     });
   });
 }

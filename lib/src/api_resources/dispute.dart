@@ -1,7 +1,7 @@
 part of stripe;
 
 /// [Disputes](https://stripe.com/docs/api/curl#disputes)
-class Dispute extends Resource {
+class Dispute extends ApiResource {
   final String object = 'dispute';
 
   static var _path = 'dispute';
@@ -11,10 +11,7 @@ class Dispute extends Resource {
   int get amount => _dataMap['amount'];
 
   String get charge {
-    var value = _dataMap['charge'];
-    if (value == null) return null;
-    else if (value is String) return _dataMap['charge'];
-    else return new Charge.fromMap(value).id;
+    return this._getIdForExpandable('charge');
   }
 
   Charge get ChargeExpand {
@@ -32,10 +29,7 @@ class Dispute extends Resource {
   String get status => _dataMap['status'];
 
   String get balanceTransaction {
-    var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else if (value is String) return _dataMap['balance_transaction'];
-    else return new BalanceTransaction.fromMap(value).id;
+    return this._getIdForExpandable('balance_transaction');
   }
 
   BalanceTransaction get balanceTransactionExpand {

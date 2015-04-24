@@ -21,6 +21,8 @@ class BankAccount extends Resource {
 
   String get routingNumber => _dataMap['routing_number'];
 
+  String get accountNumber => _dataMap['account_number'];
+
   BankAccount.fromMap(Map dataMap) : super.fromMap(dataMap);
 }
 

@@ -46,7 +46,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('RefundCreation minimal', () async {
+    test('Create minimal', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -72,7 +72,7 @@ main(List<String> args) {
       expect(refund.charge, charge.id);
     });
 
-    test('ChargeCreation full', () async {
+    test('Create full', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -116,7 +116,7 @@ main(List<String> args) {
       expect(refund.metadata, refundMetadata2);
     });
 
-    test('List parameters refund', () async {
+    test('List parameters', () async {
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
           cardExpYear = 2016,

@@ -70,7 +70,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('CardCreation minimal', () async {
+    test('Create minimal', () async {
       var number = '4242424242424242',
           expMonth = 12,
           expYear = 2016;
@@ -87,7 +87,7 @@ main(List<String> args) {
       expect(card.expYear, expYear);
     });
 
-    test('CardCreation full', () async {
+    test('Create full', () async {
       var cardNumber = '4242424242424242',
           cardExpMonth1 = 12,
           cardExpYear1 = 2016,
@@ -167,7 +167,7 @@ main(List<String> args) {
       expect(card.addressCountry, cardAddressCountry2);
     });
 
-    test('Delete card', () async {
+    test('Delete', () async {
       var number = '4242424242424242',
           expMonth = 12,
           expYear = 2016;
@@ -183,7 +183,7 @@ main(List<String> args) {
       expect(response['id'], card.id);
     });
 
-    test('List parameters card', () async {
+    test('List parameters', () async {
       var number = '4242424242424242',
           expMonth = 12,
           expYear = 2016;
