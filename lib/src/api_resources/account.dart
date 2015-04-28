@@ -6,9 +6,9 @@ class Account extends ApiResource {
 
   final String object = 'account';
 
-  static var _pathSingle = 'account';
+  static String _pathSingle = 'account';
 
-  static var _pathMultiple = 'accounts';
+  static String _pathMultiple = 'accounts';
 
   bool get chargesEnabled => _dataMap['charges_enabled'];
 
