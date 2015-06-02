@@ -9,8 +9,7 @@ abstract class ApiResource extends Resource {
   /// Creates this api resource from a JSON string.
   ApiResource.fromMap(dataMap) : super.fromMap(dataMap) {
     assert(object != null);
-    if (_dataMap == null)
-        throw new InvalidDataReceivedException('The dataMap must not be null');
+    if (_dataMap == null) throw new InvalidDataReceivedException('The dataMap must not be null');
     if (_dataMap['object'] !=
         object) throw new InvalidDataReceivedException('The data received was not for object ${object}');
   }

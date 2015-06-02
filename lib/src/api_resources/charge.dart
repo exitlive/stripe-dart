@@ -1,7 +1,7 @@
 part of stripe;
 
-/// [Charges](https://stripe.com/docs/api/curl#charges)
-class Charge extends Resource {
+/// [Charges](https://stripe.com/docs/api#charges)
+class Charge extends ApiResource {
   String get id => _dataMap['id'];
 
   final String object = 'charge';
@@ -23,9 +23,9 @@ class Charge extends Resource {
   bool get refunded => _dataMap['refunded'];
 
   RefundCollection get refunds {
-    Map refundMap = _dataMap['refunds'];
-    assert(refundMap != null);
-    return new RefundCollection.fromMap(refundMap);
+    Map value = _dataMap['refunds'];
+    assert(value != null);
+    return new RefundCollection.fromMap(value);
   }
 
   Card get source {
@@ -39,10 +39,7 @@ class Charge extends Resource {
   int get amountRefunded => _dataMap['amountRefunded'];
 
   String get balanceTransaction {
-    var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else if (value is String) return _dataMap['balance_transaction'];
-    else return new BalanceTransaction.fromMap(value).id;
+    return this._getIdForExpandable('balance_transaction');
   }
 
   BalanceTransaction get balanceTransactionExpand {
@@ -52,10 +49,7 @@ class Charge extends Resource {
   }
 
   String get customer {
-    var value = _dataMap['customer'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Customer.fromMap(value).id;
+    return this._getIdForExpandable('customer');
   }
 
   Customer get customerExpand {
@@ -77,10 +71,7 @@ class Charge extends Resource {
   String get failureMessage => _dataMap['failureMessage'];
 
   String get invoice {
-    var value = _dataMap['invoice'];
-    if (value == null) return null;
-    else if (value is String) return _dataMap['invoice'];
-    else return new Invoice.fromMap(value).id;
+    return this._getIdForExpandable('invoice');
   }
 
   Invoice get invoiceExpand {
@@ -101,47 +92,43 @@ class Charge extends Resource {
 
   Map<String, String> get fraudDetails => _dataMap['fraud_details'];
 
-  Shipping get shipping => new Shipping.fromMap(_dataMap['shipping']);
+  Shipping get shipping {
+    var value = _dataMap['shipping'];
+    if (value == null) return null;
+    else return new Shipping.fromMap(value);
+  }
 
   String get statement_descriptor => _dataMap['statement_descriptor'];
 
   Charge.fromMap(Map dataMap) : super.fromMap(dataMap);
 
-  /// [Retrieving a Charge](https://stripe.com/docs/api/curl#retrieve_charge)
-  static Future<Charge> retrieve(String id, {final Map data}) async {
-    var dataMap = await StripeService.retrieve([Charge._path, id], data: data);
+  /// [Retrieve a charge](https://stripe.com/docs/api#retrieve_charge)
+  static Future<Charge> retrieve(String chargeId, {final Map data}) async {
+    var dataMap = await StripeService.retrieve([Charge._path, chargeId], data: data);
     return new Charge.fromMap(dataMap);
   }
 
-  /// [Refunding a Charge](https://stripe.com/docs/api/curl#refund_charge)
-  static Future<Charge> refund(String id, {int amount, bool refundApplicationFee}) async {
+  /// [Capture a charge](https://stripe.com/docs/api#capture_charge)
+  static Future<Charge> capture(String chargeId,
+      {int amount, String applicationFee, String receiptEmail, String statementDescriptor}) async {
     var data = {};
     if (amount != null) data['amount'] = amount;
-    if (refundApplicationFee != null) data['refund_application_fee'] = refundApplicationFee;
-    if (data == {}) data = null;
-    var dataMap = await StripeService.post([Charge._path, id, 'refund'], data: data);
+    if (applicationFee != null) data['application_fee'] = applicationFee;
+    if (receiptEmail != null) data['receipt_email'] = receiptEmail;
+    if (statementDescriptor != null) data['statement_descriptor'] = statementDescriptor;
+    var dataMap = await StripeService.post([Charge._path, chargeId, 'capture'], data: data);
     return new Charge.fromMap(dataMap);
   }
 
-  /// [Capture a charge](https://stripe.com/docs/api/curl#charge_capture)
-  static Future<Charge> capture(String id, {int amount, bool refundApplicationFee}) async {
+  /// [List all Charges](https://stripe.com/docs/api#list_charges)
+  static Future<ChargeCollection> list(
+      {var created, String customer, int limit, String startingAfter, String endingBefore}) async {
     var data = {};
-    if (amount != null) data['amount'] = amount;
-    if (refundApplicationFee != null) data['refund_application_fee'] = refundApplicationFee;
-    if (data == {}) data = null;
-    var dataMap = await StripeService.post([Charge._path, id, 'capture'], data: data);
-    return new Charge.fromMap(dataMap);
-  }
-
-  /// [List all Charges](https://stripe.com/docs/api/curl#list_charges)
-  /// TODO: implement missing argument: `created`
-  static Future<ChargeCollection> list({String customer, int limit, String startingAfter, String endingBefore}) async {
-    var data = {};
+    if (created != null) data['created'] = created;
     if (customer != null) data['customer'] = customer;
+    if (endingBefore != null) data['ending_before'] = endingBefore;
     if (limit != null) data['limit'] = limit;
     if (startingAfter != null) data['starting_after'] = startingAfter;
-    if (endingBefore != null) data['ending_before'] = endingBefore;
-    if (data == {}) data = null;
     var dataMap = await StripeService.list([Charge._path], data: data);
     return new ChargeCollection.fromMap(dataMap);
   }
@@ -153,7 +140,7 @@ class ChargeCollection extends ResourceCollection {
   ChargeCollection.fromMap(Map map) : super.fromMap(map);
 }
 
-/// [Creating a new charge (charging a credit card)](https://stripe.com/docs/api/curl#create_charge)
+/// [Create a charge](https://stripe.com/docs/api#create_charge)
 class ChargeCreation extends ResourceRequest {
   @required
   set amount(int amount) => _setMap('amount', amount);
@@ -163,11 +150,9 @@ class ChargeCreation extends ResourceRequest {
 
   set customer(String customer) => _setMap('customer', customer);
 
-  set cardId(String cardId) => _setMap('card', cardId);
+  set sourceToken(String sourceToken) => _setMap('source', sourceToken);
 
-  set cardToken(String cardToken) => _setMap('card', cardToken);
-
-  set card(CardCreation card) => _setMap('card', card);
+  set source(CardCreation source) => _setMap('source', source);
 
   set description(String description) => _setMap('description', description);
 
@@ -177,7 +162,13 @@ class ChargeCreation extends ResourceRequest {
 
   set statementDescriptor(String statementDescriptor) => _setMap('statement_descriptor', statementDescriptor);
 
+  set receiptEmail(String receiptEmail) => _setMap('receipt_email', receiptEmail);
+
+  set destination(int destination) => _setMap('destination', destination);
+
   set applicationFee(int applicationFee) => _setMap('application_fee', applicationFee);
+
+  set shipping(int shipping) => _setMap('shipping', shipping);
 
   Future<Charge> create() async {
     var dataMap = await StripeService.create([Charge._path], _getMap());
@@ -185,14 +176,18 @@ class ChargeCreation extends ResourceRequest {
   }
 }
 
-/// [Updating a Charge](https://stripe.com/docs/api/curl#update_charge)
+/// [Update a charge](https://stripe.com/docs/api#update_charge)
 class ChargeUpdate extends ResourceRequest {
   set description(String description) => _setMap('description', description);
 
   set metadata(Map metadata) => _setMap('metadata', metadata);
 
-  Future<Charge> update(String id) async {
-    var dataMap = await StripeService.update([Charge._path, id], _getMap());
+  set receiptEmail(Map receiptEmail) => _setMap('receipt_email', receiptEmail);
+
+  set fraudDetails(Map fraudDetails) => _setMap('fraud_details', fraudDetails);
+
+  Future<Charge> update(String chargeId) async {
+    var dataMap = await StripeService.update([Charge._path, chargeId], _getMap());
     return new Charge.fromMap(dataMap);
   }
 }

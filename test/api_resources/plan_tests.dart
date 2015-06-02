@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var examplePlan = '''
+var example = '''
     {
       "interval": "month",
       "name": "Gold Special",
@@ -29,7 +29,7 @@ main(List<String> args) {
 
   group('Plan offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(examplePlan);
+      var map = JSON.decode(example);
       var plan = new Plan.fromMap(map);
       expect(plan.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
       expect(plan.id, map['id']);
@@ -50,7 +50,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('PlanCreation minimal', () async {
+    test('Create minimal', () async {
 
       // plan fields
       var planId = 'test id',
@@ -72,7 +72,7 @@ main(List<String> args) {
       expect(plan.name, planName);
     });
 
-    test('PlanCreation full', () async {
+    test('Create full', () async {
 
       // plan fields
       var planId = 'test id',
@@ -128,7 +128,7 @@ main(List<String> args) {
       expect(plan.statementDescriptor, planStatementDescriptor2);
     });
 
-    test('Delete Plan', () async {
+    test('Delete', () async {
 
       // plan fields
       var planId = 'test id',
@@ -153,7 +153,7 @@ main(List<String> args) {
       expect(response['id'], plan.id);
     });
 
-    test('List parameters plan', () async {
+    test('List parameters', () async {
 
       // plan fields
       var planId = 'test id',

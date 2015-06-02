@@ -1,7 +1,7 @@
 part of stripe;
 
 /// [Application Fees](https://stripe.com/docs/api/curl#application_fees)
-class ApplicationFee extends Resource {
+class ApplicationFee extends ApiResource {
   String get id => _dataMap['id'];
 
   final String object = 'application_fee';
@@ -11,10 +11,7 @@ class ApplicationFee extends Resource {
   bool get livemode => _dataMap['livemode'];
 
   String get account {
-    var value = _dataMap['account'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Account.fromMap(value).id;
+    return this._getIdForExpandable('account');
   }
 
   Account get accountExpand {
@@ -28,10 +25,7 @@ class ApplicationFee extends Resource {
   String get application => _dataMap['application'];
 
   String get balanceTransaction {
-    var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new BalanceTransaction.fromMap(value).id;
+    return this._getIdForExpandable('balance_transaction');
   }
 
   BalanceTransaction get balanceTransactionExpand {
@@ -41,10 +35,7 @@ class ApplicationFee extends Resource {
   }
 
   String get charge {
-    var value = _dataMap['charge'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Charge.fromMap(value).id;
+    return this._getIdForExpandable('charge');
   }
 
   Charge get chargeExpand {
@@ -60,9 +51,9 @@ class ApplicationFee extends Resource {
   bool get refunded => _dataMap['refunded'];
 
   List<Refund> get refunds {
-    List refundMaps = _dataMap['refunds'];
-    assert(refundMaps != null);
-    return refundMaps.map((Map refund) => new Refund.fromMap(refund)).toList(growable: false);
+    List value = _dataMap['refunds'];
+    assert(value != null);
+    return value.map((Map refund) => new Refund.fromMap(refund)).toList(growable: false);
   }
 
   int get amountRefunded => _dataMap['amount_refunded'];

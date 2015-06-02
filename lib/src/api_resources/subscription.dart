@@ -11,10 +11,7 @@ class Subscription extends ApiResource {
   bool get cancelAtPeriodEnd => _dataMap['cancel_at_period_end'];
 
   String get customer {
-    var value = _dataMap['customer'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Customer.fromMap(value).id;
+    return this._getIdForExpandable('customer');
   }
 
   Customer get customerExpand {

@@ -17,7 +17,10 @@ abstract class StripeService {
   static HttpClient _getClient() => new HttpClient();
 
   /// Makes a post request to the Stripe API to given path and parameters.
-  static Future<Map> create(final List<String> pathParts, final Map data) => _request('POST', pathParts, data: data);
+  static Future<Map> create(final List<String> pathParts, final Map data, {String hostOverride}) {
+    var hostToUse = (hostOverride == null) ? host : hostOverride;
+    return _request('POST', pathParts, data: data, hostOverride: hostToUse);
+  }
 
   /// Makes a delete request to the Stripe API
   static Future<Map> delete(final List<String> pathParts, {final Map data}) =>
@@ -25,14 +28,20 @@ abstract class StripeService {
 
   /// Makes a get request to the Stripe API for a single resource item
   /// [data] is used for expanding resources
-  static Future<Map> retrieve(final List<String> pathParts, {final Map data}) => _request('GET', pathParts, data: data);
+  static Future<Map> retrieve(final List<String> pathParts, {final Map data, String hostOverride}) {
+    var hostToUse = (hostOverride == null) ? host : hostOverride;
+    return _request('GET', pathParts, data: data, hostOverride: hostToUse);
+  }
 
   /// Makes a get request to the Stripe API to update an existing resource
   static Future<Map> update(final List<String> pathParts, final Map data) => _request('POST', pathParts, data: data);
 
   /// Makes a request to the Stripe API for all items of a resource
   /// [data] is used for pagination
-  static Future<Map> list(final List<String> pathParts, {final Map data}) => _request('GET', pathParts, data: data);
+  static Future<Map> list(final List<String> pathParts, {final Map data, String hostOverride}) {
+    var hostToUse = (hostOverride == null) ? host : hostOverride;
+    return _request('GET', pathParts, data: data, hostOverride: hostToUse);
+  }
 
   /// Makes a request a get request to the Stripe API
   static Future<Map> get(final List<String> pathParts, {final Map data}) {
@@ -44,14 +53,16 @@ abstract class StripeService {
     return _request('POST', pathParts, data: data);
   }
 
-  static Future<Map> _request(final String method, final List<String> pathParts, {final Map data}) async {
+  static Future<Map> _request(final String method, final List<String> pathParts,
+      {final Map data, String hostOverride}) async {
     pathParts.insert(0, basePath);
     var path = '/' + pathParts.map(Uri.encodeComponent).join('/');
     Uri uri;
+    var hostToUse = (hostOverride == null) ? host : hostOverride;
     if (method == 'GET' && data != null) {
-      uri = new Uri(scheme: 'https', host: host, path: path, query: encodeMap(data), userInfo: '${apiKey}:');
+      uri = new Uri(scheme: 'https', host: hostToUse, path: path, query: encodeMap(data), userInfo: '${apiKey}:');
     } else {
-      uri = new Uri(scheme: 'https', host: host, path: path, userInfo: '${apiKey}:');
+      uri = new Uri(scheme: 'https', host: hostToUse, path: path, userInfo: '${apiKey}:');
     }
     log.finest('Sending ${method} request to API ${uri}');
     int responseStatusCode;

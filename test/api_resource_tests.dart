@@ -27,6 +27,5 @@ main() {
       var map = null;
       expect(() => new TestResource.fromMap(map), throwsException);
     });
-
   });
 }

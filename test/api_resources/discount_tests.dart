@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleDiscount = '''
+var example = '''
     {
       "coupon": {
         "id": "25OFF",
@@ -38,7 +38,7 @@ main(List<String> args) {
 
   group('Discount offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleDiscount);
+      var map = JSON.decode(example);
       var discount = new Discount.fromMap(map);
       expect(discount.start, new DateTime.fromMillisecondsSinceEpoch(map['start'] * 1000));
       expect(discount.customer, map['customer']);
@@ -65,7 +65,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('delete from Customer', () async {
+    test('Delete from Customer', () async {
 
       // Coupon fields
       var couponId = 'test coupon id',
@@ -86,7 +86,7 @@ main(List<String> args) {
       expect(customer.discount, isNull);
     });
 
-    test('delete from Subscription', () async {
+    test('Delete from Subscription', () async {
       var cardNumber = '5555555555554444',
           cardExpMonth = 3,
           cardExpYear = 2016;

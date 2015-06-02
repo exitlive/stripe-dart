@@ -17,8 +17,15 @@ part 'src/resource.dart';
 part 'src/resource_collection.dart';
 
 // resource classes
+part 'src/resources/additional_owner.dart';
 part 'src/resources/address.dart';
+part 'src/resources/bank_account.dart';
+part 'src/resources/date.dart';
+part 'src/resources/legal_entity.dart';
 part 'src/resources/shipping.dart';
+part 'src/resources/tos_acceptance.dart';
+part 'src/resources/transfer_schedule.dart';
+part 'src/resources/verification.dart';
 
 // api resource classes
 part 'src/api_resources/account.dart';
@@ -31,11 +38,12 @@ part 'src/api_resources/customer.dart';
 part 'src/api_resources/discount.dart';
 part 'src/api_resources/dispute.dart';
 part 'src/api_resources/event.dart';
+part 'src/api_resources/file_upload.dart';
 part 'src/api_resources/invoice.dart';
 part 'src/api_resources/invoice_item.dart';
 part 'src/api_resources/plan.dart';
-part 'src/api_resources/recipient.dart';
 part 'src/api_resources/refund.dart';
 part 'src/api_resources/subscription.dart';
 part 'src/api_resources/token.dart';
 part 'src/api_resources/transfer.dart';
+part 'src/api_resources/transfer_reversal.dart';

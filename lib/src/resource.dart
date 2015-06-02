@@ -31,6 +31,12 @@ abstract class Resource {
     return _dataMap;
   }
 
+  String _getIdForExpandable(String key) {
+    var value = _dataMap[key];
+    if (value is String) return value;
+    else if (value is Map && value.containsKey('id')) return value['id'];
+    else return null;
+  }
 }
 
 /// The base class for request resources (eg: [CustomerCreation],
@@ -74,5 +80,4 @@ abstract class ResourceRequest {
   String _underscore(String camelized) {
     return camelized.replaceAllMapped(new RegExp(r'([A-Z])'), (Match match) => '_${match.group(1).toLowerCase()}');
   }
-
 }

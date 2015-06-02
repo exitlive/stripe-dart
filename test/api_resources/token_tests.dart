@@ -7,7 +7,9 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleToken = '''
+import '../resources/bank_account_tests.dart' as bank_account;
+
+var example = '''
     {
       "id": "tok_103z9O41dfVNZFcqpeOFk6jX",
       "livemode": false,
@@ -40,7 +42,7 @@ main(List<String> args) {
 
   group('Token offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleToken);
+      var map = JSON.decode(example);
       var token = new Token.fromMap(map);
       expect(token.id, map['id']);
       expect(token.livemode, map['livemode']);
@@ -71,7 +73,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('CardTokenCreation', () async {
+    test('Create CardToken', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -101,33 +103,36 @@ main(List<String> args) {
       expect(token.type, 'card');
     });
 
-    test('BankAccountTokenCreation', () async {
-
-      // BankAccount fields
-      var bankAccountCountry = 'US',
-          bankAccountRoutingNumber = '110000000',
-          bankAccountAccountNumber = '000123456789';
-
-      var bankAccount = (new BankAccountRequest()
-        ..country = bankAccountCountry
-        ..routingNumber = bankAccountRoutingNumber
-        ..accountNumber = bankAccountAccountNumber);
+    test('Create BankAccountToken', () async {
+      var bankAccountMap = JSON.decode(bank_account.example);
+      var bankAccount = new BankAccount.fromMap(bankAccountMap);
 
       var token = await (new BankAccountTokenCreation()..bankAccount = bankAccount).create();
       expect(token.id, new isInstanceOf<String>());
-      expect(token.bankAccount.country, bankAccountCountry);
-      expect(token.bankAccount.last4, bankAccountAccountNumber.substring(bankAccountAccountNumber.length - 4));
-      expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'bank_account');
+      expect(token.bankAccount.country, bankAccount.country);
+      expect(token.bankAccount.currency, bankAccount.currency);
+      expect(token.bankAccount.last4, bankAccount.last4);
+      expect(token.bankAccount.status, bankAccount.status);
+      expect(token.bankAccount.bankName, bankAccount.bankName);
+      expect(token.bankAccount.routingNumber, bankAccount.routingNumber);
+
       // testing retrieve
       token = await Token.retrieve(token.id);
       expect(token.id, new isInstanceOf<String>());
-      expect(token.bankAccount.country, bankAccountCountry);
-      expect(token.bankAccount.last4, bankAccountAccountNumber.substring(bankAccountAccountNumber.length - 4));
       expect(token.livemode, isFalse);
       expect(token.used, isFalse);
       expect(token.type, 'bank_account');
+      expect(token.id, new isInstanceOf<String>());
+      expect(token.used, isFalse);
+      expect(token.type, 'bank_account');
+      expect(token.bankAccount.country, bankAccount.country);
+      expect(token.bankAccount.currency, bankAccount.currency);
+      expect(token.bankAccount.last4, bankAccount.last4);
+      expect(token.bankAccount.status, bankAccount.status);
+      expect(token.bankAccount.bankName, bankAccount.bankName);
+      expect(token.bankAccount.routingNumber, bankAccount.routingNumber);
     });
   });
 }

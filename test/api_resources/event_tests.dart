@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleEvent = '''
+var example = '''
     {
       "id": "evt_1046Ri41dfVNZFcqJ8BRwM05",
       "created": 1401075077,
@@ -189,7 +189,7 @@ main(List<String> args) {
 
   group('Event offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleEvent);
+      var map = JSON.decode(example);
       var event = new Event.fromMap(map);
       expect(event.id, map['id']);
       expect(event.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));

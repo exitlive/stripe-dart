@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-var exampleSubscription = '''
+var example = '''
     {
       "id": "sub_43wlRGGERnM2nU",
       "plan": {
@@ -43,12 +43,21 @@ var exampleSubscription = '''
       }
     }''';
 
+var collectionExample = '''
+    {
+      "object": "list",
+      "total_count": 1,
+      "has_more": false,
+      "url": "/v1/customers/cus_43vyiOaVQ6zjp4/subscriptions",
+      "data": [${example}]
+    }''';
+
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
   group('Subscription offline', () {
     test('fromMap() properly popullates all values', () {
-      var map = JSON.decode(exampleSubscription);
+      var map = JSON.decode(example);
       var subscription = new Subscription.fromMap(map);
       expect(subscription.id, map['id']);
       expect(subscription.plan.interval, map['plan']['interval']);
@@ -85,7 +94,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('SubscriptionCreation minimal', () async {
+    test('Create minimal', () async {
 
       // Card fields
       var cardNumber = '5555555555554444',
@@ -117,7 +126,7 @@ main(List<String> args) {
       expect(subscription.customer, customer.id);
     });
 
-    test('SubscriptionCreation full', () async {
+    test('Create full', () async {
 
       // Coupon fields
       var couponId1 = 'test coupon id1',
@@ -236,7 +245,7 @@ main(List<String> args) {
       expect(subscription.cancelAtPeriodEnd, isFalse);
     });
 
-    test('List parameters subscription', () async {
+    test('List parameters', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -262,7 +271,7 @@ main(List<String> args) {
         ..interval = planInterval
         ..name = planName;
 
-      var customer = await (new CustomerCreation()..card = cardCreation).create();
+      var customer = await (new CustomerCreation()..source = cardCreation).create();
       var plan = await planCreation.create();
       for (var i = 0; i < 20; i++) {
         await (new SubscriptionCreation()..plan = plan.id).create(customer.id);

@@ -139,7 +139,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('InvoiceCreation minimal', () async {
+    test('Create minimal', () async {
       var customer = await new CustomerCreation().create();
       try {
         await (new InvoiceCreation()..customer = customer.id).create();
@@ -150,7 +150,7 @@ main(List<String> args) {
       }
     });
 
-    test('InvoiceCreation full', () async {
+    test('Create full', () async {
 
       // Card fields
       var cardNumber = '5555555555554444',

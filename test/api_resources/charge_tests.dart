@@ -15,7 +15,6 @@ import 'refund_tests.dart' as refund;
 import 'invoice_tests.dart' as invoice;
 import '../resources/shipping_tests.dart' as shipping;
 
-
 var example = '''
     {
       "id": "ch_15tbwd41dfVNZFcq48lWk5V2",
@@ -39,7 +38,7 @@ var example = '''
       "failure_message": "failure_message",      
       "invoice": ${invoice.example},      
       "metadata": ${utils.metadataExample},
-      "receipt_email": "receipt_email",
+      "receipt_email": "test@test.com",
       "receipt_number": "receipt_number",
       "application_fee": "application_fee",
       "destination": "destination",
@@ -51,10 +50,9 @@ var example = '''
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
-  solo_group('Charge offline', () {
+  group('Charge offline', () {
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(example);
-      print(map);
       var charge = new Charge.fromMap(map);
       expect(charge.id, map['id']);
       expect(charge.livemode, map['livemode']);
@@ -68,7 +66,8 @@ main(List<String> args) {
       expect(charge.source.toMap(), new Card.fromMap(map['source']).toMap());
       expect(charge.status, map['status']);
       expect(charge.amountRefunded, map['amountRefunded']);
-      expect(charge.balanceTransactionExpand.toMap(), new BalanceTransaction.fromMap(map['balance_transaction']).toMap());
+      expect(
+          charge.balanceTransactionExpand.toMap(), new BalanceTransaction.fromMap(map['balance_transaction']).toMap());
       expect(charge.customerExpand.toMap(), new Customer.fromMap(map['customer']).toMap());
       expect(charge.description, map['description']);
       expect(charge.dispute.toMap(), new Dispute.fromMap(map['dispute']).toMap());
@@ -91,7 +90,7 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('ChargeCreation minimal', () async {
+    test('Create minimal', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -115,7 +114,7 @@ main(List<String> args) {
       expect(charge.currency, chargeCurrency);
     });
 
-    test('ChargeCreation full', () async {
+    test('Create full', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -164,33 +163,7 @@ main(List<String> args) {
       expect(charge.metadata, chargeMetadata2);
     });
 
-    test('Refund a Charge', () async {
-
-      // Card fields
-      var cardNumber = '4242424242424242',
-          cardExpMonth = 12,
-          cardExpYear = 2016,
-
-          // Charge fields
-          chargeAmount = 100,
-          chargeRefundAmount = 90,
-          chargeCurrency = 'usd';
-      // application_fee can not be tested
-
-      var customer = await new CustomerCreation().create();
-      await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
-      var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id).create();
-      charge = await Charge.refund(charge.id, amount: chargeRefundAmount);
-      expect(charge.refunds.data.first.amount, chargeRefundAmount);
-    });
-
-    test('Capture a Charge', () async {
+    test('Capture', () async {
 
       // Card fields
       var cardNumber = '4242424242424242',
@@ -217,7 +190,7 @@ main(List<String> args) {
       expect(charge.captured, isTrue);
     });
 
-    test('List parameters charge', () async {
+    test('List parameters', () async {
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
           cardExpYear = 2016;

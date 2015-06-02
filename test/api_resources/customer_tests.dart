@@ -7,37 +7,26 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
+import 'card_tests.dart' as card;
+import 'discount_tests.dart' as discount;
+import 'subscription_tests.dart' as subscription;
+
 var example = '''
     {
-      "object": "customer",
-      "created": 1399894618,
       "id": "cus_41KOaI2C3BNEc7",
+      "object": "customer",
       "livemode": false,
-      "description": null,
-      "email": null,
-      "delinquent": false,
-      "metadata": {
-      },
-      "subscriptions": {
-        "object": "list",
-        "total_count": 0,
-        "has_more": false,
-        "url": "/v1/customers/cus_41KOaI2C3BNEc7/subscriptions",
-        "data": [
-    
-        ]
-      },
-      "discount": null,
-      "account_balance": 0,
+      "created": 1399894618,
+      "account_balance": 100,
       "currency": "usd",
-      "cards": {
-        "object": "list",
-        "has_more": false,
-        "url": "/v1/customers/cus_41KOaI2C3BNEc7/cards",
-        "data": [
-        ]
-      },
-      "default_card": null
+      "default_source": ${card.example},
+      "delinquent": false,
+      "description": "description",
+      "discount": ${discount.example},
+      "email": "test@test.com",
+      "metadata": ${utils.metadataExample},
+      "sources": ${card.collectionExample},
+      "subscriptions": ${subscription.collectionExample}
     }''';
 
 main(List<String> args) {
@@ -47,21 +36,19 @@ main(List<String> args) {
     test('fromMap() properly popullates all values', () {
       var map = JSON.decode(example);
       var customer = new Customer.fromMap(map);
-      expect(customer.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
       expect(customer.id, map['id']);
       expect(customer.livemode, map['livemode']);
-      expect(customer.description, map['description']);
-      expect(customer.email, map['email']);
-      expect(customer.delinquent, map['delinquent']);
-      expect(customer.metadata, map['metadata']);
-      expect(customer.subscriptions, new isInstanceOf<SubscriptionCollection>());
-      expect(customer.discount, map['discount']);
+      expect(customer.created, new DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000));
       expect(customer.accountBalance, map['account_balance']);
       expect(customer.currency, map['currency']);
-      expect(customer.cards, new isInstanceOf<CardCollection>());
-      expect(customer.cards.data.length, map['cards']['data'].length);
-      expect(customer.cards.url, map['cards']['url']);
-      expect(customer.defaultCard, map['default_card']);
+      expect(customer.defaultSourceExpand.toMap(), new Card.fromMap(map['default_source']).toMap());
+      expect(customer.delinquent, map['delinquent']);
+      expect(customer.description, map['description']);
+      expect(customer.discount.toMap(), new Discount.fromMap(map['discount']).toMap());
+      expect(customer.email, map['email']);
+      expect(customer.metadata, map['metadata']);
+      expect(customer.sources.toMap(), new CardCollection.fromMap(map['sources']).toMap());
+      expect(customer.subscriptions.toMap(), new SubscriptionCollection.fromMap(map['subscriptions']).toMap());
     });
   });
 
@@ -70,12 +57,12 @@ main(List<String> args) {
       return utils.tearDown();
     });
 
-    test('CustomerCreation minimal', () async {
+    test('Create minimal', () async {
       var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
     });
 
-    test('CustomerCreation full', () async {
+    test('Create full', () async {
 
       // Card fields
       var cardNumber1 = '4242424242424242',
@@ -144,7 +131,7 @@ main(List<String> args) {
 
       var customerCreation = new CustomerCreation()
         ..accountBalance = customerAccountBalance1
-        ..card = cardCreation1
+        ..source = cardCreation1
         ..coupon = couponId1
         ..description = customerDescription1
         ..email = customerEmail1
@@ -160,9 +147,9 @@ main(List<String> args) {
       expect(customer.id, new isInstanceOf<String>());
 
       // card tests
-      expect(customer.cards.data.first.last4, cardNumber1.substring(cardNumber1.length - 4));
-      expect(customer.cards.data.first.expMonth, cardExpMonth1);
-      expect(customer.cards.data.first.expYear, cardExpYear1);
+      expect(customer.sources.data.first.last4, cardNumber1.substring(cardNumber1.length - 4));
+      expect(customer.sources.data.first.expMonth, cardExpMonth1);
+      expect(customer.sources.data.first.expYear, cardExpYear1);
 
       // coupon tests
       expect(customer.discount.coupon.id, couponId1);
@@ -194,35 +181,35 @@ main(List<String> args) {
       expect(subscription.plan.name, planName);
       var invoices = await Invoice.list(customer: customer.id);
       expect(invoices.data.first.startingBalance, customerAccountBalance1);
-      customer = await Customer.retrieve(customer.id, data: {'expand': ['default_card']});
+      customer = await Customer.retrieve(customer.id, data: {'expand': ['default_source']});
       // testing the expand functionality of retrieve
-      expect(customer.defaultCard, customer.defaultCardExpand.id);
-      expect(customer.defaultCardExpand.last4, cardNumber1.substring(cardNumber1.length - 4));
+      expect(customer.defaultSource, customer.defaultSourceExpand.id);
+      expect(customer.defaultSourceExpand.last4, cardNumber1.substring(cardNumber1.length - 4));
 
       // testing the CustomerUpdate
       var updatedCustomer = await (new CustomerUpdate()
         ..accountBalance = customerAccountBalance2
-        ..card = cardCreation2
+        ..source = cardCreation2
         ..coupon = couponId2
         ..description = customerDescription2
         ..email = customerEmail2
         ..metadata = customerMetadata2).update(customer.id);
       expect(updatedCustomer.accountBalance, customerAccountBalance2);
-      expect(updatedCustomer.defaultCard, isNot(customer.defaultCard));
+      expect(updatedCustomer.defaultSource, isNot(customer.defaultSource));
       expect(updatedCustomer.discount.coupon.percentOff, couponPercentOff2);
       expect(updatedCustomer.description, customerDescription2);
       expect(updatedCustomer.email, customerEmail2);
       expect(updatedCustomer.metadata, customerMetadata2);
     });
 
-    test('Delete Customer', () async {
+    test('Delete', () async {
       var customer = await new CustomerCreation().create();
       var response = await Customer.delete(customer.id);
       expect(response['deleted'], isTrue);
       expect(response['id'], customer.id);
     });
 
-    test('List parameters Customer', () async {
+    test('List parameters', () async {
       for (var i = 0; i < 20; i++) {
         await new CustomerCreation().create();
       }

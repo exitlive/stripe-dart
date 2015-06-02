@@ -3,35 +3,42 @@ import 'package:unittest/unittest.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 // general tests
-import 'resource_tests.dart' as resourceTests;
-import 'api_resource_tests.dart' as apiResourceTests;
-import 'service_tests.dart' as serviceTests;
+import 'resource_tests.dart' as resource_tests;
+import 'api_resource_tests.dart' as apiResource_tests;
+import 'service_tests.dart' as service_tests;
 
 // api resource tests
-import 'api_resources/account_tests.dart' as accountTests;
-import 'api_resources/application_fee_tests.dart' as applicationFeeTests;
-import 'api_resources/balance_tests.dart' as balanceTests;
-import 'api_resources/balance_transaction_tests.dart' as balanceTransactionTests;
-import 'api_resources/card_tests.dart' as cardTests;
-import 'api_resources/charge_tests.dart' as chargeTests;
-import 'api_resources/coupon_tests.dart' as couponTests;
-import 'api_resources/customer_tests.dart' as customerTests;
-import 'api_resources/discount_tests.dart' as discountTests;
-import 'api_resources/dispute_tests.dart' as disputeTests;
-import 'api_resources/event_tests.dart' as eventTests;
-import 'api_resources/invoice_item_tests.dart' as invoiceItemTests;
-import 'api_resources/invoice_tests.dart' as invoiceTests;
-import 'api_resources/plan_tests.dart' as planTests;
-import 'api_resources/recipient_tests.dart' as recipientTests;
-import 'api_resources/refund_tests.dart' as refundTests;
-import 'api_resources/subscription_tests.dart' as subscriptionTests;
-import 'api_resources/token_tests.dart' as tokenTests;
-import 'api_resources/transfer_tests.dart' as transferTests;
-
+import 'api_resources/account_tests.dart' as account_tests;
+import 'api_resources/application_fee_tests.dart' as application_fee_tests;
+import 'api_resources/balance_tests.dart' as balance_tests;
+import 'api_resources/balance_transaction_tests.dart' as balance_transaction_tests;
+import 'api_resources/card_tests.dart' as card_tests;
+import 'api_resources/charge_tests.dart' as charge_tests;
+import 'api_resources/coupon_tests.dart' as coupon_tests;
+import 'api_resources/customer_tests.dart' as customer_tests;
+import 'api_resources/discount_tests.dart' as discount_tests;
+import 'api_resources/dispute_tests.dart' as dispute_tests;
+import 'api_resources/event_tests.dart' as event_tests;
+import 'api_resources/file_upload_tests.dart' as file_upload_tests;
+import 'api_resources/invoice_item_tests.dart' as invoice_item_tests;
+import 'api_resources/invoice_tests.dart' as invoice_tests;
+import 'api_resources/plan_tests.dart' as plan_tests;
+import 'api_resources/refund_tests.dart' as refund_tests;
+import 'api_resources/subscription_tests.dart' as subscription_tests;
+import 'api_resources/token_tests.dart' as token_tests;
+import 'api_resources/transfer_tests.dart' as transfer_tests;
+import 'api_resources/transfer_reversal_tests.dart' as transfer_reversal_tests;
 
 // resource tests
-import 'resources/address_tests.dart' as addressTests;
-import 'resources/shipping_tests.dart' as shippingTests;
+import 'resources/additional_owner_tests.dart' as additional_owner_tests;
+import 'resources/address_tests.dart' as address_tests;
+import 'resources/bank_account_tests.dart' as bank_account_tests;
+import 'resources/date_tests.dart' as date_tests;
+import 'resources/legal_entity_tests.dart' as legal_entity_tests;
+import 'resources/shipping_tests.dart' as shipping_tests;
+import 'resources/tos_acceptance_tests.dart' as tos_acceptance_tests;
+import 'resources/transfer_schedule_tests.dart' as transfer_schedule_tests;
+import 'resources/verification_tests.dart' as verification_tests;
 
 /// Unittest configuration
 class TestConfiguration extends SimpleConfiguration {
@@ -95,33 +102,40 @@ main(List<String> args) {
   unittestConfiguration = new TestConfiguration();
 
   // general tests
-  resourceTests.main();
-  apiResourceTests.main();
-  serviceTests.main();
+  resource_tests.main();
+  apiResource_tests.main();
+  service_tests.main();
 
   // api resource tests
-  accountTests.main(args);
-  applicationFeeTests.main(args);
-  balanceTests.main(args);
-  balanceTransactionTests.main(args);
-  cardTests.main(args);
-  chargeTests.main(args);
-  couponTests.main(args);
-  customerTests.main(args);
-  discountTests.main(args);
-  disputeTests.main(args);
-  eventTests.main(args);
-  invoiceItemTests.main(args);
-  invoiceTests.main(args);
-  planTests.main(args);
-  recipientTests.main(args);
-  refundTests.main(args);
-  subscriptionTests.main(args);
-  tokenTests.main(args);
-  transferTests.main(args);
+  account_tests.main(args);
+  application_fee_tests.main(args);
+  balance_tests.main(args);
+  balance_transaction_tests.main(args);
+  card_tests.main(args);
+  charge_tests.main(args);
+  coupon_tests.main(args);
+  customer_tests.main(args);
+  discount_tests.main(args);
+  dispute_tests.main(args);
+  event_tests.main(args);
+  file_upload_tests.main(args);
+  invoice_item_tests.main(args);
+  invoice_tests.main(args);
+  plan_tests.main(args);
+  refund_tests.main(args);
+  subscription_tests.main(args);
+  token_tests.main(args);
+  transfer_tests.main(args);
+  transfer_reversal_tests.main(args);
 
   // resource tests
-  addressTests.main(args);
-  shippingTests.main(args);
-
+  additional_owner_tests.main(args);
+  address_tests.main(args);
+  bank_account_tests.main(args);
+  date_tests.main(args);
+  legal_entity_tests.main(args);
+  shipping_tests.main(args);
+  tos_acceptance_tests.main(args);
+  transfer_schedule_tests.main(args);
+  verification_tests.main(args);
 }

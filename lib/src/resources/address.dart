@@ -1,7 +1,6 @@
 part of stripe;
 
 class Address extends Resource {
-
   String get line1 => _dataMap['line1'];
 
   String get line2 => _dataMap['line2'];
@@ -15,5 +14,4 @@ class Address extends Resource {
   String get country => _dataMap['country'];
 
   Address.fromMap(Map dataMap) : super.fromMap(dataMap);
-
 }

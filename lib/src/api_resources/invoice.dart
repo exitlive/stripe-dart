@@ -21,10 +21,7 @@ class Invoice extends ApiResource {
   String get currency => _dataMap['currency'];
 
   String get customer {
-    var value = _dataMap['customer'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Customer.fromMap(value).id;
+    return this._getIdForExpandable('customer');
   }
 
   Customer get customerExpand {
@@ -56,10 +53,7 @@ class Invoice extends ApiResource {
   int get applicationFee => _dataMap['application_fee'];
 
   String get charge {
-    var value = _dataMap['charge'];
-    if (value == null) return null;
-    else if (value is String) return value;
-    else return new Charge.fromMap(value).id;
+    return this._getIdForExpandable('charge');
   }
 
   Charge get chargeExpand {
@@ -192,7 +186,11 @@ class InvoiceLineItem extends Resource {
 
   String get currency => _dataMap['currency'];
 
-  Period get period => new Period.fromMap(_dataMap['period']);
+  Period get period {
+    var value = _dataMap['period'];
+    if (value == null) return null;
+    else return new Period.fromMap(value);
+  }
 
   bool get proration => _dataMap['proration'];
 
@@ -202,7 +200,11 @@ class InvoiceLineItem extends Resource {
 
   Map<String, String> get metadata => _dataMap['metadata'];
 
-  Plan get plan => new Plan.fromMap(_dataMap['plan']);
+  Plan get plan {
+    var value = _dataMap['plan'];
+    if (value == null) return null;
+    else return new Plan.fromMap(value);
+  }
 
   int get quantity => _dataMap['quantity'];
 
