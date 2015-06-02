@@ -4,110 +4,74 @@ import 'dart:async';
 import 'dart:io';
 
 import '../lib/stripe.dart';
+import 'package:logging/logging.dart';
 
+var log = new Logger('Test Utils');
+
+var metadataExample = '''
+    {
+      "string": "string",
+      "int": 10,
+      "bool": true,
+      "list": ["string", 10, true],
+      "map": {"foo": "bar"}
+    }''';
 
 setApiKeyFromArgs(List<String> args) {
-
   if (args.length < 1) {
-    print('Error. Most tests can not execute without a Stripe API key.');
-    print('Provide your stripe API key as the first command line argument!');
-    exit(2);
+    log.severe('Error. Most tests can not execute without a Stripe API key.');
+    log.severe('Provide your stripe API key as the first command line argument!');
+    exit(1);
   }
   StripeService.apiKey = args.first;
-
 }
 
-
-Future setUp() {
-
-  print('Setup Start');
-  return new Future.sync(() => print('Setup End'));
-
+Future tearDown() async {
+  log.finest('Teardown Start');
+  await deleteAllCustomers();
+  await deleteAllCoupons();
+  await deleteAllInvoiceItems();
+  await deleteAllPlans();
+  await deleteAllRecipients();
+  log.finest('Teardown End');
 }
 
-
-Future tearDown() {
-
-  print('Teardown Start');
-  List<Future> processQueue = [];
-  processQueue.add(deleteAllCustomers());
-  processQueue.add(deleteAllCoupons());
-  processQueue.add(deleteAllInvoiceitems());
-  processQueue.add(deleteAllPlans());
-  processQueue.add(deleteAllRecipients());
-  return Future.wait(processQueue).then((_) {
-    print('Teardown End');
-    return new Future.value();
-  });
-
+Future deleteAllCustomers() async {
+  var customers = await Customer.list(limit: 100);
+  for (Customer customer in customers.data) {
+    log.finest('Delete customer: ${customer.id}');
+    await Customer.delete(customer.id);
+  }
 }
 
-
-Future deleteAllCustomers() {
-
-  return Customer.list(limit: 100)
-      .then((CustomerCollection customers) {
-        List<Future> processQueue = [];
-        for (Customer customer in customers.data) {
-          processQueue.add(Customer.delete(customer.id).then((_) => print('Delete customer: ${customer.id}')));
-        }
-        return Future.wait(processQueue);
-      });
-
+Future deleteAllCoupons() async {
+  var coupons = await Coupon.list(limit: 100);
+  for (Coupon coupon in coupons.data) {
+    log.finest('Delete coupon: ${coupon.id}');
+    await Coupon.delete(coupon.id);
+  }
 }
 
-
-Future deleteAllCoupons() {
-
-  return Coupon.list(limit: 100)
-      .then((CouponCollection coupons) {
-        List<Future> processQueue = [];
-        for (Coupon coupon in coupons.data) {
-          processQueue.add(Coupon.delete(coupon.id).then((_) => print('Delete coupon: ${coupon.id}')));
-        }
-        return Future.wait(processQueue);
-      });
-
+Future deleteAllInvoiceItems() async {
+  var invoiceItems = await InvoiceItem.list(limit: 100);
+  for (InvoiceItem invoiceItem in invoiceItems.data) {
+    await InvoiceItem.delete(invoiceItem.id);
+    log.finest('Delete invoice item: ${invoiceItem.id}');
+  }
 }
 
-
-Future deleteAllInvoiceitems() {
-
-  return Invoiceitem.list(limit: 100)
-      .then((InvoiceitemCollection invoiceitems) {
-        List<Future> processQueue = [];
-        for (Invoiceitem invoiceitem in invoiceitems.data) {
-          processQueue.add(Invoiceitem.delete(invoiceitem.id).then((_) => print('Delete invoiceitem: ${invoiceitem.id}')));
-        }
-        return Future.wait(processQueue);
-      });
-
+Future deleteAllRecipients() async {
+  var recipients = await Recipient.list(limit: 100);
+  for (Recipient recipient in recipients.data) {
+    await Recipient.delete(recipient.id);
+    log.finest('Delete customer: ${recipient.id}');
+  }
 }
 
-
-Future deleteAllRecipients() {
-
-  return Recipient.list(limit: 100)
-      .then((RecipientCollection recipients) {
-        List<Future> processQueue = [];
-        for (Recipient recipient in recipients.data) {
-          processQueue.add(Recipient.delete(recipient.id).then((_) => print('Delete customer: ${recipient.id}')));
-        }
-        return Future.wait(processQueue);
-      });
-
-}
-
-
-Future deleteAllPlans() {
-
-  return Plan.list(limit: 100)
-      .then((PlanCollection plans) {
-        List<Future> processQueue = [];
-        for (Plan plan in plans.data) {
-          processQueue.add(Plan.delete(plan.id).then((_) => print('Delete plan: ${plan.id}')));
-        }
-        return Future.wait(processQueue);
-      });
-
+Future deleteAllPlans() async {
+  var plans = await Plan.list(limit: 100);
+  for (Plan plan in plans.data) {
+    await Plan.delete(plan.id);
+    log.finest('Delete plan: ${plan.id}');
+  }
 }
