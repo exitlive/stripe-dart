@@ -123,7 +123,13 @@ class CardCreation extends ResourceRequest implements SourceCreation {
 /// [Creating a new card](https://stripe.com/docs/api/curl#create_card)
 class CardCreationWithToken extends ResourceRequest implements SourceCreation {
   @required
-  set token(String token) => _setMap('card', token);
+  set token(String token) {
+    _setMap('token', token);
+  }
+
+  _getMap() {
+    return super._getMap()['token'];
+  }
 
   Future<Card> create(String customerId) async {
     var dataMap = await StripeService.create([Customer._path, customerId, Card._path], _getMap());
