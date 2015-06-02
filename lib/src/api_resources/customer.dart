@@ -98,7 +98,7 @@ class CustomerCreation extends ResourceRequest {
 
   set quantity(int quantity) => _setMap('quantity', quantity);
 
-  set source(CardCreation source) => _setMap('source', source);
+  set source(SourceCreation source) => _setMap('source', source);
 
   set trialEnd(int trialEnd) => _setMap('trial_end', trialEnd);
 
