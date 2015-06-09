@@ -224,5 +224,30 @@ main(List<String> args) {
       expect(customers.data.length, 10);
       expect(customers.hasMore, isFalse);
     });
+
+    test('Create with card token', () async {
+      // Card fields
+      var cardNumber = '4242424242424242',
+          cardExpMonth = 12,
+          cardExpYear = 2016;
+      await new CustomerCreation().create();
+      var token = await (new CardTokenCreation()
+        ..card = (new CardCreation()
+          ..number = cardNumber
+          ..expMonth = cardExpMonth
+          ..expYear = cardExpYear)).create();
+      var cardCreation = new CardCreationWithToken()..token = token.id;
+      var customerCreation = new CustomerCreation()
+        ..source = cardCreation
+        ..email = 'test@test.com';
+      Customer customer = await customerCreation.create();
+      expect(customer.sources, new isInstanceOf<CardCollection>());
+      expect(customer.sources.data, new isInstanceOf<List>());
+      Card card = customer.sources.data.first;
+      expect(card, new isInstanceOf<Card>());
+      expect(card.last4, cardNumber.substring(cardNumber.length - 4));
+      expect(card.expMonth, cardExpMonth);
+      expect(card.expYear, cardExpYear);
+    });
   });
 }

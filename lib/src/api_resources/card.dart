@@ -1,5 +1,8 @@
 part of stripe;
 
+/// Interface representing a Stripe source (e.g. CardCreation, CardCreationWithToken)
+abstract class SourceCreation {}
+
 /// [Card](https://stripe.com/docs/api/curl#cards)
 class Card extends ApiResource {
   String get id => _dataMap['id'];
@@ -81,7 +84,7 @@ class CardCollection extends ResourceCollection {
 }
 
 /// [Creating a new card](https://stripe.com/docs/api/curl#create_card)
-class CardCreation extends ResourceRequest {
+class CardCreation extends ResourceRequest implements SourceCreation {
   CardCreation() {
     _setMap('object', 'card');
   }
@@ -118,9 +121,15 @@ class CardCreation extends ResourceRequest {
 }
 
 /// [Creating a new card](https://stripe.com/docs/api/curl#create_card)
-class CardCreationWithToken extends ResourceRequest {
+class CardCreationWithToken extends ResourceRequest implements SourceCreation {
   @required
-  set token(String token) => _setMap('card', token);
+  set token(String token) {
+    _setMap('token', token);
+  }
+
+  _getMap() {
+    return super._getMap()['token'];
+  }
 
   Future<Card> create(String customerId) async {
     var dataMap = await StripeService.create([Customer._path, customerId, Card._path], _getMap());

@@ -1,4 +1,11 @@
 packages
-.DS_Store
-
+.idea
+.pub
+.buildlog
 pubspec.lock
+
+# IDE/editor files
+*.swp
+*.swo
+
+.DS_Store
