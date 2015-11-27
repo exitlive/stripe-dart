@@ -42,7 +42,6 @@ abstract class Resource {
 /// The base class for request resources (eg: [CustomerCreation],
 /// [CustomerUpdate], etc...)
 abstract class ResourceRequest {
-
   /// Holds all values that have been set/changed.
   /// You should not access this map directly, but use [_setMap] and [_getMap].
   Map<String, dynamic> _map = {};

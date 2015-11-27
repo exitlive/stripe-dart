@@ -115,8 +115,14 @@ class Transfer extends ApiResource {
   }
 
   /// [List all transfers](https://stripe.com/docs/api#list_transfers)
-  static Future<TransferCollection> list({var created, var date, int limit, String startingAfter, String endingBefore,
-      String recipient, String status}) async {
+  static Future<TransferCollection> list(
+      {var created,
+      var date,
+      int limit,
+      String startingAfter,
+      String endingBefore,
+      String recipient,
+      String status}) async {
     var data = {};
     if (created != null) data['created'] = created;
     if (date != null) data['date'] = date;

@@ -51,7 +51,6 @@ main(List<String> args) {
     });
 
     test('Create minimal', () async {
-
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
@@ -76,11 +75,8 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // Card fields
-      var cardNumber = '4242424242424242',
-          cardExpMonth = 12,
-          cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber
@@ -152,7 +148,6 @@ main(List<String> args) {
     });
 
     test('List parameters', () async {
-
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,

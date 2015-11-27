@@ -35,7 +35,6 @@ class InvalidRequestErrorException extends StripeApiException {
 /// Card errors are the most common type of error you should expect to handle.
 /// They result when the user enters a card that can't be charged for some reason.
 class CardErrorException extends StripeApiException {
-
   /// A short string from amongst those listed on the right describing the kind
   /// of card error that occurred.
   final String code;

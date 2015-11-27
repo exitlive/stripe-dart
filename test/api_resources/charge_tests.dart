@@ -91,7 +91,6 @@ main(List<String> args) {
     });
 
     test('Create minimal', () async {
-
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
@@ -115,7 +114,6 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
@@ -152,7 +150,9 @@ main(List<String> args) {
       expect(charge.captured, chargeCapture);
       expect(charge.statement_descriptor, chargeStatementDescriptor);
       // testing the expand functionality of retrieve
-      charge = await Charge.retrieve(charge.id, data: {'expand': ['balance_transaction', 'customer', 'invoice']});
+      charge = await Charge.retrieve(charge.id, data: {
+        'expand': ['balance_transaction', 'customer', 'invoice']
+      });
       expect(charge.customer, charge.customerExpand.id);
 
       // testing the ChargeUpdate
@@ -164,7 +164,6 @@ main(List<String> args) {
     });
 
     test('Capture', () async {
-
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
@@ -191,9 +190,7 @@ main(List<String> args) {
     });
 
     test('List parameters', () async {
-      var cardNumber = '4242424242424242',
-          cardExpMonth = 12,
-          cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
@@ -202,8 +199,7 @@ main(List<String> args) {
         ..expYear = cardExpYear).create(customer.id);
       for (var i = 0; i < 20; i++) {
         // Charge fields
-        var chargeAmount = 100,
-            chargeCurrency = 'usd';
+        var chargeAmount = 100, chargeCurrency = 'usd';
         // application_fee can not be tested
 
         await (new ChargeCreation()

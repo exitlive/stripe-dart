@@ -66,11 +66,8 @@ main(List<String> args) {
     });
 
     test('Delete from Customer', () async {
-
       // Coupon fields
-      var couponId = 'test coupon id',
-          couponDuration = 'forever',
-          couponPercentOff = 15;
+      var couponId = 'test coupon id', couponDuration = 'forever', couponPercentOff = 15;
 
       var coupon = await (new CouponCreation()
         ..id = couponId
@@ -87,9 +84,7 @@ main(List<String> args) {
     });
 
     test('Delete from Subscription', () async {
-      var cardNumber = '5555555555554444',
-          cardExpMonth = 3,
-          cardExpYear = 2016;
+      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested

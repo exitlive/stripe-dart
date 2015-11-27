@@ -74,17 +74,13 @@ main(List<String> args) {
     });
 
     test('Create CardToken', () async {
-
       // Card fields
-      var cardNumber = '4242424242424242',
-          cardExpMonth = 12,
-          cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
       await new CustomerCreation().create();
-      var token = await (new CardTokenCreation()
-        ..card = (new CardCreation()
-          ..number = cardNumber
-          ..expMonth = cardExpMonth
-          ..expYear = cardExpYear)).create();
+      var token = await (new CardTokenCreation()..card = (new CardCreation()
+        ..number = cardNumber
+        ..expMonth = cardExpMonth
+        ..expYear = cardExpYear)).create();
       expect(token.id, new isInstanceOf<String>());
       expect(token.card.last4, cardNumber.substring(cardNumber.length - 4));
       expect(token.card.expMonth, cardExpMonth);

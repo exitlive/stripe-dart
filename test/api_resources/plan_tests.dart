@@ -51,13 +51,8 @@ main(List<String> args) {
     });
 
     test('Create minimal', () async {
-
       // plan fields
-      var planId = 'test id',
-          planAmount = 10,
-          planCurrency = 'usd',
-          planInterval = 'month',
-          planName = 'test name';
+      var planId = 'test id', planAmount = 10, planCurrency = 'usd', planInterval = 'month', planName = 'test name';
 
       var plan = await (new PlanCreation()
         ..id = planId
@@ -73,7 +68,6 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // plan fields
       var planId = 'test id',
           planAmount = 10,
@@ -129,13 +123,8 @@ main(List<String> args) {
     });
 
     test('Delete', () async {
-
       // plan fields
-      var planId = 'test id',
-          planAmount = 10,
-          planCurrency = 'usd',
-          planInterval = 'month',
-          planName = 'test name';
+      var planId = 'test id', planAmount = 10, planCurrency = 'usd', planInterval = 'month', planName = 'test name';
 
       var plan = await (new PlanCreation()
         ..id = planId
@@ -154,13 +143,8 @@ main(List<String> args) {
     });
 
     test('List parameters', () async {
-
       // plan fields
-      var planId = 'test id',
-          planAmount = 10,
-          planCurrency = 'usd',
-          planInterval = 'month',
-          planName = 'test name';
+      var planId = 'test id', planAmount = 10, planCurrency = 'usd', planInterval = 'month', planName = 'test name';
 
       for (var i = 0; i < 20; i++) {
         await (new PlanCreation()

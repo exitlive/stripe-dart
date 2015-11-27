@@ -63,20 +63,15 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // Card fields
-      var cardNumber1 = '4242424242424242',
-          cardExpMonth1 = 12,
-          cardExpYear1 = 2016;
+      var cardNumber1 = '4242424242424242', cardExpMonth1 = 12, cardExpYear1 = 2016;
 
       var cardCreation1 = new CardCreation()
         ..number = cardNumber1 // only the last 4 digits can be tested
         ..expMonth = cardExpMonth1
         ..expYear = cardExpYear1;
 
-      var cardNumber2 = '5555555555554444',
-          cardExpMonth2 = 3,
-          cardExpYear2 = 2016;
+      var cardNumber2 = '5555555555554444', cardExpMonth2 = 3, cardExpYear2 = 2016;
 
       var cardCreation2 = new CardCreation()
         ..number = cardNumber2 // only the last 4 digits can be tested
@@ -84,18 +79,14 @@ main(List<String> args) {
         ..expYear = cardExpYear2;
 
       // Coupon fields
-      var couponId1 = 'test coupon id1',
-          couponDuration1 = 'forever',
-          couponPercentOff1 = 15;
+      var couponId1 = 'test coupon id1', couponDuration1 = 'forever', couponPercentOff1 = 15;
 
       var couponCreation1 = new CouponCreation()
         ..id = couponId1
         ..duration = couponDuration1
         ..percentOff = couponPercentOff1;
 
-      var couponId2 = 'test coupon id2',
-          couponDuration2 = 'forever',
-          couponPercentOff2 = 20;
+      var couponId2 = 'test coupon id2', couponDuration2 = 'forever', couponPercentOff2 = 20;
 
       var couponCreation2 = new CouponCreation()
         ..id = couponId2
@@ -181,7 +172,9 @@ main(List<String> args) {
       expect(subscription.plan.name, planName);
       var invoices = await Invoice.list(customer: customer.id);
       expect(invoices.data.first.startingBalance, customerAccountBalance1);
-      customer = await Customer.retrieve(customer.id, data: {'expand': ['default_source']});
+      customer = await Customer.retrieve(customer.id, data: {
+        'expand': ['default_source']
+      });
       // testing the expand functionality of retrieve
       expect(customer.defaultSource, customer.defaultSourceExpand.id);
       expect(customer.defaultSourceExpand.last4, cardNumber1.substring(cardNumber1.length - 4));
@@ -227,15 +220,12 @@ main(List<String> args) {
 
     test('Create with card token', () async {
       // Card fields
-      var cardNumber = '4242424242424242',
-          cardExpMonth = 12,
-          cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
       await new CustomerCreation().create();
-      var token = await (new CardTokenCreation()
-        ..card = (new CardCreation()
-          ..number = cardNumber
-          ..expMonth = cardExpMonth
-          ..expYear = cardExpYear)).create();
+      var token = await (new CardTokenCreation()..card = (new CardCreation()
+        ..number = cardNumber
+        ..expMonth = cardExpMonth
+        ..expYear = cardExpYear)).create();
       var cardCreation = new CardCreationWithToken()..token = token.id;
       var customerCreation = new CustomerCreation()
         ..source = cardCreation

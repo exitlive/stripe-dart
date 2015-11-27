@@ -47,7 +47,6 @@ main(List<String> args) {
     });
 
     test('Create minimal', () async {
-
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
@@ -73,7 +72,6 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
@@ -106,7 +104,9 @@ main(List<String> args) {
       expect(refund.reason, refundReason);
       expect(refund.metadata, refundMetadata1);
       // testing the expand functionality of retrieve
-      refund = await Refund.retrieve(charge.id, refund.id, data: {'expand': ['balance_transaction']});
+      refund = await Refund.retrieve(charge.id, refund.id, data: {
+        'expand': ['balance_transaction']
+      });
       expect(refund.balanceTransactionExpand.amount, -refundAmount);
       expect(refund.balanceTransactionExpand.currency, chargeCurrency);
       expect(refund.balanceTransactionExpand.type, 'refund');
