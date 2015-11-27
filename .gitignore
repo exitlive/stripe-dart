@@ -9,3 +9,5 @@ pubspec.lock
 *.swo
 
 .DS_Store
+
+.packages
