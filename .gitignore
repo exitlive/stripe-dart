@@ -2,7 +2,6 @@ packages
 .idea
 .pub
 .buildlog
-pubspec.lock
 
 # IDE/editor files
 *.swp
