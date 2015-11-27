@@ -3,7 +3,7 @@
 [ ![Codeship Status for exitlive/stripe-dart](https://codeship.com/projects/5507d630-62a5-0132-dd06-4e545b297600/status?branch=master)](https://codeship.com/projects/52114)
 
 
-Stripe API (version 2015-07-13) implemented in dart.
+Stripe API (version 2015-10-16) implemented in dart.
 
 Most of the model class documentations have been taken from the
 [stripe documentation](https://stripe.com/docs).
