@@ -151,11 +151,8 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // Card fields
-      var cardNumber = '5555555555554444',
-          cardExpMonth = 3,
-          cardExpYear = 2016;
+      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested

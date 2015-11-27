@@ -81,7 +81,6 @@ main(List<String> args) {
       var account = await Account.retrieve();
       expect(account.id.substring(0, 3), 'acc');
       // other tests will depend on your stripe account
-
     });
   });
 }

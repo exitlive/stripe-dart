@@ -71,9 +71,7 @@ main(List<String> args) {
     });
 
     test('Create minimal', () async {
-      var number = '4242424242424242',
-          expMonth = 12,
-          expYear = 2016;
+      var number = '4242424242424242', expMonth = 12, expYear = 2016;
 
       var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
@@ -140,7 +138,9 @@ main(List<String> args) {
       expect(card.addressState, cardAddressState1);
       expect(card.addressCountry, cardAddressCountry1);
       // testing the expand functionality of retrieve
-      card = await Card.retrieve(customer.id, card.id, data: {'expand': ['customer']});
+      card = await Card.retrieve(customer.id, card.id, data: {
+        'expand': ['customer']
+      });
       expect(card.customer, customer.id);
       expect(card.customerExpand.id, customer.id);
       // testing the CardUpdate
@@ -168,9 +168,7 @@ main(List<String> args) {
     });
 
     test('Delete', () async {
-      var number = '4242424242424242',
-          expMonth = 12,
-          expYear = 2016;
+      var number = '4242424242424242', expMonth = 12, expYear = 2016;
 
       var customer = await new CustomerCreation().create();
       expect(customer.id, new isInstanceOf<String>());
@@ -184,9 +182,7 @@ main(List<String> args) {
     });
 
     test('List parameters', () async {
-      var number = '4242424242424242',
-          expMonth = 12,
-          expYear = 2016;
+      var number = '4242424242424242', expMonth = 12, expYear = 2016;
       Customer customer = await new CustomerCreation().create();
       for (var i = 0; i < 20; i++) {
         await (new CardCreation()

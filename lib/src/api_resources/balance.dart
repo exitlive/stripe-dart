@@ -73,8 +73,8 @@ class BalanceTransaction extends ApiResource {
   BalanceTransaction.fromMap(Map dataMap) : super.fromMap(dataMap);
 
   /// [Retrieving a Balance Transaction](https://stripe.com/docs/api/curl#retrieve_balance_transaction)
-  static Future<BalanceTransaction> retrieve() async {
-    var dataMap = await StripeService.get([BalanceTransaction._path]);
+  static Future<BalanceTransaction> retrieve(String transactionId) async {
+    var dataMap = await StripeService.get([BalanceTransaction._path, transactionId]);
     return new BalanceTransaction.fromMap(dataMap);
   }
 

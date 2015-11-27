@@ -42,7 +42,6 @@ import 'resources/verification_tests.dart' as verification_tests;
 
 /// Unittest configuration
 class TestConfiguration extends SimpleConfiguration {
-
   // change color to green
   final String cg = '\u001b[33;32m';
   // change color to red

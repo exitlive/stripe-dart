@@ -57,10 +57,8 @@ main(List<String> args) {
     });
 
     test('Create minimal', () async {
-
       // Coupon fields
-      var couponDuration = 'forever',
-          couponPercentOff = 5;
+      var couponDuration = 'forever', couponPercentOff = 5;
 
       var coupon = await (new CouponCreation()
         ..duration = couponDuration
@@ -71,7 +69,6 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // Coupon fields
       var couponId = 'test id',
           couponDuration = 'repeating',
@@ -112,10 +109,8 @@ main(List<String> args) {
     });
 
     test('Delete', () async {
-
       // Coupon fields
-      var couponDuration = 'forever',
-          couponPercentOff = 5;
+      var couponDuration = 'forever', couponPercentOff = 5;
 
       var coupon = await (new CouponCreation()
         ..duration = couponDuration
@@ -129,10 +124,8 @@ main(List<String> args) {
     });
 
     test('List parameters', () async {
-
       // Coupon fields
-      var couponDuration = 'forever',
-          couponPercentOff = 5;
+      var couponDuration = 'forever', couponPercentOff = 5;
       for (var i = 0; i < 20; i++) {
         await (new CouponCreation()
           ..duration = couponDuration

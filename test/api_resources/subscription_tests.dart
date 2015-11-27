@@ -95,11 +95,8 @@ main(List<String> args) {
     });
 
     test('Create minimal', () async {
-
       // Card fields
-      var cardNumber = '5555555555554444',
-          cardExpMonth = 3,
-          cardExpYear = 2016;
+      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested
@@ -127,20 +124,15 @@ main(List<String> args) {
     });
 
     test('Create full', () async {
-
       // Coupon fields
-      var couponId1 = 'test coupon id1',
-          couponDuration1 = 'forever',
-          couponPercentOff1 = 15;
+      var couponId1 = 'test coupon id1', couponDuration1 = 'forever', couponPercentOff1 = 15;
 
       var couponCreation1 = new CouponCreation()
         ..id = couponId1
         ..duration = couponDuration1
         ..percentOff = couponPercentOff1;
 
-      var couponId2 = 'test coupon id2',
-          couponDuration2 = 'forever',
-          couponPercentOff2 = 10;
+      var couponId2 = 'test coupon id2', couponDuration2 = 'forever', couponPercentOff2 = 10;
 
       var couponCreation2 = new CouponCreation()
         ..id = couponId2
@@ -148,18 +140,14 @@ main(List<String> args) {
         ..percentOff = couponPercentOff2;
 
       // Card fields
-      var cardNumber1 = '4242424242424242',
-          cardExpMonth1 = 12,
-          cardExpYear1 = 2016;
+      var cardNumber1 = '4242424242424242', cardExpMonth1 = 12, cardExpYear1 = 2016;
 
       var cardCreation1 = new CardCreation()
         ..number = cardNumber1 // only the last 4 digits can be tested
         ..expMonth = cardExpMonth1
         ..expYear = cardExpYear1;
 
-      var cardNumber2 = '5555555555554444',
-          cardExpMonth2 = 3,
-          cardExpYear2 = 2016;
+      var cardNumber2 = '5555555555554444', cardExpMonth2 = 3, cardExpYear2 = 2016;
 
       var cardCreation2 = new CardCreation()
         ..number = cardNumber2 // only the last 4 digits can be tested
@@ -221,7 +209,9 @@ main(List<String> args) {
       expect(subscription.customer, customer.id);
       expect(subscription.quantity, subscriptionQuantity1);
       expect(subscription.metadata, subscriptionMetadata1);
-      subscription = await Subscription.retrieve(customer.id, subscription.id, data: {'expand': ['customer']});
+      subscription = await Subscription.retrieve(customer.id, subscription.id, data: {
+        'expand': ['customer']
+      });
       // testing the expand functionality of retrieve
       expect(subscription.customer, subscription.customerExpand.id);
 
@@ -246,11 +236,8 @@ main(List<String> args) {
     });
 
     test('List parameters', () async {
-
       // Card fields
-      var cardNumber = '4242424242424242',
-          cardExpMonth = 12,
-          cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested
