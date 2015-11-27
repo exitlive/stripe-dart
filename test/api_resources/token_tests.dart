@@ -37,6 +37,13 @@ var example = '''
       }
     }''';
 
+var bankAccountExample = '''
+    {
+      "country": "US",
+      "currency": "usd",
+      "routing_number": "110000000",
+      "account_number": "000123456789"
+    }''';
 main(List<String> args) {
   utils.setApiKeyFromArgs(args);
 
@@ -100,7 +107,7 @@ main(List<String> args) {
     });
 
     test('Create BankAccountToken', () async {
-      var bankAccountMap = JSON.decode(bank_account.example);
+      var bankAccountMap = JSON.decode(bankAccountExample);
       var bankAccount = new BankAccount.fromMap(bankAccountMap);
 
       var token = await (new BankAccountTokenCreation()..bankAccount = bankAccount).create();
@@ -109,25 +116,15 @@ main(List<String> args) {
       expect(token.type, 'bank_account');
       expect(token.bankAccount.country, bankAccount.country);
       expect(token.bankAccount.currency, bankAccount.currency);
-      expect(token.bankAccount.last4, bankAccount.last4);
-      expect(token.bankAccount.status, bankAccount.status);
-      expect(token.bankAccount.bankName, bankAccount.bankName);
       expect(token.bankAccount.routingNumber, bankAccount.routingNumber);
 
       // testing retrieve
       token = await Token.retrieve(token.id);
       expect(token.id, new isInstanceOf<String>());
       expect(token.livemode, isFalse);
-      expect(token.used, isFalse);
-      expect(token.type, 'bank_account');
-      expect(token.id, new isInstanceOf<String>());
-      expect(token.used, isFalse);
       expect(token.type, 'bank_account');
       expect(token.bankAccount.country, bankAccount.country);
       expect(token.bankAccount.currency, bankAccount.currency);
-      expect(token.bankAccount.last4, bankAccount.last4);
-      expect(token.bankAccount.status, bankAccount.status);
-      expect(token.bankAccount.bankName, bankAccount.bankName);
       expect(token.bankAccount.routingNumber, bankAccount.routingNumber);
     });
   });
