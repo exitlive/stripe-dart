@@ -110,7 +110,7 @@ main(List<String> args) {
       expect(refund.balanceTransactionExpand.amount, -refundAmount);
       expect(refund.balanceTransactionExpand.currency, chargeCurrency);
       expect(refund.balanceTransactionExpand.type, 'refund');
-      expect(refund.balanceTransactionExpand.source, charge.id);
+      expect(refund.balanceTransactionExpand.source, refund.id);
       // testing the ChargeUpdate
       refund = await (new RefundUpdate()..metadata = refundMetadata2).update(charge.id, refund.id);
       expect(refund.metadata, refundMetadata2);
