@@ -17,9 +17,10 @@ abstract class StripeService {
   static HttpClient _getClient() => new HttpClient();
 
   /// Makes a post request to the Stripe API to given path and parameters.
-  static Future<Map> create(final List<String> pathParts, final Map data, {String hostOverride}) {
+  static Future<Map> create(final List<String> pathParts, final Map data,
+      {String hostOverride, String idempotencyKey}) {
     var hostToUse = (hostOverride == null) ? host : hostOverride;
-    return _request('POST', pathParts, data: data, hostOverride: hostToUse);
+    return _request('POST', pathParts, data: data, hostOverride: hostToUse, idempotencyKey: idempotencyKey);
   }
 
   /// Makes a delete request to the Stripe API
@@ -54,7 +55,7 @@ abstract class StripeService {
   }
 
   static Future<Map> _request(final String method, final List<String> pathParts,
-      {final Map data, String hostOverride}) async {
+      {final Map data, String hostOverride, String idempotencyKey}) async {
     pathParts.insert(0, basePath);
     var path = '/' + pathParts.map(Uri.encodeComponent).join('/');
     Uri uri;
@@ -67,6 +68,10 @@ abstract class StripeService {
     log.finest('Sending ${method} request to API ${uri}');
     int responseStatusCode;
     var request = await _getClient().openUrl(method, uri);
+
+    if (idempotencyKey != null) {
+      request.headers.add('Idempotency-Key', idempotencyKey);
+    }
 
     if (method == 'POST' && data != null) {
       // Now convert the params to a list of UTF8 encoded bytes of a uri encoded

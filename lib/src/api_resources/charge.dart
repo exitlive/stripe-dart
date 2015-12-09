@@ -170,8 +170,8 @@ class ChargeCreation extends ResourceRequest {
 
   set shipping(int shipping) => _setMap('shipping', shipping);
 
-  Future<Charge> create() async {
-    var dataMap = await StripeService.create([Charge._path], _getMap());
+  Future<Charge> create({String idempotencyKey}) async {
+    var dataMap = await StripeService.create([Charge._path], _getMap(), idempotencyKey: idempotencyKey);
     return new Charge.fromMap(dataMap);
   }
 }
