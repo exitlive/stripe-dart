@@ -102,8 +102,8 @@ class CustomerCreation extends ResourceRequest {
 
   set trialEnd(int trialEnd) => _setMap('trial_end', trialEnd);
 
-  Future<Customer> create() async {
-    var dataMap = await StripeService.create([Customer._path], _getMap());
+  Future<Customer> create({String idempotencyKey}) async {
+    var dataMap = await StripeService.create([Customer._path], _getMap(), idempotencyKey: idempotencyKey);
     return new Customer.fromMap(dataMap);
   }
 }
