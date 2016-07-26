@@ -66,8 +66,10 @@ class BalanceTransaction extends ApiResource {
 
   Charge get sourceExpand {
     var value = _dataMap['source'];
-    if (value == null) return null;
-    else return new Charge.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Charge.fromMap(value);
   }
 
   BalanceTransaction.fromMap(Map dataMap) : super.fromMap(dataMap);

@@ -50,7 +50,8 @@ main(List<String> args) {
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
@@ -58,13 +59,16 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id).create();
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
+            ..customer = customer.id)
+          .create();
       var refund = await new RefundCreation().create(charge.id);
       expect(refund.amount, chargeAmount);
       expect(refund.currency, chargeCurrency);
@@ -75,11 +79,12 @@ main(List<String> args) {
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
-          chargeCurrency = 'usd',
+          chargeCurrency = 'eur',
 
           // Refund fields
           refundAmount = 50,
@@ -89,17 +94,21 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id).create();
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
+            ..customer = customer.id)
+          .create();
       var refund = await (new RefundCreation()
-        ..amount = refundAmount
-        ..reason = refundReason
-        ..metadata = refundMetadata1).create(charge.id);
+            ..amount = refundAmount
+            ..reason = refundReason
+            ..metadata = refundMetadata1)
+          .create(charge.id);
       expect(refund.amount, refundAmount);
       expect(refund.reason, refundReason);
       expect(refund.metadata, refundMetadata1);
@@ -107,7 +116,7 @@ main(List<String> args) {
       refund = await Refund.retrieve(charge.id, refund.id, data: {
         'expand': ['balance_transaction']
       });
-      expect(refund.balanceTransactionExpand.amount, -refundAmount);
+      expect(refund.balanceTransactionExpand.amount, closeTo(-refundAmount, 10));
       expect(refund.balanceTransactionExpand.currency, chargeCurrency);
       expect(refund.balanceTransactionExpand.type, 'refund');
       expect(refund.balanceTransactionExpand.source, refund.id);
@@ -119,7 +128,8 @@ main(List<String> args) {
     test('List parameters', () async {
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
@@ -127,13 +137,16 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id).create();
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
+            ..customer = customer.id)
+          .create();
 
       for (var i = 0; i < 20; i++) {
         await (new RefundCreation()..amount = 5).create(charge.id);

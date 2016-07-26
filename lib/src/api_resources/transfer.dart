@@ -20,8 +20,10 @@ class Transfer extends ApiResource {
 
   TransferReversalCollection get reversals {
     var value = _dataMap['reversals'];
-    if (value == null) return null;
-    else return new TransferReversalCollection.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new TransferReversalCollection.fromMap(value);
   }
 
   bool get reversed => _dataMap['reversed'];
@@ -38,8 +40,10 @@ class Transfer extends ApiResource {
 
   BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else return new BalanceTransaction.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new BalanceTransaction.fromMap(value);
   }
 
   String get description => _dataMap['description'];
@@ -78,8 +82,10 @@ class Transfer extends ApiResource {
 
   Charge get destinationPaymentExpand {
     var value = _dataMap['destination_payment'];
-    if (value == null) return null;
-    else return new Charge.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Charge.fromMap(value);
   }
 
   String get sourceTransaction {

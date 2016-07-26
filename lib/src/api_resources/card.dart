@@ -45,8 +45,10 @@ class Card extends ApiResource {
 
   Customer get customerExpand {
     var value = _dataMap['customer'];
-    if (value == null) return null;
-    else return new Customer.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Customer.fromMap(value);
   }
 
   String get cvcCheck => _dataMap['cvc_check'];
@@ -98,6 +100,7 @@ class CardCreation extends ResourceRequest implements SourceCreation {
   @required
   set expYear(int expYear) => _setMap('exp_year', expYear);
 
+  @required
   set cvc(int cvc) => _setMap('cvc', cvc);
 
   set name(String name) => _setMap('name', name);

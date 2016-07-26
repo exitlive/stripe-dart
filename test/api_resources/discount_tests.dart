@@ -70,9 +70,10 @@ main(List<String> args) {
       var couponId = 'test coupon id', couponDuration = 'forever', couponPercentOff = 15;
 
       var coupon = await (new CouponCreation()
-        ..id = couponId
-        ..duration = couponDuration
-        ..percentOff = couponPercentOff).create();
+            ..id = couponId
+            ..duration = couponDuration
+            ..percentOff = couponPercentOff)
+          .create();
       var customer = await (new CustomerCreation()..coupon = coupon.id).create();
       expect(customer.discount.coupon.percentOff, couponPercentOff);
       var discount = customer.discount;
@@ -84,12 +85,13 @@ main(List<String> args) {
     });
 
     test('Delete from Subscription', () async {
-      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2016;
+      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2020, cvc = 123;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested
         ..expMonth = cardExpMonth
-        ..expYear = cardExpYear;
+        ..expYear = cardExpYear
+        ..cvc = cvc;
 
       // Plan fields
       var planId = 'test plan id',
@@ -104,20 +106,23 @@ main(List<String> args) {
           couponPercentOff = 15;
 
       var coupon = await (new CouponCreation()
-        ..id = couponId
-        ..duration = couponDuration
-        ..percentOff = couponPercentOff).create();
+            ..id = couponId
+            ..duration = couponDuration
+            ..percentOff = couponPercentOff)
+          .create();
       var plan = await (new PlanCreation()
-        ..id = planId
-        ..amount = planAmount
-        ..currency = planCurrency
-        ..interval = planInterval
-        ..name = planName).create();
+            ..id = planId
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..name = planName)
+          .create();
       var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
       var subscription = await (new SubscriptionCreation()
-        ..plan = plan.id
-        ..coupon = coupon.id).create(customer.id);
+            ..plan = plan.id
+            ..coupon = coupon.id)
+          .create(customer.id);
       expect(subscription.discount.coupon.percentOff, couponPercentOff);
       var discount = subscription.discount;
       var response = await Discount.deleteForSubscription(customer.id, subscription.id);

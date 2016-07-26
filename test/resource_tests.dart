@@ -2,9 +2,9 @@ library resource_tests;
 
 import 'package:unittest/unittest.dart';
 
-import '../lib/stripe.dart';
+import '../lib/stripe.dart' as stripe;
 
-class TestResource extends Resource {
+class TestResource extends stripe.Resource {
   bool test = true;
   TestResource.fromMap(map) : super.fromMap(map);
 }

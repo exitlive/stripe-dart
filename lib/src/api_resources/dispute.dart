@@ -16,8 +16,10 @@ class Dispute extends ApiResource {
 
   Charge get ChargeExpand {
     var value = _dataMap['charge'];
-    if (value == null) return null;
-    else return new Charge.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Charge.fromMap(value);
   }
 
   DateTime get created => _getDateTimeFromMap('created');
@@ -34,8 +36,10 @@ class Dispute extends ApiResource {
 
   BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else return new BalanceTransaction.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new BalanceTransaction.fromMap(value);
   }
 
   String get evidence => _dataMap['evidence'];

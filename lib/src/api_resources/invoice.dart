@@ -26,16 +26,20 @@ class Invoice extends ApiResource {
 
   Customer get customerExpand {
     var value = _dataMap['customer'];
-    if (value == null) return null;
-    else return new Customer.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Customer.fromMap(value);
   }
 
   DateTime get date => _getDateTimeFromMap('date');
 
   InvoiceLineItemCollection get lines {
     var value = _dataMap['lines'];
-    if (value == null) return null;
-    else return new InvoiceLineItemCollection.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new InvoiceLineItemCollection.fromMap(value);
   }
 
   bool get paid => _dataMap['paid'];
@@ -58,16 +62,20 @@ class Invoice extends ApiResource {
 
   Charge get chargeExpand {
     var value = _dataMap['charge'];
-    if (value == null) return null;
-    else return new Charge.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Charge.fromMap(value);
   }
 
   String get description => _dataMap['description'];
 
   Discount get discount {
     var value = _dataMap['discount'];
-    if (value == null) return null;
-    else return new Discount.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Discount.fromMap(value);
   }
 
   int get endingBalance => _dataMap['ending_balance'];
@@ -188,8 +196,10 @@ class InvoiceLineItem extends Resource {
 
   Period get period {
     var value = _dataMap['period'];
-    if (value == null) return null;
-    else return new Period.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Period.fromMap(value);
   }
 
   bool get proration => _dataMap['proration'];
@@ -202,8 +212,10 @@ class InvoiceLineItem extends Resource {
 
   Plan get plan {
     var value = _dataMap['plan'];
-    if (value == null) return null;
-    else return new Plan.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Plan.fromMap(value);
   }
 
   int get quantity => _dataMap['quantity'];

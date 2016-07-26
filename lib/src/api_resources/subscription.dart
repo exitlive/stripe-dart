@@ -16,14 +16,18 @@ class Subscription extends ApiResource {
 
   Customer get customerExpand {
     var value = _dataMap['customer'];
-    if (value == null) return null;
-    else return new Customer.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Customer.fromMap(value);
   }
 
   Plan get plan {
     var value = _dataMap['plan'];
-    if (value == null) return null;
-    else return new Plan.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Plan.fromMap(value);
   }
 
   int get quantity => _dataMap['quantity'];
@@ -42,8 +46,10 @@ class Subscription extends ApiResource {
 
   Discount get discount {
     var value = _dataMap['discount'];
-    if (value == null) return null;
-    else return new Discount.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Discount.fromMap(value);
   }
 
   DateTime get endedAt => _getDateTimeFromMap('ended_at');

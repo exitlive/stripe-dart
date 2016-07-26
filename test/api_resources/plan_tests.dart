@@ -55,11 +55,12 @@ main(List<String> args) {
       var planId = 'test id', planAmount = 10, planCurrency = 'usd', planInterval = 'month', planName = 'test name';
 
       var plan = await (new PlanCreation()
-        ..id = planId
-        ..amount = planAmount
-        ..currency = planCurrency
-        ..interval = planInterval
-        ..name = planName).create();
+            ..id = planId
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..name = planName)
+          .create();
       expect(plan.id, planId);
       expect(plan.amount, planAmount);
       expect(plan.currency, planCurrency);
@@ -83,15 +84,16 @@ main(List<String> args) {
           planStatementDescriptor2 = 'descriptor2';
 
       var plan = await (new PlanCreation()
-        ..id = planId
-        ..amount = planAmount
-        ..currency = planCurrency
-        ..interval = planInterval
-        ..intervalCount = planIntervalCount
-        ..name = planName1
-        ..trialPeriodDays = planTrialPeriodDays
-        ..metadata = planMetadata1
-        ..statementDescriptor = planStatementDescriptor1).create();
+            ..id = planId
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..intervalCount = planIntervalCount
+            ..name = planName1
+            ..trialPeriodDays = planTrialPeriodDays
+            ..metadata = planMetadata1
+            ..statementDescriptor = planStatementDescriptor1)
+          .create();
       expect(plan.id, planId);
       expect(plan.amount, planAmount);
       expect(plan.currency, planCurrency);
@@ -112,9 +114,10 @@ main(List<String> args) {
       expect(plan.metadata, planMetadata1);
       expect(plan.statementDescriptor, planStatementDescriptor1);
       plan = await (new PlanUpdate()
-        ..name = planName2
-        ..metadata = planMetadata2
-        ..statementDescriptor = planStatementDescriptor2).update(plan.id);
+            ..name = planName2
+            ..metadata = planMetadata2
+            ..statementDescriptor = planStatementDescriptor2)
+          .update(plan.id);
       // testing update
       expect(plan.id, planId);
       expect(plan.name, planName2);
@@ -127,11 +130,12 @@ main(List<String> args) {
       var planId = 'test id', planAmount = 10, planCurrency = 'usd', planInterval = 'month', planName = 'test name';
 
       var plan = await (new PlanCreation()
-        ..id = planId
-        ..amount = planAmount
-        ..currency = planCurrency
-        ..interval = planInterval
-        ..name = planName).create();
+            ..id = planId
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..name = planName)
+          .create();
       expect(plan.id, planId);
       expect(plan.amount, planAmount);
       expect(plan.currency, planCurrency);
@@ -148,11 +152,12 @@ main(List<String> args) {
 
       for (var i = 0; i < 20; i++) {
         await (new PlanCreation()
-          ..id = planId + i.toString()
-          ..amount = planAmount
-          ..currency = planCurrency
-          ..interval = planInterval
-          ..name = planName + i.toString()).create();
+              ..id = planId + i.toString()
+              ..amount = planAmount
+              ..currency = planCurrency
+              ..interval = planInterval
+              ..name = planName + i.toString())
+            .create();
       }
       var plans = await Plan.list(limit: 10);
       expect(plans.data.length, 10);

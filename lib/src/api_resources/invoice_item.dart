@@ -20,8 +20,10 @@ class InvoiceItem extends ApiResource {
 
   Customer get customerExpand {
     var value = _dataMap['customer'];
-    if (value == null) return null;
-    else return new Customer.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Customer.fromMap(value);
   }
 
   DateTime get date => _getDateTimeFromMap('date');
@@ -36,8 +38,10 @@ class InvoiceItem extends ApiResource {
 
   Invoice get invoiceExpand {
     var value = _dataMap['invoice'];
-    if (value == null) return null;
-    else return new Invoice.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Invoice.fromMap(value);
   }
 
   Map<String, String> get metadata => _dataMap['metadata'];

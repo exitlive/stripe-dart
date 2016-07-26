@@ -18,14 +18,18 @@ class Token extends ApiResource {
 
   BankAccount get bankAccount {
     var value = _dataMap['bank_account'];
-    if (value == null) return null;
-    else return new BankAccount.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new BankAccount.fromMap(value);
   }
 
   Card get card {
     var value = _dataMap['card'];
-    if (value == null) return null;
-    else return new Card.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Card.fromMap(value);
   }
 
   Token.fromMap(Map dataMap) : super.fromMap(dataMap);

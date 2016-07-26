@@ -64,19 +64,21 @@ main(List<String> args) {
 
     test('Create full', () async {
       // Card fields
-      var cardNumber1 = '4242424242424242', cardExpMonth1 = 12, cardExpYear1 = 2016;
+      var cardNumber1 = '4242424242424242', cardExpMonth1 = 12, cardExpYear1 = 2020, cvc1 = 123;
 
       var cardCreation1 = new CardCreation()
         ..number = cardNumber1 // only the last 4 digits can be tested
         ..expMonth = cardExpMonth1
-        ..expYear = cardExpYear1;
+        ..expYear = cardExpYear1
+        ..cvc = cvc1;
 
-      var cardNumber2 = '5555555555554444', cardExpMonth2 = 3, cardExpYear2 = 2016;
+      var cardNumber2 = '5555555555554444', cardExpMonth2 = 3, cardExpYear2 = 2020, cvc2 = 321;
 
       var cardCreation2 = new CardCreation()
         ..number = cardNumber2 // only the last 4 digits can be tested
         ..expMonth = cardExpMonth2
-        ..expYear = cardExpYear2;
+        ..expYear = cardExpYear2
+        ..cvc = cvc2;
 
       // Coupon fields
       var couponId1 = 'test coupon id1', couponDuration1 = 'forever', couponPercentOff1 = 15;
@@ -181,12 +183,13 @@ main(List<String> args) {
 
       // testing the CustomerUpdate
       var updatedCustomer = await (new CustomerUpdate()
-        ..accountBalance = customerAccountBalance2
-        ..source = cardCreation2
-        ..coupon = couponId2
-        ..description = customerDescription2
-        ..email = customerEmail2
-        ..metadata = customerMetadata2).update(customer.id);
+            ..accountBalance = customerAccountBalance2
+            ..source = cardCreation2
+            ..coupon = couponId2
+            ..description = customerDescription2
+            ..email = customerEmail2
+            ..metadata = customerMetadata2)
+          .update(customer.id);
       expect(updatedCustomer.accountBalance, customerAccountBalance2);
       expect(updatedCustomer.defaultSource, isNot(customer.defaultSource));
       expect(updatedCustomer.discount.coupon.percentOff, couponPercentOff2);
@@ -220,12 +223,15 @@ main(List<String> args) {
 
     test('Create with card token', () async {
       // Card fields
-      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2020, cvc = 123;
       await new CustomerCreation().create();
-      var token = await (new CardTokenCreation()..card = (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear)).create();
+      var token = await (new CardTokenCreation()
+            ..card = (new CardCreation()
+              ..number = cardNumber
+              ..expMonth = cardExpMonth
+              ..expYear = cardExpYear
+              ..cvc = cvc))
+          .create();
       var cardCreation = new CardCreationWithToken()..token = token.id;
       var customerCreation = new CustomerCreation()
         ..source = cardCreation

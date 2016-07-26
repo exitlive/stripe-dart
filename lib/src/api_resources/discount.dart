@@ -10,8 +10,10 @@ class Discount extends Resource {
 
   Coupon get coupon {
     var value = _dataMap['coupon'];
-    if (value == null) return null;
-    else return new Coupon.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Coupon.fromMap(value);
   }
 
   String get customer => _dataMap['customer'];

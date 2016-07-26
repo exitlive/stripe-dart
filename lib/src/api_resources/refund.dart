@@ -20,8 +20,10 @@ class Refund extends ApiResource {
 
   BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else return new BalanceTransaction.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new BalanceTransaction.fromMap(value);
   }
 
   String get charge => _dataMap['charge'];

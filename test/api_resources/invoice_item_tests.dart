@@ -54,7 +54,8 @@ main(List<String> args) {
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
@@ -62,13 +63,16 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       var invoiceItem = await (new InvoiceItemCreation()
-        ..customer = customer.id
-        ..amount = chargeAmount
-        ..currency = chargeCurrency).create();
+            ..customer = customer.id
+            ..amount = chargeAmount
+            ..currency = chargeCurrency)
+          .create();
       expect(invoiceItem.amount, chargeAmount);
       expect(invoiceItem.currency, chargeCurrency);
       expect(invoiceItem.customer, customer.id);
@@ -76,12 +80,13 @@ main(List<String> args) {
 
     test('Create full', () async {
       // Card fields
-      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2020, cvc = 123;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber
         ..expMonth = cardExpMonth
-        ..expYear = cardExpYear;
+        ..expYear = cardExpYear
+        ..cvc = cvc;
 
       // Charge fields
       var chargeCurrency = 'usd',
@@ -103,21 +108,23 @@ main(List<String> args) {
           invoiceItemMetadata2 = {'foo': 'bar2'};
 
       var plan = await (new PlanCreation()
-        ..id = planId
-        ..amount = planAmount
-        ..currency = planCurrency
-        ..interval = planInterval
-        ..name = planName).create();
+            ..id = planId
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..name = planName)
+          .create();
       var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
       var subscription = await (new SubscriptionCreation()..plan = plan.id).create(customer.id);
       var invoiceItem = await (new InvoiceItemCreation()
-        ..customer = customer.id
-        ..amount = invoiceItemAmount1
-        ..currency = invoiceItemCurrency
-        ..subscription = subscription.id
-        ..description = invoiceItemDescription1
-        ..metadata = invoiceItemMetadata1).create();
+            ..customer = customer.id
+            ..amount = invoiceItemAmount1
+            ..currency = invoiceItemCurrency
+            ..subscription = subscription.id
+            ..description = invoiceItemDescription1
+            ..metadata = invoiceItemMetadata1)
+          .create();
       expect(invoiceItem.amount, invoiceItemAmount1);
       expect(invoiceItem.currency, invoiceItemCurrency);
       expect(invoiceItem.customer, customer.id);
@@ -135,9 +142,10 @@ main(List<String> args) {
       expect(invoiceItem.metadata, invoiceItemMetadata1);
       // testing InvoiceitemUpdate
       invoiceItem = await (new InvoiceItemUpdate()
-        ..amount = invoiceItemAmount2
-        ..description = invoiceItemDescription2
-        ..metadata = invoiceItemMetadata2).update(invoiceItem.id);
+            ..amount = invoiceItemAmount2
+            ..description = invoiceItemDescription2
+            ..metadata = invoiceItemMetadata2)
+          .update(invoiceItem.id);
       expect(invoiceItem.amount, invoiceItemAmount2);
       expect(invoiceItem.description, invoiceItemDescription2);
       expect(invoiceItem.metadata, invoiceItemMetadata2);
@@ -151,7 +159,8 @@ main(List<String> args) {
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
@@ -160,15 +169,18 @@ main(List<String> args) {
       var customer = await new CustomerCreation().create();
 
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
 
       for (var i = 0; i < 20; i++) {
         await (new InvoiceItemCreation()
-          ..customer = customer.id
-          ..amount = chargeAmount
-          ..currency = chargeCurrency).create();
+              ..customer = customer.id
+              ..amount = chargeAmount
+              ..currency = chargeCurrency)
+            .create();
       }
 
       var invoiceItems = await InvoiceItem.list(limit: 10);

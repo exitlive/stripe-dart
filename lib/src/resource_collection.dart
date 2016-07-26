@@ -7,7 +7,8 @@ abstract class ResourceCollection<T> extends ApiResource {
 
   List<T> get data {
     var data;
-    if ((data = _dataMap['data']) == null) return null;
+    if ((data = _dataMap['data']) == null)
+      return null;
     else {
       var list = new List<T>();
       for (var map in data) {

@@ -152,12 +152,13 @@ main(List<String> args) {
 
     test('Create full', () async {
       // Card fields
-      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2016;
+      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2020, cvc = 123;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested
         ..expMonth = cardExpMonth
-        ..expYear = cardExpYear;
+        ..expYear = cardExpYear
+        ..cvc = cvc;
 
       // Plan fields
       var planId = 'test plan id',
@@ -175,24 +176,27 @@ main(List<String> args) {
           invoiceMetadata = {'foo': 'bar'};
 
       var plan = await (new PlanCreation()
-        ..id = planId
-        ..amount = planAmount
-        ..currency = planCurrency
-        ..interval = planInterval
-        ..name = planName).create();
+            ..id = planId
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..name = planName)
+          .create();
       var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
       await (new ChargeCreation()
-        ..amount = cardAmount
-        ..currency = cardCurrency
-        ..customer = customer.id).create();
+            ..amount = cardAmount
+            ..currency = cardCurrency
+            ..customer = customer.id)
+          .create();
       var subscription = await (new SubscriptionCreation()..plan = plan.id).create(customer.id);
       try {
         await (new InvoiceCreation()
-          ..customer = customer.id
-          ..description = invoiceDescription
-          ..metadata = invoiceMetadata
-          ..subscription = subscription.id).create();
+              ..customer = customer.id
+              ..description = invoiceDescription
+              ..metadata = invoiceMetadata
+              ..subscription = subscription.id)
+            .create();
       } catch (e) {
         // nothing to invoice for a new customer
         expect(e, new isInstanceOf<InvalidRequestErrorException>());

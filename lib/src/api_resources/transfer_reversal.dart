@@ -20,8 +20,10 @@ class TransferReversal extends ApiResource {
 
   BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else return new BalanceTransaction.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new BalanceTransaction.fromMap(value);
   }
 
   Map get metadata => _dataMap['metadata'];
@@ -32,8 +34,10 @@ class TransferReversal extends ApiResource {
 
   Transfer get transferExpand {
     var value = _dataMap['transfer'];
-    if (value == null) return null;
-    else return new Transfer.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Transfer.fromMap(value);
   }
 
   TransferReversal.fromMap(Map dataMap) : super.fromMap(dataMap);

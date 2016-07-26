@@ -30,8 +30,10 @@ class Charge extends ApiResource {
 
   Card get source {
     var value = _dataMap['source'];
-    if (value == null) return null;
-    else return new Card.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Card.fromMap(value);
   }
 
   String get status => _dataMap['status'];
@@ -44,8 +46,10 @@ class Charge extends ApiResource {
 
   BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else return new BalanceTransaction.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new BalanceTransaction.fromMap(value);
   }
 
   String get customer {
@@ -54,16 +58,20 @@ class Charge extends ApiResource {
 
   Customer get customerExpand {
     var value = _dataMap['customer'];
-    if (value == null) return null;
-    else return new Customer.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Customer.fromMap(value);
   }
 
   String get description => _dataMap['description'];
 
   Dispute get dispute {
     var value = _dataMap['dispute'];
-    if (value == null) return null;
-    else return new Dispute.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Dispute.fromMap(value);
   }
 
   String get failureCode => _dataMap['failureCode'];
@@ -76,8 +84,10 @@ class Charge extends ApiResource {
 
   Invoice get invoiceExpand {
     var value = _dataMap['invoice'];
-    if (value == null) return null;
-    else return new Invoice.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Invoice.fromMap(value);
   }
 
   Map<String, String> get metadata => _dataMap['metadata'];
@@ -94,8 +104,10 @@ class Charge extends ApiResource {
 
   Shipping get shipping {
     var value = _dataMap['shipping'];
-    if (value == null) return null;
-    else return new Shipping.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Shipping.fromMap(value);
   }
 
   String get statement_descriptor => _dataMap['statement_descriptor'];

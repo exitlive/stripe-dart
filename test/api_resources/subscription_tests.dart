@@ -96,12 +96,13 @@ main(List<String> args) {
 
     test('Create minimal', () async {
       // Card fields
-      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2016;
+      var cardNumber = '5555555555554444', cardExpMonth = 3, cardExpYear = 2020, cvc = 123;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested
         ..expMonth = cardExpMonth
-        ..expYear = cardExpYear;
+        ..expYear = cardExpYear
+        ..cvc = cvc;
 
       // Plan fields
       var planId = 'test plan id',
@@ -111,11 +112,12 @@ main(List<String> args) {
           planName = 'test plan name';
 
       var plan = await (new PlanCreation()
-        ..id = planId
-        ..amount = planAmount
-        ..currency = planCurrency
-        ..interval = planInterval
-        ..name = planName).create();
+            ..id = planId
+            ..amount = planAmount
+            ..currency = planCurrency
+            ..interval = planInterval
+            ..name = planName)
+          .create();
       var customer = await new CustomerCreation().create();
       await cardCreation.create(customer.id);
       var subscription = await (new SubscriptionCreation()..plan = plan.id).create(customer.id);
@@ -140,19 +142,21 @@ main(List<String> args) {
         ..percentOff = couponPercentOff2;
 
       // Card fields
-      var cardNumber1 = '4242424242424242', cardExpMonth1 = 12, cardExpYear1 = 2016;
+      var cardNumber1 = '4242424242424242', cardExpMonth1 = 12, cardExpYear1 = 2020, cvc1 = 123;
 
       var cardCreation1 = new CardCreation()
         ..number = cardNumber1 // only the last 4 digits can be tested
         ..expMonth = cardExpMonth1
-        ..expYear = cardExpYear1;
+        ..expYear = cardExpYear1
+        ..cvc = cvc1;
 
-      var cardNumber2 = '5555555555554444', cardExpMonth2 = 3, cardExpYear2 = 2016;
+      var cardNumber2 = '5555555555554444', cardExpMonth2 = 3, cardExpYear2 = 2020, cvc2 = 321;
 
       var cardCreation2 = new CardCreation()
         ..number = cardNumber2 // only the last 4 digits can be tested
         ..expMonth = cardExpMonth2
-        ..expYear = cardExpYear2;
+        ..expYear = cardExpYear2
+        ..cvc = cvc2;
 
       // Plan fields
       var planId1 = 'test plan id1',
@@ -197,12 +201,13 @@ main(List<String> args) {
       var coupon2 = await couponCreation2.create();
       var customer = await new CustomerCreation().create();
       var subscription = await (new SubscriptionCreation()
-        ..plan = plan1.id
-        ..coupon = coupon1.id
-        ..trialEnd = subscriptionTrialEnd1
-        ..card = cardCreation1
-        ..quantity = subscriptionQuantity1
-        ..metadata = subscriptionMetadata1).create(customer.id);
+            ..plan = plan1.id
+            ..coupon = coupon1.id
+            ..trialEnd = subscriptionTrialEnd1
+            ..card = cardCreation1
+            ..quantity = subscriptionQuantity1
+            ..metadata = subscriptionMetadata1)
+          .create(customer.id);
       expect(subscription.plan.id, planId1);
       expect(subscription.discount.coupon.percentOff, couponPercentOff1);
       expect(subscription.trialEnd, new DateTime.fromMillisecondsSinceEpoch(subscriptionTrialEnd1 * 1000));
@@ -217,12 +222,13 @@ main(List<String> args) {
 
       // testing the CustomerUpdate
       subscription = await (new SubscriptionUpdate()
-        ..plan = plan2.id
-        ..coupon = coupon2.id
-        ..trialEnd = subscriptionTrialEnd2
-        ..card = cardCreation2
-        ..quantity = subscriptionQuantity2
-        ..metadata = subscriptionMetadata2).update(customer.id, subscription.id);
+            ..plan = plan2.id
+            ..coupon = coupon2.id
+            ..trialEnd = subscriptionTrialEnd2
+            ..card = cardCreation2
+            ..quantity = subscriptionQuantity2
+            ..metadata = subscriptionMetadata2)
+          .update(customer.id, subscription.id);
       expect(subscription.plan.id, planId2);
       expect(subscription.discount.coupon.percentOff, couponPercentOff2);
       expect(subscription.trialEnd, new DateTime.fromMillisecondsSinceEpoch(subscriptionTrialEnd2 * 1000));
@@ -237,12 +243,13 @@ main(List<String> args) {
 
     test('List parameters', () async {
       // Card fields
-      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2020, cvc = 123;
 
       var cardCreation = new CardCreation()
         ..number = cardNumber // only the last 4 digits can be tested
         ..expMonth = cardExpMonth
-        ..expYear = cardExpYear;
+        ..expYear = cardExpYear
+        ..cvc = cvc;
 
       // Plan fields
       var planId = 'test plan id',

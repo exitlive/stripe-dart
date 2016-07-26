@@ -7,8 +7,6 @@ import 'package:unittest/unittest.dart';
 import '../../lib/stripe.dart';
 import '../utils.dart' as utils;
 
-import '../resources/bank_account_tests.dart' as bank_account;
-
 var example = '''
     {
       "id": "tok_103z9O41dfVNZFcqpeOFk6jX",
@@ -82,12 +80,15 @@ main(List<String> args) {
 
     test('Create CardToken', () async {
       // Card fields
-      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2020, cvc = 123;
       await new CustomerCreation().create();
-      var token = await (new CardTokenCreation()..card = (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear)).create();
+      var token = await (new CardTokenCreation()
+            ..card = (new CardCreation()
+              ..number = cardNumber
+              ..expMonth = cardExpMonth
+              ..expYear = cardExpYear
+              ..cvc = cvc))
+          .create();
       expect(token.id, new isInstanceOf<String>());
       expect(token.card.last4, cardNumber.substring(cardNumber.length - 4));
       expect(token.card.expMonth, cardExpMonth);

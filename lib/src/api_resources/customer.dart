@@ -22,8 +22,10 @@ class Customer extends ApiResource {
 
   Card get defaultSourceExpand {
     var value = _dataMap['default_source'];
-    if (value == null) return null;
-    else return new Card.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Card.fromMap(value);
   }
 
   bool get delinquent => _dataMap['delinquent'];
@@ -32,8 +34,10 @@ class Customer extends ApiResource {
 
   Discount get discount {
     var value = _dataMap['discount'];
-    if (value == null) return null;
-    else return new Discount.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Discount.fromMap(value);
   }
 
   String get email => _dataMap['email'];
@@ -42,14 +46,18 @@ class Customer extends ApiResource {
 
   CardCollection get sources {
     var value = _dataMap['sources'];
-    if (value == null) return null;
-    else return new CardCollection.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new CardCollection.fromMap(value);
   }
 
   SubscriptionCollection get subscriptions {
     var value = _dataMap['subscriptions'];
-    if (value == null) return null;
-    else return new SubscriptionCollection.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new SubscriptionCollection.fromMap(value);
   }
 
   Customer.fromMap(Map dataMap) : super.fromMap(dataMap);

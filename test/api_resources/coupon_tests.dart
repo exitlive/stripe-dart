@@ -61,8 +61,9 @@ main(List<String> args) {
       var couponDuration = 'forever', couponPercentOff = 5;
 
       var coupon = await (new CouponCreation()
-        ..duration = couponDuration
-        ..percentOff = couponPercentOff).create();
+            ..duration = couponDuration
+            ..percentOff = couponPercentOff)
+          .create();
       expect(coupon.id, new isInstanceOf<String>());
       expect(coupon.duration, couponDuration);
       expect(coupon.percentOff, couponPercentOff);
@@ -77,17 +78,18 @@ main(List<String> args) {
           couponDurationInMoths = 12,
           couponMaxRedemptions = 3,
           couponMetadata = {'foo': 'bar'},
-          couponRedeemBy = 1451520000;
+          couponRedeemBy = new DateTime.now().add(new Duration(days: 1)).millisecondsSinceEpoch ~/ 1000;
 
       var coupon = await (new CouponCreation()
-        ..id = couponId
-        ..duration = couponDuration
-        ..amountOff = couponAmountOff
-        ..currency = couponCurrency
-        ..durationInMonths = couponDurationInMoths
-        ..maxRedemptions = couponMaxRedemptions
-        ..metadata = couponMetadata
-        ..redeemBy = couponRedeemBy).create();
+            ..id = couponId
+            ..duration = couponDuration
+            ..amountOff = couponAmountOff
+            ..currency = couponCurrency
+            ..durationInMonths = couponDurationInMoths
+            ..maxRedemptions = couponMaxRedemptions
+            ..metadata = couponMetadata
+            ..redeemBy = couponRedeemBy)
+          .create();
       expect(coupon.id, couponId);
       expect(coupon.duration, couponDuration);
       expect(coupon.amountOff, couponAmountOff);
@@ -113,8 +115,9 @@ main(List<String> args) {
       var couponDuration = 'forever', couponPercentOff = 5;
 
       var coupon = await (new CouponCreation()
-        ..duration = couponDuration
-        ..percentOff = couponPercentOff).create();
+            ..duration = couponDuration
+            ..percentOff = couponPercentOff)
+          .create();
       expect(coupon.id, new isInstanceOf<String>());
       expect(coupon.duration, couponDuration);
       expect(coupon.percentOff, couponPercentOff);
@@ -128,8 +131,9 @@ main(List<String> args) {
       var couponDuration = 'forever', couponPercentOff = 5;
       for (var i = 0; i < 20; i++) {
         await (new CouponCreation()
-          ..duration = couponDuration
-          ..percentOff = couponPercentOff).create();
+              ..duration = couponDuration
+              ..percentOff = couponPercentOff)
+            .create();
       }
 
       var coupons = await Coupon.list(limit: 10);

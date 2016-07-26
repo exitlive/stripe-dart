@@ -3,26 +3,34 @@ part of stripe;
 class LegalEntity extends Resource {
   Address get address {
     var value = _dataMap['address'];
-    if (value == null) return null;
-    else return new Address.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Address.fromMap(value);
   }
 
   Date get dateOfBirth {
     var value = _dataMap['dob'];
-    if (value == null) return null;
-    else return new Date.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Date.fromMap(value);
   }
 
   Address get personalAddress {
     var value = _dataMap['personal_address'];
-    if (value == null) return null;
-    else return new Address.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Address.fromMap(value);
   }
 
   Verification get verification {
     var value = _dataMap['verification'];
-    if (value == null) return null;
-    else return new Verification.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Verification.fromMap(value);
   }
 
   List<AdditionalOwner> get additionalOwners {

@@ -94,7 +94,8 @@ main(List<String> args) {
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
@@ -102,13 +103,16 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id).create();
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
+            ..customer = customer.id)
+          .create();
       expect(charge.amount, chargeAmount);
       expect(charge.currency, chargeCurrency);
     });
@@ -117,7 +121,8 @@ main(List<String> args) {
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
@@ -132,17 +137,20 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id
-        ..description = chargeDescription1
-        ..metadata = chargeMetadata1
-        ..capture = chargeCapture
-        ..statementDescriptor = chargeStatementDescriptor).create();
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
+            ..customer = customer.id
+            ..description = chargeDescription1
+            ..metadata = chargeMetadata1
+            ..capture = chargeCapture
+            ..statementDescriptor = chargeStatementDescriptor)
+          .create();
       expect(charge.amount, chargeAmount);
       expect(charge.currency, chargeCurrency);
       expect(charge.description, chargeDescription1);
@@ -157,8 +165,9 @@ main(List<String> args) {
 
       // testing the ChargeUpdate
       charge = await (new ChargeUpdate()
-        ..description = chargeDescription2
-        ..metadata = chargeMetadata2).update(charge.id);
+            ..description = chargeDescription2
+            ..metadata = chargeMetadata2)
+          .update(charge.id);
       expect(charge.description, chargeDescription2);
       expect(charge.metadata, chargeMetadata2);
     });
@@ -167,7 +176,8 @@ main(List<String> args) {
       // Card fields
       var cardNumber = '4242424242424242',
           cardExpMonth = 12,
-          cardExpYear = 2016,
+          cardExpYear = 2020,
+          cvc = 123,
 
           // Charge fields
           chargeAmount = 100,
@@ -177,36 +187,42 @@ main(List<String> args) {
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       var charge = await (new ChargeCreation()
-        ..amount = chargeAmount
-        ..currency = chargeCurrency
-        ..customer = customer.id
-        ..capture = false).create();
+            ..amount = chargeAmount
+            ..currency = chargeCurrency
+            ..customer = customer.id
+            ..capture = false)
+          .create();
       charge = await Charge.capture(charge.id, amount: chargeCaptureAmount);
       expect(charge.captured, isTrue);
     });
 
     test('List parameters', () async {
-      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2016;
+      var cardNumber = '4242424242424242', cardExpMonth = 12, cardExpYear = 2020, cvc = 123;
 
       var customer = await new CustomerCreation().create();
       await (new CardCreation()
-        ..number = cardNumber
-        ..expMonth = cardExpMonth
-        ..expYear = cardExpYear).create(customer.id);
+            ..number = cardNumber
+            ..expMonth = cardExpMonth
+            ..expYear = cardExpYear
+            ..cvc = cvc)
+          .create(customer.id);
       for (var i = 0; i < 20; i++) {
         // Charge fields
         var chargeAmount = 100, chargeCurrency = 'usd';
         // application_fee can not be tested
 
         await (new ChargeCreation()
-          ..amount = chargeAmount
-          ..currency = chargeCurrency
-          ..customer = customer.id
-          ..capture = false).create();
+              ..amount = chargeAmount
+              ..currency = chargeCurrency
+              ..customer = customer.id
+              ..capture = false)
+            .create();
       }
       var charges = await Charge.list(customer: customer.id, limit: 10);
       expect(charges.data.length, 10);

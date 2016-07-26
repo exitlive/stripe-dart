@@ -50,28 +50,36 @@ class Account extends ApiResource {
 
   LegalEntity get legalEntity {
     var value = _dataMap['legal_entity'];
-    if (value == null) return null;
-    else return new LegalEntity.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new LegalEntity.fromMap(value);
   }
 
   String get productDescription => _dataMap['product_description'];
 
   TosAcceptance get tosAcceptance {
     var value = _dataMap['tos_acceptance'];
-    if (value == null) return null;
-    else return new TosAcceptance.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new TosAcceptance.fromMap(value);
   }
 
   TransferSchedule get transferSchedule {
     var value = _dataMap['transfer_schedule'];
-    if (value == null) return null;
-    else return new TransferSchedule.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new TransferSchedule.fromMap(value);
   }
 
   Verification get verification {
     var value = _dataMap['verification'];
-    if (value == null) return null;
-    else return new Verification.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Verification.fromMap(value);
   }
 
   Map get keys => _dataMap['keys'];

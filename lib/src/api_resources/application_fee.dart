@@ -16,8 +16,10 @@ class ApplicationFee extends ApiResource {
 
   Account get accountExpand {
     var value = _dataMap['account'];
-    if (value == null) return null;
-    else return new Account.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Account.fromMap(value);
   }
 
   int get amount => _dataMap['amount'];
@@ -30,8 +32,10 @@ class ApplicationFee extends ApiResource {
 
   BalanceTransaction get balanceTransactionExpand {
     var value = _dataMap['balance_transaction'];
-    if (value == null) return null;
-    else return new BalanceTransaction.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new BalanceTransaction.fromMap(value);
   }
 
   String get charge {
@@ -40,8 +44,10 @@ class ApplicationFee extends ApiResource {
 
   Charge get chargeExpand {
     var value = _dataMap['charge'];
-    if (value == null) return null;
-    else return new Charge.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new Charge.fromMap(value);
   }
 
   DateTime get created => _getDateTimeFromMap('created');

@@ -14,8 +14,10 @@ class Event extends ApiResource {
 
   EventData get data {
     var value = _dataMap['data'];
-    if (value == null) return null;
-    else return new EventData.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new EventData.fromMap(value);
   }
 
   int get pendingWebhooks => _dataMap['pending_webhooks'];

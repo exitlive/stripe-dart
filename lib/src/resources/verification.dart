@@ -15,8 +15,10 @@ class Verification extends Resource {
 
   FileUpload get documentExpand {
     var value = _dataMap['document'];
-    if (value == null) return null;
-    else return new FileUpload.fromMap(value);
+    if (value == null)
+      return null;
+    else
+      return new FileUpload.fromMap(value);
   }
 
   Verification.fromMap(Map dataMap) : super.fromMap(dataMap);

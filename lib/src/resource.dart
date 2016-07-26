@@ -33,9 +33,12 @@ abstract class Resource {
 
   String _getIdForExpandable(String key) {
     var value = _dataMap[key];
-    if (value is String) return value;
-    else if (value is Map && value.containsKey('id')) return value['id'];
-    else return null;
+    if (value is String)
+      return value;
+    else if (value is Map && value.containsKey('id'))
+      return value['id'];
+    else
+      return null;
   }
 }
 
@@ -64,8 +67,8 @@ abstract class ResourceRequest {
             var setterCamelCase = symbolName.substring(0, symbolName.length - 1);
             var setter = _underscore(setterCamelCase);
             String className = MirrorSystem.getName(classMirror.simpleName);
-            if (_map[setter] ==
-                null) throw new MissingArgumentException('You have to set ${setter} for a proper ${className} request');
+            if (_map[setter] == null)
+              throw new MissingArgumentException('You have to set ${setter} for a proper ${className} request');
           }
         });
       }
