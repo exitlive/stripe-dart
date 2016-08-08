@@ -132,6 +132,8 @@ class CustomerUpdate extends ResourceRequest {
 
   set source(SourceCreation source) => _setMap('source', source);
 
+  set defaultSource(String sourceId) => _setMap('default_source', sourceId);
+
   Future<Customer> update(String customerId) async {
     var dataMap = await StripeService.update([Customer._path, customerId], _getMap());
     return new Customer.fromMap(dataMap);

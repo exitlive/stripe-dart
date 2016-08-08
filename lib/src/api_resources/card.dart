@@ -135,7 +135,8 @@ class CardCreationWithToken extends ResourceRequest implements SourceCreation {
   }
 
   Future<Card> create(String customerId) async {
-    var dataMap = await StripeService.create([Customer._path, customerId, Card._path], _getMap());
+    var dataMap = await StripeService.create([Customer._path, customerId, Card._path],
+        {"source": _getMap()});
     return new Card.fromMap(dataMap);
   }
 }
