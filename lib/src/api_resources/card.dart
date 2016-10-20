@@ -19,7 +19,7 @@ class Card extends ApiResource {
 
   String get last4 => _dataMap['last4'];
 
-  String get type => _dataMap['type'];
+  String get brand => _dataMap['brand'];
 
   String get addressCity => _dataMap['address_city'];
 

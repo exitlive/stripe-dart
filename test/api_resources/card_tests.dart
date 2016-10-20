@@ -12,7 +12,7 @@ var example = '''
       "id": "card_103yOK2eZvKYlo2CNWdHfG5K",
       "object": "card",
       "last4": "4242",
-      "type": "Visa",
+      "brand": "Visa",
       "exp_month": 1,
       "exp_year": 2050,
       "fingerprint": "Xt5EWLLDS7FJjR1c",
@@ -48,7 +48,7 @@ main(List<String> args) {
       var card = new Card.fromMap(map);
       expect(card.id, map['id']);
       expect(card.last4, map['last4']);
-      expect(card.type, map['type']);
+      expect(card.brand, map['brand']);
       expect(card.expMonth, map['exp_month']);
       expect(card.expYear, map['exp_year']);
       expect(card.fingerprint, map['fingerprint']);

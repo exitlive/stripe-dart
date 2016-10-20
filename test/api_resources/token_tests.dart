@@ -57,7 +57,7 @@ main(List<String> args) {
       var card = token.card;
       expect(card.id, map['card']['id']);
       expect(card.last4, map['card']['last4']);
-      expect(card.type, map['card']['type']);
+      expect(card.brand, map['card']['brand']);
       expect(card.expMonth, map['card']['exp_month']);
       expect(card.expYear, map['card']['exp_year']);
       expect(card.fingerprint, map['card']['fingerprint']);

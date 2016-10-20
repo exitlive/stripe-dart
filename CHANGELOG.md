@@ -1,3 +1,14 @@
+## 1.2.2 (2016-10-20)
+
+Features:
+
+  - upgrade dependencies
+
+Bug fixes:
+
+  - change card type to card brand
+
+
 ## 1.2.1 (2016-08-08)
 
 Features:
